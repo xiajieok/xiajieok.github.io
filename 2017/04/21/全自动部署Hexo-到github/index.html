@@ -12,10 +12,12 @@
 <meta property="og:url" content="http://xj.github.io/2017/04/21/全自动部署Hexo-到github/index.html">
 <meta property="og:site_name" content="Medivh">
 <meta property="og:description" content="有一天把hexo配置好了，但是每次更新后还有手动部署太麻烦。正好有个pm2的工具，完全可以代替我们做这些事。">
-<meta property="og:updated_time" content="2017-04-21T07:38:51.000Z">
+<meta property="og:image" content="http://7xp3xc.com1.z0.glb.clouddn.com/2016/1492760173740.png">
+<meta property="og:updated_time" content="2017-04-21T07:39:18.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="全自动部署Hexo 到github">
 <meta name="twitter:description" content="有一天把hexo配置好了，但是每次更新后还有手动部署太麻烦。正好有个pm2的工具，完全可以代替我们做这些事。">
+<meta name="twitter:image" content="http://7xp3xc.com1.z0.glb.clouddn.com/2016/1492760173740.png">
   
     <link rel="alternate" href="/atom.xml" title="Medivh" type="application/atom+xml">
   
@@ -93,13 +95,15 @@
         <p>有一天把hexo配置好了，但是每次更新后还有手动部署太麻烦。正好有个pm2的工具，完全可以代替我们做这些事。<br><a id="more"></a><br>安装 pm2<br><figure class="highlight cmake"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm <span class="keyword">install</span> -g pm2</div></pre></td></tr></table></figure></p>
 <p>在博客source目录新建start.js<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> process = <span class="built_in">require</span>(<span class="string">'child_process'</span>);</div><div class="line"></div><div class="line">process.exec(<span class="string">' hexo g -d'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">error, stdout, stderr</span>) </span>&#123;</div><div class="line">    <span class="keyword">if</span> (error !== <span class="literal">null</span>) &#123;</div><div class="line">            <span class="built_in">console</span>.log(<span class="string">'exec error: '</span> + error);</div><div class="line">    &#125;</div><div class="line"> &#125;);</div></pre></td></tr></table></figure></p>
 <p>新建watch.js<br><figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line"> <span class="attr">"apps"</span> : [&#123;</div><div class="line"> <span class="attr">"name"</span>       : <span class="string">"blog"</span>,</div><div class="line"> <span class="attr">"script"</span>     : <span class="string">"./start.js"</span>,</div><div class="line"> <span class="attr">"exec_interpreter"</span>: <span class="string">"node"</span>,</div><div class="line"> <span class="attr">"exec_mode"</span>  : <span class="string">"fork_mode"</span>,</div><div class="line"> <span class="attr">"watch"</span>      : <span class="string">"_posts"</span></div><div class="line">  &#125;]</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>使用pm2命令实现监控文件变动自动提交<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">pm2 <span class="keyword">start</span> watch.json</div><div class="line">&lt;img src=<span class="string">"http://7xp3xc.com1.z0.glb.clouddn.com/2016/1492760173740.png"</span> width=<span class="string">"790"</span>/&gt;</div><div class="line"></div><div class="line">pm2常用命令</div><div class="line"></div><div class="line">pm <span class="keyword">list</span></div><div class="line">pm <span class="keyword">logs</span></div><div class="line">pm <span class="keyword">start</span> watch.json</div><div class="line">pm <span class="keyword">show</span> &lt;<span class="keyword">id</span>|<span class="keyword">name</span>&gt;</div></pre></td></tr></table></figure></p>
+<p>使用pm2命令实现监控文件变动自动提交<br><figure class="highlight crmsh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pm2 <span class="literal">start</span> watch.json</div></pre></td></tr></table></figure></p>
+<p><img src="http://7xp3xc.com1.z0.glb.clouddn.com/2016/1492760173740.png" width="790"></p>
+<p>pm2常用命令<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">pm list</div><div class="line">pm logs</div><div class="line">pm <span class="keyword">start</span> watch.json</div><div class="line">pm <span class="keyword">show</span> &lt;<span class="keyword">id</span>|<span class="keyword">name</span>&gt;</div></pre></td></tr></table></figure></p>
 <p>这样就会发现Hexo已经被自动部署到github啦，而且时刻保持最新版</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://xj.github.io/2017/04/21/全自动部署Hexo-到github/" data-id="cj1riykh60005qkrkn326ihf4" class="article-share-link">Share</a>
+      <a data-url="http://xj.github.io/2017/04/21/全自动部署Hexo-到github/" data-id="cj1riz6fo0005rcrk6zvmvlkr" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/hexo/">hexo</a></li></ul>
