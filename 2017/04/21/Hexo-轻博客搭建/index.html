@@ -12,7 +12,7 @@
 <meta property="og:url" content="http://xj.github.io/2017/04/21/Hexo-轻博客搭建/index.html">
 <meta property="og:site_name" content="Medivh">
 <meta property="og:description" content="初识Hexo">
-<meta property="og:updated_time" content="2017-04-21T03:23:13.000Z">
+<meta property="og:updated_time" content="2017-04-21T03:55:14.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Hexo 轻博客搭建">
 <meta name="twitter:description" content="初识Hexo">
@@ -90,12 +90,39 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>初识Hexo<br><a id="more"></a></p>
+        <p>初识Hexo<br><a id="more"></a><br>编译安装nodejs</p>
+<p>wget <a href="http://nodejs.org/dist/latest-v6.x/node-v6.9.1.tar.gz" target="_blank" rel="external">http://nodejs.org/dist/latest-v6.x/node-v6.9.1.tar.gz</a><br>tar -zxvf node-v6.9.1.tar.gz<br>cd node-v6.9.1<br>./configure<br>make<br>make install<br>node -v</p>
+<p>安装完成后安装hexo<br>Node, npm和Git都安装成功, 开始安装hexo</p>
+<p>npm install hexo -g</p>
+<p>#-g表示全局安装, npm默认为当前项目安装</p>
+<p>npm install hexo-deployer-git –save</p>
+<p>#hexo 使用git</p>
+<p>hexo version</p>
+<p>Hexo使用命令:</p>
+<p>cd ~/git</p>
+<p>hexo init hexo  #执行init命令初始化到你指定的hexo目录cd hexo</p>
+<p>#初始化后目录结构<br>-rw-r–r–    1 jack  staff  1483  4 21 10:19 _config.yml<br>drwxr-xr-x  288 jack  staff  9792  4 21 10:24 node_modules/<br>-rw-r–r–    1 jack  staff   443  4 21 10:19 package.json<br>drwxr-xr-x    5 jack  staff   170  4 21 10:19 scaffolds/<br>drwxr-xr-x    3 jack  staff   102  4 21 10:19 source/<br>drwxr-xr-x    3 jack  staff   102  4 21 10:19 themes/</p>
+<p>npm install    #install before start blogging<br>hexo generate       #自动根据当前目录下文件,生成静态网页<br>hexo server         #运行本地服务</p>
+<p>浏览器输入<a href="http://localhost:4000就可以看到效果。" target="_blank" rel="external">http://localhost:4000就可以看到效果。</a></p>
+<p>目录结构</p>
+<p>.<br>├── .deploy       #需要部署的文件<br>├── node_modules  #Hexo插件<br>├── public        #生成的静态网页文件<br>├── scaffolds     #模板<br>├── source        #博客正文和其他源文件, 404 favicon CNAME 等都应该放在这里<br>|   ├── _drafts   #草稿<br>|   └── _posts    #文章<br>├── themes        #主题<br>├── _config.yml   #全局配置文件</p>
+<p>└── package.json</p>
+<p>修改_config.yml</p>
+<h1 id="Site"><a href="#Site" class="headerlink" title="Site"></a>Site</h1><p>title: Medivh<br>subtitle: Medivh 的 blog<br>description: my blog is Hexo<br>author: Medivh<br>language: zh-CN<br>timezone: Asia/Shanghai</p>
+<h1 id="URL"><a href="#URL" class="headerlink" title="URL"></a>URL</h1><p>url: <a href="http://xj.github.io">http://xj.github.io</a></p>
+<p>#github<br>deploy:<br>  type: git<br>  repo: <a href="https://github.com/xiajieok/xj.github.io.git" target="_blank" rel="external">https://github.com/xiajieok/xj.github.io.git</a><br>  branch: master</p>
+<p>配置github</p>
+<pre><code>新建repo
+</code></pre><p>配置域名<br>repo-&gt;settings-&gt; 检查是否和配置文件一致</p>
+<p>部署</p>
+<p>hexo depoly</p>
+<p>访问<br>如果出现404，检查配置文件和域名是否一致。<br><a href="http://xiajieok.github.io" target="_blank" rel="external">http://xiajieok.github.io</a></p>
+<p>ERROR：<br>如果出现ERROR Deployer not found: git<br>安装npm install hexo-deployer-git –save<br>– end</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://xj.github.io/2017/04/21/Hexo-轻博客搭建/" data-id="cj1ra7mdm0003a6rkrugw7h97" class="article-share-link">Share</a>
+      <a data-url="http://xj.github.io/2017/04/21/Hexo-轻博客搭建/" data-id="cj1raz09300025erkvxjopbkc" class="article-share-link">Share</a>
       
       
     </footer>
