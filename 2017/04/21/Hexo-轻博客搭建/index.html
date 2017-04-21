@@ -12,7 +12,7 @@
 <meta property="og:url" content="http://xj.github.io/2017/04/21/Hexo-轻博客搭建/index.html">
 <meta property="og:site_name" content="Medivh">
 <meta property="og:description" content="初识Hexo">
-<meta property="og:updated_time" content="2017-04-21T04:02:37.000Z">
+<meta property="og:updated_time" content="2017-04-21T05:37:25.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Hexo 轻博客搭建">
 <meta name="twitter:description" content="初识Hexo">
@@ -93,24 +93,24 @@
         <p>初识Hexo<br><a id="more"></a><br>编译安装nodejs</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">wget http://nodejs.org/dist/latest-v6.x/node-v6.9.1.tar.gz   </div><div class="line">tar -zxvf node-v6.9.1.tar.gz   </div><div class="line">cd node-v6.9.1   </div><div class="line">./configure   </div><div class="line">make   </div><div class="line">make install   </div><div class="line">node -v</div></pre></td></tr></table></figure>
 <p>安装完成后安装hexo<br>Node, npm和Git都安装成功, 开始安装hexo</p>
-<p>npm install hexo -g</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm install hexo -g</div></pre></td></tr></table></figure>
 <p>#-g表示全局安装, npm默认为当前项目安装</p>
-<p>npm install hexo-deployer-git –save</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm install hexo-deployer-git --save</div></pre></td></tr></table></figure>
 <p>#hexo 使用git</p>
 <p>hexo version</p>
 <p>Hexo使用命令:</p>
 <p>cd ~/git</p>
 <p>hexo init hexo  #执行init命令初始化到你指定的hexo目录cd hexo</p>
-<p>#初始化后目录结构<br>-rw-r–r–    1 jack  staff  1483  4 21 10:19 _config.yml<br>drwxr-xr-x  288 jack  staff  9792  4 21 10:24 node_modules/<br>-rw-r–r–    1 jack  staff   443  4 21 10:19 package.json<br>drwxr-xr-x    5 jack  staff   170  4 21 10:19 scaffolds/<br>drwxr-xr-x    3 jack  staff   102  4 21 10:19 source/<br>drwxr-xr-x    3 jack  staff   102  4 21 10:19 themes/</p>
-<p>npm install    #install before start blogging<br>hexo generate       #自动根据当前目录下文件,生成静态网页<br>hexo server         #运行本地服务</p>
+<blockquote>
+<p>初始化后目录结构   </p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">-rw-r--r--    1 jack  staff  1483  4 21 10:19 _config.yml</div><div class="line">drwxr-xr-x  288 jack  staff  9792  4 21 10:24 node_modules/</div><div class="line">-rw-r--r--    1 jack  staff   443  4 21 10:19 package.json</div><div class="line">drwxr-xr-x    5 jack  staff   170  4 21 10:19 scaffolds/</div><div class="line">drwxr-xr-x    3 jack  staff   102  4 21 10:19 source/</div><div class="line">drwxr-xr-x    3 jack  staff   102  4 21 10:19 themes/</div><div class="line"></div><div class="line">npm install    #install before start blogging</div><div class="line">hexo generate       #自动根据当前目录下文件,生成静态网页</div><div class="line">hexo server         #运行本地服务</div></pre></td></tr></table></figure>
 <p>浏览器输入<a href="http://localhost:4000就可以看到效果。" target="_blank" rel="external">http://localhost:4000就可以看到效果。</a></p>
-<p>目录结构</p>
-<p>.<br>├── .deploy       #需要部署的文件<br>├── node_modules  #Hexo插件<br>├── public        #生成的静态网页文件<br>├── scaffolds     #模板<br>├── source        #博客正文和其他源文件, 404 favicon CNAME 等都应该放在这里<br>|   ├── _drafts   #草稿<br>|   └── _posts    #文章<br>├── themes        #主题<br>├── _config.yml   #全局配置文件</p>
-<p>└── package.json</p>
+<p>目录结构<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">.</div><div class="line">├── .deploy       #需要部署的文件</div><div class="line">├── node_modules  #Hexo插件</div><div class="line">├── public        #生成的静态网页文件</div><div class="line">├── scaffolds     #模板</div><div class="line">├── source        #博客正文和其他源文件, 404 favicon CNAME 等都应该放在这里</div><div class="line">|   ├── _drafts   #草稿</div><div class="line">|   └── _posts    #文章</div><div class="line">├── themes        #主题</div><div class="line">├── _config.yml   #全局配置文件</div><div class="line"></div><div class="line">└── package.json</div></pre></td></tr></table></figure></p>
 <p>修改_config.yml</p>
-<h1 id="Site"><a href="#Site" class="headerlink" title="Site"></a>Site</h1><p>title: Medivh<br>subtitle: Medivh 的 blog<br>description: my blog is Hexo<br>author: Medivh<br>language: zh-CN<br>timezone: Asia/Shanghai</p>
-<h1 id="URL"><a href="#URL" class="headerlink" title="URL"></a>URL</h1><p>url: <a href="http://xj.github.io">http://xj.github.io</a></p>
-<p>#github<br>deploy:<br>  type: git<br>  repo: <a href="https://github.com/xiajieok/xj.github.io.git" target="_blank" rel="external">https://github.com/xiajieok/xj.github.io.git</a><br>  branch: master</p>
+<blockquote>
+<p>Site<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">title: Medivh</div><div class="line">subtitle: Medivh 的 blog</div><div class="line">description: my blog is Hexo</div><div class="line">author: Medivh</div><div class="line">language: zh-CN</div><div class="line">timezone: Asia/Shanghai</div><div class="line"># URL</div><div class="line">url: http://xj.github.io</div><div class="line">#github</div><div class="line">deploy:</div><div class="line">  type: git</div><div class="line">  repo: https://github.com/xiajieok/xj.github.io.git</div><div class="line">  branch: master</div></pre></td></tr></table></figure></p>
+</blockquote>
 <p>配置github</p>
 <pre><code>新建repo
 </code></pre><p>配置域名<br>repo-&gt;settings-&gt; 检查是否和配置文件一致</p>
@@ -122,7 +122,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://xj.github.io/2017/04/21/Hexo-轻博客搭建/" data-id="cj1rb88eo0002jprk5iribywn" class="article-share-link">Share</a>
+      <a data-url="http://xj.github.io/2017/04/21/Hexo-轻博客搭建/" data-id="cj1remeqh0002eerkmrnt29j9" class="article-share-link">Share</a>
       
       
     </footer>
