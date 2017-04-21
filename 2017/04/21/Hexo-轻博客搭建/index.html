@@ -5,18 +5,18 @@
   
   <title>Hexo 轻博客搭建 | Medivh</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="初识Hexo Hexo是一个快速的、简单的、功能强大的博客框架。你可以通过Markdown语言写文章，然后hexo帮你生成一个带有漂亮主题的静态页面。最近入手了一个树莓派，所以有事没事就想着折腾它，后来无意中看到了hexo的博客，真漂亮！就试着在派上部署一下环境试试。">
+  <meta name="description" content="初识HexoHexo是一个快速的、简单的、功能强大的博客框架。你可以通过Markdown语言写文章，然后hexo帮你生成一个带有漂亮主题的静态页面。最近入手了一个树莓派，所以有事没事就想着折腾它，后来无意中看到了hexo的博客，真漂亮！就试着在派上部署一下环境试试。">
 <meta name="keywords" content="树莓派">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Hexo 轻博客搭建">
 <meta property="og:url" content="http://xj.github.io/2017/04/21/Hexo-轻博客搭建/index.html">
 <meta property="og:site_name" content="Medivh">
-<meta property="og:description" content="初识Hexo Hexo是一个快速的、简单的、功能强大的博客框架。你可以通过Markdown语言写文章，然后hexo帮你生成一个带有漂亮主题的静态页面。最近入手了一个树莓派，所以有事没事就想着折腾它，后来无意中看到了hexo的博客，真漂亮！就试着在派上部署一下环境试试。">
+<meta property="og:description" content="初识HexoHexo是一个快速的、简单的、功能强大的博客框架。你可以通过Markdown语言写文章，然后hexo帮你生成一个带有漂亮主题的静态页面。最近入手了一个树莓派，所以有事没事就想着折腾它，后来无意中看到了hexo的博客，真漂亮！就试着在派上部署一下环境试试。">
 <meta property="og:image" content="http://7xp3xc.com1.z0.glb.clouddn.com/2016/1492755503227.png">
-<meta property="og:updated_time" content="2017-04-21T07:15:58.000Z">
+<meta property="og:updated_time" content="2017-04-21T07:17:51.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Hexo 轻博客搭建">
-<meta name="twitter:description" content="初识Hexo Hexo是一个快速的、简单的、功能强大的博客框架。你可以通过Markdown语言写文章，然后hexo帮你生成一个带有漂亮主题的静态页面。最近入手了一个树莓派，所以有事没事就想着折腾它，后来无意中看到了hexo的博客，真漂亮！就试着在派上部署一下环境试试。">
+<meta name="twitter:description" content="初识HexoHexo是一个快速的、简单的、功能强大的博客框架。你可以通过Markdown语言写文章，然后hexo帮你生成一个带有漂亮主题的静态页面。最近入手了一个树莓派，所以有事没事就想着折腾它，后来无意中看到了hexo的博客，真漂亮！就试着在派上部署一下环境试试。">
 <meta name="twitter:image" content="http://7xp3xc.com1.z0.glb.clouddn.com/2016/1492755503227.png">
   
     <link rel="alternate" href="/atom.xml" title="Medivh" type="application/atom+xml">
@@ -92,8 +92,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>初识Hexo</p>
-<p>Hexo是一个快速的、简单的、功能强大的博客框架。你可以通过Markdown语言写文章，然后hexo帮你生成一个带有漂亮主题的静态页面。<br>最近入手了一个树莓派，所以有事没事就想着折腾它，后来无意中看到了hexo的博客，真漂亮！就试着在派上部署一下环境试试。<br><a id="more"></a><br>环境<br>hexo依赖于nodejs，因此记得先装一下nodejs。有些平台上就编译一下吧，比如在树莓派上就得好几个小时，那就在那编译着吧。。。<br>编译安装nodejs</p>
+        <h4 id="初识Hexo"><a href="#初识Hexo" class="headerlink" title="初识Hexo"></a>初识Hexo</h4><p>Hexo是一个快速的、简单的、功能强大的博客框架。你可以通过Markdown语言写文章，然后hexo帮你生成一个带有漂亮主题的静态页面。<br>最近入手了一个树莓派，所以有事没事就想着折腾它，后来无意中看到了hexo的博客，真漂亮！就试着在派上部署一下环境试试。<br><a id="more"></a><br>环境<br>hexo依赖于nodejs，因此记得先装一下nodejs。有些平台上就编译一下吧，比如在树莓派上就得好几个小时，那就在那编译着吧。。。<br>编译安装nodejs</p>
 <figure class="highlight crmsh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">wget http://nodejs.org/dist/latest-v6.x/<span class="keyword">node</span><span class="title">-v6</span>.<span class="number">9.1</span>.tar.gz   </div><div class="line">tar -zxvf <span class="keyword">node</span><span class="title">-v6</span>.<span class="number">9.1</span>.tar.gz   </div><div class="line">cd <span class="keyword">node</span><span class="title">-v6</span>.<span class="number">9.1</span>   </div><div class="line">./configure   </div><div class="line">make   </div><div class="line">make install   </div><div class="line"><span class="keyword">node</span> <span class="title">-v</span></div></pre></td></tr></table></figure>
 <p>安装完成后安装hexo<br>Node, npm和Git都安装成功, 开始安装hexo</p>
 <figure class="highlight cmake"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">npm <span class="keyword">install</span> hexo -g</div><div class="line"><span class="comment">#-g表示全局安装, npm默认为当前项目安装</span></div></pre></td></tr></table></figure>
@@ -118,7 +117,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://xj.github.io/2017/04/21/Hexo-轻博客搭建/" data-id="cj1ri55ko0002odrkbmokm46n" class="article-share-link">Share</a>
+      <a data-url="http://xj.github.io/2017/04/21/Hexo-轻博客搭建/" data-id="cj1ri7kop0002q7rk1oc08b2b" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/树莓派/">树莓派</a></li></ul>
