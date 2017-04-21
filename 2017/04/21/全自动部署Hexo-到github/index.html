@@ -5,17 +5,17 @@
   
   <title>全自动部署Hexo 到github | Medivh</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="安装 pm21npm install -g pm2 在博客source目录新建start.js1234567var process = require(&apos;child_process&apos;);process.exec(&apos; hexo g -d&apos;, function (error, stdout, stderr) &amp;#123;    if (error !== null) &amp;#123;">
+  <meta name="description" content="有一天把hexo配置好了，但是每次更新后还有手动部署太麻烦。正好有个pm2的工具，完全可以代替我们做这些事。&amp;lt;&amp;gt;安装 pm21npm install -g pm2 在博客source目录新建start.js1234567var process = require(&apos;child_process&apos;);process.exec(&apos; hexo g -d&apos;, function (error, s">
 <meta name="keywords" content="hexo">
 <meta property="og:type" content="article">
 <meta property="og:title" content="全自动部署Hexo 到github">
 <meta property="og:url" content="http://xj.github.io/2017/04/21/全自动部署Hexo-到github/index.html">
 <meta property="og:site_name" content="Medivh">
-<meta property="og:description" content="安装 pm21npm install -g pm2 在博客source目录新建start.js1234567var process = require(&apos;child_process&apos;);process.exec(&apos; hexo g -d&apos;, function (error, stdout, stderr) &amp;#123;    if (error !== null) &amp;#123;">
-<meta property="og:updated_time" content="2017-04-21T07:31:26.000Z">
+<meta property="og:description" content="有一天把hexo配置好了，但是每次更新后还有手动部署太麻烦。正好有个pm2的工具，完全可以代替我们做这些事。&amp;lt;&amp;gt;安装 pm21npm install -g pm2 在博客source目录新建start.js1234567var process = require(&apos;child_process&apos;);process.exec(&apos; hexo g -d&apos;, function (error, s">
+<meta property="og:updated_time" content="2017-04-21T07:34:29.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="全自动部署Hexo 到github">
-<meta name="twitter:description" content="安装 pm21npm install -g pm2 在博客source目录新建start.js1234567var process = require(&apos;child_process&apos;);process.exec(&apos; hexo g -d&apos;, function (error, stdout, stderr) &amp;#123;    if (error !== null) &amp;#123;">
+<meta name="twitter:description" content="有一天把hexo配置好了，但是每次更新后还有手动部署太麻烦。正好有个pm2的工具，完全可以代替我们做这些事。&amp;lt;&amp;gt;安装 pm21npm install -g pm2 在博客source目录新建start.js1234567var process = require(&apos;child_process&apos;);process.exec(&apos; hexo g -d&apos;, function (error, s">
   
     <link rel="alternate" href="/atom.xml" title="Medivh" type="application/atom+xml">
   
@@ -90,7 +90,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>安装 pm2<br><figure class="highlight cmake"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm <span class="keyword">install</span> -g pm2</div></pre></td></tr></table></figure></p>
+        <p>有一天把hexo配置好了，但是每次更新后还有手动部署太麻烦。正好有个pm2的工具，完全可以代替我们做这些事。<br>&lt;&gt;<br>安装 pm2<br><figure class="highlight cmake"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm <span class="keyword">install</span> -g pm2</div></pre></td></tr></table></figure></p>
 <p>在博客source目录新建start.js<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> process = <span class="built_in">require</span>(<span class="string">'child_process'</span>);</div><div class="line"></div><div class="line">process.exec(<span class="string">' hexo g -d'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">error, stdout, stderr</span>) </span>&#123;</div><div class="line">    <span class="keyword">if</span> (error !== <span class="literal">null</span>) &#123;</div><div class="line">            <span class="built_in">console</span>.log(<span class="string">'exec error: '</span> + error);</div><div class="line">    &#125;</div><div class="line"> &#125;);</div></pre></td></tr></table></figure></p>
 <p>新建watch.js<br><figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line"> <span class="attr">"apps"</span> : [&#123;</div><div class="line"> <span class="attr">"name"</span>       : <span class="string">"blog"</span>,</div><div class="line"> <span class="attr">"script"</span>     : <span class="string">"./start.js"</span>,</div><div class="line"> <span class="attr">"exec_interpreter"</span>: <span class="string">"node"</span>,</div><div class="line"> <span class="attr">"exec_mode"</span>  : <span class="string">"fork_mode"</span>,</div><div class="line"> <span class="attr">"watch"</span>      : <span class="string">"_posts"</span></div><div class="line">  &#125;]</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 <p>使用pm2命令实现监控文件变动自动提交<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">pm2 <span class="keyword">start</span> watch.json</div><div class="line"></div><div class="line">pm2常用命令</div><div class="line"></div><div class="line">pm <span class="keyword">list</span></div><div class="line">pm <span class="keyword">logs</span></div><div class="line">pm <span class="keyword">start</span> watch.json</div><div class="line">pm <span class="keyword">show</span> &lt;<span class="keyword">id</span>|<span class="keyword">name</span>&gt;</div></pre></td></tr></table></figure></p>
@@ -99,7 +99,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://xj.github.io/2017/04/21/全自动部署Hexo-到github/" data-id="cj1rip1pl000499rkltan1vmc" class="article-share-link">Share</a>
+      <a data-url="http://xj.github.io/2017/04/21/全自动部署Hexo-到github/" data-id="cj1risy180005ecrkwlbh7zip" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/hexo/">hexo</a></li></ul>
