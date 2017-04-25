@@ -15,7 +15,7 @@
 <meta property="og:image" content="http://7xp3xc.com1.z0.glb.clouddn.com/2016/1493107147483.png">
 <meta property="og:image" content="http://7xp3xc.com1.z0.glb.clouddn.com/2016/1493107282786.png">
 <meta property="og:image" content="http://7xp3xc.com1.z0.glb.clouddn.com/2016/1493103640349.png">
-<meta property="og:updated_time" content="2017-04-25T08:03:14.000Z">
+<meta property="og:updated_time" content="2017-04-25T08:04:16.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="树莓派编译安装Python3.5">
 <meta name="twitter:description" content="刚写了一个天气预报的脚本，想部署在服务器上，但是运行的时候报错，说找不到requests库，奇怪的是装上了也报错。后来发现树莓派自带的是3.2，版本有点老可能会有点不兼容吧。那就装个Python3.5吧！">
@@ -102,14 +102,14 @@
 <p><img src="http://7xp3xc.com1.z0.glb.clouddn.com/2016/1493107282786.png" width="873"></p>
 <p>安装完成！！！</p>
 <h4 id="错误整理"><a href="#错误整理" class="headerlink" title="错误整理"></a>错误整理</h4><ul>
-<li>提示Ignoring ensurepip failure: pip 8.1.1 requires SSL/TLS错误<br>是因为没有安装openssl-devel<br>解决： </li>
+<li>提示Ignoring ensurepip failure: pip 8.1.1 requires SSL/TLS<br><img src="http://7xp3xc.com1.z0.glb.clouddn.com/2016/1493103640349.png" width="873"><br>错误<br>  是因为没有安装openssl-devel<br>解决：   <figure class="highlight q"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">	sudo apt-<span class="built_in">get</span> install libssl-<span class="built_in">dev</span></div><div class="line">	sudo apt-<span class="built_in">get</span> install openss</div><div class="line">* 如果</div></pre></td></tr></table></figure>
+</li>
 </ul>
-<p><img src="http://7xp3xc.com1.z0.glb.clouddn.com/2016/1493103640349.png" width="873"></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://xj.github.io/2017/04/25/树莓派编译安装Python3-5/" data-id="cj1x9lbza00078erkc3f4pty2" class="article-share-link">Share</a>
+      <a data-url="http://xj.github.io/2017/04/25/树莓派编译安装Python3-5/" data-id="cj1x9mo3q0007a0rkmvd6p40g" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/">Python</a></li></ul>
