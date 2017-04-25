@@ -13,7 +13,7 @@
 <meta property="og:site_name" content="Medivh">
 <meta property="og:description" content="刚写了一个天气预报的脚本，想部署在服务器上，但是运行的时候报错，说找不到requests库，奇怪的是装上了也报错。后来发现树莓派自带的是3.2，版本有点老可能会有点不兼容吧。那就装个Python3.5吧！">
 <meta property="og:image" content="http://7xp3xc.com1.z0.glb.clouddn.com/2016/1493103640349.png">
-<meta property="og:updated_time" content="2017-04-25T07:55:48.000Z">
+<meta property="og:updated_time" content="2017-04-25T07:56:10.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="树莓派编译安装Python3.5">
 <meta name="twitter:description" content="刚写了一个天气预报的脚本，想部署在服务器上，但是运行的时候报错，说找不到requests库，奇怪的是装上了也报错。后来发现树莓派自带的是3.2，版本有点老可能会有点不兼容吧。那就装个Python3.5吧！">
@@ -94,13 +94,13 @@
       
         <p>刚写了一个天气预报的脚本，想部署在服务器上，但是运行的时候报错，说找不到requests库，奇怪的是装上了也报错。后来发现树莓派自带的是3.2，版本有点老可能会有点不兼容吧。<br>那就装个Python3.5吧！<br><a id="more"></a></p>
 <h4 id="环境依赖"><a href="#环境依赖" class="headerlink" title="环境依赖"></a>环境依赖</h4><p>sudo apt-get install libssl-dev<br>sudo apt-get install openssl</p>
-<figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">sudo wget https:<span class="comment">//www.python.org/ftp/python/3.5.3/Python-3.5.3.tar.xz</span></div><div class="line">tar -xvf Python-<span class="number">3.5</span>.<span class="number">3</span><span class="selector-class">.tar</span><span class="selector-class">.xz</span></div><div class="line">cd Python-<span class="number">3.5</span>.<span class="number">3</span></div></pre></td></tr></table></figure>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">sudo wget https:<span class="regexp">//</span>www.python.org<span class="regexp">/ftp/</span>python<span class="regexp">/3.5.3/</span>Python-<span class="number">3.5</span>.<span class="number">3</span>.tar.xz</div><div class="line">tar -xvf Python-<span class="number">3.5</span>.<span class="number">3</span>.tar.xz</div><div class="line">cd Python-<span class="number">3.5</span>.<span class="number">3</span></div><div class="line">.<span class="regexp">/configure --prefix=/u</span>sr<span class="regexp">/local/</span>python3.<span class="number">5</span></div></pre></td></tr></table></figure>
 <p><img src="http://7xp3xc.com1.z0.glb.clouddn.com/2016/1493103640349.png" width="873"></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://xj.github.io/2017/04/25/树莓派编译安装Python3-5/" data-id="cj1x9akzp0002zrrknz006h9t" class="article-share-link">Share</a>
+      <a data-url="http://xj.github.io/2017/04/25/树莓派编译安装Python3-5/" data-id="cj1x9c8oh00070wrkexg5twwo" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/">Python</a></li></ul>
