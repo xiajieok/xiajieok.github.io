@@ -14,7 +14,7 @@
 <meta property="og:description" content="刚写了一个天气预报的脚本，想部署在服务器上，但是运行的时候报错，说找不到requests库，奇怪的是装上了也报错。后来发现树莓派自带的是3.2，版本有点老可能会有点不兼容吧。那就装个Python3.5吧！">
 <meta property="og:image" content="http://7xp3xc.com1.z0.glb.clouddn.com/2016/1493107147483.png">
 <meta property="og:image" content="http://7xp3xc.com1.z0.glb.clouddn.com/2016/1493103640349.png">
-<meta property="og:updated_time" content="2017-04-25T07:59:34.000Z">
+<meta property="og:updated_time" content="2017-04-25T08:00:52.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="树莓派编译安装Python3.5">
 <meta name="twitter:description" content="刚写了一个天气预报的脚本，想部署在服务器上，但是运行的时候报错，说找不到requests库，奇怪的是装上了也报错。后来发现树莓派自带的是3.2，版本有点老可能会有点不兼容吧。那就装个Python3.5吧！">
@@ -96,13 +96,14 @@
         <p>刚写了一个天气预报的脚本，想部署在服务器上，但是运行的时候报错，说找不到requests库，奇怪的是装上了也报错。后来发现树莓派自带的是3.2，版本有点老可能会有点不兼容吧。<br>那就装个Python3.5吧！<br><a id="more"></a></p>
 <h4 id="环境依赖"><a href="#环境依赖" class="headerlink" title="环境依赖"></a>环境依赖</h4><p>sudo apt-get install libssl-dev<br>sudo apt-get install openssl</p>
 <figure class="highlight vim"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">sudo wget http<span class="variable">s:</span>//www.<span class="keyword">python</span>.org/ftp/<span class="keyword">python</span>/<span class="number">3.5</span>.<span class="number">3</span>/Python-<span class="number">3.5</span>.<span class="number">3</span>.tar.xz</div><div class="line">tar -xvf Python-<span class="number">3.5</span>.<span class="number">3</span>.tar.xz</div><div class="line"><span class="keyword">cd</span> Python-<span class="number">3.5</span>.<span class="number">3</span></div><div class="line">./configure --prefix=/usr/local/<span class="keyword">python3</span>.<span class="number">5</span></div><div class="line"><span class="keyword">make</span></div><div class="line"><span class="keyword">make</span> altinstall</div></pre></td></tr></table></figure>
-<p>进入/usr/local/python3.5 检查是否完整<br><img src="http://7xp3xc.com1.z0.glb.clouddn.com/2016/1493107147483.png" width="873"><br>建立软链<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"></div></pre></td></tr></table></figure></p>
+<p>进入/usr/local/python3.5 检查是否完整<br><img src="http://7xp3xc.com1.z0.glb.clouddn.com/2016/1493107147483.png" width="873"><br>建立软链</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sudo ln -s <span class="regexp">/usr/</span>local<span class="regexp">/python3.5/</span>bin<span class="regexp">/python3.5 /u</span>sr<span class="regexp">/bin/</span>python3</div><div class="line">sudo ln -s <span class="regexp">/usr/</span>local<span class="regexp">/python3.5/</span>bin<span class="regexp">/pip3 /u</span>sr<span class="regexp">/bin/</span>pip3</div></pre></td></tr></table></figure>
 <p><img src="http://7xp3xc.com1.z0.glb.clouddn.com/2016/1493103640349.png" width="873"></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://xj.github.io/2017/04/25/树莓派编译安装Python3-5/" data-id="cj1x9gmp500074crkbu4211or" class="article-share-link">Share</a>
+      <a data-url="http://xj.github.io/2017/04/25/树莓派编译安装Python3-5/" data-id="cj1x9iahp000b5yrki7lqocu4" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/">Python</a></li></ul>
