@@ -74,7 +74,7 @@
 <link href="/css/main.css?v=" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Python,树莓派," />
+  <meta name="keywords" content="树莓派,Python," />
 
 
 
@@ -90,17 +90,17 @@
 
 
 
-<meta name="description" content="12345678910111213cd srcsudo wget http://curl.haxx.se/download/curl-7.24.0.tar.gztar -zxvf curl-7.24.0.tar.gzcd curl-7.24.0./configuremake make install cd ..sudo wget http://pycurl.sourceforge.net/down">
-<meta name="keywords" content="Python,树莓派">
+<meta name="description" content="1234567cd srcsudo wget http://curl.haxx.se/download/curl-7.24.0.tar.gztar -zxvf curl-7.24.0.tar.gzcd curl-7.24.0./configuremake make install 检查curl-config是否存在，如果存在则继续安装，pip3 或者下载安装 12345cd ..sudo wget">
+<meta name="keywords" content="树莓派,Python">
 <meta property="og:type" content="article">
 <meta property="og:title" content="树莓派编译安装pycurl">
 <meta property="og:url" content="http://xiajieok.github.io/2017/04/26/树莓派编译安装pycurl/index.html">
 <meta property="og:site_name" content="Medivh">
-<meta property="og:description" content="12345678910111213cd srcsudo wget http://curl.haxx.se/download/curl-7.24.0.tar.gztar -zxvf curl-7.24.0.tar.gzcd curl-7.24.0./configuremake make install cd ..sudo wget http://pycurl.sourceforge.net/down">
-<meta property="og:updated_time" content="2017-04-27T06:28:57.000Z">
+<meta property="og:description" content="1234567cd srcsudo wget http://curl.haxx.se/download/curl-7.24.0.tar.gztar -zxvf curl-7.24.0.tar.gzcd curl-7.24.0./configuremake make install 检查curl-config是否存在，如果存在则继续安装，pip3 或者下载安装 12345cd ..sudo wget">
+<meta property="og:updated_time" content="2017-04-27T08:27:53.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="树莓派编译安装pycurl">
-<meta name="twitter:description" content="12345678910111213cd srcsudo wget http://curl.haxx.se/download/curl-7.24.0.tar.gztar -zxvf curl-7.24.0.tar.gzcd curl-7.24.0./configuremake make install cd ..sudo wget http://pycurl.sourceforge.net/down">
+<meta name="twitter:description" content="1234567cd srcsudo wget http://curl.haxx.se/download/curl-7.24.0.tar.gztar -zxvf curl-7.24.0.tar.gzcd curl-7.24.0./configuremake make install 检查curl-config是否存在，如果存在则继续安装，pip3 或者下载安装 12345cd ..sudo wget">
 
 
 
@@ -334,7 +334,9 @@
       
 
       
-        <figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">cd src</div><div class="line">sudo wget http:<span class="comment">//curl.haxx.se/download/curl-7.24.0.tar.gz</span></div><div class="line">tar -zxvf curl-<span class="number">7.24</span>.<span class="number">0</span><span class="selector-class">.tar</span><span class="selector-class">.gz</span></div><div class="line">cd curl-<span class="number">7.24</span>.<span class="number">0</span></div><div class="line">./configure</div><div class="line">make </div><div class="line">make install </div><div class="line"></div><div class="line">cd ..</div><div class="line">sudo wget http:<span class="comment">//pycurl.sourceforge.net/download/pycurl-7.19.0.tar.gz</span></div><div class="line">tar -zxvf pycurl-<span class="number">7.19</span>.<span class="number">0</span><span class="selector-class">.tar</span><span class="selector-class">.gz</span></div><div class="line">cd pycurl-<span class="number">7.19</span>.<span class="number">0</span></div><div class="line">python3 setup<span class="selector-class">.py</span> install --curl-config=/usr/local/bin/curl-config</div></pre></td></tr></table></figure>
+        <figure class="highlight vim"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">cd</span> src</div><div class="line">sudo wget http://curl.haxx.<span class="keyword">se</span>/download/curl-<span class="number">7.24</span>.<span class="number">0</span>.tar.gz</div><div class="line">tar -zxvf curl-<span class="number">7.24</span>.<span class="number">0</span>.tar.gz</div><div class="line"><span class="keyword">cd</span> curl-<span class="number">7.24</span>.<span class="number">0</span></div><div class="line">./configure</div><div class="line"><span class="keyword">make</span> </div><div class="line"><span class="keyword">make</span> install</div></pre></td></tr></table></figure>
+<p>检查curl-config是否存在，如果存在则继续安装，pip3 或者下载安装</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">cd ..</div><div class="line">sudo wget http:<span class="comment">//pycurl.sourceforge.net/download/pycurl-7.19.0.tar.gz</span></div><div class="line">tar -zxvf pycurl-<span class="number">7.19</span>.<span class="number">0</span><span class="selector-class">.tar</span><span class="selector-class">.gz</span></div><div class="line">cd pycurl-<span class="number">7.19</span>.<span class="number">0</span></div><div class="line">python3 setup<span class="selector-class">.py</span> install --curl-config=/usr/local/bin/curl-config</div></pre></td></tr></table></figure>
 
       
     </div>
@@ -364,9 +366,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Python/" rel="tag"># Python</a>
-          
             <a href="/tags/树莓派/" rel="tag"># 树莓派</a>
+          
+            <a href="/tags/Python/" rel="tag"># Python</a>
           
         </div>
       
