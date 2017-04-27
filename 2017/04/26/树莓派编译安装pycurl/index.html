@@ -90,18 +90,18 @@
 
 
 
-<meta name="description" content="打算写个监控网站状态的小脚本，用到pycurl，但是提示找不到curl-config，那就手动安装吧。  1234567cd srcsudo wget http://curl.haxx.se/download/curl-7.24.0.tar.gztar -zxvf curl-7.24.0.tar.gzcd curl-7.24.0./configuremake make install 检查curl">
+<meta name="description" content="打算写个监控网站状态的小脚本，用到pycurl，但是提示找不到curl-config，那就手动安装吧。Pycurl包是一个libcurl的Python接口，它是由C语言编写的。与urllib相比，pycurl的速度要快很多。 Libcurl 是一个支持FTP，FTPS，HTTP，HTTPS，GOPHER，TELNET，DICT，FILE 和 LDAP的客户端URL传输库。libcurl也支持HTT">
 <meta name="keywords" content="Python">
 <meta property="og:type" content="article">
 <meta property="og:title" content="pycurl安装">
 <meta property="og:url" content="http://xiajieok.github.io/2017/04/26/树莓派编译安装pycurl/index.html">
 <meta property="og:site_name" content="Medivh">
-<meta property="og:description" content="打算写个监控网站状态的小脚本，用到pycurl，但是提示找不到curl-config，那就手动安装吧。  1234567cd srcsudo wget http://curl.haxx.se/download/curl-7.24.0.tar.gztar -zxvf curl-7.24.0.tar.gzcd curl-7.24.0./configuremake make install 检查curl">
+<meta property="og:description" content="打算写个监控网站状态的小脚本，用到pycurl，但是提示找不到curl-config，那就手动安装吧。Pycurl包是一个libcurl的Python接口，它是由C语言编写的。与urllib相比，pycurl的速度要快很多。 Libcurl 是一个支持FTP，FTPS，HTTP，HTTPS，GOPHER，TELNET，DICT，FILE 和 LDAP的客户端URL传输库。libcurl也支持HTT">
 <meta property="og:image" content="http://7xp3xc.com1.z0.glb.clouddn.com/2016/1493281738429.png">
-<meta property="og:updated_time" content="2017-04-27T08:31:05.000Z">
+<meta property="og:updated_time" content="2017-04-27T08:31:28.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="pycurl安装">
-<meta name="twitter:description" content="打算写个监控网站状态的小脚本，用到pycurl，但是提示找不到curl-config，那就手动安装吧。  1234567cd srcsudo wget http://curl.haxx.se/download/curl-7.24.0.tar.gztar -zxvf curl-7.24.0.tar.gzcd curl-7.24.0./configuremake make install 检查curl">
+<meta name="twitter:description" content="打算写个监控网站状态的小脚本，用到pycurl，但是提示找不到curl-config，那就手动安装吧。Pycurl包是一个libcurl的Python接口，它是由C语言编写的。与urllib相比，pycurl的速度要快很多。 Libcurl 是一个支持FTP，FTPS，HTTP，HTTPS，GOPHER，TELNET，DICT，FILE 和 LDAP的客户端URL传输库。libcurl也支持HTT">
 <meta name="twitter:image" content="http://7xp3xc.com1.z0.glb.clouddn.com/2016/1493281738429.png">
 
 
@@ -336,7 +336,8 @@
       
 
       
-        <p>打算写个监控网站状态的小脚本，用到pycurl，但是提示找不到curl-config，那就手动安装吧。</p>
+        <p>打算写个监控网站状态的小脚本，用到pycurl，但是提示找不到curl-config，那就手动安装吧。<br>Pycurl包是一个libcurl的Python接口，它是由C语言编写的。与urllib相比，pycurl的速度要快很多。</p>
+<p>Libcurl 是一个支持FTP，FTPS，HTTP，HTTPS，GOPHER，TELNET，DICT，FILE 和 LDAP的客户端URL传输库。libcurl也支持HTTPS认证，HTTP、POST、HTTP PUT、FTP上传，代理，Cookies，基本身份验证，FTP文件断点继传，HTTP代理通道等等。</p>
 <p><img src="http://7xp3xc.com1.z0.glb.clouddn.com/2016/1493281738429.png" width="873"></p>
 <figure class="highlight vim"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">cd</span> src</div><div class="line">sudo wget http://curl.haxx.<span class="keyword">se</span>/download/curl-<span class="number">7.24</span>.<span class="number">0</span>.tar.gz</div><div class="line">tar -zxvf curl-<span class="number">7.24</span>.<span class="number">0</span>.tar.gz</div><div class="line"><span class="keyword">cd</span> curl-<span class="number">7.24</span>.<span class="number">0</span></div><div class="line">./configure</div><div class="line"><span class="keyword">make</span> </div><div class="line"><span class="keyword">make</span> install</div></pre></td></tr></table></figure>
 <p>检查curl-config是否存在，如果存在则继续安装，pip3 或者下载安装<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">cd ..</div><div class="line">sudo wget http:<span class="comment">//pycurl.sourceforge.net/download/pycurl-7.19.0.tar.gz</span></div><div class="line">tar -zxvf pycurl-<span class="number">7.19</span>.<span class="number">0</span><span class="selector-class">.tar</span><span class="selector-class">.gz</span></div><div class="line">cd pycurl-<span class="number">7.19</span>.<span class="number">0</span></div><div class="line">python3 setup<span class="selector-class">.py</span> install --curl-config=/usr/local/bin/curl-config</div></pre></td></tr></table></figure></p>
