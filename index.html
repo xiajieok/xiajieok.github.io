@@ -2,10 +2,8 @@
 
 
 
-  
 
-
-<html class="theme-next pisces use-motion" lang="zh-Hans">
+<html class="theme-next pisces" lang="zh-Hans">
 <head>
   <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -33,48 +31,15 @@
 
 
 
-  
-  
-  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
-
-
-
-
-  
-  
-  
-  
-
-  
-    
-    
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-    
-    
-    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
-  
 
 
 
 
 
 
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+<link href="/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
 
-<link href="/css/main.css?v=" rel="stylesheet" type="text/css" />
-
-
-  <meta name="keywords" content="Hexo, NexT" />
+<link href="//main.css?v=" rel="stylesheet" type="text/css" />
 
 
 
@@ -83,7 +48,6 @@
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=" />
 
 
 
@@ -107,26 +71,24 @@
   var CONFIG = {
     root: '/',
     scheme: 'Pisces',
-    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
-    fancybox: true,
-    motion: true,
+    sidebar: "",
+    fancybox: ,
+    motion: ,
     duoshuo: {
-      userId: '0',
+      userId: 'undefined',
       author: '博主'
     },
     algolia: {
       applicationID: '',
       apiKey: '',
       indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+      hits: "",
+      labels: ""
     }
   };
 </script>
 
 
-
-  <link rel="canonical" href="http://xiajieok.github.io/"/>
 
 
 
@@ -154,10 +116,8 @@
 
   
   
-    
-  
 
-  <div class="container sidebar-position-left 
+  <div class="container  
    page-home 
  ">
     <div class="headband"></div>
@@ -192,52 +152,6 @@
   
 
   
-    <ul id="menu" class="menu">
-      
-        
-        <li class="menu-item menu-item-home">
-          <a href="/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
-            
-            首页
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-about">
-          <a href="/about" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
-            
-            关于
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-archives">
-          <a href="/archives" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
-            
-            归档
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-tags">
-          <a href="/tags" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
-            
-            标签
-          </a>
-        </li>
-      
-
-      
-    </ul>
-  
 
   
 </nav>
@@ -268,7 +182,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Medivh">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="http://7xp3xc.com1.z0.glb.clouddn.com/2016/1493282832303.png">
+      <meta itemprop="image" content="/avatar.gif">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -295,16 +209,6 @@
 
         <div class="post-meta">
           <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-26T17:53:27+08:00">
-                2017-04-26
-              </time>
             
 
             
@@ -339,16 +243,15 @@
       
         
           
-          前言打算写个监控网站状态的小脚本，用到pycurl，但是提示找不到curl-config，那就手动安装吧。Pycurl包是一个libcurl的Python接口，它是由C语言编写的。与urllib相比，pycurl的速度要快很多。
-Libcurl 是一个支持FTP，FTPS，HTTP，HTTPS，GO
-          ...
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/04/26/树莓派编译安装pycurl/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
+            <h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>打算写个监控网站状态的小脚本，用到pycurl，但是提示找不到curl-config，那就手动安装吧。<br>Pycurl包是一个libcurl的Python接口，它是由C语言编写的。与urllib相比，pycurl的速度要快很多。</p>
+<p>Libcurl 是一个支持FTP，FTPS，HTTP，HTTPS，GOPHER，TELNET，DICT，FILE 和 LDAP的客户端URL传输库。libcurl也支持HTTPS认证，HTTP、POST、HTTP PUT、FTP上传，代理，Cookies，基本身份验证，FTP文件断点继传，HTTP代理通道等等。</p>
+<p><img src="http://7xp3xc.com1.z0.glb.clouddn.com/2016/1493281738429.png" width="873"></p>
+<h4 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h4><figure class="highlight vim"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">cd</span> src</div><div class="line">sudo wget http://curl.haxx.<span class="keyword">se</span>/download/curl-<span class="number">7.24</span>.<span class="number">0</span>.tar.gz</div><div class="line">tar -zxvf curl-<span class="number">7.24</span>.<span class="number">0</span>.tar.gz</div><div class="line"><span class="keyword">cd</span> curl-<span class="number">7.24</span>.<span class="number">0</span></div><div class="line">./configure</div><div class="line"><span class="keyword">make</span> </div><div class="line"><span class="keyword">make</span> install</div></pre></td></tr></table></figure>
+<p>检查curl-config是否存在，如果存在则继续安装，pip3 或者下载安装<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">cd ..</div><div class="line">sudo wget http:<span class="comment">//pycurl.sourceforge.net/download/pycurl-7.19.0.tar.gz</span></div><div class="line">tar -zxvf pycurl-<span class="number">7.19</span>.<span class="number">0</span><span class="selector-class">.tar</span><span class="selector-class">.gz</span></div><div class="line">cd pycurl-<span class="number">7.19</span>.<span class="number">0</span></div><div class="line">python3 setup<span class="selector-class">.py</span> install --curl-config=/usr/local/bin/curl-config</div></pre></td></tr></table></figure></p>
+<h4 id="基本用法"><a href="#基本用法" class="headerlink" title="基本用法"></a>基本用法</h4><figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div></pre></td><td class="code"><pre><div class="line">c = pycurl.Curl()    <span class="comment">#创建一个curl对象 </span></div><div class="line"></div><div class="line">c.setopt(pycurl.CONNECTTIMEOUT, <span class="number">5</span>)    <span class="comment">#连接的等待时间，设置为0则不等待  </span></div><div class="line"></div><div class="line">c.setopt(pycurl.TIMEOUT, <span class="number">5</span>)           <span class="comment">#请求超时时间  </span></div><div class="line"></div><div class="line">c.setopt(pycurl.NOPROGRESS, <span class="number">0</span>)        <span class="comment">#是否屏蔽下载进度条，非0则屏蔽  </span></div><div class="line"></div><div class="line">c.setopt(pycurl.MAXREDIRS, <span class="number">5</span>)         <span class="comment">#指定HTTP重定向的最大数  </span></div><div class="line"></div><div class="line">c.setopt(pycurl.FORBID_REUSE, <span class="number">1</span>)      <span class="comment">#完成交互后强制断开连接，不重用  </span></div><div class="line"></div><div class="line">c.setopt(pycurl.FRESH_CONNECT,<span class="number">1</span>)      <span class="comment">#强制获取新的连接，即替代缓存中的连接  </span></div><div class="line"></div><div class="line">c.setopt(pycurl.DNS_CACHE_TIMEOUT,<span class="number">60</span>) <span class="comment">#设置保存DNS信息的时间，默认为120秒  </span></div><div class="line"></div><div class="line">c.setopt(pycurl.<span class="built_in">URL</span>,<span class="string">"http://www.baidu.com"</span>)      <span class="comment">#指定请求的URL  </span></div><div class="line"></div><div class="line">c.setopt(pycurl.USERAGENT,<span class="string">"Mozilla/5.2 (compatible; MSIE 6.0; Windows NT 5.1; SV1; .NET CLR 1.1.4322; .NET CLR 2.0.50324)"</span>)    <span class="comment">#配置请求HTTP头的User-Agent</span></div><div class="line"></div><div class="line">c.setopt(pycurl.HEADERFUNCTION, getheader)   <span class="comment">#将返回的HTTP HEADER定向到回调函数getheader</span></div><div class="line"></div><div class="line">c.setopt(pycurl.WRITEFUNCTION, getbody)      <span class="comment">#将返回的内容定向到回调函数getbody</span></div><div class="line"></div><div class="line">c.setopt(pycurl.WRITEHEADER, fileobj)        <span class="comment">#将返回的HTTP HEADER定向到fileobj文件对象</span></div><div class="line"></div><div class="line">c.setopt(pycurl.WRITEDATA, fileobj)          <span class="comment">#将返回的HTML内容定向到fileobj文件对象</span></div><div class="line"></div><div class="line">c.getinfo(pycurl.HTTP_CODE)         <span class="comment">#返回的HTTP状态码</span></div><div class="line"></div><div class="line">c.getinfo(pycurl.TOTAL_TIME)        <span class="comment">#传输结束所消耗的总时间</span></div><div class="line"></div><div class="line">c.getinfo(pycurl.NAMELOOKUP_TIME)   <span class="comment">#DNS解析所消耗的时间</span></div><div class="line"></div><div class="line">c.getinfo(pycurl.CONNECT_TIME)      <span class="comment">#建立连接所消耗的时间</span></div><div class="line"></div><div class="line">c.getinfo(pycurl.PRETRANSFER_TIME)  <span class="comment">#从建立连接到准备传输所消耗的时间</span></div><div class="line"></div><div class="line">c.getinfo(pycurl.STARTTRANSFER_TIME)    <span class="comment">#从建立连接到传输开始消耗的时间</span></div><div class="line"></div><div class="line">c.getinfo(pycurl.REDIRECT_TIME)     <span class="comment">#重定向所消耗的时间</span></div><div class="line"></div><div class="line">c.getinfo(pycurl.SIZE_UPLOAD)       <span class="comment">#上传数据包大小</span></div><div class="line"></div><div class="line">c.getinfo(pycurl.SIZE_DOWNLOAD)     <span class="comment">#下载数据包大小 </span></div><div class="line"></div><div class="line">c.getinfo(pycurl.SPEED_DOWNLOAD)    <span class="comment">#平均下载速度</span></div><div class="line"></div><div class="line">c.getinfo(pycurl.SPEED_UPLOAD)      <span class="comment">#平均上传速度</span></div><div class="line"></div><div class="line">c.getinfo(pycurl.HEADER_SIZE)       <span class="comment">#HTTP头部大小</span></div></pre></td></tr></table></figure>
+<h4 id="代码示例"><a href="#代码示例" class="headerlink" title="代码示例"></a>代码示例</h4><figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">import pycurl</div><div class="line">import io</div><div class="line"></div><div class="line">url=<span class="string">'www.baidu.com'</span></div><div class="line">c=pycurl.Curl()</div><div class="line">c.setopt(c<span class="selector-class">.URL</span>, url)</div><div class="line"></div><div class="line"><span class="selector-tag">b</span> = io.StringIO()</div><div class="line"></div><div class="line">c.setopt(c<span class="selector-class">.WRITEFUNCTION</span>, <span class="selector-tag">b</span>.write)</div><div class="line"></div><div class="line"><span class="selector-id">#c</span>.setopt(c<span class="selector-class">.FOLLOWLOCATION</span>, <span class="number">1</span>)</div><div class="line"><span class="selector-id">#c</span>.setopt(c<span class="selector-class">.HEADER</span>, True) </div><div class="line"></div><div class="line">c.perform()   </div><div class="line"><span class="function"><span class="title">print</span><span class="params">(b.getvalue()</span></span>)   </div><div class="line"></div><div class="line"><span class="selector-tag">b</span>.close()</div><div class="line">c.close()</div></pre></td></tr></table></figure>
+<h4 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> pycurl</div><div class="line"><span class="keyword">import</span> io</div><div class="line"><span class="keyword">import</span> wechat_sms</div><div class="line"><span class="keyword">import</span> time</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">check_status</span><span class="params">(url)</span>:</span></div><div class="line">    <span class="string">'''</span></div><div class="line">    检查网站状态</div><div class="line">    :param url:</div><div class="line">    :return: 异常信息,正常则不返回</div><div class="line">    '''</div><div class="line">    c = pycurl.Curl()</div><div class="line">    <span class="comment">#pycurl 实例</span></div><div class="line">    c.setopt(pycurl.URL, url)</div><div class="line">    c.setopt(pycurl.TIMEOUT,<span class="number">10</span>)</div><div class="line">    <span class="comment">#超时时间</span></div><div class="line">    b = io.BytesIO()</div><div class="line">    c.setopt(pycurl.WRITEFUNCTION, b.write)</div><div class="line">    c.perform()</div><div class="line">    code = c.getinfo(pycurl.HTTP_CODE)</div><div class="line">    <span class="comment">#状态码</span></div><div class="line">    total_time = <span class="string">'%.2f'</span>%c.getinfo(pycurl.TOTAL_TIME)</div><div class="line">    <span class="comment">#总时间</span></div><div class="line">    dns = <span class="string">'%.2f'</span>%c.getinfo(pycurl.NAMELOOKUP_TIME)</div><div class="line">    <span class="comment">#DNS解析消耗</span></div><div class="line">    connet_time = <span class="string">'%.2f'</span>%c.getinfo(pycurl.CONNECT_TIME)</div><div class="line">    <span class="comment">#建立连接时间</span></div><div class="line">    PRETRANSFER_TIME = <span class="string">'%.2f'</span>%c.getinfo(pycurl.PRETRANSFER_TIME)</div><div class="line">    <span class="comment">#建立连接到准备传输数据时间</span></div><div class="line">    STARTTRANSFER_TIME = <span class="string">'%.2f'</span>%c.getinfo(pycurl.STARTTRANSFER_TIME)</div><div class="line">    <span class="comment">#建立连接到传输开始消耗的时间</span></div><div class="line">    download = c.getinfo(pycurl.SPEED_DOWNLOAD)</div><div class="line">    <span class="comment">#平均下载速度</span></div><div class="line"></div><div class="line">    info = (<span class="string">'HTTP   Code: %s\nTotal time: %s ms\nDNS lookup time: %s ms\nCONNECT_TIME:  %s ms\nPRETRANSFER_TIME: %s ms\nSTARTTRANSFER_TIME: %s ms\nDownload Speed: %s byte/s'</span> % (code, total_time, dns,connet_time,PRETRANSFER_TIME,STARTTRANSFER_TIME,download))</div><div class="line">    print(code)</div><div class="line">    <span class="keyword">if</span> code &gt; <span class="number">400</span> <span class="keyword">and</span> connet_time &gt; <span class="number">10</span>:</div><div class="line">        <span class="comment">#如果状态码大于400,或者消耗时间大于10秒,说明网站有问题,发送错误信息;否则不返回</span></div><div class="line">        <span class="keyword">return</span> info</div><div class="line">    <span class="keyword">else</span>:</div><div class="line">        <span class="keyword">return</span> <span class="keyword">True</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">send_sms</span><span class="params">(url)</span>:</span></div><div class="line">    <span class="string">'''</span></div><div class="line">    发送信息</div><div class="line">    :param url:</div><div class="line">    :return:</div><div class="line">    '''</div><div class="line">    msm = check_status(url)</div><div class="line">    project = <span class="string">'网站状态'</span></div><div class="line">    <span class="comment">#如果网站状态返回为True,则跳出,否则返回具体信息</span></div><div class="line">    <span class="keyword">while</span> msm <span class="keyword">is</span> <span class="keyword">True</span>:</div><div class="line">        print(msm)</div><div class="line">        <span class="keyword">break</span></div><div class="line">    <span class="keyword">else</span>:</div><div class="line">        print(msm)</div><div class="line">        WeChat.sendMessage(<span class="string">'medivh'</span>, project, msm)</div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</div><div class="line">    WeChat = wechat_sms.WeChat(<span class="string">'https://qyapi.weixin.qq.com/cgi-bin'</span>)</div><div class="line">    <span class="comment">#自定义网站列表,循环执行对网站的检测</span></div><div class="line">    url_list = [<span class="string">'http://wechat.xxx.com'</span>,<span class="string">'http://www.xxx.com'</span>,<span class="string">'http://xxx.com'</span>]</div><div class="line">    <span class="keyword">while</span> <span class="keyword">True</span>:</div><div class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> url_list:</div><div class="line">            msm = send_sms(i)</div><div class="line">        <span class="comment"># 30秒检查一次</span></div><div class="line">        time.sleep(<span class="number">30</span>)</div></pre></td></tr></table></figure>
+          
         
       
     </div>
@@ -395,7 +298,7 @@ Libcurl 是一个支持FTP，FTPS，HTTP，HTTPS，GO
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Medivh">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="http://7xp3xc.com1.z0.glb.clouddn.com/2016/1493282832303.png">
+      <meta itemprop="image" content="/avatar.gif">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -422,16 +325,6 @@ Libcurl 是一个支持FTP，FTPS，HTTP，HTTPS，GO
 
         <div class="post-meta">
           <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-25T16:45:47+08:00">
-                2017-04-25
-              </time>
             
 
             
@@ -468,7 +361,7 @@ Libcurl 是一个支持FTP，FTPS，HTTP，HTTPS，GO
           <p>很久以前就像弄个天气预报之类的小东西啦，现在就来玩一下。参考网上的一个例子，抓取墨迹天气的内容，将天气情况转换成mp3文件，使用播放器播放，另外再发送到微信企业号上。<br>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017/04/25/树莓派天气预报-语音播报/#more" rel="contents">
+            <a class="btn" href="/2017/04/25/树莓派天气预报-语音播报/" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -519,7 +412,7 @@ Libcurl 是一个支持FTP，FTPS，HTTP，HTTPS，GO
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Medivh">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="http://7xp3xc.com1.z0.glb.clouddn.com/2016/1493282832303.png">
+      <meta itemprop="image" content="/avatar.gif">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -546,16 +439,6 @@ Libcurl 是一个支持FTP，FTPS，HTTP，HTTPS，GO
 
         <div class="post-meta">
           <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-25T15:49:02+08:00">
-                2017-04-25
-              </time>
             
 
             
@@ -592,7 +475,7 @@ Libcurl 是一个支持FTP，FTPS，HTTP，HTTPS，GO
           <p>刚写了一个天气预报的脚本，想部署在服务器上，但是运行的时候报错，说找不到requests库，奇怪的是装上了也报错。后来发现树莓派自带的是3.2，版本有点老可能会有点不兼容吧。<br>那就装个Python3.5吧！<br>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017/04/25/树莓派编译安装Python3-5/#more" rel="contents">
+            <a class="btn" href="/2017/04/25/树莓派编译安装Python3-5/" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -643,7 +526,7 @@ Libcurl 是一个支持FTP，FTPS，HTTP，HTTPS，GO
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Medivh">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="http://7xp3xc.com1.z0.glb.clouddn.com/2016/1493282832303.png">
+      <meta itemprop="image" content="/avatar.gif">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -670,16 +553,6 @@ Libcurl 是一个支持FTP，FTPS，HTTP，HTTPS，GO
 
         <div class="post-meta">
           <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-24T15:55:08+08:00">
-                2017-04-24
-              </time>
             
 
             
@@ -716,7 +589,7 @@ Libcurl 是一个支持FTP，FTPS，HTTP，HTTPS，GO
           <p>有一天收到邮件说万网邮箱到期啦，续不续费呢，这是个问题。最终老板决定不续费，毕竟是一笔不小的开支。但还想留着，就搬到腾讯邮箱吧。<br>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017/04/24/从万网邮箱搬家到腾讯/#more" rel="contents">
+            <a class="btn" href="/2017/04/24/从万网邮箱搬家到腾讯/" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -767,7 +640,7 @@ Libcurl 是一个支持FTP，FTPS，HTTP，HTTPS，GO
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Medivh">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="http://7xp3xc.com1.z0.glb.clouddn.com/2016/1493282832303.png">
+      <meta itemprop="image" content="/avatar.gif">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -794,16 +667,6 @@ Libcurl 是一个支持FTP，FTPS，HTTP，HTTPS，GO
 
         <div class="post-meta">
           <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-21T15:30:37+08:00">
-                2017-04-21
-              </time>
             
 
             
@@ -840,7 +703,7 @@ Libcurl 是一个支持FTP，FTPS，HTTP，HTTPS，GO
           <p>有一天把hexo配置好了，但是每次更新后还有手动部署太麻烦。正好有个pm2的工具，完全可以代替我们做这些事。<br>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017/04/21/全自动部署Hexo-到github/#more" rel="contents">
+            <a class="btn" href="/2017/04/21/全自动部署Hexo-到github/" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -891,7 +754,7 @@ Libcurl 是一个支持FTP，FTPS，HTTP，HTTPS，GO
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Medivh">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="http://7xp3xc.com1.z0.glb.clouddn.com/2016/1493282832303.png">
+      <meta itemprop="image" content="/avatar.gif">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -918,16 +781,6 @@ Libcurl 是一个支持FTP，FTPS，HTTP，HTTPS，GO
 
         <div class="post-meta">
           <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-21T11:33:08+08:00">
-                2017-04-21
-              </time>
             
 
             
@@ -965,7 +818,7 @@ Libcurl 是一个支持FTP，FTPS，HTTP，HTTPS，GO
 <h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017/04/21/hello-world/#more" rel="contents">
+            <a class="btn" href="/2017/04/21/hello-world/" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1016,7 +869,7 @@ Libcurl 是一个支持FTP，FTPS，HTTP，HTTPS，GO
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Medivh">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="http://7xp3xc.com1.z0.glb.clouddn.com/2016/1493282832303.png">
+      <meta itemprop="image" content="/avatar.gif">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -1043,16 +896,6 @@ Libcurl 是一个支持FTP，FTPS，HTTP，HTTPS，GO
 
         <div class="post-meta">
           <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-21T10:33:30+08:00">
-                2017-04-21
-              </time>
             
 
             
@@ -1089,7 +932,7 @@ Libcurl 是一个支持FTP，FTPS，HTTP，HTTPS，GO
           <h2 id="初识Hexo"><a href="#初识Hexo" class="headerlink" title="初识Hexo"></a>初识Hexo</h2><p>Hexo是一个快速的、简单的、功能强大的博客框架。你可以通过Markdown语言写文章，然后hexo帮你生成一个带有漂亮主题的静态页面。<br>最近入手了一个树莓派，所以有事没事就想着折腾它，后来无意中看到了hexo的博客，真漂亮！就试着在派上部署一下环境试试。<br>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017/04/21/Hexo-轻博客搭建/#more" rel="contents">
+            <a class="btn" href="/2017/04/21/Hexo-轻博客搭建/" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1159,7 +1002,7 @@ Libcurl 是一个支持FTP，FTPS，HTTP，HTTPS，GO
       <section class="site-overview sidebar-panel sidebar-panel-active">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
-               src="http://7xp3xc.com1.z0.glb.clouddn.com/2016/1493282832303.png"
+               src="/avatar.gif"
                alt="Medivh" />
           <p class="site-author-name" itemprop="name">Medivh</p>
            
@@ -1170,7 +1013,7 @@ Libcurl 是一个支持FTP，FTPS，HTTP，HTTPS，GO
 
           
             <div class="site-state-item site-state-posts">
-              <a href="/archives">
+              <a href="/">
                 <span class="site-state-item-count">7</span>
                 <span class="site-state-item-name">日志</span>
               </a>
@@ -1228,22 +1071,11 @@ Libcurl 是一个支持FTP，FTPS，HTTP，HTTPS，GO
   &copy; 
   <span itemprop="copyrightYear">2017</span>
   <span class="with-love">
-    <i class="fa fa-heart"></i>
+    <i class="fa fa-"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">Medivh</span>
 </div>
 
-
-<div class="powered-by">
-  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
-</div>
-
-<div class="theme-info">
-  主题 -
-  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
-    NexT.Pisces
-  </a>
-</div>
 
 
         
@@ -1277,8 +1109,6 @@ Libcurl 是一个支持FTP，FTPS，HTTP，HTTPS，GO
 
 
 
-  
-
 
 
 
@@ -1291,30 +1121,27 @@ Libcurl 是一个支持FTP，FTPS，HTTP，HTTPS，GO
 
 
   
-  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  <script type="text/javascript" src="//jquery/index.js?v=2.1.3"></script>
 
   
-  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  <script type="text/javascript" src="//fastclick/lib/fastclick.min.js?v=1.0.6"></script>
 
   
-  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  <script type="text/javascript" src="//jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
 
   
-  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script type="text/javascript" src="//velocity/velocity.min.js?v=1.2.1"></script>
 
   
-  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-
-  
-  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  <script type="text/javascript" src="//velocity/velocity.ui.min.js?v=1.2.1"></script>
 
 
   
 
 
-  <script type="text/javascript" src="/js/src/utils.js?v="></script>
+  <script type="text/javascript" src="//src/utils.js?v="></script>
 
-  <script type="text/javascript" src="/js/src/motion.js?v="></script>
+  <script type="text/javascript" src="//src/motion.js?v="></script>
 
 
 
@@ -1322,9 +1149,9 @@ Libcurl 是一个支持FTP，FTPS，HTTP，HTTPS，GO
   
 
 
-  <script type="text/javascript" src="/js/src/affix.js?v="></script>
+  <script type="text/javascript" src="//src/affix.js?v="></script>
 
-  <script type="text/javascript" src="/js/src/schemes/pisces.js?v="></script>
+  <script type="text/javascript" src="//src/schemes/pisces.js?v="></script>
 
 
 
@@ -1333,7 +1160,7 @@ Libcurl 是一个支持FTP，FTPS，HTTP，HTTPS，GO
   
 
 
-  <script type="text/javascript" src="/js/src/bootstrap.js?v="></script>
+  <script type="text/javascript" src="//src/bootstrap.js?v="></script>
 
 
 
