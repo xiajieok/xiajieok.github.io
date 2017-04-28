@@ -97,7 +97,7 @@
 <meta property="og:description" content="NexT主题支持集成 Swiftype、 微搜索、Local Search 和 Algolia,Swiftype和Algolia都只有一段时间的试用期，可以采用Hexo提供的Local Search,原理是通过hexo-generator-search插件在本地生成一个search.xml文件，搜索的时候从这个文件中根据关键字检索出相应的链接。 配置搜索安装 hexo-generator-sear">
 <meta property="og:image" content="http://7xp3xc.com1.z0.glb.clouddn.com/2016/1493345650335.png">
 <meta property="og:image" content="http://7xp3xc.com1.z0.glb.clouddn.com/2016/1493347316086.png">
-<meta property="og:updated_time" content="2017-04-28T02:43:03.000Z">
+<meta property="og:updated_time" content="2017-04-28T03:01:36.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Hexo Next 主题配置">
 <meta name="twitter:description" content="NexT主题支持集成 Swiftype、 微搜索、Local Search 和 Algolia,Swiftype和Algolia都只有一段时间的试用期，可以采用Hexo提供的Local Search,原理是通过hexo-generator-search插件在本地生成一个search.xml文件，搜索的时候从这个文件中根据关键字检索出相应的链接。 配置搜索安装 hexo-generator-sear">
@@ -376,7 +376,7 @@
 <p>编辑 站点配置文件，新增以下内容到任意位置：<br><figure class="highlight dts"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="symbol">search:</span></div><div class="line"><span class="symbol">  path:</span> search.xml</div><div class="line"><span class="symbol">  field:</span> post</div><div class="line"><span class="symbol">  format:</span> html</div><div class="line"><span class="symbol">  limit:</span> <span class="number">10000</span></div></pre></td></tr></table></figure></p>
 <p>验证搜索<br><img src="http://7xp3xc.com1.z0.glb.clouddn.com/2016/1493345650335.png" width="873"></p>
 <h4 id="修改背景色"><a href="#修改背景色" class="headerlink" title="修改背景色"></a>修改背景色</h4><figure class="highlight dts"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">vim themes<span class="meta-keyword">/next/</span>source<span class="meta-keyword">/css/</span>_custom/custom.styl</div><div class="line"><span class="comment">//Custom styles.</span></div><div class="line"><span class="class">body </span>&#123;</div><div class="line"><span class="symbol">	background:</span>rgb(<span class="number">250</span>, <span class="number">235</span>, <span class="number">215</span>);</div><div class="line">  <span class="meta">#可以设置背景色或者背景图片</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h4 id="开启动画效果"><a href="#开启动画效果" class="headerlink" title="开启动画效果"></a>开启动画效果</h4><p>修改_config.yml,true为开启，false为关闭。<br><img src="http://7xp3xc.com1.z0.glb.clouddn.com/2016/1493347316086.png" width="873"></p>
+<h4 id="开启动画效果"><a href="#开启动画效果" class="headerlink" title="开启动画效果"></a>开启动画效果</h4><p>修改_config.yml,true为开启，false为关闭。<br><img src="http://7xp3xc.com1.z0.glb.clouddn.com/2016/1493347316086.png" width="873"><br>但是有个问题，three_waves这个动画效果开启后，风扇就开始狂转，建议选择其它效果。</p>
 
       
     </div>
