@@ -5,7 +5,7 @@
     <entry>
       <title><![CDATA[Hexo添加站内搜索]]></title>
       <url>%2F2017%2F04%2F28%2FHexo%E6%B7%BB%E5%8A%A0%E7%AB%99%E5%86%85%E6%90%9C%E7%B4%A2%2F</url>
-      <content type="text"></content>
+      <content type="text"><![CDATA[安装步骤安装 hexo-generator-search 在站点的根目录下执行以下命令：1$ npm install hexo-generator-search --save 安装 hexo-generator-searchdb 在站点的根目录下执行以下命令：1$ npm install hexo-generator-searchdb --save 启用搜索 编辑 站点配置文件，新增以下内容到任意位置：12345search: path: search.xml field: post format: html limit: 10000]]></content>
     </entry>
 
     
