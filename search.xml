@@ -3,6 +3,13 @@
   
     
     <entry>
+      <title><![CDATA[sitemap.xml]]></title>
+      <url>%2F2017%2F05%2F02%2Fsitemap-xml%2F</url>
+      <content type="text"></content>
+    </entry>
+
+    
+    <entry>
       <title><![CDATA[sitemap]]></title>
       <url>%2F2017%2F05%2F02%2Fsitemap%2F</url>
       <content type="text"></content>
