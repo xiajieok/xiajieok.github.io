@@ -2,10 +2,8 @@
 
 
 
-  
 
-
-<html class="theme-next muse use-motion" lang="zh-Hans">
+<html class="theme-next pisces" lang="zh-Hans">
 <head>
   <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -68,7 +66,7 @@
 
 <link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
 
-<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+<link href="/css/main.css?v=" rel="stylesheet" type="text/css" />
 
 
   <meta name="keywords" content="Hexo, NexT" />
@@ -80,7 +78,7 @@
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=" />
 
 
 
@@ -103,10 +101,10 @@
   var NexT = window.NexT || {};
   var CONFIG = {
     root: '/',
-    scheme: 'Muse',
+    scheme: 'Pisces',
     sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
     fancybox: true,
-    motion: true,
+    motion: false,
     duoshuo: {
       userId: '0',
       author: '博主'
@@ -139,6 +137,16 @@
 
 
 
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?38c49f797f857fe23de49ccf545ad783";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
 
 
 
@@ -202,6 +210,16 @@
         </li>
       
         
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
         <li class="menu-item menu-item-archives">
           <a href="/archives" rel="section">
             
@@ -221,11 +239,55 @@
           </a>
         </li>
       
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+            
+            站点地图
+          </a>
+        </li>
+      
 
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
       
     </ul>
   
 
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocapitalize="off" autocomplete="off" autocorrect="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
   
 </nav>
 
@@ -255,7 +317,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Medivh">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="image" content="http://7xp3xc.com1.z0.glb.clouddn.com/2016/1493282832303.png">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -307,6 +369,17 @@
 
           
           
+             <span id="/2017/04/28/Hexo添加站内搜索/" class="leancloud_visitors" data-flag-title="Hexo Next 主题配置">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
 
           
 
@@ -327,27 +400,17 @@
       
         
           
-            <h3 id="自定义域名"><a href="#自定义域名" class="headerlink" title="自定义域名"></a>自定义域名</h3><h4 id="购买域名"><a href="#购买域名" class="headerlink" title="购买域名"></a>购买域名</h4><p>阿里云省事，但是要记得不是所有域名都可以备案的，尤其是那些便宜的！！！</p>
-<h4 id="域名解析"><a href="#域名解析" class="headerlink" title="域名解析"></a>域名解析</h4><p>有了域名后，xxx.github.io 增加cname<br><img src="http://7xp3xc.com1.z0.glb.clouddn.com/2016/1493360584432.png" width="873"><br>说明：192.30.252.154和192.30.252.153是github服务器对应的ip地址，这步一定要设置，否则访问不了</p>
-<h4 id="添加CNAME"><a href="#添加CNAME" class="headerlink" title="添加CNAME"></a>添加CNAME</h4><p>然后回到博客项目根目录，在source/下新建一个名为CNAME的文件，里面的内容写入xxxx.com即可。</p>
-<h3 id="配置搜索"><a href="#配置搜索" class="headerlink" title="配置搜索"></a>配置搜索</h3><p>NexT主题支持集成 Swiftype、 微搜索、Local Search 和 Algolia,Swiftype和Algolia都只有一段时间的试用期，可以采用Hexo提供的Local Search,原理是通过hexo-generator-search插件在本地生成一个search.xml文件，搜索的时候从这个文件中根据关键字检索出相应的链接。</p>
-<h4 id="安装-hexo-generator-search"><a href="#安装-hexo-generator-search" class="headerlink" title="安装 hexo-generator-search"></a>安装 hexo-generator-search</h4><p>在站点的根目录下执行以下命令：<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span><span class="bash">安装 hexo-generator-searchdb</span></div><div class="line"><span class="meta">$</span><span class="bash"> npm install hexo-generator-search --save</span></div><div class="line"><span class="meta"></span></div><div class="line">$<span class="bash"> npm install hexo-generator-searchdb --save</span></div></pre></td></tr></table></figure></p>
-<h4 id="启用搜索"><a href="#启用搜索" class="headerlink" title="启用搜索"></a>启用搜索</h4><h4 id="编辑-站点配置文件，新增以下内容到任意位置："><a href="#编辑-站点配置文件，新增以下内容到任意位置：" class="headerlink" title="编辑 站点配置文件，新增以下内容到任意位置："></a>编辑 站点配置文件，新增以下内容到任意位置：</h4><figure class="highlight dts"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="symbol">search:</span></div><div class="line"><span class="symbol">  path:</span> search.xml</div><div class="line"><span class="symbol">  field:</span> post</div><div class="line"><span class="symbol">  format:</span> html</div><div class="line"><span class="symbol">  limit:</span> <span class="number">10000</span></div></pre></td></tr></table></figure>
-<h4 id="验证搜索"><a href="#验证搜索" class="headerlink" title="验证搜索"></a>验证搜索</h4><p><img src="http://7xp3xc.com1.z0.glb.clouddn.com/2016/1493345650335.png" width="873"></p>
-<h3 id="修改背景色"><a href="#修改背景色" class="headerlink" title="修改背景色"></a>修改背景色</h3><figure class="highlight dts"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">vim themes<span class="meta-keyword">/next/</span>source<span class="meta-keyword">/css/</span>_custom/custom.styl</div><div class="line"><span class="comment">//Custom styles.</span></div><div class="line"><span class="class">body </span>&#123;</div><div class="line"><span class="symbol">	background:</span>rgb(<span class="number">250</span>, <span class="number">235</span>, <span class="number">215</span>);</div><div class="line">  <span class="meta">#可以设置背景色或者背景图片</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h3 id="开启动画效果"><a href="#开启动画效果" class="headerlink" title="开启动画效果"></a>开启动画效果</h3><p>修改_config.yml,true为开启，false为关闭。<br><img src="http://7xp3xc.com1.z0.glb.clouddn.com/2016/1493347316086.png" width="873"><br>但是有个问题，three_waves这个动画效果开启后，风扇就开始狂转，建议选择其它效果。</p>
-<h3 id="开启访问量统计"><a href="#开启访问量统计" class="headerlink" title="开启访问量统计"></a>开启访问量统计</h3><h4 id="申请帐号"><a href="#申请帐号" class="headerlink" title="申请帐号"></a>申请帐号</h4><p><a href="https://leancloud.cn" target="_blank" rel="external">注册帐号</a></p>
-<h4 id="创建应用"><a href="#创建应用" class="headerlink" title="创建应用"></a>创建应用</h4><p><img src="http://7xp3xc.com1.z0.glb.clouddn.com/2016/1493358213242.png" width="873"></p>
-<h4 id="创建class"><a href="#创建class" class="headerlink" title="创建class"></a>创建class</h4><p><img src="http://7xp3xc.com1.z0.glb.clouddn.com/2016/1493358279110.png" width="873"></p>
-<h4 id="获取key"><a href="#获取key" class="headerlink" title="获取key"></a>获取key</h4><p><img src="http://7xp3xc.com1.z0.glb.clouddn.com/2016/1493358329637.png" width="873"></p>
-<h4 id="修改配置文件-confi-yml"><a href="#修改配置文件-confi-yml" class="headerlink" title="修改配置文件_confi.yml"></a>修改配置文件_confi.yml</h4><figure class="highlight yaml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="attr">leancloud_visitors:</span></div><div class="line"><span class="attr">  enable:</span> <span class="literal">true</span></div><div class="line"><span class="attr">  app_id:</span> <span class="string">B1L35FebIXXX3MloNCxrCS-gzGzoHsz</span></div><div class="line"><span class="attr">  app_key:</span> <span class="string">iQH7DjsXXXMB58gpevWMC</span></div></pre></td></tr></table></figure>
-<p>重新加载后就出来了，但是只能在外网访问的时候才会增加。<br><img src="http://7xp3xc.com1.z0.glb.clouddn.com/2016/1493358386367.png" width="873"></p>
-<p>按照Next官方手册给的LeanCloud教程<br>弄完以后，次数格式出现了xx:xx:xx的形式，当时的内心是崩溃的。Why?经多方的研究和询问以后发现是因为Next主题已经集成了LeanCloud，而我们只需要配置主题_config.yml即可，但是，坑爹的又出现了，把教程里面的配置过的东西删除后，次数就完全不显示了，再次经过多方的研究，解决了这个问题，所以在此记录。</p>
-<h3 id="增加评论功能"><a href="#增加评论功能" class="headerlink" title="增加评论功能"></a>增加评论功能</h3><h4 id="获取key-1"><a href="#获取key-1" class="headerlink" title="获取key"></a>获取key</h4><p>登录<a href="https://manage.gentie.163.com" target="_blank" rel="external">网易云跟帖</a> 获取你的 Product Key。<br><img src="http://7xp3xc.com1.z0.glb.clouddn.com/2016/1493360341707.png" width="873"></p>
-<h4 id="编辑主题配置文件"><a href="#编辑主题配置文件" class="headerlink" title="编辑主题配置文件"></a>编辑主题配置文件</h4><p>编辑 gentie_productKey 字段，设置如下：<br><figure class="highlight yaml"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="attr">gentie_productKey:</span> <span class="comment">#your-gentie-product-key</span></div></pre></td></tr></table></figure></p>
-<p>请注意，您在云跟帖管理后台设置的域名必须跟您站点的域名一致。</p>
-
-          
+          自定义域名购买域名阿里云省事，但是要记得不是所有域名都可以备案的，尤其是那些便宜的！！！
+域名解析有了域名后，xxx.github.io 增加cname说明：192.30.252.154和192.30.252.153是github服务器对应的ip地址，这步一定要设置，否则访问不了
+添加CNAME然后
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/04/28/Hexo添加站内搜索/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -394,7 +457,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Medivh">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="image" content="http://7xp3xc.com1.z0.glb.clouddn.com/2016/1493282832303.png">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -446,6 +509,17 @@
 
           
           
+             <span id="/2017/04/26/树莓派编译安装pycurl/" class="leancloud_visitors" data-flag-title="Python+pycurl监控网站">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
 
           
 
@@ -466,15 +540,16 @@
       
         
           
-            <h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>打算写个监控网站状态的小脚本，用到pycurl，但是提示找不到curl-config，那就手动安装吧。<br>Pycurl包是一个libcurl的Python接口，它是由C语言编写的。与urllib相比，pycurl的速度要快很多。</p>
-<p>Libcurl 是一个支持FTP，FTPS，HTTP，HTTPS，GOPHER，TELNET，DICT，FILE 和 LDAP的客户端URL传输库。libcurl也支持HTTPS认证，HTTP、POST、HTTP PUT、FTP上传，代理，Cookies，基本身份验证，FTP文件断点继传，HTTP代理通道等等。</p>
-<p><img src="http://7xp3xc.com1.z0.glb.clouddn.com/2016/1493281738429.png" width="873"></p>
-<h4 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h4><figure class="highlight vim"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">cd</span> src</div><div class="line">sudo wget http://curl.haxx.<span class="keyword">se</span>/download/curl-<span class="number">7.24</span>.<span class="number">0</span>.tar.gz</div><div class="line">tar -zxvf curl-<span class="number">7.24</span>.<span class="number">0</span>.tar.gz</div><div class="line"><span class="keyword">cd</span> curl-<span class="number">7.24</span>.<span class="number">0</span></div><div class="line">./configure</div><div class="line"><span class="keyword">make</span> </div><div class="line"><span class="keyword">make</span> install</div></pre></td></tr></table></figure>
-<p>检查curl-config是否存在，如果存在则继续安装，pip3 或者下载安装<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">cd ..</div><div class="line">sudo wget http:<span class="comment">//pycurl.sourceforge.net/download/pycurl-7.19.0.tar.gz</span></div><div class="line">tar -zxvf pycurl-<span class="number">7.19</span>.<span class="number">0</span><span class="selector-class">.tar</span><span class="selector-class">.gz</span></div><div class="line">cd pycurl-<span class="number">7.19</span>.<span class="number">0</span></div><div class="line">python3 setup<span class="selector-class">.py</span> install --curl-config=/usr/local/bin/curl-config</div></pre></td></tr></table></figure></p>
-<h4 id="基本用法"><a href="#基本用法" class="headerlink" title="基本用法"></a>基本用法</h4><figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div></pre></td><td class="code"><pre><div class="line">c = pycurl.Curl()    <span class="comment">#创建一个curl对象 </span></div><div class="line"></div><div class="line">c.setopt(pycurl.CONNECTTIMEOUT, <span class="number">5</span>)    <span class="comment">#连接的等待时间，设置为0则不等待  </span></div><div class="line"></div><div class="line">c.setopt(pycurl.TIMEOUT, <span class="number">5</span>)           <span class="comment">#请求超时时间  </span></div><div class="line"></div><div class="line">c.setopt(pycurl.NOPROGRESS, <span class="number">0</span>)        <span class="comment">#是否屏蔽下载进度条，非0则屏蔽  </span></div><div class="line"></div><div class="line">c.setopt(pycurl.MAXREDIRS, <span class="number">5</span>)         <span class="comment">#指定HTTP重定向的最大数  </span></div><div class="line"></div><div class="line">c.setopt(pycurl.FORBID_REUSE, <span class="number">1</span>)      <span class="comment">#完成交互后强制断开连接，不重用  </span></div><div class="line"></div><div class="line">c.setopt(pycurl.FRESH_CONNECT,<span class="number">1</span>)      <span class="comment">#强制获取新的连接，即替代缓存中的连接  </span></div><div class="line"></div><div class="line">c.setopt(pycurl.DNS_CACHE_TIMEOUT,<span class="number">60</span>) <span class="comment">#设置保存DNS信息的时间，默认为120秒  </span></div><div class="line"></div><div class="line">c.setopt(pycurl.<span class="built_in">URL</span>,<span class="string">"http://www.baidu.com"</span>)      <span class="comment">#指定请求的URL  </span></div><div class="line"></div><div class="line">c.setopt(pycurl.USERAGENT,<span class="string">"Mozilla/5.2 (compatible; MSIE 6.0; Windows NT 5.1; SV1; .NET CLR 1.1.4322; .NET CLR 2.0.50324)"</span>)    <span class="comment">#配置请求HTTP头的User-Agent</span></div><div class="line"></div><div class="line">c.setopt(pycurl.HEADERFUNCTION, getheader)   <span class="comment">#将返回的HTTP HEADER定向到回调函数getheader</span></div><div class="line"></div><div class="line">c.setopt(pycurl.WRITEFUNCTION, getbody)      <span class="comment">#将返回的内容定向到回调函数getbody</span></div><div class="line"></div><div class="line">c.setopt(pycurl.WRITEHEADER, fileobj)        <span class="comment">#将返回的HTTP HEADER定向到fileobj文件对象</span></div><div class="line"></div><div class="line">c.setopt(pycurl.WRITEDATA, fileobj)          <span class="comment">#将返回的HTML内容定向到fileobj文件对象</span></div><div class="line"></div><div class="line">c.getinfo(pycurl.HTTP_CODE)         <span class="comment">#返回的HTTP状态码</span></div><div class="line"></div><div class="line">c.getinfo(pycurl.TOTAL_TIME)        <span class="comment">#传输结束所消耗的总时间</span></div><div class="line"></div><div class="line">c.getinfo(pycurl.NAMELOOKUP_TIME)   <span class="comment">#DNS解析所消耗的时间</span></div><div class="line"></div><div class="line">c.getinfo(pycurl.CONNECT_TIME)      <span class="comment">#建立连接所消耗的时间</span></div><div class="line"></div><div class="line">c.getinfo(pycurl.PRETRANSFER_TIME)  <span class="comment">#从建立连接到准备传输所消耗的时间</span></div><div class="line"></div><div class="line">c.getinfo(pycurl.STARTTRANSFER_TIME)    <span class="comment">#从建立连接到传输开始消耗的时间</span></div><div class="line"></div><div class="line">c.getinfo(pycurl.REDIRECT_TIME)     <span class="comment">#重定向所消耗的时间</span></div><div class="line"></div><div class="line">c.getinfo(pycurl.SIZE_UPLOAD)       <span class="comment">#上传数据包大小</span></div><div class="line"></div><div class="line">c.getinfo(pycurl.SIZE_DOWNLOAD)     <span class="comment">#下载数据包大小 </span></div><div class="line"></div><div class="line">c.getinfo(pycurl.SPEED_DOWNLOAD)    <span class="comment">#平均下载速度</span></div><div class="line"></div><div class="line">c.getinfo(pycurl.SPEED_UPLOAD)      <span class="comment">#平均上传速度</span></div><div class="line"></div><div class="line">c.getinfo(pycurl.HEADER_SIZE)       <span class="comment">#HTTP头部大小</span></div></pre></td></tr></table></figure>
-<h4 id="代码示例"><a href="#代码示例" class="headerlink" title="代码示例"></a>代码示例</h4><figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">import pycurl</div><div class="line">import io</div><div class="line"></div><div class="line">url=<span class="string">'www.baidu.com'</span></div><div class="line">c=pycurl.Curl()</div><div class="line">c.setopt(c<span class="selector-class">.URL</span>, url)</div><div class="line"></div><div class="line"><span class="selector-tag">b</span> = io.StringIO()</div><div class="line"></div><div class="line">c.setopt(c<span class="selector-class">.WRITEFUNCTION</span>, <span class="selector-tag">b</span>.write)</div><div class="line"></div><div class="line"><span class="selector-id">#c</span>.setopt(c<span class="selector-class">.FOLLOWLOCATION</span>, <span class="number">1</span>)</div><div class="line"><span class="selector-id">#c</span>.setopt(c<span class="selector-class">.HEADER</span>, True) </div><div class="line"></div><div class="line">c.perform()   </div><div class="line"><span class="function"><span class="title">print</span><span class="params">(b.getvalue()</span></span>)   </div><div class="line"></div><div class="line"><span class="selector-tag">b</span>.close()</div><div class="line">c.close()</div></pre></td></tr></table></figure>
-<h4 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> pycurl</div><div class="line"><span class="keyword">import</span> io</div><div class="line"><span class="keyword">import</span> wechat_sms</div><div class="line"><span class="keyword">import</span> time</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">check_status</span><span class="params">(url)</span>:</span></div><div class="line">    <span class="string">'''</span></div><div class="line">    检查网站状态</div><div class="line">    :param url:</div><div class="line">    :return: 异常信息,正常则不返回</div><div class="line">    '''</div><div class="line">    c = pycurl.Curl()</div><div class="line">    <span class="comment">#pycurl 实例</span></div><div class="line">    c.setopt(pycurl.URL, url)</div><div class="line">    c.setopt(pycurl.TIMEOUT,<span class="number">10</span>)</div><div class="line">    <span class="comment">#超时时间</span></div><div class="line">    b = io.BytesIO()</div><div class="line">    c.setopt(pycurl.WRITEFUNCTION, b.write)</div><div class="line">    c.perform()</div><div class="line">    code = c.getinfo(pycurl.HTTP_CODE)</div><div class="line">    <span class="comment">#状态码</span></div><div class="line">    total_time = <span class="string">'%.2f'</span>%c.getinfo(pycurl.TOTAL_TIME)</div><div class="line">    <span class="comment">#总时间</span></div><div class="line">    dns = <span class="string">'%.2f'</span>%c.getinfo(pycurl.NAMELOOKUP_TIME)</div><div class="line">    <span class="comment">#DNS解析消耗</span></div><div class="line">    connet_time = <span class="string">'%.2f'</span>%c.getinfo(pycurl.CONNECT_TIME)</div><div class="line">    <span class="comment">#建立连接时间</span></div><div class="line">    PRETRANSFER_TIME = <span class="string">'%.2f'</span>%c.getinfo(pycurl.PRETRANSFER_TIME)</div><div class="line">    <span class="comment">#建立连接到准备传输数据时间</span></div><div class="line">    STARTTRANSFER_TIME = <span class="string">'%.2f'</span>%c.getinfo(pycurl.STARTTRANSFER_TIME)</div><div class="line">    <span class="comment">#建立连接到传输开始消耗的时间</span></div><div class="line">    download = c.getinfo(pycurl.SPEED_DOWNLOAD)</div><div class="line">    <span class="comment">#平均下载速度</span></div><div class="line"></div><div class="line">    info = (<span class="string">'HTTP   Code: %s\nTotal time: %s ms\nDNS lookup time: %s ms\nCONNECT_TIME:  %s ms\nPRETRANSFER_TIME: %s ms\nSTARTTRANSFER_TIME: %s ms\nDownload Speed: %s byte/s'</span> % (code, total_time, dns,connet_time,PRETRANSFER_TIME,STARTTRANSFER_TIME,download))</div><div class="line">    print(code)</div><div class="line">    <span class="keyword">if</span> code &gt; <span class="number">400</span> <span class="keyword">and</span> connet_time &gt; <span class="number">10</span>:</div><div class="line">        <span class="comment">#如果状态码大于400,或者消耗时间大于10秒,说明网站有问题,发送错误信息;否则不返回</span></div><div class="line">        <span class="keyword">return</span> info</div><div class="line">    <span class="keyword">else</span>:</div><div class="line">        <span class="keyword">return</span> <span class="keyword">True</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">send_sms</span><span class="params">(url)</span>:</span></div><div class="line">    <span class="string">'''</span></div><div class="line">    发送信息</div><div class="line">    :param url:</div><div class="line">    :return:</div><div class="line">    '''</div><div class="line">    msm = check_status(url)</div><div class="line">    project = <span class="string">'网站状态'</span></div><div class="line">    <span class="comment">#如果网站状态返回为True,则跳出,否则返回具体信息</span></div><div class="line">    <span class="keyword">while</span> msm <span class="keyword">is</span> <span class="keyword">True</span>:</div><div class="line">        print(msm)</div><div class="line">        <span class="keyword">break</span></div><div class="line">    <span class="keyword">else</span>:</div><div class="line">        print(msm)</div><div class="line">        WeChat.sendMessage(<span class="string">'medivh'</span>, project, msm)</div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</div><div class="line">    WeChat = wechat_sms.WeChat(<span class="string">'https://qyapi.weixin.qq.com/cgi-bin'</span>)</div><div class="line">    <span class="comment">#自定义网站列表,循环执行对网站的检测</span></div><div class="line">    url_list = [<span class="string">'http://wechat.xxx.com'</span>,<span class="string">'http://www.xxx.com'</span>,<span class="string">'http://xxx.com'</span>]</div><div class="line">    <span class="keyword">while</span> <span class="keyword">True</span>:</div><div class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> url_list:</div><div class="line">            msm = send_sms(i)</div><div class="line">        <span class="comment"># 30秒检查一次</span></div><div class="line">        time.sleep(<span class="number">30</span>)</div></pre></td></tr></table></figure>
-          
+          前言打算写个监控网站状态的小脚本，用到pycurl，但是提示找不到curl-config，那就手动安装吧。Pycurl包是一个libcurl的Python接口，它是由C语言编写的。与urllib相比，pycurl的速度要快很多。
+Libcurl 是一个支持FTP，FTPS，HTTP，HTTPS，GO
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/04/26/树莓派编译安装pycurl/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -521,7 +596,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Medivh">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="image" content="http://7xp3xc.com1.z0.glb.clouddn.com/2016/1493282832303.png">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -572,6 +647,17 @@
           
 
           
+          
+             <span id="/2017/04/25/树莓派天气预报-语音播报/" class="leancloud_visitors" data-flag-title="树莓派获取天气预报+语音播报">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
           
 
           
@@ -646,7 +732,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Medivh">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="image" content="http://7xp3xc.com1.z0.glb.clouddn.com/2016/1493282832303.png">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -697,6 +783,17 @@
           
 
           
+          
+             <span id="/2017/04/25/树莓派编译安装Python3-5/" class="leancloud_visitors" data-flag-title="树莓派编译安装Python3.5">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
           
 
           
@@ -771,7 +868,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Medivh">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="image" content="http://7xp3xc.com1.z0.glb.clouddn.com/2016/1493282832303.png">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -822,6 +919,17 @@
           
 
           
+          
+             <span id="/2017/04/24/从万网邮箱搬家到腾讯/" class="leancloud_visitors" data-flag-title="从万网邮箱搬家到腾讯">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
           
 
           
@@ -896,7 +1004,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Medivh">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="image" content="http://7xp3xc.com1.z0.glb.clouddn.com/2016/1493282832303.png">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -947,6 +1055,17 @@
           
 
           
+          
+             <span id="/2017/04/21/全自动部署Hexo-到github/" class="leancloud_visitors" data-flag-title="全自动部署Hexo 到github">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
           
 
           
@@ -1021,7 +1140,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Medivh">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="image" content="http://7xp3xc.com1.z0.glb.clouddn.com/2016/1493282832303.png">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -1072,6 +1191,17 @@
           
 
           
+          
+             <span id="/2017/04/21/hello-world/" class="leancloud_visitors" data-flag-title="Hello World">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
           
 
           
@@ -1147,7 +1277,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Medivh">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="image" content="http://7xp3xc.com1.z0.glb.clouddn.com/2016/1493282832303.png">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -1198,6 +1328,17 @@
           
 
           
+          
+             <span id="/2017/04/21/Hexo-轻博客搭建/" class="leancloud_visitors" data-flag-title="Hexo 轻博客搭建">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
           
 
           
@@ -1291,7 +1432,7 @@
       <section class="site-overview sidebar-panel sidebar-panel-active">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
-               src="/images/avatar.gif"
+               src="http://7xp3xc.com1.z0.glb.clouddn.com/2016/1493282832303.png"
                alt="Medivh" />
           <p class="site-author-name" itemprop="name">Medivh</p>
            
@@ -1373,7 +1514,7 @@
 <div class="theme-info">
   主题 -
   <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
-    NexT.Muse
+    NexT.Pisces
   </a>
 </div>
 
@@ -1438,21 +1579,28 @@
   
 
 
-  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+  <script type="text/javascript" src="/js/src/utils.js?v="></script>
 
-  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+  <script type="text/javascript" src="/js/src/motion.js?v="></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v="></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v="></script>
 
 
 
   
-  
 
   
 
-  
 
-
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+  <script type="text/javascript" src="/js/src/bootstrap.js?v="></script>
 
 
 
@@ -1471,6 +1619,22 @@
 
 
   
+    
+    <script>
+      var cloudTieConfig = {
+        url: document.location.href, 
+        sourceId: "",
+        productKey: "61c3dd7dd8ca450288de77d214b30cd7",
+        target: "cloud-tie-wrapper"
+      };
+    </script>
+    <script src="https://img1.ws.126.net/f2e/tie/yun/sdk/loader.js"></script>
+  
+
+
+
+
+
 
 
 
@@ -1478,26 +1642,261 @@
 
   
 
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.popup').toggle();
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+      $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = $( "entry", xmlResponse ).map(function() {
+            return {
+              title: $( "title", this ).text(),
+              content: $("content",this).text(),
+              url: $( "url" , this).text()
+            };
+          }).get();
+          var $input = document.getElementById(search_id);
+          var $resultContent = document.getElementById(content_id);
+          $input.addEventListener('input', function(){
+            var matchcounts = 0;
+            var str='<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length > 1) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var content_index = [];
+                var data_title = data.title.trim().toLowerCase();
+                var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                var data_url = decodeURIComponent(data.url);
+                var index_title = -1;
+                var index_content = -1;
+                var first_occur = -1;
+                // only match artiles with not empty titles and contents
+                if(data_title != '') {
+                  keywords.forEach(function(keyword, i) {
+                    index_title = data_title.indexOf(keyword);
+                    index_content = data_content.indexOf(keyword);
+                    if( index_title >= 0 || index_content >= 0 ){
+                      isMatch = true;
+                      if (i == 0) {
+                        first_occur = index_content;
+                      }
+                    }
+
+                  });
+                }
+                // show search results
+                if (isMatch) {
+                  matchcounts += 1;
+                  str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                  var content = data.content.trim().replace(/<[^>]+>/g,"");
+                  if (first_occur >= 0) {
+                    // cut out 100 characters
+                    var start = first_occur - 20;
+                    var end = first_occur + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if(start == 0){
+                      end = 50;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    var match_content = content.substring(start, end);
+                    // highlight all keywords
+                    keywords.forEach(function(keyword){
+                      var regS = new RegExp(keyword, "gi");
+                      match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                    });
+
+                    str += "<p class=\"search-result\">" + match_content +"...</p>"
+                  }
+                  str += "</li>";
+                }
+              })};
+            str += "</ul>";
+            if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+            if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+            $resultContent.innerHTML = str;
+          });
+          proceedsearch();
+        }
+      });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
 
 
 
 
   
 
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("B1L35FebIXiGQu3MloNCxrCS-gzGzoHsz", "iQH7DjsnLwlvoMB58gpevWMC");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
 
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
 
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
 
 
 
   
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
 
-
-
-
-
-  
-
-  
 
   
 
