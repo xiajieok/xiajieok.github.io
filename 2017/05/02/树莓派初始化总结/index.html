@@ -95,7 +95,7 @@
 <meta property="og:url" content="http://xiajieok.github.io/2017/05/02/树莓派初始化总结/index.html">
 <meta property="og:site_name" content="Medivh">
 <meta property="og:description" content="树莓派初始化总结修改软件源由于默认的软件源在国外，一般速度会略微有点慢，因此最好选择国内的。起初用过阿里云的，但是很多包装不了，因此推荐阿里云以外的其它源。需要修改/etc/apt/sources.list文件，注释并添加。修改示例：12345#deb http://mirrordirector.raspbian.org/raspbian/ jessie main contrib non-free">
-<meta property="og:updated_time" content="2017-05-02T06:55:49.000Z">
+<meta property="og:updated_time" content="2017-05-02T06:56:54.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="树莓派初始化总结">
 <meta name="twitter:description" content="树莓派初始化总结修改软件源由于默认的软件源在国外，一般速度会略微有点慢，因此最好选择国内的。起初用过阿里云的，但是很多包装不了，因此推荐阿里云以外的其它源。需要修改/etc/apt/sources.list文件，注释并添加。修改示例：12345#deb http://mirrordirector.raspbian.org/raspbian/ jessie main contrib non-free">
@@ -420,7 +420,7 @@
 <h3 id="安装常用服务-1"><a href="#安装常用服务-1" class="headerlink" title="安装常用服务"></a>安装常用服务</h3><p>web:<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sudo apt-get <span class="keyword">install</span> nginx</div><div class="line">sudo apt-<span class="keyword">get</span> <span class="keyword">install</span> apache2</div></pre></td></tr></table></figure></p>
 <p>db:<br><figure class="highlight actionscript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo apt-<span class="keyword">get</span> install mysql</div></pre></td></tr></table></figure></p>
 <p>samba:<br><figure class="highlight actionscript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo apt-<span class="keyword">get</span> install samba</div></pre></td></tr></table></figure></p>
-<p>cd /home/pi/src<br>wget <a href="http://download.oray.com/peanuthull/embed/phddns_rapi_3.0.1.armhf.deb" target="_blank" rel="external">http://download.oray.com/peanuthull/embed/phddns_rapi_3.0.1.armhf.deb</a><br>dpkg -i phddns_rapi_3.0.1.armhf.deb</p>
+<p>安装花生壳<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">cd /home/pi/src</div><div class="line">wget http:<span class="comment">//download.oray.com/peanuthull/embed/phddns_rapi_3.0.1.armhf.deb</span></div><div class="line">dpkg -<span class="selector-tag">i</span> phddns_rapi_3.<span class="number">0.1</span><span class="selector-class">.armhf</span><span class="selector-class">.deb</span></div><div class="line">sudo phddns start</div><div class="line">sudo phddns status</div></pre></td></tr></table></figure></p>
 
       
     </div>
