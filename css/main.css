@@ -544,6 +544,7 @@ pre code {
   background-color: #eff2f3;
 }
 .highlight .code pre {
+  width: 100%;
   padding-left: 10px;
   padding-right: 10px;
   background-color: #f7f7f7;
@@ -957,7 +958,7 @@ pre .javascript .function {
   bottom: 30px;
 }
 .header {
-  background: #fff;
+  background: transparent;
 }
 .header-inner {
   position: relative;
@@ -1127,11 +1128,17 @@ pre .javascript .function {
   .posts-expand {
     margin: 0 20px;
   }
-  .post-body pre,
-  .post-body .highlight {
+  .post-body pre {
     padding: 10px;
   }
-  .post-body pre .gutter pre,
+  .post-body pre .gutter pre {
+    padding-right: 10px;
+  }
+  .post-body .highlight {
+    margin-left: 0px;
+    margin-right: 0px;
+    padding: 0;
+  }
   .post-body .highlight .gutter pre {
     padding-right: 10px;
   }
@@ -1367,6 +1374,9 @@ pre .javascript .function {
 .posts-expand .post-meta .post-description {
   font-size: 14px;
   margin-top: 2px;
+}
+.post-wordcount {
+  display: inline-block;
 }
 .post-meta-divider {
   margin: 0 0.5em;
@@ -1800,7 +1810,7 @@ pre .javascript .function {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #d10ded;
+  background: #95ede4;
 }
 .links-of-blogroll {
   font-size: 13px;
@@ -2205,6 +2215,9 @@ pre .javascript .function {
 .jiathis_style a {
   border: none;
 }
+.fa {
+  font-family: FontAwesome !important;
+}
 .post-spread {
   margin-top: 20px;
   text-align: center;
@@ -2266,7 +2279,6 @@ pre .javascript .function {
 }
 .local-search-popup .search-keyword {
   border-bottom: 1px dashed #f00;
-  font-size: 14px;
   font-weight: bold;
   color: #f00;
 }
@@ -2285,7 +2297,7 @@ pre .javascript .function {
 }
 .local-search-popup .local-search-input-wrapper {
   display: inline-block;
-  width: calc(100% - 60px);
+  width: calc(100% - 90px);
   height: 36px;
   line-height: 36px;
   padding: 0 5px;
@@ -2307,6 +2319,8 @@ pre .javascript .function {
   color: #999;
   height: 36px;
   width: 18px;
+  padding-left: 10px;
+  padding-right: 10px;
 }
 .local-search-popup .search-icon {
   float: left;
@@ -2315,7 +2329,6 @@ pre .javascript .function {
   border-left: 1px solid #eee;
   float: right;
   cursor: pointer;
-  padding-left: 10px;
 }
 .local-search-popup #no-result {
   position: absolute;
@@ -2710,13 +2723,15 @@ pre .javascript .function {
 @media (min-width: 768px) and (max-width: 991px) {
   .footer-inner {
     width: auto;
-    padding-left: 0;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
   }
 }
 @media (max-width: 767px) {
   .footer-inner {
     width: auto;
-    padding-left: 0;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
   }
 }
 .sidebar-position-right .header-inner {
