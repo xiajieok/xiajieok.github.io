@@ -1,0 +1,1444 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=6.6.0" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.6.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="http://img.mknight.cn/2018/1545104669394.png?v=6.6.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="http://img.mknight.cn/2018/1545104669394.png?v=6.6.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.6.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '6.6.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="安装1、yum方式（推荐）推荐使用yum方式安装，因为之前曾经发生过莫名其妙服务自己停止的情况。12yum install openvpn open-ssl -yyum install easy-rsa openssl  -y 2、编译安装12345678910111213yum install pam-devel open-ssl -ycd /usr/srcwget http://www.obe">
+<meta property="og:type" content="article">
+<meta property="og:title" content="OpenVpn 最新版部署">
+<meta property="og:url" content="https://xiajieok.gitee.io/OpenVpn 最新版部署.html">
+<meta property="og:site_name" content="Medivh&#39;s castle">
+<meta property="og:description" content="安装1、yum方式（推荐）推荐使用yum方式安装，因为之前曾经发生过莫名其妙服务自己停止的情况。12yum install openvpn open-ssl -yyum install easy-rsa openssl  -y 2、编译安装12345678910111213yum install pam-devel open-ssl -ycd /usr/srcwget http://www.obe">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://img.mknight.cn/2018/1544336390853.png">
+<meta property="og:image" content="http://img.mknight.cn/2018/1544336486389.png">
+<meta property="og:image" content="http://img.mknight.cn/2018/1544336462517.png">
+<meta property="og:image" content="http://img.mknight.cn/2018/1544337135904.png">
+<meta property="og:image" content="http://img.mknight.cn/2018/1544337254592.png">
+<meta property="og:updated_time" content="2021-02-28T13:38:18.032Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="OpenVpn 最新版部署">
+<meta name="twitter:description" content="安装1、yum方式（推荐）推荐使用yum方式安装，因为之前曾经发生过莫名其妙服务自己停止的情况。12yum install openvpn open-ssl -yyum install easy-rsa openssl  -y 2、编译安装12345678910111213yum install pam-devel open-ssl -ycd /usr/srcwget http://www.obe">
+<meta name="twitter:image" content="http://img.mknight.cn/2018/1544336390853.png">
+
+
+
+
+
+
+  <link rel="canonical" href="https://xiajieok.gitee.io/OpenVpn 最新版部署.html">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>OpenVpn 最新版部署 | Medivh's castle</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion .logo-line-before i { left: initial; }
+    .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Medivh's castle</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiajieok.gitee.io/OpenVpn 最新版部署.html">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="medivh">
+      <meta itemprop="description" content="运维的日常">
+      <meta itemprop="image" content="http://img.mknight.cn/2018/1545104669394.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Medivh's castle">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">OpenVpn 最新版部署
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2021-02-28 21:38:18" itemprop="dateCreated datePublished" datetime="2021-02-28T21:38:18+08:00">2021-02-28</time>
+            
+
+            
+          </span>
+         
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/OpenVpn 最新版部署.html#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/OpenVpn 最新版部署.html" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/OpenVpn 最新版部署.html" class="leancloud_visitors" data-flag-title="OpenVpn 最新版部署">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">Views：</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+            <div class="post-symbolscount">
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">本文字数：</span>
+                
+                <span title="本文字数"></span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长"></span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><h3 id="1、yum方式（推荐）"><a href="#1、yum方式（推荐）" class="headerlink" title="1、yum方式（推荐）"></a>1、yum方式（推荐）</h3><p>推荐使用yum方式安装，因为之前曾经发生过莫名其妙服务自己停止的情况。<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">yum <span class="keyword">install</span> openvpn <span class="keyword">open</span>-ssl -y</span><br><span class="line">yum <span class="keyword">install</span> easy-rsa openssl  -y</span><br></pre></td></tr></table></figure></p>
+<h3 id="2、编译安装"><a href="#2、编译安装" class="headerlink" title="2、编译安装"></a>2、编译安装</h3><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">yum install pam-devel open-ssl -y</span><br><span class="line"></span><br><span class="line">cd <span class="regexp">/usr/</span>src</span><br><span class="line">wget http:<span class="regexp">//</span>www.oberhumer.com<span class="regexp">/opensource/</span>lzo<span class="regexp">/download/</span>lzo-<span class="number">2.06</span>.tar.gz</span><br><span class="line">tar zxvf lzo-<span class="number">2.06</span>.tar.gz</span><br><span class="line">cd lzo-<span class="number">2.06</span></span><br><span class="line">.<span class="regexp">/configure --prefix=/u</span>sr<span class="regexp">/local/</span></span><br><span class="line">make &amp;&amp; make install</span><br><span class="line"></span><br><span class="line">cd <span class="regexp">/usr/</span>src</span><br><span class="line">tar -zxvf openvpn-<span class="number">2.4</span>.<span class="number">6</span>.tar.gz</span><br><span class="line"> cd openvpn-<span class="number">2.4</span>.<span class="number">6</span></span><br><span class="line">.<span class="regexp">/configure --prefix=/u</span>sr<span class="regexp">/local/</span>openvpn --with-lzo-lib=<span class="regexp">/usr/</span>local<span class="regexp">/lzo/</span>lib --with-lzo-headers=<span class="regexp">/usr/</span>local<span class="regexp">/lzo/i</span>nclude<span class="regexp">/</span></span><br></pre></td></tr></table></figure>
+<h2 id="证书配置"><a href="#证书配置" class="headerlink" title="证书配置"></a>证书配置</h2><p>当前配置是按照编译安装的目录，yum安装目录在/etc/openvpn</p>
+<h3 id="创建-PKI-和-CA"><a href="#创建-PKI-和-CA" class="headerlink" title="创建 PKI 和 CA"></a>创建 PKI 和 CA</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">[root@localhost 3.0.3]<span class="comment"># pwd</span></span><br><span class="line">/etc/openvpn/server</span><br><span class="line">[root@localhost 3.0.3]<span class="comment"># cp -r  /usr/share/easy-rsa .</span></span><br><span class="line">[root@localhost 3.0.3]<span class="comment"># rm 3 3.0 </span></span><br><span class="line">[root@localhost 3.0.3]<span class="comment"># cd /etc/openvpn/server/easy-rsa/3.0.3</span></span><br><span class="line">[root@localhost 3.0.3]<span class="comment"># ./easyrsa init-pki  #创建空的pki</span></span><br><span class="line"></span><br><span class="line">Note: using Easy-RSA configuration from: ./vars</span><br><span class="line"></span><br><span class="line">init-pki complete; you may now <span class="keyword">create</span> a CA <span class="keyword">or</span> requests.</span><br><span class="line">Your newly created PKI dir <span class="keyword">is</span>: /etc/openvpn/easy-rsa/<span class="number">3.0</span><span class="number">.3</span>/pki</span><br><span class="line"></span><br><span class="line">[root@localhost <span class="number">3.0</span><span class="number">.3</span>]<span class="comment"># ./easyrsa build-ca nopass #创建新的CA，不使用密码</span></span><br><span class="line"></span><br><span class="line">Note: <span class="keyword">using</span> Easy-RSA configuration <span class="keyword">from</span>: ./vars</span><br><span class="line">Generating a <span class="number">2048</span> <span class="built_in">bit</span> RSA <span class="keyword">private</span> <span class="keyword">key</span></span><br><span class="line">......................+++</span><br><span class="line">................................................+++</span><br><span class="line">writing <span class="keyword">new</span> <span class="keyword">private</span> <span class="keyword">key</span> <span class="keyword">to</span> <span class="string">'/etc/openvpn/easy-rsa/3.0.3/pki/private/ca.key.pClvaQ1GLD'</span></span><br><span class="line"><span class="comment">-----</span></span><br><span class="line">You <span class="keyword">are</span> about <span class="keyword">to</span> be asked <span class="keyword">to</span> enter information that will be incorporated</span><br><span class="line"><span class="keyword">into</span> your certificate request.</span><br><span class="line">What you <span class="keyword">are</span> about <span class="keyword">to</span> enter <span class="keyword">is</span> what <span class="keyword">is</span> called a Distinguished <span class="keyword">Name</span> <span class="keyword">or</span> a DN.</span><br><span class="line">There <span class="keyword">are</span> quite a few <span class="keyword">fields</span> but you can leave <span class="keyword">some</span> blank</span><br><span class="line"><span class="keyword">For</span> <span class="keyword">some</span> <span class="keyword">fields</span> there will be a <span class="keyword">default</span> <span class="keyword">value</span>,</span><br><span class="line"><span class="keyword">If</span> you enter <span class="string">'.'</span>, the <span class="keyword">field</span> will be <span class="keyword">left</span> blank.</span><br><span class="line"><span class="comment">-----</span></span><br><span class="line">Common <span class="keyword">Name</span> (eg: your <span class="keyword">user</span>, host, <span class="keyword">or</span> <span class="keyword">server</span> <span class="keyword">name</span>) [Easy-RSA CA]: 回车</span><br><span class="line"></span><br><span class="line">CA <span class="keyword">creation</span> <span class="keyword">complete</span> <span class="keyword">and</span> you may <span class="keyword">now</span> <span class="keyword">import</span> <span class="keyword">and</span> <span class="keyword">sign</span> cert requests.</span><br><span class="line">Your <span class="keyword">new</span> CA certificate <span class="keyword">file</span> <span class="keyword">for</span> publishing <span class="keyword">is</span> <span class="keyword">at</span>:</span><br><span class="line">/etc/openvpn/easy-rsa/<span class="number">3.0</span><span class="number">.3</span>/pki/ca.crt</span><br></pre></td></tr></table></figure>
+<h4 id="创建服务端证书"><a href="#创建服务端证书" class="headerlink" title="创建服务端证书"></a>创建服务端证书</h4><figure class="highlight clean"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost <span class="number">3.0</span><span class="number">.3</span>]# ./easyrsa gen-req server nopass</span><br><span class="line"></span><br><span class="line">Note: using Easy-RSA configuration <span class="keyword">from</span>: ./vars</span><br><span class="line">Generating a <span class="number">2048</span> bit RSA private key</span><br><span class="line">...........................+++</span><br><span class="line">..............................................................................+++</span><br><span class="line">writing new private key to <span class="string">'/etc/openvpn/easy-rsa/3.0.3/pki/private/server.key.wy7Q0fuG6A'</span></span><br><span class="line">-----</span><br><span class="line">You are about to be asked to enter information that will be incorporated</span><br><span class="line">into your certificate request.</span><br><span class="line">What you are about to enter is what is called a Distinguished Name or a DN.</span><br><span class="line">There are quite a few fields but you can leave some blank</span><br><span class="line">For some fields there will be a default value,</span><br><span class="line">If you enter <span class="string">'.'</span>, the field will be left blank.</span><br><span class="line">-----</span><br><span class="line">Common Name (eg: your user, host, or server name) [server]: 回车</span><br><span class="line"></span><br><span class="line">Keypair and certificate request completed. Your files are:</span><br><span class="line">req: /etc/openvpn/easy-rsa/<span class="number">3.0</span><span class="number">.3</span>/pki/reqs/server.req</span><br><span class="line">key: /etc/openvpn/easy-rsa/<span class="number">3.0</span><span class="number">.3</span>/pki/private/server.key</span><br></pre></td></tr></table></figure>
+<h4 id="签约服务端证书"><a href="#签约服务端证书" class="headerlink" title="签约服务端证书"></a>签约服务端证书</h4><p>注意操作目录是在server目录里的  <code>/etc/openvpn/server/easy-rsa/3.0.3</code><br><figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost <span class="number">3.0</span><span class="number">.3</span>]<span class="comment"># ./easyrsa sign server server</span></span><br><span class="line"></span><br><span class="line">Note: using Easy-RSA configuration <span class="keyword">from</span>: ./vars</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">You are <span class="keyword">about</span> <span class="keyword">to</span> sign <span class="keyword">the</span> following certificate.</span><br><span class="line">Please check <span class="keyword">over</span> <span class="keyword">the</span> details shown <span class="keyword">below</span> <span class="keyword">for</span> accuracy. Note <span class="keyword">that</span> this request</span><br><span class="line">has <span class="keyword">not</span> been cryptographically verified. Please be sure <span class="keyword">it</span> came <span class="keyword">from</span> a trusted</span><br><span class="line">source <span class="keyword">or</span> <span class="keyword">that</span> you have verified <span class="keyword">the</span> request checksum <span class="keyword">with</span> <span class="keyword">the</span> sender.</span><br><span class="line"></span><br><span class="line">Request subject, <span class="keyword">to</span> be signed <span class="keyword">as</span> a server certificate <span class="keyword">for</span> <span class="number">3650</span> days:</span><br><span class="line"></span><br><span class="line">subject=</span><br><span class="line">    commonName                = server</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Type <span class="keyword">the</span> <span class="built_in">word</span> 'yes' <span class="keyword">to</span> <span class="keyword">continue</span>, <span class="keyword">or</span> any other input <span class="keyword">to</span> abort.</span><br><span class="line">  Confirm request details: yes</span><br><span class="line">Using configuration <span class="keyword">from</span> ./openssl<span class="number">-1.0</span>.cnf</span><br><span class="line">Check <span class="keyword">that</span> <span class="keyword">the</span> request matches <span class="keyword">the</span> signature</span><br><span class="line">Signature ok</span><br><span class="line">The Subject's Distinguished Name <span class="keyword">is</span> <span class="keyword">as</span> follows</span><br><span class="line">commonName            :ASN<span class="number">.1</span> <span class="number">12</span>:'server'</span><br><span class="line">Certificate <span class="keyword">is</span> <span class="keyword">to</span> be certified <span class="keyword">until</span> Apr  <span class="number">7</span> <span class="number">14</span>:<span class="number">54</span>:<span class="number">08</span> <span class="number">2028</span> GMT (<span class="number">3650</span> days)</span><br><span class="line"></span><br><span class="line">Write out database <span class="keyword">with</span> <span class="number">1</span> new entries</span><br><span class="line">Data Base Updated</span><br><span class="line"></span><br><span class="line">Certificate created <span class="keyword">at</span>: /etc/openvpn/easy-rsa/<span class="number">3.0</span><span class="number">.3</span>/pki/issued/server.crt</span><br></pre></td></tr></table></figure></p>
+<h4 id="创建-Diffie-Hellman"><a href="#创建-Diffie-Hellman" class="headerlink" title="创建 Diffie-Hellman"></a>创建 Diffie-Hellman</h4><figure class="highlight clean"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost <span class="number">3.0</span><span class="number">.3</span>]# ./easyrsa gen-dh</span><br><span class="line">............................................................</span><br><span class="line">DH parameters <span class="keyword">of</span> size <span class="number">2048</span> created at /etc/openvpn/easy-rsa/<span class="number">3.0</span><span class="number">.3</span>/pki/dh.pem</span><br></pre></td></tr></table></figure>
+<h3 id="创建客户端证书"><a href="#创建客户端证书" class="headerlink" title="创建客户端证书"></a>创建客户端证书</h3><h4 id="复制文件"><a href="#复制文件" class="headerlink" title="复制文件"></a>复制文件</h4><figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">cp -r <span class="meta-keyword">/usr/</span>share<span class="meta-keyword">/easy-rsa/</span> <span class="meta-keyword">/etc/</span>openvpn<span class="meta-keyword">/client/</span>easy-rsa</span><br><span class="line">cd <span class="meta-keyword">/etc/</span>openvpn<span class="meta-keyword">/client/</span>easy-rsa/</span><br><span class="line">rm <span class="number">3</span> <span class="number">3.0</span></span><br><span class="line">cd <span class="number">3.0</span><span class="number">.3</span>/</span><br><span class="line">find <span class="meta-keyword">/usr/</span>share<span class="meta-keyword">/doc/</span>easy-rsa<span class="number">-3.0</span><span class="number">.3</span>/vars.example -type f -name <span class="string">"vars.example"</span> | xargs -i <span class="class">cp </span>&#123;&#125; . &amp;&amp; mv vars.example vars</span><br></pre></td></tr></table></figure>
+<h4 id="生成证书"><a href="#生成证书" class="headerlink" title="生成证书"></a>生成证书</h4><p>操作目录 <code>/etc/openvpn/server/easy-rsa/3.0.3</code><br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost 3.0.3]<span class="comment"># pwd</span></span><br><span class="line">/etc/openvpn/client/easy-rsa/3.0.3</span><br><span class="line">[root@localhost 3.0.3]<span class="comment"># ./easyrsa init-pki #创建新的pki</span></span><br><span class="line"></span><br><span class="line">Note: using Easy-RSA configuration from: ./vars</span><br><span class="line"></span><br><span class="line">init-pki complete; you may now <span class="keyword">create</span> a CA <span class="keyword">or</span> requests.</span><br><span class="line">Your newly created PKI dir <span class="keyword">is</span>: /etc/openvpn/<span class="keyword">client</span>/easy-rsa/<span class="number">3.0</span><span class="number">.3</span>/pki</span><br><span class="line">[root@localhost <span class="number">3.0</span><span class="number">.3</span>]<span class="comment"># ./easyrsa gen-req joy01 nopass  #客户证书名为joy01，木有密码</span></span><br><span class="line"></span><br><span class="line">Note: <span class="keyword">using</span> Easy-RSA configuration <span class="keyword">from</span>: ./vars</span><br><span class="line">Generating a <span class="number">2048</span> <span class="built_in">bit</span> RSA <span class="keyword">private</span> <span class="keyword">key</span></span><br><span class="line">....................................................+++</span><br><span class="line">............+++</span><br><span class="line">writing <span class="keyword">new</span> <span class="keyword">private</span> <span class="keyword">key</span> <span class="keyword">to</span> <span class="string">'/etc/openvpn/client/easy-rsa/3.0.3/pki/private/joy01.key.FkrLzXH9Bm'</span></span><br><span class="line"><span class="comment">-----</span></span><br><span class="line">You <span class="keyword">are</span> about <span class="keyword">to</span> be asked <span class="keyword">to</span> enter information that will be incorporated</span><br><span class="line"><span class="keyword">into</span> your certificate request.</span><br><span class="line">What you <span class="keyword">are</span> about <span class="keyword">to</span> enter <span class="keyword">is</span> what <span class="keyword">is</span> called a Distinguished <span class="keyword">Name</span> <span class="keyword">or</span> a DN.</span><br><span class="line">There <span class="keyword">are</span> quite a few <span class="keyword">fields</span> but you can leave <span class="keyword">some</span> blank</span><br><span class="line"><span class="keyword">For</span> <span class="keyword">some</span> <span class="keyword">fields</span> there will be a <span class="keyword">default</span> <span class="keyword">value</span>,</span><br><span class="line"><span class="keyword">If</span> you enter <span class="string">'.'</span>, the <span class="keyword">field</span> will be <span class="keyword">left</span> blank.</span><br><span class="line"><span class="comment">-----</span></span><br><span class="line">Common <span class="keyword">Name</span> (eg: your <span class="keyword">user</span>, host, <span class="keyword">or</span> <span class="keyword">server</span> <span class="keyword">name</span>) [joy01]: 回车</span><br><span class="line"></span><br><span class="line">Keypair <span class="keyword">and</span> certificate request completed. Your files <span class="keyword">are</span>:</span><br><span class="line">req: /etc/openvpn/<span class="keyword">client</span>/easy-rsa/<span class="number">3.0</span><span class="number">.3</span>/pki/reqs/joy01.req</span><br><span class="line"><span class="keyword">key</span>: /etc/openvpn/<span class="keyword">client</span>/easy-rsa/<span class="number">3.0</span><span class="number">.3</span>/pki/<span class="keyword">private</span>/joy01.key</span><br></pre></td></tr></table></figure></p>
+<h4 id="签约客户端证书"><a href="#签约客户端证书" class="headerlink" title="签约客户端证书"></a>签约客户端证书</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost 3.0.3]<span class="comment"># cd /etc/openvpn/server/easy-rsa/3.0.3/</span></span><br><span class="line">[root@localhost 3.0.3]<span class="comment"># pwd</span></span><br><span class="line">/etc/openvpn/server/easy-rsa/3.0.3</span><br><span class="line">[root@localhost 3.0.3]<span class="comment"># ./easyrsa import-req /etc/openvpn/client/easy-rsa/3.0.3/pki/reqs/joy01.req joy01</span></span><br><span class="line"></span><br><span class="line">Note: using Easy-RSA configuration from: ./vars</span><br><span class="line"></span><br><span class="line">The request has been successfully imported <span class="keyword">with</span> a <span class="keyword">short</span> <span class="keyword">name</span> <span class="keyword">of</span>: joy01</span><br><span class="line">You may <span class="keyword">now</span> <span class="keyword">use</span> this <span class="keyword">name</span> <span class="keyword">to</span> perform signing <span class="keyword">operations</span> <span class="keyword">on</span> this request.</span><br><span class="line"></span><br><span class="line">[root@localhost <span class="number">3.0</span><span class="number">.3</span>]<span class="comment"># ./easyrsa sign client joy01</span></span><br><span class="line"></span><br><span class="line">Note: <span class="keyword">using</span> Easy-RSA configuration <span class="keyword">from</span>: ./vars</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">You <span class="keyword">are</span> about <span class="keyword">to</span> <span class="keyword">sign</span> the <span class="keyword">following</span> certificate.</span><br><span class="line">Please <span class="keyword">check</span> <span class="keyword">over</span> the details shown below <span class="keyword">for</span> accuracy. Note that this request</span><br><span class="line">has <span class="keyword">not</span> been cryptographically verified. Please be sure it came <span class="keyword">from</span> a trusted</span><br><span class="line"><span class="keyword">source</span> <span class="keyword">or</span> that you have verified the request <span class="keyword">checksum</span> <span class="keyword">with</span> the sender.</span><br><span class="line"></span><br><span class="line">Request subject, <span class="keyword">to</span> be signed <span class="keyword">as</span> a <span class="keyword">client</span> certificate <span class="keyword">for</span> <span class="number">3650</span> <span class="keyword">days</span>:</span><br><span class="line"></span><br><span class="line">subject=</span><br><span class="line">    commonName                = joy01</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">Type</span> the word <span class="string">'yes'</span> <span class="keyword">to</span> continue, <span class="keyword">or</span> <span class="keyword">any</span> other <span class="keyword">input</span> <span class="keyword">to</span> abort.</span><br><span class="line">  <span class="keyword">Confirm</span> request details: yes</span><br><span class="line"><span class="keyword">Using</span> configuration <span class="keyword">from</span> ./openssl<span class="number">-1.0</span>.cnf</span><br><span class="line"><span class="keyword">Check</span> that the request matches the signature</span><br><span class="line">Signature ok</span><br><span class="line">The Subject<span class="string">'s Distinguished Name is as follows</span></span><br><span class="line"><span class="string">commonName            :ASN.1 12:'</span>joy01<span class="string">'</span></span><br><span class="line"><span class="string">Certificate is to be certified until Apr  8 01:54:57 2028 GMT (3650 days)</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">Write out database with 1 new entries</span></span><br><span class="line"><span class="string">Data Base Updated</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">Certificate created at: /etc/openvpn/easy-rsa/3.0.3/pki/issued/joy01.crt</span></span><br></pre></td></tr></table></figure>
+<h3 id="整理证书"><a href="#整理证书" class="headerlink" title="整理证书"></a>整理证书</h3><h4 id="server-端证书"><a href="#server-端证书" class="headerlink" title="server 端证书"></a>server 端证书</h4><figure class="highlight tap"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]<span class="comment"># mkdir /etc/openvpn/certs</span></span><br><span class="line">[root@localhost ~]<span class="comment"># cd /etc/openvpn/certs/</span></span><br><span class="line">[root@localhost certs]<span class="comment"># cp /etc/openvpn/easy-rsa/3.0.3/pki/dh.pem .</span></span><br><span class="line">[root@localhost certs]<span class="comment"># cp /etc/openvpn/easy-rsa/3.0.3/pki/ca.crt .</span></span><br><span class="line">[root@localhost certs]<span class="comment"># cp /etc/openvpn/easy-rsa/3.0.3/pki/issued/server.crt .</span></span><br><span class="line">[root@localhost certs]<span class="comment"># cp /etc/openvpn/easy-rsa/3.0.3/pki/private/server.key .</span></span><br><span class="line">[root@localhost certs]<span class="comment"># ll</span></span><br><span class="line">总用量 20</span><br><span class="line">-rw-------.<span class="number"> 1 </span>root root<span class="number"> 1172 </span>4月 <span class="number"> 11 </span>10:02 ca.crt</span><br><span class="line">-rw-------.<span class="number"> 1 </span>root root <span class="number"> 424 </span>4月 <span class="number"> 11 </span>10:03 dh.pem</span><br><span class="line">-rw-------.<span class="number"> 1 </span>root root<span class="number"> 4547 </span>4月 <span class="number"> 11 </span>10:03 server.crt</span><br><span class="line">-rw-------.<span class="number"> 1 </span>root root<span class="number"> 1704 </span>4月 <span class="number"> 11 </span>10:02 server.key</span><br></pre></td></tr></table></figure>
+<h4 id="client-端"><a href="#client-端" class="headerlink" title="client 端"></a>client 端</h4><figure class="highlight tap"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost certs]<span class="comment"># mkdir /etc/openvpn/client/joy01/</span></span><br><span class="line">[root@localhost certs]<span class="comment"># cp /etc/openvpn/easy-rsa/3.0.3/pki/ca.crt /etc/openvpn/client/joy01/</span></span><br><span class="line">[root@localhost certs]<span class="comment"># cp /etc/openvpn/easy-rsa/3.0.3/pki/issued/joy01.crt /etc/openvpn/client/joy01/</span></span><br><span class="line">[root@localhost certs]<span class="comment"># cp /etc/openvpn/client/easy-rsa/3.0.3/pki/private/joy01.key /etc/openvpn/client/joy01/</span></span><br><span class="line">[root@localhost certs]<span class="comment"># ll /etc/openvpn/client/joy01/</span></span><br><span class="line">总用量 16</span><br><span class="line">-rw-------.<span class="number"> 1 </span>root root<span class="number"> 1172 </span>4月 <span class="number"> 11 </span>10:07 ca.crt</span><br><span class="line">-rw-------.<span class="number"> 1 </span>root root<span class="number"> 4431 </span>4月 <span class="number"> 11 </span>10:08 joy01.crt</span><br><span class="line">-rw-------.<span class="number"> 1 </span>root root<span class="number"> 1704 </span>4月 <span class="number"> 11 </span>10:08 joy01.key</span><br></pre></td></tr></table></figure>
+<h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><h3 id="Server"><a href="#Server" class="headerlink" title="Server"></a>Server</h3><p>一切操作只需要在服务器，client不需要！！！</p>
+<h4 id="开启转发"><a href="#开启转发" class="headerlink" title="开启转发"></a>开启转发</h4><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo <span class="string">'net.ipv4.ip_forward = 1'</span> <span class="meta">&gt;&gt; </span>/etc/sysctl.conf</span><br></pre></td></tr></table></figure>
+<p>验证<br><figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">sysctl -p</span></span><br></pre></td></tr></table></figure></p>
+<p><img src="http://img.mknight.cn/2018/1544336390853.png" width="262"> </p>
+<h4 id="iptables"><a href="#iptables" class="headerlink" title="iptables"></a>iptables</h4><p>清空防火墙<br><figure class="highlight tp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">iptables -F</span><br><span class="line">iptables -<span class="keyword">X</span></span><br><span class="line">ipatbles -<span class="keyword">Z</span></span><br></pre></td></tr></table></figure></p>
+<p>接下来的配置之前需要先了解以下概念：</p>
+<ul>
+<li>NAT 的原理 简单的说就是当内网主机访问外网时，当内网主机的数据包要通过路由器时，路由器将数据包中的源内网 IP 地址改为路由器上的公网 IP 地址，同时记录下该数据包的消息；当外网服务器响应这次由内而外发出的请求或数据交换时，当外网服务器发出的数据包经过路由器时，原本是路由器上的公网 IP 地址被路由器改为内网 IP 。<ul>
+<li>SNAT是source networkaddress translation的缩写，即源地址目标转换。比如，多个PC机使用ADSL路由器共享上网，每个PC机都配置了内网IP，PC机访问外部网络的时候，路由器将数据包的报头中的源地址替换成路由器的ip，当外部网络的服务器比如网站web服务器接到访问请求的时候，他的日志记录下来的是路由器的ip地址，而不是pc机的内网ip，这是因为，这个服务器收到的数据包的报头里边的“源地址”，已经被替换了，所以叫做SNAT，基于源地址的地址转换。  </li>
+<li>DNAT是destination networkaddress translation的缩写，即目标网络地址转换，典型的应用是，有个web服务器放在内网配置内网ip，前端有个防火墙配置公网ip，互联网上的访问者使用公网ip来访问这个网站，当访问的时候，客户端发出一个数据包，这个数据包的报头里边，目标地址写的是防火墙的公网ip，防火墙会把这个数据包的报头改写一次，将目标地址改写成web服务器的内网ip，然后再把这个数据包发送到内网的web服务器上，这样，数据包就穿透了防火墙，并从公网ip变成了一个对内网地址的访问了，即DNAT，基于目标的网络地址转换。</li>
+<li>MASQUERADE，地址伪装，属于nat的一种。算是snat中的一种特例，可以实现自动化的snat。MASQUERADE是用发送数据的网卡上的IP来替换源IP，因此，对于那些IP不固定的场合，比如拨号网络或者通过dhcp分配IP的情况下，就得用MASQUERADE。</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>如果内网主机访问外网而经过路由时，源 IP 会发生改变，这种变更行为就是 SNAT；反之，当外网的数据经过路由发往内网主机时，数据包中的目的 IP (路由器上的公网 IP) 将修改为内网 IP，这种变更行为就是 DNAT 。与 SNAT 和 DNAT所对应的两个链分别是  POSTROUTING和PREROUTING。<ul>
+<li>POSTROUTING是源地址转换，要把你的内网地址转换成公网地址才能让你上网。</li>
+<li>PREROUTING是目的地址转换，要把别人的公网IP换成你们内部的IP，才让访问到你们内部受防火墙保护的机器</li>
+</ul>
+</li>
+</ul>
+<p>综上所述，简单理解就是从服务器网卡获取当前IP来做SNAT。</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">iptables -A FORWARD -s 172.16.0.0/24 -j ACCEPT  </span><br><span class="line">iptables -A FORWARD -m state --state RELATED,ESTABLISHED -j ACCEPT  </span><br><span class="line"></span><br><span class="line"><span class="comment">#检查</span></span><br><span class="line">iptables  -t <span class="built_in"> nat </span> -nL</span><br><span class="line"></span><br><span class="line"><span class="comment">#转发</span></span><br><span class="line">iptables -t<span class="built_in"> nat </span>-A POSTROUTING -s 172.16.0.0/24  -j MASQUERADE</span><br><span class="line">  <span class="keyword">or</span></span><br><span class="line">iptables -t<span class="built_in"> nat </span>-A POSTROUTING -s 172.16.0.0/24 -o eth0 -j MASQUERADE</span><br></pre></td></tr></table></figure>
+<p>检查FORWARD<br><img src="http://img.mknight.cn/2018/1544336486389.png" width="716"></p>
+<p>检查MASQUERADE<br><img src="http://img.mknight.cn/2018/1544336462517.png" width="480">  </p>
+<h3 id="配置文件"><a href="#配置文件" class="headerlink" title="配置文件"></a>配置文件</h3><h4 id="server端"><a href="#server端" class="headerlink" title="server端"></a>server端</h4><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">port</span> 1194</span><br><span class="line"><span class="selector-tag">proto</span> <span class="selector-tag">udp</span></span><br><span class="line"><span class="selector-tag">dev</span> <span class="selector-tag">tun</span></span><br><span class="line"><span class="selector-tag">ca</span> <span class="selector-tag">ca</span><span class="selector-class">.crt</span></span><br><span class="line"><span class="selector-tag">cert</span> <span class="selector-tag">server</span><span class="selector-class">.crt</span></span><br><span class="line"><span class="selector-tag">key</span> <span class="selector-tag">server</span><span class="selector-class">.key</span></span><br><span class="line"><span class="selector-tag">dh</span> <span class="selector-tag">dh</span><span class="selector-class">.pem</span></span><br><span class="line"><span class="selector-tag">server</span> 172<span class="selector-class">.16</span><span class="selector-class">.0</span><span class="selector-class">.0</span> 255<span class="selector-class">.255</span><span class="selector-class">.255</span><span class="selector-class">.0</span></span><br><span class="line"><span class="selector-tag">ifconfig-pool-persist</span> <span class="selector-tag">ipp</span><span class="selector-class">.txt</span></span><br><span class="line"><span class="selector-tag">client-config-dir</span> <span class="selector-tag">ccd</span></span><br><span class="line"><span class="selector-tag">push</span> "<span class="selector-tag">redirect-gateway</span> <span class="selector-tag">def1</span> <span class="selector-tag">bypass-dhcp</span>"</span><br><span class="line"><span class="selector-tag">push</span> "<span class="selector-tag">dhcp-option</span> <span class="selector-tag">DNS</span> 208<span class="selector-class">.67</span><span class="selector-class">.222</span><span class="selector-class">.222</span>"</span><br><span class="line"><span class="selector-tag">push</span> "<span class="selector-tag">dhcp-option</span> <span class="selector-tag">DNS</span> 208<span class="selector-class">.67</span><span class="selector-class">.220</span><span class="selector-class">.220</span>"</span><br><span class="line"><span class="selector-tag">client-to-client</span></span><br><span class="line"><span class="selector-tag">duplicate-cn</span></span><br><span class="line"><span class="selector-tag">keepalive</span> 10 120</span><br><span class="line"></span><br><span class="line">;<span class="selector-tag">cipher</span> <span class="selector-tag">BF-CBC</span></span><br><span class="line">;<span class="selector-tag">cipher</span> <span class="selector-tag">AES-128-CBC</span></span><br><span class="line">;<span class="selector-tag">cipher</span> <span class="selector-tag">DES-EDE3-CBC</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="selector-tag">comp-lzo</span></span><br><span class="line">;<span class="selector-tag">max-clients</span> 100</span><br><span class="line"><span class="selector-tag">log</span>         <span class="selector-tag">openvpn</span><span class="selector-class">.log</span></span><br><span class="line"><span class="selector-tag">status</span> <span class="selector-tag">openvpn-status</span><span class="selector-class">.log</span></span><br><span class="line"><span class="selector-tag">verb</span> 3</span><br><span class="line"><span class="selector-tag">mute</span> 20</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>“redirect-gateway def1 bypass-dhcp”的目的是在所有客戶端的默认网络都重定向到服务器,它的目的就是客户端在使用不同的私有地址时可以确保能连上OpenVPN服务器。<br>但是如果有时候客户端无法正常上网，那么就得换种方式。<code>push &quot;route 10.110.1.0 255.255.255.0&quot;</code>就像这样推送服务器的路由。  </p>
+</blockquote>
+<p>如果想使用固定IP，那么就开启<code>&quot;client-config-dir ccd&quot;</code></p>
+<ul>
+<li>在服务器端创建ccd目录</li>
+<li>按照用户名创建文件，类似”ifconfig-push 10.8.0.18 255.255.255.0”</li>
+</ul>
+<h4 id="client端"><a href="#client端" class="headerlink" title="client端"></a>client端</h4><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">client</span><br><span class="line">dev tun</span><br><span class="line">proto udp</span><br><span class="line">remote 服务器外网IP</span><br><span class="line">resolv-retry infinite</span><br><span class="line">nobind</span><br><span class="line">user nobody</span><br><span class="line">group nobody</span><br><span class="line">persist-key</span><br><span class="line">persist-tun</span><br><span class="line">ca ca.crt</span><br><span class="line">cert xiajie.crt</span><br><span class="line">key xiajie.key</span><br><span class="line">comp-lzo</span><br><span class="line">verb 3</span><br><span class="line">redirect-gateway def1</span><br></pre></td></tr></table></figure>
+<h3 id="启动"><a href="#启动" class="headerlink" title="启动"></a>启动</h3><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">systemctl</span> -f enable openvpn<span class="variable">@server</span></span><br><span class="line">systemctl start openvpn<span class="variable">@server</span></span><br></pre></td></tr></table></figure>
+<h2 id="服务检查"><a href="#服务检查" class="headerlink" title="服务检查"></a>服务检查</h2><h3 id="服务器端"><a href="#服务器端" class="headerlink" title="服务器端"></a>服务器端</h3><p><img src="http://img.mknight.cn/2018/1544337135904.png" width="668"></p>
+<h3 id="客户端（Windows）"><a href="#客户端（Windows）" class="headerlink" title="客户端（Windows）"></a>客户端（Windows）</h3><p><img src="http://img.mknight.cn/2018/1544337254592.png" width="642"></p>
+<h2 id="疑难杂症"><a href="#疑难杂症" class="headerlink" title="疑难杂症"></a>疑难杂症</h2><ul>
+<li>客户端直接无法访问，虚拟IP不通，内网不通<br>检查服务器端配置文件<code>client-to-client</code></li>
+<li>如果还是不通，或者无法访问外网，检查<code>push &quot;redirect-gateway def1 bypass-dhcp&quot;</code>是否注释或者有没有推送路由。  </li>
+<li>如果追求速度就选择UDP，如果选择可靠质量就选择TCP。</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div></div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="medivh 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="medivh 支付宝">
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+    <div>
+    
+                
+<div style="text-align:center;color: #ccc;font-size:14px;">
+------ 本文结束 ------</div>
+<br>
+<div style="border: 1px solid black">
+<div style="margin-left:10px">
+<span style="font-weight:blod">版权声明</span>
+<br>
+<p style="font-size: 10px;line-height: 30px"><a href="http://www.mknight.cn" style="color:#258FC6">Medivh's Notes</a> by <a href="http://www.mknight.cn" style="color:#258FC6">Medivh</a> is licensed under a <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" style="color:#258FC6">Creative Commons BY-NC-ND 4.0 International License</a>.<br>
+由<a href="http://www.mknight.cn" style="color:#258FC6">Medivh</a>创作并维护的<a href="http://www.mknight.cn" style="color:#258FC6">Medivh's Notes</a>博客采用<a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" style="color:#258FC6">创作共用保留署名-非商业-禁止演绎4.0国际许可证</a>。<br>
+本文首发于<a href="http://www.mknight.cn" style="color:#258FC6">Medivh</a> 博客（ <a href="http://www.mknight.cn" style="color:#258FC6">http://www.mknight.cn</a> ），版权所有，侵权必究。</p>
+</div>
+</div>
+
+        
+    </div>
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/Mac部分技巧总结.html" rel="next" title="Mac 技巧">
+                <i class="fa fa-chevron-left"></i> Mac 技巧
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/PPTP-VPN 使用.html" rel="prev" title="PPTP-VPN 使用">
+                PPTP-VPN 使用 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="http://img.mknight.cn/2018/1545104669394.png" alt="medivh">
+            
+              <p class="site-author-name" itemprop="name">medivh</p>
+              <p class="site-description motion-element" itemprop="description">运维的日常</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">54</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">4</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">30</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#安装"><span class="nav-number">1.</span> <span class="nav-text">安装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、yum方式（推荐）"><span class="nav-number">1.1.</span> <span class="nav-text">1、yum方式（推荐）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、编译安装"><span class="nav-number">1.2.</span> <span class="nav-text">2、编译安装</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#证书配置"><span class="nav-number">2.</span> <span class="nav-text">证书配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#创建-PKI-和-CA"><span class="nav-number">2.1.</span> <span class="nav-text">创建 PKI 和 CA</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#创建服务端证书"><span class="nav-number">2.1.1.</span> <span class="nav-text">创建服务端证书</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#签约服务端证书"><span class="nav-number">2.1.2.</span> <span class="nav-text">签约服务端证书</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#创建-Diffie-Hellman"><span class="nav-number">2.1.3.</span> <span class="nav-text">创建 Diffie-Hellman</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#创建客户端证书"><span class="nav-number">2.2.</span> <span class="nav-text">创建客户端证书</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#复制文件"><span class="nav-number">2.2.1.</span> <span class="nav-text">复制文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#生成证书"><span class="nav-number">2.2.2.</span> <span class="nav-text">生成证书</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#签约客户端证书"><span class="nav-number">2.2.3.</span> <span class="nav-text">签约客户端证书</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#整理证书"><span class="nav-number">2.3.</span> <span class="nav-text">整理证书</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#server-端证书"><span class="nav-number">2.3.1.</span> <span class="nav-text">server 端证书</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#client-端"><span class="nav-number">2.3.2.</span> <span class="nav-text">client 端</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置"><span class="nav-number">3.</span> <span class="nav-text">配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Server"><span class="nav-number">3.1.</span> <span class="nav-text">Server</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#开启转发"><span class="nav-number">3.1.1.</span> <span class="nav-text">开启转发</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#iptables"><span class="nav-number">3.1.2.</span> <span class="nav-text">iptables</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#配置文件"><span class="nav-number">3.2.</span> <span class="nav-text">配置文件</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#server端"><span class="nav-number">3.2.1.</span> <span class="nav-text">server端</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#client端"><span class="nav-number">3.2.2.</span> <span class="nav-text">client端</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#启动"><span class="nav-number">3.3.</span> <span class="nav-text">启动</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#服务检查"><span class="nav-number">4.</span> <span class="nav-text">服务检查</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#服务器端"><span class="nav-number">4.1.</span> <span class="nav-text">服务器端</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#客户端（Windows）"><span class="nav-number">4.2.</span> <span class="nav-text">客户端（Windows）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#疑难杂症"><span class="nav-number">5.</span> <span class="nav-text">疑难杂症</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  <span>
+    <a target="_blank" href="https://beian.miit.gov.cn">京ICP备17063827号-1</a>
+  </span>
+  <span itemprop="copyrightYear"></span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">medivh</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+    <span title="站点总字数"></span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    
+    <span title="站点阅读时长"></span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv" title="总访客量">
+    	<span id="busuanzi_container_site_pv">
+        	本站访客数: <span id="busuanzi_value_site_uv"></span>
+   	 </span>
+    </span>
+  
+
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=6.6.0"></script>
+
+  <script src="/js/src/motion.js?v=6.6.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/affix.js?v=6.6.0"></script>
+
+  <script src="/js/src/schemes/pisces.js?v=6.6.0"></script>
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=6.6.0"></script>
+<script src="/js/src/post-details.js?v=6.6.0"></script>
+
+
+
+  
+
+
+  <script src="/js/src/bootstrap.js?v=6.6.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  
+  
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+
+  <script>
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(function (item) {
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'B1L35FebIXiGQu3MloNCxrCS-gzGzoHsz',
+        appKey: 'iQH7DjsnLwlvoMB58gpevWMC',
+        placeholder: 'Just go go',
+        avatar:'mm',
+        meta:guest,
+        pageSize:'10' || 10,
+        visitor: true
+    });
+  </script>
+
+
+
+
+  
+
+  <script>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

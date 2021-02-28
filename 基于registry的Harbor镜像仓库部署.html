@@ -1,0 +1,1526 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=6.6.0" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.6.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="http://img.mknight.cn/2018/1545104669394.png?v=6.6.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="http://img.mknight.cn/2018/1545104669394.png?v=6.6.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.6.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '6.6.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="Harbor 是 Vmwar 公司开源的 企业级的 Docker Registry 管理项目 它主要 提供 Dcoker Registry 管理UI，可基于角色访问控制, AD/LDAP 集成，日志审核等功能，完全的支持中文。 Harbor 的所有组件都在 Dcoker 中部署，所以 Harbor 可使用 Docker Compose 快速部署。  一、简介Harbor，是一个英文单词，意思是港">
+<meta name="keywords" content="docker">
+<meta property="og:type" content="article">
+<meta property="og:title" content="基于registry的Harbor镜像仓库部署">
+<meta property="og:url" content="https://xiajieok.gitee.io/基于registry的Harbor镜像仓库部署.html">
+<meta property="og:site_name" content="Medivh&#39;s castle">
+<meta property="og:description" content="Harbor 是 Vmwar 公司开源的 企业级的 Docker Registry 管理项目 它主要 提供 Dcoker Registry 管理UI，可基于角色访问控制, AD/LDAP 集成，日志审核等功能，完全的支持中文。 Harbor 的所有组件都在 Dcoker 中部署，所以 Harbor 可使用 Docker Compose 快速部署。  一、简介Harbor，是一个英文单词，意思是港">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://img.mknight.cn/medivh/1555837828882.png">
+<meta property="og:image" content="http://img.mknight.cn/medivh/1555838409977.png">
+<meta property="og:updated_time" content="2021-02-28T13:38:18.044Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="基于registry的Harbor镜像仓库部署">
+<meta name="twitter:description" content="Harbor 是 Vmwar 公司开源的 企业级的 Docker Registry 管理项目 它主要 提供 Dcoker Registry 管理UI，可基于角色访问控制, AD/LDAP 集成，日志审核等功能，完全的支持中文。 Harbor 的所有组件都在 Dcoker 中部署，所以 Harbor 可使用 Docker Compose 快速部署。  一、简介Harbor，是一个英文单词，意思是港">
+<meta name="twitter:image" content="http://img.mknight.cn/medivh/1555837828882.png">
+
+
+
+
+
+
+  <link rel="canonical" href="https://xiajieok.gitee.io/基于registry的Harbor镜像仓库部署.html">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>基于registry的Harbor镜像仓库部署 | Medivh's castle</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion .logo-line-before i { left: initial; }
+    .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Medivh's castle</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiajieok.gitee.io/基于registry的Harbor镜像仓库部署.html">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="medivh">
+      <meta itemprop="description" content="运维的日常">
+      <meta itemprop="image" content="http://img.mknight.cn/2018/1545104669394.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Medivh's castle">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">基于registry的Harbor镜像仓库部署
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2021-02-28 21:38:18" itemprop="dateCreated datePublished" datetime="2021-02-28T21:38:18+08:00">2021-02-28</time>
+            
+
+            
+          </span>
+         
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/基于registry的Harbor镜像仓库部署.html#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/基于registry的Harbor镜像仓库部署.html" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/基于registry的Harbor镜像仓库部署.html" class="leancloud_visitors" data-flag-title="基于registry的Harbor镜像仓库部署">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">Views：</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+            <div class="post-symbolscount">
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">本文字数：</span>
+                
+                <span title="本文字数"></span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长"></span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>Harbor 是 Vmwar 公司开源的 企业级的 Docker Registry 管理项目 它主要 提供 Dcoker Registry 管理UI，可基于角色访问控制, AD/LDAP 集成，日志审核等功能，完全的支持中文。 Harbor 的所有组件都在 Dcoker 中部署，所以 Harbor 可使用 Docker Compose 快速部署。</p>
+</blockquote>
+<h2 id="一、简介"><a href="#一、简介" class="headerlink" title="一、简介"></a>一、简介</h2><p>Harbor，是一个英文单词，意思是港湾，港湾是干什么的呢，就是停放货物的，而货物呢，是装在集装箱中的，说到集装箱，就不得不提到Docker容器，因为docker容器的技术正是借鉴了集装箱的原理。所以，Harbor正是一个用于存储Docker镜像的企业级Registry服务。</p>
+<p>Registry是Dcoker官方的一个私有仓库镜像，可以将本地的镜像打标签进行标记然后push到以Registry起的容器的私有仓库中。企业可以根据自己的需求，使用Dokcerfile生成自己的镜像，并推到私有仓库中，这样可以大大提高拉取镜像的效率。</p>
+<h3 id="1、优点"><a href="#1、优点" class="headerlink" title="1、优点"></a>1、优点</h3><p>Harbor和Registry都是Docker的镜像仓库，但是Harbor作为更多企业的选择，是因为相比较于Regisrty来说，它具有很多的优势。</p>
+<ul>
+<li>1.提供分层传输机制，优化网络传输<br>Docker镜像是是分层的，而如果每次传输都使用全量文件(所以用FTP的方式并不适合)，显然不经济。必须提供识别分层传输的机制，以层的UUID为标识，确定传输的对象。</li>
+<li>2.提供WEB界面，优化用户体验<br>只用镜像的名字来进行上传下载显然很不方便，需要有一个用户界面可以支持登陆、搜索功能，包括区分公有、私有镜像。</li>
+<li>3.支持水平扩展集群<br>当有用户对镜像的上传下载操作集中在某服务器，需要对相应的访问压力作分解。</li>
+<li>4.良好的安全机制<br>企业中的开发团队有很多不同的职位，对于不同的职位人员，分配不同的权限，具有更好的安全性。</li>
+<li>5.Harbor提供了基于角色的访问控制机制，并通过项目来对镜像进行组织和访问权限的控制。kubernetes中通过namespace来对资源进行隔离，在企业级应用场景中，通过将两者进行结合可以有效将kubernetes使用的镜像资源进行管理和访问控制，增强镜像使用的安全性。尤其是在多租户场景下，可以通过租户、namespace和项目相结合的方式来实现对多租户镜像资源的管理和访问控制。</li>
+</ul>
+<h3 id="2、核心组件"><a href="#2、核心组件" class="headerlink" title="2、核心组件"></a>2、核心组件</h3><ul>
+<li>Proxy：他是一个nginx的前端代理，代理Harbor的registry,UI, token等服务。</li>
+<li>db：负责储存用户权限、审计日志、Dockerimage分组信息等数据。</li>
+<li>UI：提供图形化界面，帮助用户管理registry上的镜像, 并对用户进行授权。</li>
+<li>jobsevice：jobsevice是负责镜像复制工作的，他和registry通信，从一个registry pull镜像然后push到另一个registry，并记录job_log。</li>
+<li>Adminserver：是系统的配置管理中心附带检查存储用量，ui和jobserver启动时候回需要加载adminserver的配置。</li>
+<li>Registry：镜像仓库，负责存储镜像文件。</li>
+<li>Log：为了帮助监控Harbor运行，负责收集其他组件的log，供日后进行分析。</li>
+</ul>
+<h2 id="二、安装部署"><a href="#二、安装部署" class="headerlink" title="二、安装部署"></a>二、安装部署</h2><h3 id="1、环境要求"><a href="#1、环境要求" class="headerlink" title="1、环境要求"></a>1、环境要求</h3><h4 id="Hardware"><a href="#Hardware" class="headerlink" title="Hardware"></a>Hardware</h4><table>
+<thead>
+<tr>
+<th>Resource</th>
+<th>Capacity</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CPU</td>
+<td>minimal 2 CPU</td>
+<td>4 CPU is preferred</td>
+</tr>
+<tr>
+<td>Mem</td>
+<td>minimal 4GB</td>
+<td>8GB is preferred</td>
+</tr>
+<tr>
+<td>Disk</td>
+<td>minimal 40GB</td>
+<td>160GB is preferred</td>
+</tr>
+</tbody>
+</table>
+<h4 id="Software"><a href="#Software" class="headerlink" title="Software"></a>Software</h4><table>
+<thead>
+<tr>
+<th>Software</th>
+<th>Version</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Python</td>
+<td>version 2.7 or higher</td>
+<td>Note that you may have to install Python on Linux distributions (Gentoo, Arch) that do not come with a Python interpreter installed by default</td>
+</tr>
+<tr>
+<td>Docker engine</td>
+<td>version 1.10 or higher</td>
+<td>For installation instructions, please refer to: <a href="https://docs.docker.com/engine/installation/" target="_blank" rel="noopener">https://docs.docker.com/engine/installation/</a></td>
+</tr>
+<tr>
+<td>Docker Compose</td>
+<td>version 1.6.0 or higher</td>
+<td>For installation instructions, please refer to: <a href="https://docs.docker.com/compose/install/" target="_blank" rel="noopener">https://docs.docker.com/compose/install/</a></td>
+</tr>
+<tr>
+<td>Openssl</td>
+<td>latest is preferred</td>
+<td>Generate certificate and keys for Harbor</td>
+</tr>
+</tbody>
+</table>
+<h4 id="Network-ports"><a href="#Network-ports" class="headerlink" title="Network ports"></a>Network ports</h4><table>
+<thead>
+<tr>
+<th>Port</th>
+<th>Protocol</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>443</td>
+<td>HTTPS</td>
+<td>Harbor portal and core API will accept requests on this port for https protocol</td>
+</tr>
+<tr>
+<td>4443</td>
+<td>HTTPS</td>
+<td>Connections to the Docker Content Trust service for Harbor, only needed when Notary is enabled</td>
+</tr>
+<tr>
+<td>80</td>
+<td>HTTP</td>
+<td>Harbor portal and core API will accept requests on this port for http protocol</td>
+</tr>
+</tbody>
+</table>
+<h4 id="Docker-相关"><a href="#Docker-相关" class="headerlink" title="Docker 相关"></a>Docker 相关</h4><p>安装docker-compose<br><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">yum <span class="keyword">install</span> python-pip</span><br><span class="line">pip <span class="keyword">install</span> docker-compose</span><br></pre></td></tr></table></figure></p>
+<h3 id="2、安装方式"><a href="#2、安装方式" class="headerlink" title="2、安装方式"></a>2、安装方式</h3><h4 id="在线安装"><a href="#在线安装" class="headerlink" title="在线安装"></a>在线安装</h4><p>该方式从Docker hub下载Harbor相关镜像，安装包较小。</p>
+<h4 id="离线安装"><a href="#离线安装" class="headerlink" title="离线安装"></a>离线安装</h4><ul>
+<li>正常安装版 <a href="http://img.mknight.cn/harbor-offline-installer-v1.2.2.tgz" target="_blank" rel="noopener">http://img.mknight.cn/harbor-offline-installer-v1.2.2.tgz</a> 推荐使用此方式靠谱。</li>
+<li>github下载最新版 <a href="https://storage.googleapis.com/harbor-releases/release-1.7.0/harbor-offline-installer-v1.7.5.tgz" target="_blank" rel="noopener">Harbor offline installer</a></li>
+</ul>
+<h3 id="3、安装"><a href="#3、安装" class="headerlink" title="3、安装"></a>3、安装</h3><figure class="highlight x86asm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd /usr/src</span><br><span class="line">wget http://img.mknight.cn/harbor-offline-installer-v1<span class="meta">.2</span><span class="meta">.2</span>.tgz](http://img.mknight.cn/harbor-offline-installer-v1<span class="meta">.2</span><span class="meta">.2</span>.tgz</span><br><span class="line">tar -zxvf  harbor-offline-installer-v1<span class="meta">.2</span><span class="meta">.2</span>.tgz -C /opt/harbor</span><br></pre></td></tr></table></figure>
+<h4 id="修改配置文件"><a href="#修改配置文件" class="headerlink" title="修改配置文件"></a>修改配置文件</h4><p>vim harbor.cfg<br><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">## Configuration file of Harbor</span></span><br><span class="line"><span class="comment"># hostname 设置访问地址，支持IP，域名，主机名，禁止设置127.0.0.1</span></span><br><span class="line"><span class="comment"># 必须修改！！！</span></span><br><span class="line"><span class="attr">hostname</span> = 内网ip</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 访问协议，可设置 http,https</span></span><br><span class="line"><span class="attr">ui_url_protocol</span> = http</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 邮件通知, 配置邮件通知。</span></span><br><span class="line"><span class="attr">email_server</span> = smtp.mydomain.com</span><br><span class="line"><span class="attr">email_server_port</span> = <span class="number">25</span></span><br><span class="line"><span class="attr">email_username</span> = sample_admin@mydomain.com</span><br><span class="line"><span class="attr">email_password</span> = abc</span><br><span class="line"><span class="attr">email_from</span> = admin &lt;sample_admin@mydomain.com&gt;</span><br><span class="line"><span class="attr">email_ssl</span> = <span class="literal">false</span></span><br><span class="line"> </span><br><span class="line"><span class="comment"># harbor WEB UI登陆使用的密码</span></span><br><span class="line"><span class="attr">harbor_admin_password</span> = Harbor12345</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 认证方式，这里支持多种认证方式，默认是 db_auth ，既mysql数据库存储认证。</span></span><br><span class="line"><span class="comment"># 这里还支持 ldap 以及 本地文件存储方式。</span></span><br><span class="line"><span class="attr">auth_mode</span> = db_auth</span><br><span class="line"> </span><br><span class="line"></span><br><span class="line"><span class="comment"># mysql root 账户的 密码</span></span><br><span class="line"><span class="attr">db_password</span> = root123</span><br><span class="line"><span class="comment"># 默认密码应该是root，反正root123的时候我登不进去</span></span><br><span class="line"><span class="attr">self_registration</span> = <span class="literal">on</span></span><br><span class="line"><span class="attr">use_compressed_js</span> = <span class="literal">on</span></span><br><span class="line"><span class="attr">max_job_workers</span> = <span class="number">3</span></span><br><span class="line"><span class="attr">verify_remote_cert</span> = <span class="literal">on</span></span><br><span class="line"><span class="attr">customize_crt</span> = <span class="literal">on</span></span><br><span class="line"> </span><br><span class="line"><span class="comment"># 一些显示的设置.</span></span><br><span class="line"><span class="attr">crt_country</span> = CN</span><br><span class="line"><span class="attr">crt_state</span> = State</span><br><span class="line"><span class="attr">crt_location</span> = CN</span><br><span class="line"><span class="attr">crt_organization</span> = organization</span><br><span class="line"><span class="attr">crt_organizationalunit</span> = organizational unit</span><br><span class="line"><span class="attr">crt_commonname</span> = example.com</span><br><span class="line"><span class="attr">crt_email</span> = example@example.com</span><br></pre></td></tr></table></figure></p>
+<h4 id="1、修改80端口为5000"><a href="#1、修改80端口为5000" class="headerlink" title="1、修改80端口为5000"></a>1、修改80端口为5000</h4><figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta"># vim docker-compose.yml</span></span><br><span class="line"><span class="symbol">proxy:</span></span><br><span class="line"><span class="symbol">image:</span> vmware/nginx-photon:<span class="number">1.11</span><span class="number">.13</span></span><br><span class="line"><span class="symbol">container_name:</span> nginx</span><br><span class="line"><span class="symbol">restart:</span> always</span><br><span class="line"><span class="symbol">volumes:</span></span><br><span class="line">- .<span class="meta-keyword">/common/</span>config/nginx:<span class="meta-keyword">/etc/</span>nginx:z</span><br><span class="line"><span class="symbol">networks:</span></span><br><span class="line">- harbor</span><br><span class="line"><span class="symbol">ports:</span></span><br><span class="line">- <span class="number">5000</span>:<span class="number">80</span></span><br><span class="line">- <span class="number">443</span>:<span class="number">443</span></span><br><span class="line">- <span class="number">4443</span>:<span class="number">4443</span></span><br><span class="line"><span class="symbol">depends_on:</span></span><br><span class="line">- mysql</span><br><span class="line">- registry</span><br><span class="line">- ui</span><br><span class="line">- log</span><br><span class="line"><span class="symbol">logging:</span></span><br><span class="line"><span class="symbol">driver:</span> <span class="string">"syslog"</span></span><br><span class="line"><span class="symbol">options:</span></span><br><span class="line">syslog-address: <span class="string">"tcp://127.0.0.1:1514"</span></span><br><span class="line"><span class="symbol">tag:</span> <span class="string">"proxy"</span></span><br></pre></td></tr></table></figure>
+<p>处理模板<br><figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#vim common/templates/registry/config.yml</span></span><br><span class="line"><span class="symbol">auth:</span></span><br><span class="line"><span class="symbol">token:</span></span><br><span class="line"><span class="symbol">issuer:</span> registry-token-issuer</span><br><span class="line"><span class="symbol">realm:</span> $ui_url:<span class="number">5000</span><span class="meta-keyword">/service/</span>token</span><br><span class="line"><span class="symbol">rootcertbundle:</span> <span class="meta-keyword">/etc/</span>registry/root.crt</span><br><span class="line"><span class="symbol">service:</span> token-service</span><br></pre></td></tr></table></figure></p>
+<p>启动，执行安装，加载镜像<br><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./<span class="keyword">install</span>.sh</span><br></pre></td></tr></table></figure></p>
+<p>更改配置后执行 prepare 脚本<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">./<span class="keyword">prepare</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">Generated</span> configuration <span class="keyword">file</span>: ./config/ui/env</span><br><span class="line"><span class="keyword">Generated</span> configuration <span class="keyword">file</span>: ./config/ui/app.conf</span><br><span class="line"><span class="keyword">Generated</span> configuration <span class="keyword">file</span>: ./config/registry/config.yml</span><br><span class="line"><span class="keyword">Generated</span> configuration <span class="keyword">file</span>: ./config/db/env</span><br><span class="line"><span class="keyword">Generated</span> configuration <span class="keyword">file</span>: ./config/jobservice/env</span><br><span class="line">Clearing the configuration <span class="keyword">file</span>: ./config/ui/private_key.pem</span><br><span class="line">Clearing the configuration <span class="keyword">file</span>: ./config/registry/root.crt</span><br><span class="line"><span class="keyword">Generated</span> configuration <span class="keyword">file</span>: ./config/ui/private_key.pem</span><br><span class="line"><span class="keyword">Generated</span> configuration <span class="keyword">file</span>: ./config/registry/root.crt</span><br><span class="line">The configuration files <span class="keyword">are</span> ready, please <span class="keyword">use</span> docker-compose <span class="keyword">to</span> <span class="keyword">start</span> the service.</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># docker-compose up -d 启动</span></span><br><span class="line"><span class="comment"># docker-compose ps 查看信息</span></span><br><span class="line"></span><br><span class="line">Name Command State Ports</span><br><span class="line"><span class="params">--------------------------------------------------------------------------------------------------------------------------------</span></span><br><span class="line">harbor-adminserver <span class="string">/harbor/harbor_adminserver</span> Up</span><br><span class="line">harbor-db docker-entrypoint.sh mysqld Up 3306/tcp</span><br><span class="line">harbor-jobservice <span class="string">/harbor/harbor_jobservice</span> Up</span><br><span class="line">harbor-log <span class="string">/bin/sh</span> -c crond &amp;&amp; rm -f <span class="string">...</span> Up 127.0.0.1<span class="function">:1514-</span>&gt;514/tcp</span><br><span class="line">harbor-ui <span class="string">/harbor/harbor_ui</span> Up</span><br><span class="line">nginx nginx -g daemon off; Up 0.0.0.0<span class="function">:443-</span>&gt;443/tcp, 0.0.0.0<span class="function">:4443-</span>&gt;4443/tcp, 0.0.0.0<span class="function">:5000-</span>&gt;80/tcp</span><br><span class="line">registry <span class="string">/entrypoint.sh</span> serve <span class="string">/etc/</span> <span class="string">...</span> Up 5000/tcp</span><br></pre></td></tr></table></figure>
+<p>访问ip:5000 就可以了<br>默认帐号密码admin/Harbor12345<br>然后创建用户和项目，注意区分公开还是私有。</p>
+<h4 id="2、修改存储目录"><a href="#2、修改存储目录" class="headerlink" title="2、修改存储目录"></a>2、修改存储目录</h4><p>默认情况下存在在/data目录，很多时候还是需要修改一下目录的。<br><figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="symbol">registry:</span></span><br><span class="line"><span class="symbol">    image:</span> vmware/registry:<span class="number">2.6</span><span class="number">.2</span>-photon</span><br><span class="line"><span class="symbol">    container_name:</span> registry</span><br><span class="line"><span class="symbol">    restart:</span> always</span><br><span class="line"><span class="symbol">    volumes:</span></span><br><span class="line">      - <span class="meta-keyword">/joyfs/</span>oam<span class="meta-keyword">/harbor/</span>registry:/storage:z</span><br><span class="line">      - .<span class="meta-keyword">/common/</span>config<span class="meta-keyword">/registry/</span>:<span class="meta-keyword">/etc/</span>registry/:z</span><br><span class="line">    ...</span><br><span class="line">    ...</span><br><span class="line"><span class="symbol">adminserver:</span></span><br><span class="line"><span class="symbol">    image:</span> vmware/harbor-adminserver:v1<span class="number">.2</span><span class="number">.2</span></span><br><span class="line"><span class="symbol">    container_name:</span> harbor-adminserver</span><br><span class="line"><span class="symbol">    env_file:</span></span><br><span class="line">      - .<span class="meta-keyword">/common/</span>config<span class="meta-keyword">/adminserver/</span>env</span><br><span class="line"><span class="symbol">    restart:</span> always</span><br><span class="line"><span class="symbol">    volumes:</span></span><br><span class="line">      - <span class="meta-keyword">/data/</span>config/:<span class="meta-keyword">/etc/</span>adminserver<span class="meta-keyword">/config/</span>:z</span><br><span class="line">      - <span class="meta-keyword">/data/</span>secretkey:<span class="meta-keyword">/etc/</span>adminserver/key:z</span><br><span class="line">      - <span class="meta-keyword">/joyfs/</span>oam<span class="meta-keyword">/harbor/</span>data/:<span class="meta-keyword">/data/</span>:z</span><br><span class="line">    ...</span><br><span class="line">    ...</span><br></pre></td></tr></table></figure></p>
+<h4 id="3、修改数据库为外置MySQL"><a href="#3、修改数据库为外置MySQL" class="headerlink" title="3、修改数据库为外置MySQL"></a>3、修改数据库为外置MySQL</h4><figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#docker exec -i -t 6e1e4b576315 bash</span></span><br><span class="line">在db container中：</span><br><span class="line"><span class="comment"># mysqldump -u root -p --databases registry &gt; registry.dump</span></span><br><span class="line">回到<span class="keyword">node</span><span class="title">，将dump</span>文件从container中copy出来：</span><br><span class="line"><span class="comment">#docker cp 6e1e4b576315:/root/registry.dump ./</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">cd common/templates/adminserver</span><br><span class="line">cp env env.bak</span><br><span class="line">vim env</span><br><span class="line"><span class="comment">#修改以下内容</span></span><br><span class="line"><span class="attribute">MYSQL_HOST</span>=x.x.x.x</span><br><span class="line"><span class="attribute">MYSQL_PORT</span>=3306</span><br><span class="line"><span class="attribute">MYSQL_USR</span>=new name</span><br><span class="line"><span class="attribute">MYSQL_PWD</span>=new password</span><br><span class="line"><span class="attribute">MYSQL_DATABASE</span>=registry</span><br><span class="line"><span class="built_in">..</span><span class="built_in">..</span></span><br><span class="line"><span class="attribute">RESET</span>=<span class="literal">true</span></span><br></pre></td></tr></table></figure>
+<p>docker-compose.yml删除 MySQL部分配置，包括proxy里面的- mysql。<br>不过需要注意需要删除 /data/config/config.json 文件。</p>
+<p>重启<br><figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">docker-compose <span class="built_in">stop</span></span><br><span class="line">./<span class="built_in">prepare</span></span><br><span class="line">docker-compose up -d</span><br></pre></td></tr></table></figure></p>
+<p>验证登录正常，OK！！！</p>
+<p><img src="http://img.mknight.cn/medivh/1555837828882.png"></p>
+<h2 id="三、推送镜像"><a href="#三、推送镜像" class="headerlink" title="三、推送镜像"></a>三、推送镜像</h2><p>1、检查是否包含镜像地址，如果不包含则执行第2步<br><img src="http://img.mknight.cn/medivh/1555838409977.png"></p>
+<p>2、增加仓库地址<br><figure class="highlight crystal"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">vim /usr/<span class="class"><span class="keyword">lib</span>/<span class="title">systemd</span>/<span class="title">system</span>/<span class="title">docker</span>.<span class="title">service</span></span></span><br><span class="line"></span><br><span class="line">ExecStart=<span class="regexp">/usr/bin</span><span class="regexp">/dockerd -H fd:/</span><span class="regexp">/ --containerd=/run</span><span class="regexp">/containerd/containerd</span>.sock --insecure-registry x.x.x.<span class="symbol">x:</span><span class="number">5000</span></span><br><span class="line">ExecReload=<span class="regexp">/bin/kill</span> -s HUP $MAINPID</span><br><span class="line">TimeoutSec=<span class="number">0</span></span><br><span class="line">RestartSec=<span class="number">2</span></span><br><span class="line">Restart=always</span><br></pre></td></tr></table></figure></p>
+<p>部分低版本的则是修改其他文件<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#vim</span>  /etc/docker/daemon.json</span><br><span class="line">&#123; <span class="string">"insecure-registries"</span>:[<span class="string">"ip:5000"</span>] &#125;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">systemctl daemon-reload</span></span><br><span class="line"><span class="attribute">systemctl restart docker</span></span><br></pre></td></tr></table></figure>
+<p>3、构建并推送<br><figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">docker</span> <span class="keyword">build </span>-t <span class="built_in">ip</span>:<span class="number">5000</span>/<span class="keyword">base/jdk </span>.</span><br><span class="line"><span class="symbol">docker</span> login <span class="built_in">ip</span>:<span class="number">5000</span> </span><br><span class="line"># 输入账号密码</span><br><span class="line"><span class="symbol">docker</span> <span class="keyword">push </span><span class="built_in">ip</span>:<span class="number">5000</span>/<span class="keyword">base/jdk</span></span><br></pre></td></tr></table></figure></p>
+<p>之后在浏览器检查是否正常即可。</p>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><p><a href="https://github.com/goharbor/harbor/blob/master/docs/installation_guide.md" target="_blank" rel="noopener">github</a></p>
+
+      
+    </div>
+
+    
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div></div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="medivh 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="medivh 支付宝">
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+    <div>
+    
+                
+<div style="text-align:center;color: #ccc;font-size:14px;">
+------ 本文结束 ------</div>
+<br>
+<div style="border: 1px solid black">
+<div style="margin-left:10px">
+<span style="font-weight:blod">版权声明</span>
+<br>
+<p style="font-size: 10px;line-height: 30px"><a href="http://www.mknight.cn" style="color:#258FC6">Medivh's Notes</a> by <a href="http://www.mknight.cn" style="color:#258FC6">Medivh</a> is licensed under a <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" style="color:#258FC6">Creative Commons BY-NC-ND 4.0 International License</a>.<br>
+由<a href="http://www.mknight.cn" style="color:#258FC6">Medivh</a>创作并维护的<a href="http://www.mknight.cn" style="color:#258FC6">Medivh's Notes</a>博客采用<a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" style="color:#258FC6">创作共用保留署名-非商业-禁止演绎4.0国际许可证</a>。<br>
+本文首发于<a href="http://www.mknight.cn" style="color:#258FC6">Medivh</a> 博客（ <a href="http://www.mknight.cn" style="color:#258FC6">http://www.mknight.cn</a> ），版权所有，侵权必究。</p>
+</div>
+</div>
+
+        
+    </div>
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/docker/" <i="" class="fa fa-tag"> docker</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/使用Cloudera部署和管理hadoop集群.html" rel="next" title="使用Cloudera部署和管理hadoop集群">
+                <i class="fa fa-chevron-left"></i> 使用Cloudera部署和管理hadoop集群
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/数据库操作审批规范.html" rel="prev" title="数据库操作审批规范">
+                数据库操作审批规范 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="http://img.mknight.cn/2018/1545104669394.png" alt="medivh">
+            
+              <p class="site-author-name" itemprop="name">medivh</p>
+              <p class="site-description motion-element" itemprop="description">运维的日常</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">54</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">4</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">30</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、简介"><span class="nav-number">1.</span> <span class="nav-text">一、简介</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、优点"><span class="nav-number">1.1.</span> <span class="nav-text">1、优点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、核心组件"><span class="nav-number">1.2.</span> <span class="nav-text">2、核心组件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、安装部署"><span class="nav-number">2.</span> <span class="nav-text">二、安装部署</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、环境要求"><span class="nav-number">2.1.</span> <span class="nav-text">1、环境要求</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Hardware"><span class="nav-number">2.1.1.</span> <span class="nav-text">Hardware</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Software"><span class="nav-number">2.1.2.</span> <span class="nav-text">Software</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Network-ports"><span class="nav-number">2.1.3.</span> <span class="nav-text">Network ports</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Docker-相关"><span class="nav-number">2.1.4.</span> <span class="nav-text">Docker 相关</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、安装方式"><span class="nav-number">2.2.</span> <span class="nav-text">2、安装方式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#在线安装"><span class="nav-number">2.2.1.</span> <span class="nav-text">在线安装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#离线安装"><span class="nav-number">2.2.2.</span> <span class="nav-text">离线安装</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3、安装"><span class="nav-number">2.3.</span> <span class="nav-text">3、安装</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#修改配置文件"><span class="nav-number">2.3.1.</span> <span class="nav-text">修改配置文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1、修改80端口为5000"><span class="nav-number">2.3.2.</span> <span class="nav-text">1、修改80端口为5000</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2、修改存储目录"><span class="nav-number">2.3.3.</span> <span class="nav-text">2、修改存储目录</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3、修改数据库为外置MySQL"><span class="nav-number">2.3.4.</span> <span class="nav-text">3、修改数据库为外置MySQL</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、推送镜像"><span class="nav-number">3.</span> <span class="nav-text">三、推送镜像</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#参考资料"><span class="nav-number">3.1.</span> <span class="nav-text">参考资料</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  <span>
+    <a target="_blank" href="https://beian.miit.gov.cn">京ICP备17063827号-1</a>
+  </span>
+  <span itemprop="copyrightYear"></span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">medivh</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+    <span title="站点总字数"></span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    
+    <span title="站点阅读时长"></span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv" title="总访客量">
+    	<span id="busuanzi_container_site_pv">
+        	本站访客数: <span id="busuanzi_value_site_uv"></span>
+   	 </span>
+    </span>
+  
+
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=6.6.0"></script>
+
+  <script src="/js/src/motion.js?v=6.6.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/affix.js?v=6.6.0"></script>
+
+  <script src="/js/src/schemes/pisces.js?v=6.6.0"></script>
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=6.6.0"></script>
+<script src="/js/src/post-details.js?v=6.6.0"></script>
+
+
+
+  
+
+
+  <script src="/js/src/bootstrap.js?v=6.6.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  
+  
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+
+  <script>
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(function (item) {
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'B1L35FebIXiGQu3MloNCxrCS-gzGzoHsz',
+        appKey: 'iQH7DjsnLwlvoMB58gpevWMC',
+        placeholder: 'Just go go',
+        avatar:'mm',
+        meta:guest,
+        pageSize:'10' || 10,
+        visitor: true
+    });
+  </script>
+
+
+
+
+  
+
+  <script>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

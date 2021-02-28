@@ -1,0 +1,1461 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=6.6.0" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.6.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="http://img.mknight.cn/2018/1545104669394.png?v=6.6.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="http://img.mknight.cn/2018/1545104669394.png?v=6.6.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.6.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '6.6.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="简介安装环境依赖1yum install erlang -y 安装服务1234cd /usr/src/wget http://www.rabbitmq.com/releases/rabbitmq-server/v3.6.4/rabbitmq-server-3.6.4-1.noarch.rpmyum install rabbitmq-server-3.6.4-1.noarch.rpm -y 启动测试">
+<meta name="keywords" content="RabbitMQ">
+<meta property="og:type" content="article">
+<meta property="og:title" content="RabbitMQ 集群部署">
+<meta property="og:url" content="https://xiajieok.gitee.io/RabbitMQ 集群部署.html">
+<meta property="og:site_name" content="Medivh&#39;s castle">
+<meta property="og:description" content="简介安装环境依赖1yum install erlang -y 安装服务1234cd /usr/src/wget http://www.rabbitmq.com/releases/rabbitmq-server/v3.6.4/rabbitmq-server-3.6.4-1.noarch.rpmyum install rabbitmq-server-3.6.4-1.noarch.rpm -y 启动测试">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://img.mknight.cn/medivh/1553065925609.png">
+<meta property="og:image" content="http://img.mknight.cn/medivh/1553065954361.png">
+<meta property="og:image" content="http://img.mknight.cn/medivh/1553069420891.png">
+<meta property="og:image" content="http://img.mknight.cn/medivh/1553066819130.png">
+<meta property="og:image" content="http://img.mknight.cn/medivh/1553075635396.png">
+<meta property="og:updated_time" content="2021-02-28T13:38:18.036Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="RabbitMQ 集群部署">
+<meta name="twitter:description" content="简介安装环境依赖1yum install erlang -y 安装服务1234cd /usr/src/wget http://www.rabbitmq.com/releases/rabbitmq-server/v3.6.4/rabbitmq-server-3.6.4-1.noarch.rpmyum install rabbitmq-server-3.6.4-1.noarch.rpm -y 启动测试">
+<meta name="twitter:image" content="http://img.mknight.cn/medivh/1553065925609.png">
+
+
+
+
+
+
+  <link rel="canonical" href="https://xiajieok.gitee.io/RabbitMQ 集群部署.html">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>RabbitMQ 集群部署 | Medivh's castle</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion .logo-line-before i { left: initial; }
+    .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Medivh's castle</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiajieok.gitee.io/RabbitMQ 集群部署.html">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="medivh">
+      <meta itemprop="description" content="运维的日常">
+      <meta itemprop="image" content="http://img.mknight.cn/2018/1545104669394.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Medivh's castle">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">RabbitMQ 集群部署
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2021-02-28 21:38:18" itemprop="dateCreated datePublished" datetime="2021-02-28T21:38:18+08:00">2021-02-28</time>
+            
+
+            
+          </span>
+         
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/RabbitMQ 集群部署.html#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/RabbitMQ 集群部署.html" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/RabbitMQ 集群部署.html" class="leancloud_visitors" data-flag-title="RabbitMQ 集群部署">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">Views：</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+            <div class="post-symbolscount">
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">本文字数：</span>
+                
+                <span title="本文字数"></span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长"></span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><h3 id="环境依赖"><a href="#环境依赖" class="headerlink" title="环境依赖"></a>环境依赖</h3><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum <span class="keyword">install</span> erlang -y</span><br></pre></td></tr></table></figure>
+<h3 id="安装服务"><a href="#安装服务" class="headerlink" title="安装服务"></a>安装服务</h3><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">cd /usr/src/</span><br><span class="line">wget http:<span class="comment">//www.rabbitmq.com/releases/rabbitmq-server/v3.6.4/rabbitmq-server-3.6.4-1.noarch.rpm</span></span><br><span class="line"></span><br><span class="line">yum install rabbitmq-server-<span class="number">3.6</span>.<span class="number">4</span>-<span class="number">1</span><span class="selector-class">.noarch</span><span class="selector-class">.rpm</span> -y</span><br></pre></td></tr></table></figure>
+<h3 id="启动测试"><a href="#启动测试" class="headerlink" title="启动测试"></a>启动测试</h3><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#启动服务</span></span><br><span class="line">service rabbitmq-server start</span><br><span class="line"><span class="comment">#查看服务状态</span></span><br><span class="line">service rabbitmq-server status</span><br></pre></td></tr></table></figure>
+<h2 id="配置管理"><a href="#配置管理" class="headerlink" title="配置管理"></a>配置管理</h2><h3 id="增加账号"><a href="#增加账号" class="headerlink" title="增加账号"></a>增加账号</h3><figure class="highlight nsis"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#增加</span></span><br><span class="line">rabbitmqctl  add_user  <span class="literal">admin</span>  <span class="string">'admin'</span></span><br><span class="line"><span class="comment">#角色分配</span></span><br><span class="line">rabbitmqctl  set_user_tags <span class="literal">admin</span> administrator</span><br></pre></td></tr></table></figure>
+<h3 id="vhost"><a href="#vhost" class="headerlink" title="vhost"></a>vhost</h3><p>运行多个vhost，以便于适用不同的业务需要，这样做既可以满足权限配置的要求，避免不同业务之间队列、交换机的命名冲突问题，</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#vhost</span> </span><br><span class="line">rabbitmqctl add_vhost personas</span><br><span class="line">rabbitmqctl set_permissions -<span class="selector-tag">p</span> personas joy <span class="string">'.*'</span> <span class="string">'.*'</span> <span class="string">'.*'</span></span><br></pre></td></tr></table></figure>
+<h3 id="管理界面"><a href="#管理界面" class="headerlink" title="管理界面"></a>管理界面</h3><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rabbitmq-plugins <span class="builtin-name">enable</span> rabbitmq_management</span><br></pre></td></tr></table></figure>
+<h2 id="集群部署"><a href="#集群部署" class="headerlink" title="集群部署"></a>集群部署</h2><h3 id="集群模式"><a href="#集群模式" class="headerlink" title="集群模式"></a>集群模式</h3><p>RabbitMQ 的 Cluster 集群模式一般分为两种，普通模式和镜像模式。</p>
+<p>普通模式：默认的集群模式，以两个节点（rabbit01、rabbit02）为例来进行说明。对于 Queue 来说，消息实体只存在于其中一个节点 rabbit01（或者 rabbit02），rabbit01 和 rabbit02 两个节点仅有相同的元数据，即队列的结构。当消息进入 rabbit01 节点的 Queue 后，consumer 从 rabbit02 节点消费时，RabbitMQ 会临时在 rabbit01、rabbit02 间进行消息传输，把 A 中的消息实体取出并经过 B 发送给 consumer。所以 consumer 应尽量连接每一个节点，从中取消息。即对于同一个逻辑队列，要在多个节点建立物理 Queue。否则无论 consumer 连 rabbit01 或 rabbit02，出口总在 rabbit01，会产生瓶颈。当 rabbit01 节点故障后，rabbit02 节点无法取到 rabbit01 节点中还未消费的消息实体。如果做了消息持久化，那么得等 rabbit01 节点恢复，然后才可被消费；如果没有持久化的话，就会产生消息丢失的现象。<br>镜像模式：将需要消费的队列变为镜像队列，存在于多个节点，这样就可以实现 RabbitMQ 的 HA 高可用性。作用就是消息实体会主动在镜像节点之间实现同步，而不是像普通模式那样，在 consumer 消费数据时临时读取。缺点就是，集群内部的同步通讯会占用大量的网络带宽。</p>
+<h3 id="节点类型"><a href="#节点类型" class="headerlink" title="节点类型"></a>节点类型</h3><ul>
+<li>RAM node：内存节点将所有的队列、交换机、绑定、用户、权限和 vhost 的元数据定义存储在内存中，好处是可以使得像交换机和队列声明等操作更加的快速。</li>
+<li>Disk node：将元数据存储在磁盘中，单节点系统只允许磁盘类型的节点，防止重启 RabbitMQ 的时候，丢失系统的配置信息。<blockquote>
+<p>RabbitMQ 要求在集群中至少有一个磁盘节点，所有其他节点可以是内存节点，当节点加入或者离开集群时，必须要将该变更通知到至少一个磁盘节点。如果集群中唯一的一个磁盘节点崩溃的话，集群仍然可以保持运行，但是无法进行其他操作（增删改查），直到节点恢复。<br>解决方案：设置两个磁盘节点，至少有一个是可用的，可以保存元数据的更改。</p>
+</blockquote>
+</li>
+</ul>
+<h3 id="认证方式"><a href="#认证方式" class="headerlink" title="认证方式"></a>认证方式</h3><p>通过Erlang Cookie，相当于共享秘钥的概念，长度任意，只要所有节点都一致即可。rabbitmq server在启动的时候，erlang VM会自动创建一个随机的cookie文件。cookie文件的位置： /var/lib/rabbitmq/.erlang.cookie 或者/root/.erlang.cookie。我们的为保证cookie的完全一致，采用从一个节点copy的方式，实现各个节点的cookie文件一致。</p>
+<p>注意该文件默认是400权限，修改后需要还原回去400。</p>
+<h3 id="集群组建"><a href="#集群组建" class="headerlink" title="集群组建"></a>集群组建</h3><p>首先保证所有节点都可以正常启动服务。</p>
+<h4 id="停止服务"><a href="#停止服务" class="headerlink" title="停止服务"></a>停止服务</h4><p>在所有节点执行以下操作，停止服务<br><figure class="highlight vbscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">service rabbitmq-<span class="built_in">server</span> <span class="keyword">stop</span></span><br></pre></td></tr></table></figure></p>
+<h4 id="集群启动"><a href="#集群启动" class="headerlink" title="集群启动"></a>集群启动</h4><p>1、所有节点执行以下操作，启动集群</p>
+<figure class="highlight axapta"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rabbitmq-<span class="keyword">server</span> -detached</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>-detached<br>Start the server process in the background. Note that this will cause the pid not to be written to the pid file.</p>
+</blockquote>
+<blockquote>
+<p>For example, runs RabbitMQ AMQP server in the background:<br>rabbitmq-server -detached</p>
+</blockquote>
+<p>该参数简单说就是后台启动，始终没理解和<code>service rabbitmq-server sart</code>的区别</p>
+<p>2、修改统一hosts文件<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">192<span class="selector-class">.168</span><span class="selector-class">.1</span><span class="selector-class">.233</span> <span class="selector-tag">r0</span></span><br><span class="line">192<span class="selector-class">.168</span><span class="selector-class">.1</span><span class="selector-class">.234</span> <span class="selector-tag">r1</span></span><br><span class="line">192<span class="selector-class">.168</span><span class="selector-class">.1</span><span class="selector-class">.232</span> <span class="selector-tag">r2</span></span><br><span class="line">192<span class="selector-class">.168</span><span class="selector-class">.1</span><span class="selector-class">.229</span> <span class="selector-tag">r3</span></span><br></pre></td></tr></table></figure></p>
+<p>3、同步.erlang.cookie文件<br>所有节点从r0机器分发 <code>/var/lib/rabbitmq/.erlang.cookie</code>。</p>
+<p>4、在其他节点服务器操作加入集群</p>
+<figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//默认是磁盘节点，如果是内存节点的话，需要加--ram参数</span></span><br><span class="line"></span><br><span class="line">rabbitmqctl stop_app</span><br><span class="line">rabbitmqctl join_cluster --ram rabbit<span class="meta">@r</span>0</span><br><span class="line">rabbitmqctl start_app</span><br><span class="line">rabbitmqctl stop_app</span><br><span class="line">rabbitmqctl join_cluster rabbit<span class="meta">@r</span>0</span><br><span class="line">rabbitmqctl start_app</span><br></pre></td></tr></table></figure>
+<h4 id="验证集群"><a href="#验证集群" class="headerlink" title="验证集群"></a>验证集群</h4><p>1、节点加入集群，此处使用的主机名意义和hosts中一个意义。<br><img src="http://img.mknight.cn/medivh/1553065925609.png"></p>
+<p>2、加入集群后，检查集群状态<br><img src="http://img.mknight.cn/medivh/1553065954361.png"></p>
+<p><img src="http://img.mknight.cn/medivh/1553069420891.png"></p>
+<h4 id="问题整理"><a href="#问题整理" class="headerlink" title="问题整理"></a>问题整理</h4><ul>
+<li><p>之前加入集群的时候总提示错误<code>rror: unable to connect to node rabbit@test_229: nodedown</code><br><img src="http://img.mknight.cn/medivh/1553066819130.png"><br>原因：在集群的所有机器都需要先执行<code>rabbitmq-server -detached</code></p>
+</li>
+<li><p>unable to connect to epmd (port 4369) on base_233: nxdomain (non-existing domain)</p>
+</li>
+</ul>
+<p>原因：未启用管理插件<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rabbitmq-plugins <span class="builtin-name">enable</span> rabbitmq_management</span><br></pre></td></tr></table></figure></p>
+<h4 id="集群节点操作"><a href="#集群节点操作" class="headerlink" title="集群节点操作"></a>集群节点操作</h4><p>节点恢复过程中把数据删掉很重要，恢复一单结点，再清数据<br>节点增加：<br><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1.</span> <span class="string">rabbitmq-server</span> <span class="bullet">-detached</span>   <span class="meta">---</span> <span class="string">.erlang.cooike的权限，400</span> <span class="string">属主rabbitmq</span></span><br><span class="line"><span class="number">2.</span> <span class="string">rabbitmqctl</span> <span class="string">stop_app</span></span><br><span class="line"><span class="number">3.</span> <span class="string">rabbitmqctl</span> <span class="string">join_cluster</span> <span class="bullet">--ram</span> <span class="string">rabbit@rabbitmq1</span></span><br><span class="line"><span class="number">4.</span> <span class="string">rabbitmqctl</span> <span class="string">start_app</span></span><br><span class="line"><span class="number">5.</span> <span class="string">rabbitmqctl</span>  <span class="string">cluster_status</span></span><br></pre></td></tr></table></figure></p>
+<p>节点删除<br><figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1.</span>  rabbitmq-server -detached</span><br><span class="line">以上为基础，正常运行的mq节点直接进行<span class="number">2</span>、<span class="number">3</span>两步；<span class="number">4</span>可省略或更改为rabbitmqctl stop</span><br><span class="line"><span class="number">2.</span> rabbitmqctl stop_app</span><br><span class="line"><span class="number">3.</span> rabbitmqctl reset </span><br><span class="line"><span class="number">4.</span> rabbitmqctl start_app</span><br></pre></td></tr></table></figure></p>
+<p>硬删除：<br>直接删掉集群中的某个节点：<br><figure class="highlight clean"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">rabbitmqctl forget_cluster_node   node_name</span><br><span class="line">``` </span><br><span class="line">由disc--&gt;ram</span><br></pre></td></tr></table></figure></p>
+<p>1.节点删除     rabbitmq-server -detached —rabbitctl stop_app—-    rabbitmqctl reset  （（–2.清除原数据（暂时备份到其他地方）–rabbitmqctl join_cluster –ram rabbit@rabbitmq1 ————    rabbitmqctl start_app））<br>2.清除原数据（暂时备份到其他地方）<br>3.节点增加<br><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">由disc--&gt;ram</span><br><span class="line">先恢复到单结点，重启，清数据</span><br><span class="line">加集群 </span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### 镜像队列</span><br><span class="line"></span><br><span class="line">#### 配置参数</span><br><span class="line"><span class="number">1</span>、在管理界面配置</span><br><span class="line">&lt;img src=<span class="string">"http://img.mknight.cn/medivh/1553134452790.png"</span> /&gt;</span><br><span class="line"></span><br><span class="line">* Virtual host： 可选参数，针对指定vhost下的queue进行设置</span><br><span class="line">* Name: policy的名称</span><br><span class="line">* Pattern: queue的匹配模式(正则表达式)</span><br><span class="line">* Definition：镜像定义，包括三个部分<span class="keyword">ha</span>-<span class="keyword">mode</span>, <span class="keyword">ha</span>-params, <span class="keyword">ha</span>-<span class="keyword">sync</span>-<span class="keyword">mode</span></span><br><span class="line"></span><br><span class="line">    * <span class="keyword">ha</span>-<span class="keyword">mode</span>:指明镜像队列的模式，有效值为 <span class="keyword">all</span>/exactly/nodes</span><br><span class="line">        * <span class="keyword">all</span>：表示在集群中所有的节点上进行镜像</span><br><span class="line">        * exactly：表示在指定个数的节点上进行镜像，节点的个数由<span class="keyword">ha</span>-params指定</span><br><span class="line">        * nodes：表示在指定的节点上进行镜像，节点名称通过<span class="keyword">ha</span>-params指定</span><br><span class="line">    * <span class="keyword">ha</span>-params：<span class="keyword">ha</span>-<span class="keyword">mode</span>模式需要用到的参数</span><br><span class="line">    * <span class="keyword">ha</span>-<span class="keyword">sync</span>-<span class="keyword">mode</span>：进行队列中消息的同步方式，有效值为automatic和manual</span><br><span class="line">* priority：可选参数，policy的优先级</span><br><span class="line"></span><br><span class="line"><span class="number">2</span>、任意节点命令行配置</span><br></pre></td></tr></table></figure></p>
+<p>rabbitmqctl set_policy ha-all “^” ‘{“ha-mode”:”all”}’<br>1</p>
+<p>// 命令行方式添加策略<br>// 策略名称为ha-allqueue,策略模式为 all 即复制到所有节点，包含新增节点，策略正则表达式为 “^” 表示所有匹配所有队列名称。<br>rabbitmqctl set_policy -p <vhost> ha-allqueue”^” ‘{“ha-mode”:”all”}’</vhost></p>
+<figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">这时候就变成多个节点了。</span><br><span class="line">&lt;img src=<span class="string">"http://img.mknight.cn/medivh/1553135352884.png"</span> /&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 负载均衡</span><br><span class="line">AProxy 是一个免费的负载均衡软件，可以运行于大部分主流的 Linux 操作系统上。</span><br><span class="line"></span><br><span class="line">HAProxy 提供了 L4(TCP) 和 L7(HTTP) 两种负载均衡能力，具备丰富的功能。HAProxy 的社区非常活跃，版本更新快速（最新稳定版 <span class="number">1.7</span><span class="number">.2</span> 于 <span class="number">2017</span>/<span class="number">01</span>/<span class="number">13</span> 推出）。最关键的是，HAProxy 具备媲美商用负载均衡器的性能和稳定性。它当前不仅仅是免费负载均衡软件的首选，更几乎成为了唯一选择。</span><br><span class="line"></span><br><span class="line">因为 RabbitMQ 本身不提供负载均衡，下面我们就搭建 HAProxy，用作 RabbitMQ 集群的负载均衡。</span><br></pre></td></tr></table></figure>
+<p>yum -y install haproxy<br>cp /etc/haproxy/haproxy.cfg /etc/haproxy/haproxy.cfg.bak<br>vim /etc/haproxy/haproxy.cfg</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">haproxy配置文件</span><br></pre></td></tr></table></figure>
+<p>global<br>    log     127.0.0.1  local0 info<br>    log     127.0.0.1  local1 notice<br>    daemon<br>    maxconn 4096</p>
+<p>defaults<br>    log     global<br>    mode    tcp<br>    option  tcplog<br>    option  dontlognull<br>    retries 3<br>    option  abortonclose<br>    maxconn 4096<br>    timeout connect  5000ms<br>    timeout client  3000ms<br>    timeout server  3000ms<br>    balance roundrobin</p>
+<p>listen private_monitoring<br>    bind    0.0.0.0:8100<br>    mode    http<br>    option  httplog<br>    stats   refresh  5s<br>    stats   uri  /stats<br>    stats   realm   Haproxy<br>    stats   auth  admin:admin</p>
+<p>listen rabbitmq_admin<br>    bind    0.0.0.0:8102<br>    server  r0 r0:15672<br>    server  r3 r3:15672</p>
+<p>listen rabbitmq_cluster<br>    bind    0.0.0.0:8101<br>    mode    tcp<br>    option  tcplog<br>    balance roundrobin<br>    timeout client  3h<br>    timeout server  3h<br>    server  r0  r0:5672  check  inter  5000  rise  2  fall  3<br>    server  r3  r3:5672  check  inter  5000  rise  2  fall  3<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">启动 haproxy</span><br></pre></td></tr></table></figure></p>
+<p>haproxy -f /etc/haproxy/haproxy.cfg<br><code>`</code><br>HAProxy 配置了三个地址：</p>
+<ul>
+<li><a href="http://r0:8100/stats：HAProxy" target="_blank" rel="noopener">http://r0:8100/stats：HAProxy</a> 负载均衡信息地址，账号密码：admin/admin。</li>
+<li><a href="http://r0:8101：RabbitMQ" target="_blank" rel="noopener">http://r0:8101：RabbitMQ</a> Server Web 管理界面（基于负载均衡）。</li>
+<li><a href="http://r0:8102：RabbitMQ" target="_blank" rel="noopener">http://r0:8102：RabbitMQ</a> Server 服务地址（基于负载均衡）。<br>通过访问<a href="http://r0:8100/stats，查看" target="_blank" rel="noopener">http://r0:8100/stats，查看</a> HAProxy 负载均衡信息：</li>
+</ul>
+<p>实际程序访问的端口为8101</p>
+<p>这样，haproxy就可以使用啦。<br><img src="http://img.mknight.cn/medivh/1553075635396.png"></p>
+
+      
+    </div>
+
+    
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div></div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="medivh 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="medivh 支付宝">
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+    <div>
+    
+                
+<div style="text-align:center;color: #ccc;font-size:14px;">
+------ 本文结束 ------</div>
+<br>
+<div style="border: 1px solid black">
+<div style="margin-left:10px">
+<span style="font-weight:blod">版权声明</span>
+<br>
+<p style="font-size: 10px;line-height: 30px"><a href="http://www.mknight.cn" style="color:#258FC6">Medivh's Notes</a> by <a href="http://www.mknight.cn" style="color:#258FC6">Medivh</a> is licensed under a <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" style="color:#258FC6">Creative Commons BY-NC-ND 4.0 International License</a>.<br>
+由<a href="http://www.mknight.cn" style="color:#258FC6">Medivh</a>创作并维护的<a href="http://www.mknight.cn" style="color:#258FC6">Medivh's Notes</a>博客采用<a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" style="color:#258FC6">创作共用保留署名-非商业-禁止演绎4.0国际许可证</a>。<br>
+本文首发于<a href="http://www.mknight.cn" style="color:#258FC6">Medivh</a> 博客（ <a href="http://www.mknight.cn" style="color:#258FC6">http://www.mknight.cn</a> ），版权所有，侵权必究。</p>
+</div>
+</div>
+
+        
+    </div>
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/RabbitMQ/" <i="" class="fa fa-tag"> RabbitMQ</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/Rsync+Inotify 实时同步.html" rel="next" title="Rsync+Inotify 实时同步">
+                <i class="fa fa-chevron-left"></i> Rsync+Inotify 实时同步
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/elasticsearch-dump 迁移es数据 （elasticdump）.html" rel="prev" title="elasticsearch-dump 迁移es数据 （elasticdump）">
+                elasticsearch-dump 迁移es数据 （elasticdump） <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="http://img.mknight.cn/2018/1545104669394.png" alt="medivh">
+            
+              <p class="site-author-name" itemprop="name">medivh</p>
+              <p class="site-description motion-element" itemprop="description">运维的日常</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">54</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">4</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">30</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装"><span class="nav-number">2.</span> <span class="nav-text">安装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#环境依赖"><span class="nav-number">2.1.</span> <span class="nav-text">环境依赖</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装服务"><span class="nav-number">2.2.</span> <span class="nav-text">安装服务</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#启动测试"><span class="nav-number">2.3.</span> <span class="nav-text">启动测试</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置管理"><span class="nav-number">3.</span> <span class="nav-text">配置管理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#增加账号"><span class="nav-number">3.1.</span> <span class="nav-text">增加账号</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#vhost"><span class="nav-number">3.2.</span> <span class="nav-text">vhost</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#管理界面"><span class="nav-number">3.3.</span> <span class="nav-text">管理界面</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#集群部署"><span class="nav-number">4.</span> <span class="nav-text">集群部署</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#集群模式"><span class="nav-number">4.1.</span> <span class="nav-text">集群模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#节点类型"><span class="nav-number">4.2.</span> <span class="nav-text">节点类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#认证方式"><span class="nav-number">4.3.</span> <span class="nav-text">认证方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#集群组建"><span class="nav-number">4.4.</span> <span class="nav-text">集群组建</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#停止服务"><span class="nav-number">4.4.1.</span> <span class="nav-text">停止服务</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#集群启动"><span class="nav-number">4.4.2.</span> <span class="nav-text">集群启动</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#验证集群"><span class="nav-number">4.4.3.</span> <span class="nav-text">验证集群</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#问题整理"><span class="nav-number">4.4.4.</span> <span class="nav-text">问题整理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#集群节点操作"><span class="nav-number">4.4.5.</span> <span class="nav-text">集群节点操作</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  <span>
+    <a target="_blank" href="https://beian.miit.gov.cn">京ICP备17063827号-1</a>
+  </span>
+  <span itemprop="copyrightYear"></span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">medivh</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+    <span title="站点总字数"></span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    
+    <span title="站点阅读时长"></span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv" title="总访客量">
+    	<span id="busuanzi_container_site_pv">
+        	本站访客数: <span id="busuanzi_value_site_uv"></span>
+   	 </span>
+    </span>
+  
+
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=6.6.0"></script>
+
+  <script src="/js/src/motion.js?v=6.6.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/affix.js?v=6.6.0"></script>
+
+  <script src="/js/src/schemes/pisces.js?v=6.6.0"></script>
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=6.6.0"></script>
+<script src="/js/src/post-details.js?v=6.6.0"></script>
+
+
+
+  
+
+
+  <script src="/js/src/bootstrap.js?v=6.6.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  
+  
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+
+  <script>
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(function (item) {
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'B1L35FebIXiGQu3MloNCxrCS-gzGzoHsz',
+        appKey: 'iQH7DjsnLwlvoMB58gpevWMC',
+        placeholder: 'Just go go',
+        avatar:'mm',
+        meta:guest,
+        pageSize:'10' || 10,
+        visitor: true
+    });
+  </script>
+
+
+
+
+  
+
+  <script>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

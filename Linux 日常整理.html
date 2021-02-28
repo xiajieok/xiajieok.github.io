@@ -1,0 +1,1421 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=6.6.0" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.6.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="http://img.mknight.cn/2018/1545104669394.png?v=6.6.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="http://img.mknight.cn/2018/1545104669394.png?v=6.6.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.6.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '6.6.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="时间同步the NTP socket is in use, exiting问题12345678[root@esx4 ~]# ntpdate ntp.api.bz21 Sep 14:39:09 ntpdate[24744]: the NTP socket is in use, exiting[root@esx4 ~]# service ntpd stopShutting down ntpd:">
+<meta name="keywords" content="linux">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux 日常整理">
+<meta property="og:url" content="https://xiajieok.gitee.io/Linux 日常整理.html">
+<meta property="og:site_name" content="Medivh&#39;s castle">
+<meta property="og:description" content="时间同步the NTP socket is in use, exiting问题12345678[root@esx4 ~]# ntpdate ntp.api.bz21 Sep 14:39:09 ntpdate[24744]: the NTP socket is in use, exiting[root@esx4 ~]# service ntpd stopShutting down ntpd:">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://img.mknight.cn/medivh/1551426333101.png">
+<meta property="og:image" content="http://img.mknight.cn/medivh/1551426435903.png">
+<meta property="og:updated_time" content="2021-02-28T13:38:18.030Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Linux 日常整理">
+<meta name="twitter:description" content="时间同步the NTP socket is in use, exiting问题12345678[root@esx4 ~]# ntpdate ntp.api.bz21 Sep 14:39:09 ntpdate[24744]: the NTP socket is in use, exiting[root@esx4 ~]# service ntpd stopShutting down ntpd:">
+<meta name="twitter:image" content="http://img.mknight.cn/medivh/1551426333101.png">
+
+
+
+
+
+
+  <link rel="canonical" href="https://xiajieok.gitee.io/Linux 日常整理.html">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>Linux 日常整理 | Medivh's castle</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion .logo-line-before i { left: initial; }
+    .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Medivh's castle</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiajieok.gitee.io/Linux 日常整理.html">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="medivh">
+      <meta itemprop="description" content="运维的日常">
+      <meta itemprop="image" content="http://img.mknight.cn/2018/1545104669394.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Medivh's castle">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Linux 日常整理
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2021-02-28 21:38:18" itemprop="dateCreated datePublished" datetime="2021-02-28T21:38:18+08:00">2021-02-28</time>
+            
+
+            
+          </span>
+         
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/Linux 日常整理.html#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/Linux 日常整理.html" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/Linux 日常整理.html" class="leancloud_visitors" data-flag-title="Linux 日常整理">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">Views：</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+            <div class="post-symbolscount">
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">本文字数：</span>
+                
+                <span title="本文字数"></span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长"></span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="时间同步"><a href="#时间同步" class="headerlink" title="时间同步"></a>时间同步</h3><h4 id="the-NTP-socket-is-in-use-exiting问题"><a href="#the-NTP-socket-is-in-use-exiting问题" class="headerlink" title="the NTP socket is in use, exiting问题"></a>the NTP socket is in use, exiting问题</h4><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[root@esx4 ~]# ntpdate ntp.api.bz</span><br><span class="line">21 Sep 14:39:09 ntpdate[24744]: the<span class="built_in"> NTP </span>socket is <span class="keyword">in</span> use, exiting</span><br><span class="line"></span><br><span class="line">[root@esx4 ~]#<span class="built_in"> service </span>ntpd stop</span><br><span class="line">Shutting down ntpd:                                        [  OK  ]</span><br><span class="line"></span><br><span class="line">[root@esx4 ~]# ntpdate 0.debian.pool.ntp.org</span><br><span class="line">21 Sep 15:22:43 ntpdate[25723]: <span class="keyword">step</span> time<span class="built_in"> server </span>114.80.81.1 offset 2312.159684 sec</span><br></pre></td></tr></table></figure>
+<h4 id="同步crontab"><a href="#同步crontab" class="headerlink" title="同步crontab"></a>同步crontab</h4><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo <span class="string">"59 23 * * * /usr/sbin/ntpdate 0.debian.pool.ntp.org &gt;&gt; /var/log/time.log &amp;&amp; hwclock --systohc 2&gt;&amp;1"</span> <span class="meta">&gt;&gt; </span>/etc/crontab</span><br></pre></td></tr></table></figure>
+<h3 id="磁盘"><a href="#磁盘" class="headerlink" title="磁盘"></a>磁盘</h3><h4 id="大于2T的分区"><a href="#大于2T的分区" class="headerlink" title="大于2T的分区"></a>大于2T的分区</h4><figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">parted  <span class="string">/dev/sdb</span></span><br><span class="line">mklabel gpt --建立gpt标签</span><br><span class="line">mkpart primary 0% 100%  （开始和终止位置）</span><br><span class="line">print   查看结果</span><br><span class="line"><span class="keyword">quit</span> 退出</span><br><span class="line"></span><br><span class="line">mkfs.ext4 <span class="string">/dev/sdb</span></span><br><span class="line"></span><br><span class="line">mkdir <span class="string">/data</span></span><br><span class="line">mount  <span class="string">/dev/sdb</span> <span class="string">/data</span></span><br></pre></td></tr></table></figure>
+<h4 id="UUID"><a href="#UUID" class="headerlink" title="UUID"></a>UUID</h4><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">[root@hadoop01-bj-a src]# blk</span><br><span class="line">blkdeactivate  blkdiscard     blkid</span><br><span class="line">[root@hadoop01-bj-a src]# blkid</span><br><span class="line">/dev/vda1: <span class="attribute">UUID</span>=<span class="string">"976105f5-f402-456c-aadd-50de49ff88f9"</span> <span class="attribute">TYPE</span>=<span class="string">"ext4"</span></span><br><span class="line">/dev/vdb1: <span class="attribute">UUID</span>=<span class="string">"7f7dfded-4bbd-4a38-b823-1ddf904be9db"</span> <span class="attribute">TYPE</span>=<span class="string">"ext4"</span></span><br><span class="line">[root@hadoop01-bj-a src]# cat /etc/fstab</span><br><span class="line"></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># /etc/fstab</span></span><br><span class="line"><span class="comment"># Created by anaconda on Thu Aug 17 07:38:21 2017</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># Accessible filesystems, by reference, are maintained under '/dev/disk'</span></span><br><span class="line"><span class="comment"># See man pages fstab(5), findfs(8), mount(8) and/or blkid(8) for more info</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="attribute">UUID</span>=976105f5-f402-456c-aadd-50de49ff88f9 /                       ext4    defaults        1 1</span><br><span class="line"><span class="attribute">UUID</span>=976105f5-f402-456c-aadd-50de49ff88f9 /opt                    ext4    defaults        0 0</span><br></pre></td></tr></table></figure>
+<h3 id="JDK"><a href="#JDK" class="headerlink" title="JDK"></a>JDK</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"><span class="built_in">cd</span> /usr/src/ &amp;&amp; tar -zxvf ./jre-8u191-linux-x64.tar.gz -C /usr/<span class="built_in">local</span></span><br><span class="line">ln -s /usr/<span class="built_in">local</span>/jdk1.8.0_91/ /usr/<span class="built_in">local</span>/java</span><br><span class="line"><span class="built_in">echo</span> <span class="string">'</span></span><br><span class="line"><span class="string">#JDK</span></span><br><span class="line"><span class="string">############################################################</span></span><br><span class="line"><span class="string">export JAVA_HOME=/usr/local/java</span></span><br><span class="line"><span class="string">export PATH=$JAVA_HOME/bin:$PATH</span></span><br><span class="line"><span class="string">############################################################</span></span><br><span class="line"><span class="string">'</span> &gt;&gt; /etc/profile</span><br><span class="line"><span class="built_in">source</span> /etc/profile</span><br><span class="line">java -version</span><br></pre></td></tr></table></figure>
+<h3 id="监控"><a href="#监控" class="headerlink" title="监控"></a>监控</h3><figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">cd</span> /usr/src/ &amp;&amp; wget 10.110.1.18/<span class="keyword">open</span>-falcon-agnt.tar.gz &amp;&amp; tar -xvf <span class="keyword">open</span>-falcon-agnt.tar.gz -C /usr/<span class="keyword">local</span> &amp;&amp; chmod 755 /usr/<span class="keyword">local</span>/<span class="keyword">open</span>-falcon -R  &amp;&amp; <span class="keyword">cd</span>   /usr/<span class="keyword">local</span>/<span class="keyword">open</span>-falcon</span><br><span class="line">./<span class="keyword">open</span>-falcon start agent</span><br></pre></td></tr></table></figure>
+<h3 id="name-or-service-not-known"><a href="#name-or-service-not-known" class="headerlink" title="name or service not known"></a>name or service not known</h3><p>配置jumpserver发邮件的时候提示<code>name or service not known</code>。<br>检查发现能ping通<code>smtp.exmail.qq.com</code>，但是不知道为啥发不出邮件</p>
+<p>使用以下命令，然后加入hosts文件,即可<br><img src="http://img.mknight.cn/medivh/1551426333101.png"><br><img src="http://img.mknight.cn/medivh/1551426435903.png"></p>
+<h3 id="查看文件编码"><a href="#查看文件编码" class="headerlink" title="查看文件编码"></a>查看文件编码</h3><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">vim </span><br><span class="line"></span><br><span class="line">:<span class="builtin-name">set</span> fileencoding</span><br></pre></td></tr></table></figure>
+<h3 id="find"><a href="#find" class="headerlink" title="find"></a>find</h3><figure class="highlight excel"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br></pre></td><td class="code"><pre><span class="line">#查找<span class="number">30</span>天以前的文件</span><br><span class="line"><span class="built_in">find</span> . -name <span class="string">"*.png"</span> -ctime +<span class="number">1</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">find</span> -name april*                      在当前目录下查找以april开始的文件</span><br><span class="line"><span class="built_in">find</span> -name april* fprint file        在当前目录下查找以april开始的文件，并把结果输出到file中</span><br><span class="line"><span class="built_in">find</span> -name ap* -o -name may* 查找以ap或may开头的文件</span><br><span class="line"><span class="built_in">find</span> /mnt -name tom.txt -ftype vfat 在/mnt下查找名称为tom.txt且文件系统类型为vfat的文件</span><br><span class="line"><span class="built_in">find</span> /mnt -name t.txt ! -ftype vfat   在/mnt下查找名称为tom.txt且文件系统类型不为vfat的文件</span><br><span class="line"><span class="built_in">find</span> /tmp -name wa* -<span class="built_in">type</span> l           在/tmp下查找名为wa开头且类型为符号链接的文件</span><br><span class="line"><span class="built_in">find</span> /home -mtime -<span class="number">2</span>                 在/home下查最近两天内改动过的文件</span><br><span class="line"><span class="built_in">find</span> /home   -atime -<span class="number">1</span>                  查<span class="number">1</span>天之内被存取过的文件</span><br><span class="line"><span class="built_in">find</span> /home -mmin   +<span class="number">60</span>                  在/home下查<span class="number">60</span>分钟前改动过的文件</span><br><span class="line"><span class="built_in">find</span> /home -amin +<span class="number">30</span>                  查最近<span class="number">30</span>分钟前被存取过的文件</span><br><span class="line"><span class="built_in">find</span> /home -newer tmp.txt             在/home下查更新时间比tmp.txt近的文件或目录</span><br><span class="line"><span class="built_in">find</span> /home -anewer tmp.txt            在/home下查存取时间比tmp.txt近的文件或目录</span><br><span class="line"><span class="built_in">find</span> /home -used -<span class="number">2</span>                  列出文件或目录被改动过之后，在<span class="number">2</span>日内被存取过的文件或目录</span><br><span class="line"><span class="built_in">find</span> /home -user cnscn                列出/home目录内属于用户cnscn的文件或目录</span><br><span class="line"><span class="built_in">find</span> /home -uid +<span class="number">501</span>                 列出/home目录内用户的识别码大于<span class="number">501</span>的文件或目录</span><br><span class="line"><span class="built_in">find</span> /home -group cnscn              列出/home内组为cnscn的文件或目录</span><br><span class="line"><span class="built_in">find</span> /home -gid <span class="number">501</span>                   列出/home内组id为<span class="number">501</span>的文件或目录</span><br><span class="line"><span class="built_in">find</span> /home -nouser                    列出/home内不属于本地用户的文件或目录</span><br><span class="line"><span class="built_in">find</span> /home -nogroup                   列出/home内不属于本地组的文件或目录</span><br><span class="line"><span class="built_in">find</span> /home   -name tmp.txt   -maxdepth <span class="number">4</span> 列出/home内的tmp.txt 查时深度最多为<span class="number">3</span>层</span><br><span class="line"><span class="built_in">find</span> /home -name tmp.txt -mindepth <span class="number">3</span> 从第<span class="number">2</span>层开始查</span><br><span class="line"><span class="built_in">find</span> /home -empty                     查找大小为<span class="number">0</span>的文件或空目录</span><br><span class="line"><span class="built_in">find</span> /home -size +<span class="number">512</span>k               查大于<span class="number">512</span>k的文件</span><br><span class="line"><span class="built_in">find</span> /home -size -<span class="number">512</span>k               查小于<span class="number">512</span>k的文件</span><br><span class="line"><span class="built_in">find</span> /home -links +<span class="number">2</span>                 查硬连接数大于<span class="number">2</span>的文件或目录</span><br><span class="line"><span class="built_in">find</span> /home -perm <span class="number">0700</span>                查权限为<span class="number">700</span>的文件或目录</span><br><span class="line"><span class="built_in">find</span> /tmp -name tmp.txt -exec cat &#123;&#125; /;</span><br><span class="line"><span class="built_in">find</span> /tmp -name tmp.txt -ok rm &#123;&#125; /;</span><br><span class="line"></span><br><span class="line"><span class="built_in">find</span>   / -amin   -<span class="number">10</span>       # 查找在系统中最后<span class="number">10</span>分钟访问的文件</span><br><span class="line"><span class="built_in">find</span>   / -atime -<span class="number">2</span>         # 查找在系统中最后<span class="number">48</span>小时访问的文件</span><br><span class="line"><span class="built_in">find</span>   / -empty              # 查找在系统中为空的文件或者文件夹</span><br><span class="line"><span class="built_in">find</span>   / -group cat        # 查找在系统中属于 groupcat的文件</span><br><span class="line"><span class="built_in">find</span>   / -mmin -<span class="number">5</span>         # 查找在系统中最后<span class="number">5</span>分钟里修改过的文件</span><br><span class="line"><span class="built_in">find</span>   / -mtime -<span class="number">1</span>        #查找在系统中最后<span class="number">24</span>小时里修改过的文件</span><br><span class="line"><span class="built_in">find</span>   / -nouser             #查找在系统中属于作废用户的文件</span><br><span class="line"><span class="built_in">find</span>   / -user   fred       #查找在系统中属于FRED这个用户的文件</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">-name filename             #查找名为filename的文件</span><br><span class="line">-perm                       #按执行权限来查找</span><br><span class="line">-user   username            #按文件属主来查找</span><br><span class="line">-group groupname            #按组来查找</span><br><span class="line">-mtime -<span class="built_in">n</span> +<span class="built_in">n</span>               #按文件更改时间来查找文件，-<span class="built_in">n</span>指<span class="built_in">n</span>天以内，+<span class="built_in">n</span>指<span class="built_in">n</span>天以前</span><br><span class="line">-atime   -<span class="built_in">n</span> +<span class="built_in">n</span>              #按文件访问时间来查</span><br><span class="line">-perm                        #按执行权限来查找</span><br><span class="line">-user   username            #按文件属主来查找</span><br><span class="line">-group groupname            #按组来查找</span><br><span class="line">-mtime -<span class="built_in">n</span> +<span class="built_in">n</span>               #按文件更改时间来查找文件，-<span class="built_in">n</span>指<span class="built_in">n</span>天以内，+<span class="built_in">n</span>指<span class="built_in">n</span>天以前</span><br><span class="line">-atime   -<span class="built_in">n</span> +<span class="built_in">n</span>              #按文件访问时间来查找文件，-<span class="built_in">n</span>指<span class="built_in">n</span>天以内，+<span class="built_in">n</span>指<span class="built_in">n</span>天以前 </span><br><span class="line">-ctime   -<span class="built_in">n</span> +<span class="built_in">n</span>              #按文件创建时间来查找文件，-<span class="built_in">n</span>指<span class="built_in">n</span>天以内，+<span class="built_in">n</span>指<span class="built_in">n</span>天以前 </span><br><span class="line">-nogroup                    #查无有效属组的文件，即文件的属组在/etc/groups中不存在</span><br><span class="line">-nouser                     #查无有效属主的文件，即文件的属主在/etc/passwd中不存</span><br><span class="line">-newer <span class="symbol">f1</span> !<span class="symbol">f2</span>              找文件，-<span class="built_in">n</span>指<span class="built_in">n</span>天以内，+<span class="built_in">n</span>指<span class="built_in">n</span>天以前 </span><br><span class="line">-ctime   -<span class="built_in">n</span> +<span class="built_in">n</span>              #按文件创建时间来查找文件，-<span class="built_in">n</span>指<span class="built_in">n</span>天以内，+<span class="built_in">n</span>指<span class="built_in">n</span>天以前 </span><br><span class="line">-nogroup                    #查无有效属组的文件，即文件的属组在/etc/groups中不存在</span><br><span class="line">-nouser                     #查无有效属主的文件，即文件的属主在/etc/passwd中不存</span><br><span class="line">-newer <span class="symbol">f1</span> !<span class="symbol">f2</span>              #查更改时间比<span class="symbol">f1</span>新但比<span class="symbol">f2</span>旧的文件</span><br><span class="line">-<span class="built_in">type</span>    b/d/c/p/l/f        #查是块设备、目录、字符设备、管道、符号链接、普通文件</span><br><span class="line">-size     <span class="built_in">n</span>[c]              #查长度为<span class="built_in">n</span>块[或<span class="built_in">n</span>字节]的文件</span><br><span class="line">-depth                      #使查找在进入子目录前先行查找完本目录</span><br><span class="line">-fstype                     #查更改时间比<span class="symbol">f1</span>新但比<span class="symbol">f2</span>旧的文件</span><br><span class="line">-<span class="built_in">type</span>    b/d/c/p/l/f        #查是块设备、目录、字符设备、管道、符号链接、普通文件</span><br><span class="line">-size     <span class="built_in">n</span>[c]              #查长度为<span class="built_in">n</span>块[或<span class="built_in">n</span>字节]的文件</span><br><span class="line">-depth                      #使查找在进入子目录前先行查找完本目录</span><br><span class="line">-fstype                     #查位于某一类型文件系统中的文件，这些文件系统类型通常可 在/etc/fstab中找到</span><br><span class="line">-mount                      #查文件时不跨越文件系统mount点</span><br><span class="line">-follow                     #如果遇到符号链接文件，就跟踪链接所指的文件</span><br><span class="line">-cpio                   #查位于某一类型文件系统中的文件，这些文件系统类型通常可 在/etc/fstab中找到</span><br><span class="line">-mount                      #查文件时不跨越文件系统mount点</span><br><span class="line">-follow                     #如果遇到符号链接文件，就跟踪链接所指的文件</span><br><span class="line">-cpio                       #对匹配的文件使用cpio命令，将他们备份到磁带设备中</span><br><span class="line">-prune                      #忽略某个目录</span><br></pre></td></tr></table></figure>
+<h3 id="日期"><a href="#日期" class="headerlink" title="日期"></a>日期</h3><figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 获取昨天 </span></span><br><span class="line"><span class="built_in">date</span> -d 'yesterday'  <span class="comment"># 或 date -d 'last day' </span></span><br><span class="line"><span class="comment"># 获取明天 </span></span><br><span class="line"><span class="built_in">date</span> -d 'tomorrow'   <span class="comment"># 或 date -d 'next day' </span></span><br><span class="line"><span class="comment"># 获取上个月 </span></span><br><span class="line"><span class="built_in">date</span> -d '<span class="keyword">last</span> <span class="built_in">month</span>' </span><br><span class="line"><span class="comment"># 获取下个月 </span></span><br><span class="line"><span class="built_in">date</span> -d 'next <span class="built_in">month</span>' </span><br><span class="line"><span class="comment"># 获取上一年 </span></span><br><span class="line"><span class="built_in">date</span> -d ’<span class="keyword">last</span> <span class="built_in">year</span>' </span><br><span class="line"><span class="comment"># 获取下一年 </span></span><br><span class="line"><span class="built_in">date</span> -d 'next <span class="built_in">year</span>' </span><br><span class="line">此外你可以获取多天前，多天后，多个月前，多个月后，多年前或多年后 </span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 三年前 </span></span><br><span class="line"><span class="built_in">date</span> -d '<span class="number">3</span> <span class="built_in">year</span> ago' </span><br><span class="line"><span class="comment"># 五年后 </span></span><br><span class="line"><span class="built_in">date</span> -d '<span class="number">-5</span> <span class="built_in">year</span> ago' </span><br><span class="line"><span class="comment"># 两天后 </span></span><br><span class="line"><span class="built_in">date</span> -d '<span class="number">-2</span> <span class="built_in">day</span> ago' </span><br><span class="line"><span class="comment"># 一个月前 </span></span><br><span class="line"><span class="built_in">date</span> -d '<span class="number">1</span> <span class="built_in">month</span> ago'</span><br></pre></td></tr></table></figure>
+<h3 id="sed"><a href="#sed" class="headerlink" title="sed"></a>sed</h3><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">#查找指定日期的内容</span><br><span class="line">sed -n <span class="string">'/^2019-03-14/p'</span> xxx<span class="selector-class">.info</span><span class="selector-class">.log</span> &gt; new.log</span><br><span class="line"></span><br><span class="line">#删除指定行</span><br><span class="line">sed -<span class="selector-tag">i</span> <span class="string">'1,14430d'</span> xx<span class="selector-class">.info</span><span class="selector-class">.log</span></span><br><span class="line"></span><br><span class="line">#删除指定行，例如第<span class="number">5</span>行</span><br><span class="line">sed -<span class="selector-tag">i</span> <span class="string">'5 d'</span> test.txt</span><br><span class="line"></span><br><span class="line">#删除首行</span><br><span class="line">sed -<span class="selector-tag">i</span> <span class="string">'1d'</span> test.txt</span><br><span class="line"></span><br><span class="line">#删除末行</span><br><span class="line">sed -<span class="selector-tag">i</span> <span class="string">'$d'</span> test.txt</span><br><span class="line"></span><br><span class="line">#删除空行</span><br><span class="line">sed -<span class="selector-tag">i</span> <span class="string">'/^$/d'</span> test.txt</span><br><span class="line"></span><br><span class="line">#剔除空格</span><br><span class="line">sed -<span class="selector-tag">i</span> <span class="string">'s/[ ]*//g'</span> test.txt</span><br><span class="line"></span><br><span class="line">#删除车符</span><br><span class="line">sed -<span class="selector-tag">i</span> <span class="string">'s/^M//g'</span> test.txt</span><br><span class="line"></span><br><span class="line">#删除指定字段的下一行</span><br><span class="line">sed -<span class="selector-tag">i</span> <span class="string">'/test/&#123;n;d&#125;'</span> test<span class="selector-class">.txt</span>  #匹配到test字段</span><br><span class="line"></span><br><span class="line">#删除指定字段的上一行</span><br><span class="line">sed -<span class="selector-tag">i</span> -e :<span class="selector-tag">a</span> -e <span class="string">'$!N;s/.*n(.*test)/1/;ta'</span> -e <span class="string">'P;d'</span> test<span class="selector-class">.txt</span>    #匹配到test字段</span><br></pre></td></tr></table></figure>
+<p>CentOS的启动出错：</p>
+<p>当执行 ifup ens33</p>
+<p>出现错误：Error:Connection activation failed: No suitable device found for this connection</p>
+<p>解决办法：</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">chkconfig NetworkManager off</span><br><span class="line">chkconfig<span class="built_in"> network </span>on</span><br><span class="line">service NetworkManager stop</span><br><span class="line">service<span class="built_in"> network </span>start</span><br></pre></td></tr></table></figure>
+<h3 id="切割大文件"><a href="#切割大文件" class="headerlink" title="切割大文件"></a>切割大文件</h3><figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">split</span> -b <span class="number">100</span>m <span class="number">1111.</span><span class="built_in">log</span> (按照字节分隔)</span><br><span class="line"><span class="built_in">split</span> -l <span class="number">1000000</span> <span class="number">1111.</span><span class="built_in">log</span>(按照行数分隔)</span><br></pre></td></tr></table></figure>
+<h3 id="journalctl日志文件清理"><a href="#journalctl日志文件清理" class="headerlink" title="journalctl日志文件清理"></a>journalctl日志文件清理</h3><figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">journalctl <span class="comment">--disk-usage</span></span><br><span class="line">Journals take up <span class="number">3.8</span>G <span class="keyword">on</span> disk.</span><br></pre></td></tr></table></figure>
+<p>手动删除<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">journalctl <span class="attribute">--vacuum-time</span>=7d</span><br><span class="line">journalctl <span class="attribute">--vacuum-size</span>=1024M</span><br></pre></td></tr></table></figure></p>
+<p>控制目录大小<br><figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">/etc/systemd/journald.conf</span><br><span class="line">SystemMaxUse=1G</span><br></pre></td></tr></table></figure></p>
+<p>如果不生效，重启该服务<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl kill <span class="attribute">--kill-who</span>=main <span class="attribute">--signal</span>=SIGUSR2 systemd-journald.service</span><br></pre></td></tr></table></figure></p>
+<p>校验是否正常<br><figure class="highlight ada"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">journalctl <span class="comment">--verify</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="安装pip"><a href="#安装pip" class="headerlink" title="安装pip"></a>安装pip</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">yum -y <span class="keyword">install</span> epel-<span class="keyword">release</span></span><br><span class="line"></span><br><span class="line">yum -y <span class="keyword">install</span> python-pip</span><br></pre></td></tr></table></figure>
+<h3 id="Nginx-代理"><a href="#Nginx-代理" class="headerlink" title="Nginx 代理"></a>Nginx 代理</h3><p>作用：给爬虫服务器做代理服务器</p>
+<p>遇到的问题：访问部分机器的时候出现少量504错误</p>
+<p>解决：<br>    <figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">fastcgi_buffers <span class="number">8</span> <span class="number">128</span>k;</span><br><span class="line">send_timeout <span class="number">60</span>;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line">#user  nobody;</span><br><span class="line">worker_processes  auto;</span><br><span class="line"></span><br><span class="line">#error_log  logs/error.log;</span><br><span class="line">#error_log  logs/error.log  notice;</span><br><span class="line">#error_log  logs/error.log  info;</span><br><span class="line"></span><br><span class="line">#pid        logs/nginx.pid;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">events &#123;</span><br><span class="line">    worker_connections  65535;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">http &#123;</span><br><span class="line">    include       mime.types;</span><br><span class="line">    default_type  application/octet-stream;</span><br><span class="line"></span><br><span class="line">    #log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '</span><br><span class="line">    #                  '$status $body_bytes_sent "$http_referer" '</span><br><span class="line">    #                  '"$http_user_agent" "$http_x_forwarded_for"';</span><br><span class="line"></span><br><span class="line">    #access_log  logs/access.log  main;</span><br><span class="line"></span><br><span class="line">    sendfile        on;</span><br><span class="line">    #tcp_nopush     on;</span><br><span class="line"></span><br><span class="line">    #keepalive_timeout  0;</span><br><span class="line">    keepalive_timeout  65;</span><br><span class="line">    fastcgi_buffers 8 128k;</span><br><span class="line">    send_timeout 60;</span><br><span class="line">    gzip  on;</span><br><span class="line"></span><br><span class="line">   <span class="attribute">server&#123;</span></span><br><span class="line">        listen   2019;</span><br><span class="line">        resolver 100.100.2.136;</span><br><span class="line">        <span class="attribute">proxy_connect;</span></span><br><span class="line">        proxy_connect_allow            443 563;</span><br><span class="line">        proxy_connect_connect_timeout  10s;</span><br><span class="line">        proxy_connect_read_timeout     10s;</span><br><span class="line">        proxy_connect_send_timeout     10s;</span><br><span class="line">        location / &#123;</span><br><span class="line">                proxy_set_header Host $host;</span><br><span class="line">		        proxy_pass	http://$http_host$request_uri;</span><br><span class="line">        	&#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="初试化"><a href="#初试化" class="headerlink" title="初试化"></a>初试化</h3><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">chown root:root /etc/passwd /etc/shadow /etc<span class="built_in">/group </span>/etc/gshadow</span><br><span class="line">chmod 0644 /etc<span class="built_in">/group </span> </span><br><span class="line">chmod 0644 /etc/passwd  </span><br><span class="line">chmod 0400 /etc/shadow  </span><br><span class="line">chmod 0400 /etc/gshadow</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div></div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="medivh 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="medivh 支付宝">
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+    <div>
+    
+                
+<div style="text-align:center;color: #ccc;font-size:14px;">
+------ 本文结束 ------</div>
+<br>
+<div style="border: 1px solid black">
+<div style="margin-left:10px">
+<span style="font-weight:blod">版权声明</span>
+<br>
+<p style="font-size: 10px;line-height: 30px"><a href="http://www.mknight.cn" style="color:#258FC6">Medivh's Notes</a> by <a href="http://www.mknight.cn" style="color:#258FC6">Medivh</a> is licensed under a <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" style="color:#258FC6">Creative Commons BY-NC-ND 4.0 International License</a>.<br>
+由<a href="http://www.mknight.cn" style="color:#258FC6">Medivh</a>创作并维护的<a href="http://www.mknight.cn" style="color:#258FC6">Medivh's Notes</a>博客采用<a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" style="color:#258FC6">创作共用保留署名-非商业-禁止演绎4.0国际许可证</a>。<br>
+本文首发于<a href="http://www.mknight.cn" style="color:#258FC6">Medivh</a> 博客（ <a href="http://www.mknight.cn" style="color:#258FC6">http://www.mknight.cn</a> ），版权所有，侵权必究。</p>
+</div>
+</div>
+
+        
+    </div>
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/linux/" <i="" class="fa fa-tag"> linux</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/H3C wap712c Fit to Fat.html" rel="next" title="H3C wap712c Fit to Fat">
+                <i class="fa fa-chevron-left"></i> H3C wap712c Fit to Fat
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/Jenkins 2.121 部署.html" rel="prev" title="Jenkins 2.121 部署">
+                Jenkins 2.121 部署 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="http://img.mknight.cn/2018/1545104669394.png" alt="medivh">
+            
+              <p class="site-author-name" itemprop="name">medivh</p>
+              <p class="site-description motion-element" itemprop="description">运维的日常</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">54</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">4</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">30</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#时间同步"><span class="nav-number">1.</span> <span class="nav-text">时间同步</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#the-NTP-socket-is-in-use-exiting问题"><span class="nav-number">1.1.</span> <span class="nav-text">the NTP socket is in use, exiting问题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#同步crontab"><span class="nav-number">1.2.</span> <span class="nav-text">同步crontab</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#磁盘"><span class="nav-number">2.</span> <span class="nav-text">磁盘</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#大于2T的分区"><span class="nav-number">2.1.</span> <span class="nav-text">大于2T的分区</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#UUID"><span class="nav-number">2.2.</span> <span class="nav-text">UUID</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JDK"><span class="nav-number">3.</span> <span class="nav-text">JDK</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#监控"><span class="nav-number">4.</span> <span class="nav-text">监控</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#name-or-service-not-known"><span class="nav-number">5.</span> <span class="nav-text">name or service not known</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查看文件编码"><span class="nav-number">6.</span> <span class="nav-text">查看文件编码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#find"><span class="nav-number">7.</span> <span class="nav-text">find</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#日期"><span class="nav-number">8.</span> <span class="nav-text">日期</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#sed"><span class="nav-number">9.</span> <span class="nav-text">sed</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#切割大文件"><span class="nav-number">10.</span> <span class="nav-text">切割大文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#journalctl日志文件清理"><span class="nav-number">11.</span> <span class="nav-text">journalctl日志文件清理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装pip"><span class="nav-number">12.</span> <span class="nav-text">安装pip</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Nginx-代理"><span class="nav-number">13.</span> <span class="nav-text">Nginx 代理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#初试化"><span class="nav-number">14.</span> <span class="nav-text">初试化</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  <span>
+    <a target="_blank" href="https://beian.miit.gov.cn">京ICP备17063827号-1</a>
+  </span>
+  <span itemprop="copyrightYear"></span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">medivh</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+    <span title="站点总字数"></span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    
+    <span title="站点阅读时长"></span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv" title="总访客量">
+    	<span id="busuanzi_container_site_pv">
+        	本站访客数: <span id="busuanzi_value_site_uv"></span>
+   	 </span>
+    </span>
+  
+
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=6.6.0"></script>
+
+  <script src="/js/src/motion.js?v=6.6.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/affix.js?v=6.6.0"></script>
+
+  <script src="/js/src/schemes/pisces.js?v=6.6.0"></script>
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=6.6.0"></script>
+<script src="/js/src/post-details.js?v=6.6.0"></script>
+
+
+
+  
+
+
+  <script src="/js/src/bootstrap.js?v=6.6.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  
+  
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+
+  <script>
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(function (item) {
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'B1L35FebIXiGQu3MloNCxrCS-gzGzoHsz',
+        appKey: 'iQH7DjsnLwlvoMB58gpevWMC',
+        placeholder: 'Just go go',
+        avatar:'mm',
+        meta:guest,
+        pageSize:'10' || 10,
+        visitor: true
+    });
+  </script>
+
+
+
+
+  
+
+  <script>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,1583 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=6.6.0" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.6.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="http://img.mknight.cn/2018/1545104669394.png?v=6.6.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="http://img.mknight.cn/2018/1545104669394.png?v=6.6.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.6.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '6.6.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="按照需求来分，将实例区分为单机和集群两种类型。  单机适合容量和性能要求不高的小型存储 集群应对性能和容量要求较高的场景  单机安全加固1234567rename-command FLUSHALL &quot;&quot;rename-command FLUSHDB  &quot;&quot;rename-command CONFIG   &quot;&quot;rename-command KEYS     &quot;&quot;rename-command SHUTDO">
+<meta name="keywords" content="Redis">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Redis集群技术演变">
+<meta property="og:url" content="https://xiajieok.gitee.io/Redis集群技术演变.html">
+<meta property="og:site_name" content="Medivh&#39;s castle">
+<meta property="og:description" content="按照需求来分，将实例区分为单机和集群两种类型。  单机适合容量和性能要求不高的小型存储 集群应对性能和容量要求较高的场景  单机安全加固1234567rename-command FLUSHALL &quot;&quot;rename-command FLUSHDB  &quot;&quot;rename-command CONFIG   &quot;&quot;rename-command KEYS     &quot;&quot;rename-command SHUTDO">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://img.mknight.cn/medivh/1562750986206.png">
+<meta property="og:image" content="http://img.mknight.cn/medivh/1562755390514.png">
+<meta property="og:image" content="http://img.mknight.cn/medivh/1562755494148.png">
+<meta property="og:image" content="http://img.mknight.cn/medivh/1562756643624.png">
+<meta property="og:image" content="http://img.mknight.cn/medivh/1562756689621.png">
+<meta property="og:image" content="http://img.mknight.cn/medivh/1562756729219.png">
+<meta property="og:image" content="http://img.mknight.cn/medivh/1562816515954.png">
+<meta property="og:image" content="http://img.mknight.cn/medivh/1562837169421.png">
+<meta property="og:image" content="http://img.mknight.cn/medivh/1562837656576.png">
+<meta property="og:updated_time" content="2021-02-28T13:38:18.036Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Redis集群技术演变">
+<meta name="twitter:description" content="按照需求来分，将实例区分为单机和集群两种类型。  单机适合容量和性能要求不高的小型存储 集群应对性能和容量要求较高的场景  单机安全加固1234567rename-command FLUSHALL &quot;&quot;rename-command FLUSHDB  &quot;&quot;rename-command CONFIG   &quot;&quot;rename-command KEYS     &quot;&quot;rename-command SHUTDO">
+<meta name="twitter:image" content="http://img.mknight.cn/medivh/1562750986206.png">
+
+
+
+
+
+
+  <link rel="canonical" href="https://xiajieok.gitee.io/Redis集群技术演变.html">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>Redis集群技术演变 | Medivh's castle</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion .logo-line-before i { left: initial; }
+    .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Medivh's castle</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiajieok.gitee.io/Redis集群技术演变.html">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="medivh">
+      <meta itemprop="description" content="运维的日常">
+      <meta itemprop="image" content="http://img.mknight.cn/2018/1545104669394.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Medivh's castle">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Redis集群技术演变
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2021-02-28 21:38:18" itemprop="dateCreated datePublished" datetime="2021-02-28T21:38:18+08:00">2021-02-28</time>
+            
+
+            
+          </span>
+         
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/Redis集群技术演变.html#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/Redis集群技术演变.html" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/Redis集群技术演变.html" class="leancloud_visitors" data-flag-title="Redis集群技术演变">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">Views：</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+            <div class="post-symbolscount">
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">本文字数：</span>
+                
+                <span title="本文字数"></span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长"></span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>按照需求来分，将实例区分为单机和集群两种类型。</p>
+<ul>
+<li>单机适合容量和性能要求不高的小型存储</li>
+<li>集群应对性能和容量要求较高的场景</li>
+</ul>
+<h2 id="单机"><a href="#单机" class="headerlink" title="单机"></a>单机</h2><h3 id="安全加固"><a href="#安全加固" class="headerlink" title="安全加固"></a>安全加固</h3><figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">rename</span>-<span class="keyword">command</span> <span class="title">FLUSHALL</span> <span class="string">""</span></span><br><span class="line"><span class="built_in">rename</span>-<span class="keyword">command</span> <span class="title">FLUSHDB</span>  <span class="string">""</span></span><br><span class="line"><span class="built_in">rename</span>-<span class="keyword">command</span> <span class="title">CONFIG</span>   <span class="string">""</span></span><br><span class="line"><span class="built_in">rename</span>-<span class="keyword">command</span> <span class="title">KEYS</span>     <span class="string">""</span></span><br><span class="line"><span class="built_in">rename</span>-<span class="keyword">command</span> <span class="title">SHUTDOWN</span> <span class="string">""</span></span><br><span class="line"><span class="built_in">rename</span>-<span class="keyword">command</span> <span class="title">DEL</span> <span class="string">""</span></span><br><span class="line"><span class="built_in">rename</span>-<span class="keyword">command</span> <span class="title">EVAL</span> <span class="string">""</span></span><br></pre></td></tr></table></figure>
+<p>但是注意是否和以下故障切换是否冲突“config”</p>
+<h3 id="原生主从（master-slave"><a href="#原生主从（master-slave" class="headerlink" title="原生主从（master-slave)"></a>原生主从（master-slave)</h3><p>实现高可用，暴露master节点。支持Redis所有指令。<br>使用Redis 自带的哨兵（Sentinel）集群对实例进行状态监控与 Failover。Sentinel 是 Redis 自带的高可用组件，将 Redis 注册到由多个 Sentinel 组成的 Sentinel 集群后，Sentinel 会对 Redis 实例进行健康检查，当 Redis 发生故障后，Sentinel 会通过 Gossip 协议进行故障检测，确认宕机后会通过一个简化的 Raft 协议来提升 Slave 成为新的 Master。</p>
+<p><img src="http://img.mknight.cn/medivh/1562750986206.png"></p>
+<p>通常情况仅使用1 个 Slave 节点进行冷备，如果有读写分离请求，可以建立多个Read only slave 来进行读写分离。</p>
+<ul>
+<li>只读Slave 节点可以按照需求设置 slave-priority 参数为0，防止故障切换时选择了只读节点而不是热备 Slave 节点；</li>
+<li>Sentinel 进行故障切换后会执行 CONFIG REWRITE 命令将SLAVEOF 配置落地，如果 Redis 配置中禁用了 CONFIG 命令，切换时会发生错误，可以通过修改 Sentinel 代码来替换 CONFIG 命令；</li>
+<li>Sentinel Group 监控的节点不宜过多，实测超过 500 个切换过程偶尔会进入 TILT 模式，导致Sentinel 工作不正常，推荐部署多个 Sentinel 集群并保证每个集群监控的实例数量小于 300 个；</li>
+<li>Master 节点应与 Slave 节点跨机器部署，有能力的使用方可以跨机架部署，不推荐跨机房部署 Redis 主从实例；</li>
+<li>Sentinel 切换功能主要依赖 down-after-milliseconds 和failover-timeout 两个参数，down-after-milliseconds 决定了Sentinel 判断 Redis 节点宕机的超时，知乎使用 30000 作为阈值。而 failover-timeout 则决定了两次切换之间的最短等待时间，如果对于切换成功率要求较高，可以适当缩短failover-timeout 到秒级保证切换成功，具体详见Redis 官方文档[2]；</li>
+<li>单机网络故障等同于机器宕机，但如果机房全网发生大规模故障会造成主从多次切换，此时资源发现服务可能更新不够及时，需要人工介入。</li>
+</ul>
+<h3 id="Sentinel"><a href="#Sentinel" class="headerlink" title="Sentinel"></a>Sentinel</h3><p>Redis 的 Sentinel 系统用于管理多个 Redis 服务器（instance）， 该系统执行以下三个任务：</p>
+<ul>
+<li>监控（Monitoring）： Sentinel 会不断地检查你的主服务器和从服务器是否运作正常。</li>
+<li>提醒（Notification）： 当被监控的某个 Redis 服务器出现问题时， Sentinel 可以通过 API 向管理员或者其他应用程序发送通知。</li>
+<li>自动故障迁移（Automatic failover）： 当一个主服务器不能正常工作时， Sentinel 会开始一次自动故障迁移操作， 它会将失效主服务器的其中一个从服务器升级为新的主服务器， 并让失效主服务器的其他从服务器改为复制新的主服务器； 当客户端试图连接失效的主服务器时， 集群也会向客户端返回新主服务器的地址， 使得集群可以使用新主服务器代替失效服务器。</li>
+</ul>
+<p>优点：</p>
+<ul>
+<li>基于主从模式，所有主从的优点，sentinel都有</li>
+<li>主从可以切换，故障可以转移，系统可用性好</li>
+<li>是主从模式的升级，系统更健壮，可用性更高</li>
+</ul>
+<p>缺点：</p>
+<ul>
+<li>较难支持在线扩容</li>
+<li>在集群容量达到上限时只能升级机器内存，而不能实现水平扩容</li>
+</ul>
+<p>主从同步可能会遇到的问题：</p>
+<ul>
+<li>端口不通</li>
+<li>认证失败</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>角色</th>
+<th>IP</th>
+<th>端口</th>
+<th>其他</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Master,Sentinel1</td>
+<td>192.168.1.233</td>
+<td>6379,26379</td>
+<td></td>
+</tr>
+<tr>
+<td>slave01,Sentinel2</td>
+<td>192.168.1.234</td>
+<td>6379,26379</td>
+<td></td>
+</tr>
+<tr>
+<td>slave02,Sentinel3</td>
+<td>192.168.1.235</td>
+<td>6379,26379</td>
+</tr>
+</tbody>
+</table>
+<h4 id="配置redis文件"><a href="#配置redis文件" class="headerlink" title="配置redis文件"></a>配置redis文件</h4><ul>
+<li>在3台服务器上分别安装Redis。需要注意的是，如果要给Redis设置密码，需要在3个Redis的配置文件中设置相同的密码。</li>
+</ul>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#master</span><br><span class="line">requirepass <span class="string">"Redis-Password"</span></span><br><span class="line"><span class="selector-id">#slave</span> </span><br><span class="line">masterauth  <span class="string">"Redis-Password"</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>在2个SlaveRedis的配置文件中声明所从属的主数据库。<code>slaveof 192.168.1.233 6379</code></li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">daemonize                   yes    </span><br><span class="line">pidfile                     /var/run/redis.pid</span><br><span class="line">port                        6379     </span><br><span class="line">bind                        192.168.1.233</span><br><span class="line">timeout                     120     </span><br><span class="line">tcp-keepalive               60     </span><br><span class="line">loglevel                    notice  </span><br><span class="line">logfile                     /var/log/redis/redis.log</span><br><span class="line">syslog-enabled              no</span><br><span class="line">databases                   16     </span><br><span class="line"><span class="keyword">stop</span>-writes-<span class="keyword">on</span>-bgsave-<span class="keyword">error</span> <span class="keyword">no</span></span><br><span class="line">rdbcompression              yes</span><br><span class="line">rdbchecksum                 yes</span><br><span class="line">dbfilename                  dump.rdb</span><br><span class="line">dir                         /<span class="keyword">var</span>/lib/redis</span><br><span class="line"><span class="keyword">save</span>                        <span class="number">7200</span>    <span class="number">100000</span></span><br><span class="line">maxclients                  <span class="number">10000</span>    </span><br><span class="line">maxmemory                   <span class="number">1</span>GB</span><br><span class="line">maxmemory-<span class="keyword">policy</span>            volatile-lru</span><br><span class="line">maxmemory-samples           <span class="number">5</span></span><br><span class="line">appendonly                  <span class="keyword">no</span></span><br><span class="line">appendfilename              appendonly.aof    </span><br><span class="line"><span class="keyword">hash</span>-<span class="keyword">max</span>-ziplist-entries    <span class="number">512</span>     </span><br><span class="line"><span class="keyword">hash</span>-<span class="keyword">max</span>-ziplist-<span class="keyword">value</span>      <span class="number">64</span></span><br><span class="line"><span class="keyword">list</span>-<span class="keyword">max</span>-ziplist-entries    <span class="number">512</span></span><br><span class="line"><span class="keyword">list</span>-<span class="keyword">max</span>-ziplist-<span class="keyword">value</span>      <span class="number">64</span></span><br><span class="line"><span class="keyword">set</span>-<span class="keyword">max</span>-intset-entries      <span class="number">512</span></span><br><span class="line">zset-<span class="keyword">max</span>-ziplist-entries    <span class="number">128</span></span><br><span class="line">zset-<span class="keyword">max</span>-ziplist-<span class="keyword">value</span>      <span class="number">64</span></span><br><span class="line">activerehashing             yes     </span><br><span class="line"><span class="keyword">client</span>-<span class="keyword">output</span>-buffer-<span class="keyword">limit</span>  <span class="keyword">normal</span>                      <span class="number">0</span>      <span class="number">0</span>     <span class="number">0</span></span><br><span class="line"><span class="keyword">client</span>-<span class="keyword">output</span>-buffer-<span class="keyword">limit</span>  <span class="keyword">slave</span>                       <span class="number">256</span>mb  <span class="number">64</span>mb  <span class="number">60</span></span><br><span class="line"><span class="keyword">client</span>-<span class="keyword">output</span>-buffer-<span class="keyword">limit</span>  pubsub                      <span class="number">256</span>mb  <span class="number">64</span>b   <span class="number">120</span></span><br><span class="line">hz                          <span class="number">10</span></span><br><span class="line">requirepass                 <span class="string">"alkq2caiAmq82s"</span></span><br><span class="line">masterauth                  <span class="string">"alkq2caiAmq82s"</span></span><br><span class="line"><span class="keyword">rename</span>-command              flushall   <span class="string">""</span></span><br><span class="line"><span class="keyword">rename</span>-command              flushdb    <span class="string">""</span></span><br></pre></td></tr></table></figure>
+<p>三台机器启动后检查主从状态，数量和状态对的上就没啥问题了。<br><img src="http://img.mknight.cn/medivh/1562755390514.png"><br><img src="http://img.mknight.cn/medivh/1562755494148.png"></p>
+<h4 id="配置sentinel"><a href="#配置sentinel" class="headerlink" title="配置sentinel"></a>配置sentinel</h4><p>注意加上认证部分。<br>配置项解释：</p>
+<ul>
+<li><code>sentinel monitor mymaster 192.168.1.233 6379 2</code>给master取名叫mymaster，2代表集群中有两个sentinel认为master死了的时候，才能真正认为master死了。sentinel集群中通过gossip协互相通信。</li>
+<li><code>down-after-milliseconds</code> sentinel会向master发送心跳PING来确认master是否存活，如果master在“一定时间范围”内不回应PONG 或者是回复了一个错误消息，那么这个sentinel会主观地(单方面地)认为这个master已经不可用了(subjectively down, 也简称为SDOWN)。而这个down-after-milliseconds就是用来指定这个“一定时间范围”的，单位是毫秒。</li>
+<li><code>parallel-syncs</code>不过需要注意的是，这个时候sentinel并不会马上进行failover主备切换，这个sentinel还需要参考sentinel集群中其他sentinel的意见，如果超过某个数量的sentinel也主观地认为该master死了，那么这个master就会被客观地(注意哦，这次不是主观，是客观，与刚才的subjectively down相对，这次是objectively down，简称为ODOWN)认为已经死了。需要一起做出决定的sentinel数量在上一条配置中进行配置。</li>
+<li>在发生failover主备切换时，这个选项指定了最多可以有多少个slave同时对新的master进行同步，这个数字越小，完成failover所需的时间就越长，但是如果这个数字越大，就意味着越多的slave因为replication而不可用。可以通过将这个值设为 1 来保证每次只有一个slave处于不能处理命令请求的状态。</li>
+</ul>
+<h5 id="配置文件"><a href="#配置文件" class="headerlink" title="配置文件"></a>配置文件</h5><figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">port <span class="number">26379</span></span><br><span class="line">daemonize yes</span><br><span class="line">bind <span class="number">192.168</span><span class="number">.1</span><span class="number">.233</span></span><br><span class="line">logfile <span class="string">"/var/log/redis/sentinel.log"</span></span><br><span class="line">dir <span class="string">"/var/lib/redis"</span></span><br><span class="line">sentinel monitor mymaster <span class="number">192.168</span><span class="number">.1</span><span class="number">.233</span> <span class="number">6379</span> <span class="number">2</span></span><br><span class="line">sentinel auth-pass mymaster alkq2caiAmq82s</span><br><span class="line">sentinel down-after-milliseconds mymaster <span class="number">30000</span></span><br><span class="line">sentinel parallel-syncs mymaster <span class="number">1</span></span><br><span class="line">sentinel failover-timeout mymaster <span class="number">180000</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">port <span class="number">26379</span></span><br><span class="line">daemonize yes</span><br><span class="line">bind <span class="number">192.168</span><span class="number">.1</span><span class="number">.234</span></span><br><span class="line">logfile <span class="string">"/var/log/redis/sentinel.log"</span></span><br><span class="line">dir <span class="string">"/var/lib/redis"</span></span><br><span class="line">sentinel monitor mymaster <span class="number">192.168</span><span class="number">.1</span><span class="number">.233</span> <span class="number">6379</span> <span class="number">2</span></span><br><span class="line">sentinel auth-pass mymaster alkq2caiAmq82s</span><br><span class="line">sentinel down-after-milliseconds mymaster <span class="number">30000</span></span><br><span class="line">sentinel parallel-syncs mymaster <span class="number">1</span></span><br><span class="line">sentinel failover-timeout mymaster <span class="number">180000</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">port <span class="number">26379</span></span><br><span class="line">daemonize yes</span><br><span class="line">bind <span class="number">192.168</span><span class="number">.1</span><span class="number">.235</span></span><br><span class="line">logfile <span class="string">"/var/log/redis/sentinel.log"</span></span><br><span class="line">dir <span class="string">"/var/lib/redis"</span></span><br><span class="line">sentinel monitor mymaster <span class="number">192.168</span><span class="number">.1</span><span class="number">.233</span> <span class="number">6379</span> <span class="number">2</span></span><br><span class="line">sentinel auth-pass mymaster alkq2caiAmq82s</span><br><span class="line">sentinel down-after-milliseconds mymaster <span class="number">30000</span></span><br><span class="line">sentinel parallel-syncs mymaster <span class="number">1</span></span><br><span class="line">sentinel failover-timeout mymaster <span class="number">180000</span></span><br></pre></td></tr></table></figure>
+<h5 id="启动"><a href="#启动" class="headerlink" title="启动"></a>启动</h5><p>然后依次启动，之后检查状态<br><figure class="highlight avrasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">redis-sentinel sentinel.conf</span><br><span class="line"></span><br><span class="line"><span class="keyword">or</span></span><br><span class="line"></span><br><span class="line">redis-server sentinel.conf --sentinel</span><br><span class="line"></span><br><span class="line">[root@base_233 ~]<span class="meta"># redis-cli -h 192.168.1.233 -p 26379</span></span><br><span class="line"><span class="number">192.168</span><span class="number">.1</span><span class="number">.233</span>:<span class="number">26379</span>&gt; info Sentinel</span><br><span class="line"><span class="meta"># Sentinel</span></span><br><span class="line"><span class="symbol">sentinel_masters:</span><span class="number">1</span></span><br><span class="line"><span class="symbol">sentinel_tilt:</span><span class="number">0</span></span><br><span class="line"><span class="symbol">sentinel_running_scripts:</span><span class="number">0</span></span><br><span class="line"><span class="symbol">sentinel_scripts_queue_length:</span><span class="number">0</span></span><br><span class="line"><span class="symbol">sentinel_simulate_failure_flags:</span><span class="number">0</span></span><br><span class="line"><span class="symbol">master0:</span>name=mymaster,status=ok,address=<span class="number">192.168</span><span class="number">.1</span><span class="number">.233</span>:<span class="number">6379</span>,slaves=<span class="number">2</span>,sentinels=<span class="number">3</span></span><br></pre></td></tr></table></figure></p>
+<h5 id="检查配置文件的变化"><a href="#检查配置文件的变化" class="headerlink" title="检查配置文件的变化"></a>检查配置文件的变化</h5><p><img src="http://img.mknight.cn/medivh/1562756643624.png"><br><img src="http://img.mknight.cn/medivh/1562756689621.png"></p>
+<p>发现slave机器上会自动增加其他两个节点的信息。</p>
+<p>启动日志<br><img src="http://img.mknight.cn/medivh/1562756729219.png"></p>
+<h4 id="基本命令"><a href="#基本命令" class="headerlink" title="基本命令"></a>基本命令</h4><ul>
+<li>PING ：返回 PONG 。</li>
+<li>SENTINEL masters ：列出所有被监视的主服务器，以及这些主服务器的当前状态。</li>
+<li>SENTINEL slaves <master name=""> ：列出给定主服务器的所有从服务器，以及这些从服务器的当前状态。</master></li>
+<li>SENTINEL get-master-addr-by-name <master name=""> ： 返回给定名字的主服务器的 IP 地址和端口号。 如果这个主服务器正在执行故障转移操作， 或者针对这个主服务器的故障转移操作已经完成， 那么这个命令返回新的主服务器的 IP 地址和端口号。</master></li>
+<li>SENTINEL reset <pattern> ： 重置所有名字和给定模式 pattern 相匹配的主服务器。 pattern 参数是一个 Glob 风格的模式。 重置操作清楚主服务器目前的所有状态， 包括正在执行中的故障转移， 并移除目前已经发现和关联的， 主服务器的所有从服务器和 Sentinel 。</pattern></li>
+<li>SENTINEL failover <master name=""> ： 当主服务器失效时， 在不询问其他 Sentinel 意见的情况下， 强制开始一次自动故障迁移 （不过发起故障转移的 Sentinel 会向其他 Sentinel 发送一个新的配置，其他 Sentinel 会根据这个配置进行相应的更新）。</master></li>
+</ul>
+<h4 id="故障转移"><a href="#故障转移" class="headerlink" title="故障转移"></a>故障转移</h4><p>一次故障转移操作由以下步骤组成：</p>
+<ul>
+<li>发现主服务器已经进入客观下线状态。</li>
+<li>对我们的当前纪元进行自增（详情请参考 Raft leader election ）， 并尝试在这个纪元中当选。</li>
+<li>如果当选失败， 那么在设定的故障迁移超时时间的两倍之后， 重新尝试当选。 如果当选成功， 那么执行以下步骤。</li>
+<li>选出一个从服务器，并将它升级为主服务器。</li>
+<li>向被选中的从服务器发送 SLAVEOF NO ONE 命令，让它转变为主服务器。</li>
+<li>通过发布与订阅功能， 将更新后的配置传播给所有其他 Sentinel ， 其他 Sentinel 对它们自己的配置进行更新。</li>
+<li>向已下线主服务器的从服务器发送 SLAVEOF 命令， 让它们去复制新的主服务器。</li>
+<li>当所有从服务器都已经开始复制新的主服务器时， 领头 Sentinel 终止这次故障迁移操作。</li>
+</ul>
+<blockquote>
+<p>每当一个 Redis 实例被重新配置（reconfigured） —— 无论是被设置成主服务器、从服务器、又或者被设置成其他主服务器的从服务器 —— Sentinel 都会向被重新配置的实例发送一个 CONFIG REWRITE 命令， 从而确保这些配置会持久化在硬盘里。</p>
+</blockquote>
+<p>日志说明：</p>
+<ul>
+<li>+sdown 表示哨兵主观认为数据库下线</li>
+<li>+odown 表示哨兵客观认为数据库下线</li>
+<li>+try-failover 表示哨兵开始进行故障恢复</li>
+<li>+failover-end 表示哨兵完成故障修复，其中包括了领头哨兵的选举、备选从数据库的选择等等较为复杂的过程</li>
+<li>+switch-master表示主数据库从51服务器迁移到52服务器</li>
+<li>+slave列出了新的主数据库的2个从数据库，而哨兵并没有彻底清除51服务器的实力信息，这是因为停止的实例有可能会在将来恢复，哨兵会让其重新加入进来</li>
+</ul>
+<p>故障转移过程：</p>
+<ul>
+<li>观察slave节点日志：master故障了<br><img src="http://img.mknight.cn/medivh/1562816515954.png"><ul>
+<li>发现master故障，</li>
+<li>选举出来233为master</li>
+<li>切换master</li>
+<li>更新sentinel配置文件</li>
+<li>将原来的master切换为slave，并且定义为down</li>
+</ul>
+</li>
+<li>观察sentinel配置文件，master已经切换为新的地址<br><img src="http://img.mknight.cn/medivh/1562837169421.png"></li>
+</ul>
+<p>之前一直不成功主要的原因就是配置了<code>rename-command &quot;RENAMECONFIG&quot;</code>,导致失败的，这个要多注意一下。</p>
+<h3 id="常见问题"><a href="#常见问题" class="headerlink" title="常见问题"></a>常见问题</h3><ul>
+<li>slave不能写<br><img src="http://img.mknight.cn/medivh/1562837656576.png"></li>
+</ul>
+<h4 id="访问sentinel集群"><a href="#访问sentinel集群" class="headerlink" title="访问sentinel集群"></a>访问sentinel集群</h4><p>以Python为例，程序通过sentinel提供的端口进行访问，获取master地址进行写操作，读操作默认是轮询。<br><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">Python <span class="number">2.6</span>.<span class="number">6</span> (<span class="symbol">r266:</span><span class="number">84292</span>, Jan <span class="number">22</span> <span class="number">2014</span>, 09<span class="symbol">:</span><span class="number">42</span><span class="symbol">:</span><span class="number">36</span>) </span><br><span class="line">[GCC <span class="number">4.4</span>.<span class="number">7</span> <span class="number">20120313</span> (Red Hat <span class="number">4.4</span>.<span class="number">7</span>-<span class="number">4</span>)] on linux2</span><br><span class="line">Type <span class="string">"help"</span>, <span class="string">"copyright"</span>, <span class="string">"credits"</span> <span class="keyword">or</span> <span class="string">"license"</span> <span class="keyword">for</span> more information.</span><br><span class="line"><span class="meta">&gt;&gt;</span>&gt; from redis.sentinel import Sentinel <span class="comment">#加载redis模块</span></span><br><span class="line"><span class="meta">&gt;&gt;</span>&gt; sentinel = Sentinel([(<span class="string">'192.168.221.160'</span>, <span class="number">26379</span>),</span><br><span class="line">...                      (<span class="string">'192.168.221.161'</span>, <span class="number">26379</span>)],</span><br><span class="line">...                     socket_timeout=<span class="number">0</span>.<span class="number">1</span>) <span class="comment">#连接哨兵服务器</span></span><br><span class="line"><span class="meta">&gt;&gt;</span>&gt; sentinel.discover_master(<span class="string">'mymaster'</span>) <span class="comment">#获取主redis服务器地址</span></span><br><span class="line">(<span class="string">'192.168.221.161'</span>, <span class="number">6379</span>)</span><br><span class="line"><span class="meta">&gt;&gt;</span>&gt; sentinel.discover_slaves(<span class="string">'mymaster'</span>)<span class="comment">#获取从redis服务区地址</span></span><br><span class="line">[(<span class="string">'192.168.221.160'</span>, <span class="number">6379</span>)]</span><br><span class="line"><span class="meta">&gt;&gt;</span>&gt; master = sentinel.master_for(<span class="string">'mymaster'</span>, socket_timeout=<span class="number">0</span>.<span class="number">1</span>) </span><br><span class="line"><span class="meta">&gt;&gt;</span>&gt; master.set(<span class="string">'foo'</span>,<span class="string">'bar'</span>) <span class="comment">#获取主redis服务器并进行写入</span></span><br><span class="line">True</span><br><span class="line"><span class="meta">&gt;&gt;</span>&gt; slave = sentinel.slave_for(<span class="string">'mymaster'</span>, socket_timeout=<span class="number">0</span>.<span class="number">1</span>)</span><br><span class="line"><span class="meta">&gt;&gt;</span>&gt; slave.get(<span class="string">'foo'</span>)<span class="comment">#获取从redis服务器进行获取</span></span><br><span class="line"><span class="string">'bar'</span></span><br><span class="line"><span class="meta">&gt;&gt;</span>&gt;</span><br></pre></td></tr></table></figure></p>
+<h2 id="集群-Cluster"><a href="#集群-Cluster" class="headerlink" title="集群(Cluster)"></a>集群(Cluster)</h2><p>cluster的出现是为了解决单机Redis容量有限的问题，将Redis的数据根据一定的规则分配到多台机器。对cluster的一些理解：</p>
+<ul>
+<li>cluster可以说是sentinel和主从模式的结合体，通过cluster可以实现主从和master重选功能，所以如果配置两个副本三个分片的话，就需要六个Redis实例。</li>
+<li>因为Redis的数据是根据一定规则分配到cluster的不同机器的，当数据量过大时，可以新增机器进行扩容。这种模式适合数据量巨大的缓存要求，当数据量不是很大使用sentinel即可。</li>
+</ul>
+<h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><p>Redis集群是一个可以在多个Redis节点之间进行数据共享的设施。</p>
+<p>Redis集群不支持需要同时处理多个键的命令，因为在执行这些命令的时候需要在多个Redis节点之间移动数据，会降低集群性能。<br>Redis集群通过分区来提供一定程度的可用性：即使集群中有一部分节点失效，集群也可以继续处理命令请求。</p>
+<p>优点：</p>
+<ul>
+<li>将数据自动切分到多个节点的能力</li>
+<li>当部分节点失效的时候，集群仍然可以继续处理命令请求</li>
+</ul>
+<h3 id="数据共享"><a href="#数据共享" class="headerlink" title="数据共享"></a>数据共享</h3><p>一个集群包含16384个哈希槽，数据库中的每个键都属于这16384个哈希槽的其中一个。<br>每个节点负责处理一部分哈希槽，比如一个集群有三个节点，就均分为3大块哈希槽。</p>
+<p>这种哈希槽的处理方式使用处更容易或者更快的添加删除节点。比如</p>
+<ul>
+<li>增加节点。ABC只需要将部分哈希槽移动到新的D就可以了</li>
+<li>删除节点，ABCD只需要将要删除的D节点的哈希槽移动到ABC就可以了</li>
+</ul>
+<h3 id="集群中的主从复制"><a href="#集群中的主从复制" class="headerlink" title="集群中的主从复制"></a>集群中的主从复制</h3><p>集群中的主从复制功能：集群中的每个节点都有N个复制品，其中一个复制品为主节点，其余的为从节点。<br>比如之前的B节点下线了，那么集群中会丢失部分哈希槽。但是如果创建集群的时候为B节点添加了从节点B1，那么在B下线的时候，B1就会为新的主节点，取代处理之前对应的哈希槽。这样集群就会正常运作了。</p>
+<h3 id="集群一致性保证"><a href="#集群一致性保证" class="headerlink" title="集群一致性保证"></a>集群一致性保证</h3><p>集群不保证数据的强一致性，在特定条件下，集群可能会丢失已经被执行过的写命令。</p>
+<p>使用异步复制是丢失写命令的一个原因，示例如下：</p>
+<ul>
+<li>客户端向主节点B发送写的命令</li>
+<li>主节点B执行写命令，并向客户端放回命令回复</li>
+<li>主机点B</li>
+</ul>
+<h3 id="部署"><a href="#部署" class="headerlink" title="部署"></a>部署</h3><h4 id="配置文件-1"><a href="#配置文件-1" class="headerlink" title="配置文件"></a>配置文件</h4><p>创建三个目录，然后依次修改端口，之后发送到其他节点机器。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">daemonize                   yes    </span><br><span class="line">pidfile                     /var/run/redis7000.pid</span><br><span class="line">port                        6379     </span><br><span class="line">bind                        192.168.1.233</span><br><span class="line">timeout                     120     </span><br><span class="line">tcp-keepalive               60     </span><br><span class="line">loglevel                    notice  </span><br><span class="line">logfile                     /var/log/redis/redis7000.log</span><br><span class="line">syslog-enabled              no</span><br><span class="line">databases                   16     </span><br><span class="line"><span class="keyword">stop</span>-writes-<span class="keyword">on</span>-bgsave-<span class="keyword">error</span> <span class="keyword">no</span></span><br><span class="line">rdbcompression              yes</span><br><span class="line">rdbchecksum                 yes</span><br><span class="line">dbfilename                  dump.rdb</span><br><span class="line">dir                         /usr/<span class="keyword">local</span>/redis_cluster/<span class="number">7000</span></span><br><span class="line"><span class="keyword">save</span>                        <span class="number">7200</span>    <span class="number">100000</span></span><br><span class="line">maxclients                  <span class="number">10000</span>    </span><br><span class="line">maxmemory                   <span class="number">1</span>GB</span><br><span class="line">maxmemory-<span class="keyword">policy</span>            volatile-lru</span><br><span class="line">maxmemory-samples           <span class="number">5</span></span><br><span class="line">appendonly                  <span class="keyword">no</span></span><br><span class="line">appendfilename              appendonly.aof    </span><br><span class="line"><span class="keyword">hash</span>-<span class="keyword">max</span>-ziplist-entries    <span class="number">512</span>     </span><br><span class="line"><span class="keyword">hash</span>-<span class="keyword">max</span>-ziplist-<span class="keyword">value</span>      <span class="number">64</span></span><br><span class="line"><span class="keyword">list</span>-<span class="keyword">max</span>-ziplist-entries    <span class="number">512</span></span><br><span class="line"><span class="keyword">list</span>-<span class="keyword">max</span>-ziplist-<span class="keyword">value</span>      <span class="number">64</span></span><br><span class="line"><span class="keyword">set</span>-<span class="keyword">max</span>-intset-entries      <span class="number">512</span></span><br><span class="line">zset-<span class="keyword">max</span>-ziplist-entries    <span class="number">128</span></span><br><span class="line">zset-<span class="keyword">max</span>-ziplist-<span class="keyword">value</span>      <span class="number">64</span></span><br><span class="line">activerehashing             yes     </span><br><span class="line"><span class="keyword">client</span>-<span class="keyword">output</span>-buffer-<span class="keyword">limit</span>  <span class="keyword">normal</span>                      <span class="number">0</span>      <span class="number">0</span>     <span class="number">0</span></span><br><span class="line"><span class="keyword">client</span>-<span class="keyword">output</span>-buffer-<span class="keyword">limit</span>  <span class="keyword">slave</span>                       <span class="number">256</span>mb  <span class="number">64</span>mb  <span class="number">60</span></span><br><span class="line"><span class="keyword">client</span>-<span class="keyword">output</span>-buffer-<span class="keyword">limit</span>  pubsub                      <span class="number">256</span>mb  <span class="number">64</span>b   <span class="number">120</span></span><br><span class="line">hz                          <span class="number">10</span></span><br><span class="line"></span><br><span class="line">cluster-enabled yes</span><br><span class="line">cluster-config-<span class="keyword">file</span>  nodes.conf   </span><br><span class="line">cluster-node-<span class="keyword">timeout</span> <span class="number">5000</span></span><br></pre></td></tr></table></figure>
+<p>启动命令<br><figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">7000</span>/bin/redis-server <span class="number">7000</span>/cluster.conf</span><br><span class="line"><span class="number">7001</span>/bin/redis-server <span class="number">7001</span>/cluster.conf</span><br><span class="line"><span class="number">7002</span>/bin/redis-server <span class="number">7002</span>/cluster.conf</span><br></pre></td></tr></table></figure></p>
+<h4 id="1-创建集群"><a href="#1-创建集群" class="headerlink" title="1 创建集群"></a>1 创建集群</h4><p>对于5.0以前的版本：<br><figure class="highlight x86asm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/usr/local/redis_cluster/<span class="number">7000</span>/bin/redis-trib.rb create --replicas <span class="number">2</span> <span class="number">192.168</span><span class="meta">.1</span><span class="meta">.233</span>:<span class="number">7000</span> <span class="number">192.168</span><span class="meta">.1</span><span class="meta">.233</span>:<span class="number">7001</span> <span class="number">192.168</span><span class="meta">.1</span><span class="meta">.233</span>:<span class="number">7002</span> <span class="number">192.168</span><span class="meta">.1</span><span class="meta">.234</span>:<span class="number">7000</span> <span class="number">192.168</span><span class="meta">.1</span><span class="meta">.234</span>:<span class="number">7001</span> <span class="number">192.168</span><span class="meta">.1</span><span class="meta">.234</span>:<span class="number">7002</span> <span class="number">192.168</span><span class="meta">.1</span><span class="meta">.235</span>:<span class="number">7000</span>  <span class="number">192.168</span><span class="meta">.1</span><span class="meta">.235</span>:<span class="number">7001</span> <span class="number">192.168</span><span class="meta">.1</span><span class="meta">.235</span>:<span class="number">7002</span></span><br></pre></td></tr></table></figure></p>
+<p>对于5.0的版本：<br><figure class="highlight x86asm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/usr/local/redis_cluster/<span class="number">7000</span>/bin/redis-<span class="keyword">cli</span> --cluster  create --cluster-replicas <span class="number">2</span>   <span class="number">192.168</span><span class="meta">.1</span><span class="meta">.233</span>:<span class="number">7000</span> <span class="number">192.168</span><span class="meta">.1</span><span class="meta">.233</span>:<span class="number">7001</span> <span class="number">192.168</span><span class="meta">.1</span><span class="meta">.233</span>:<span class="number">7002</span> <span class="number">192.168</span><span class="meta">.1</span><span class="meta">.234</span>:<span class="number">7000</span> <span class="number">192.168</span><span class="meta">.1</span><span class="meta">.234</span>:<span class="number">7001</span> <span class="number">192.168</span><span class="meta">.1</span><span class="meta">.234</span>:<span class="number">7002</span> <span class="number">192.168</span><span class="meta">.1</span><span class="meta">.235</span>:<span class="number">7000</span>  <span class="number">192.168</span><span class="meta">.1</span><span class="meta">.235</span>:<span class="number">7001</span> <span class="number">192.168</span><span class="meta">.1</span><span class="meta">.235</span>:<span class="number">7002</span></span><br></pre></td></tr></table></figure></p>
+<p>如果使用了错误的版本命令，会有下面的警告信息。<br><figure class="highlight x86asm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">[root@base_233 redis_cluster]# /usr/local/redis_cluster/<span class="number">7000</span>/bin/redis-trib.rb create --replicas <span class="number">2</span> <span class="number">192.168</span><span class="meta">.1</span><span class="meta">.233</span>:<span class="number">7000</span> <span class="number">192.168</span><span class="meta">.1</span><span class="meta">.233</span>:<span class="number">7001</span> <span class="number">192.168</span><span class="meta">.1</span><span class="meta">.233</span>:<span class="number">7002</span> <span class="number">192.168</span><span class="meta">.1</span><span class="meta">.234</span>:<span class="number">7000</span> <span class="number">192.168</span><span class="meta">.1</span><span class="meta">.234</span>:<span class="number">7001</span> <span class="number">192.168</span><span class="meta">.1</span><span class="meta">.234</span>:<span class="number">7002</span> <span class="number">192.168</span><span class="meta">.1</span><span class="meta">.235</span>:<span class="number">7000</span>  <span class="number">192.168</span><span class="meta">.1</span><span class="meta">.235</span>:<span class="number">7001</span> <span class="number">192.168</span><span class="meta">.1</span><span class="meta">.235</span>:<span class="number">7002</span></span><br><span class="line"><span class="symbol">WARNING:</span> redis-trib.rb is <span class="keyword">not</span> longer available!</span><br><span class="line">You should use redis-<span class="keyword">cli</span> instead.</span><br><span class="line"></span><br><span class="line">All commands <span class="keyword">and</span> features belonging to redis-trib.rb have been moved</span><br><span class="line">to redis-<span class="keyword">cli</span>.</span><br><span class="line"><span class="keyword">In</span> order to use them you should <span class="keyword">call</span> redis-<span class="keyword">cli</span> with the --cluster</span><br><span class="line"><span class="meta">option</span> followed by the subcommand name, arguments <span class="keyword">and</span> options.</span><br><span class="line"></span><br><span class="line">Use the following syntax:</span><br><span class="line">redis-<span class="keyword">cli</span> --cluster SUBCOMMAND [ARGUMENTS] [OPTIONS]</span><br><span class="line"></span><br><span class="line"><span class="symbol">Example:</span></span><br><span class="line">redis-<span class="keyword">cli</span> --cluster create <span class="number">192.168</span><span class="meta">.1</span><span class="meta">.233</span>:<span class="number">7000</span> <span class="number">192.168</span><span class="meta">.1</span><span class="meta">.233</span>:<span class="number">7001</span> <span class="number">192.168</span><span class="meta">.1</span><span class="meta">.233</span>:<span class="number">7002</span> <span class="number">192.168</span><span class="meta">.1</span><span class="meta">.234</span>:<span class="number">7000</span> <span class="number">192.168</span><span class="meta">.1</span><span class="meta">.234</span>:<span class="number">7001</span> <span class="number">192.168</span><span class="meta">.1</span><span class="meta">.234</span>:<span class="number">7002</span> <span class="number">192.168</span><span class="meta">.1</span><span class="meta">.235</span>:<span class="number">7000</span> <span class="number">192.168</span><span class="meta">.1</span><span class="meta">.235</span>:<span class="number">7001</span> <span class="number">192.168</span><span class="meta">.1</span><span class="meta">.235</span>:<span class="number">7002</span> --cluster-replicas <span class="number">2</span></span><br><span class="line"></span><br><span class="line">To get help about all subcommands, type:</span><br><span class="line">redis-<span class="keyword">cli</span> --cluster help</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>redis 5.0 放弃redis-trib.rb，使用<code>redis-cli --cluster create</code>创建集群。也就是说5.0以后所有的集群操作都是通过<code>redis-cli --cluster</code> 来执行的。</p>
+</blockquote>
+<p>创建集群后会提示是否能更新以上的配置？选择yes</p>
+<h4 id="修复集群"><a href="#修复集群" class="headerlink" title="修复集群"></a>修复集群</h4><figure class="highlight smali"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/usr/local/redis_cluster/7000/bin/redis-cli --cluster<span class="built_in"> check </span> 192.168.1.233:7001</span><br></pre></td></tr></table></figure>
+<h3 id="监控"><a href="#监控" class="headerlink" title="监控"></a>监控</h3><p><a href="https://github.com/ZhuoRoger/redismon" target="_blank" rel="noopener">https://github.com/ZhuoRoger/redismon</a><br>or<br><a href="https://github.com/iambocai/falcon-monit-scripts" target="_blank" rel="noopener">https://github.com/iambocai/falcon-monit-scripts</a></p>
+<h2 id="备份机制"><a href="#备份机制" class="headerlink" title="备份机制"></a>备份机制</h2><h3 id="AOF"><a href="#AOF" class="headerlink" title="AOF"></a>AOF</h3><p>每秒或者每次写操作，安全，速度不够快，也存在丢失1秒的可能。可以在从机器上开启。</p>
+<h3 id="RDB"><a href="#RDB" class="headerlink" title="RDB"></a>RDB</h3><p>快照，定时，或者数量改变时，存储到一个二进制文件。容易恢复，文件小，但是存在不完整的可能。</p>
+<p>主库开启RDB，每天<br>从库开启AOF，</p>
+<p>如果只配置AOF,重启时加载AOF文件恢复数据；<br>如果同时 配置了RBD和AOF,启动是只加载AOF文件恢复数据;<br>如果只配置RBD,启动是讲加载dump文件恢复数据。</p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a href="http://doc.redisfans.com/topic/sentinel.html" target="_blank" rel="noopener">http://doc.redisfans.com/topic/sentinel.html</a><br><a href="https://redis.io/topics/sentinel-clients" target="_blank" rel="noopener">sentinel客户端使用参考</a><br><a href="https://www.cnblogs.com/yiwangzhibujian/p/7047458.html" target="_blank" rel="noopener">sentinel和cluster的对比</a></p>
+
+      
+    </div>
+
+    
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div></div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="medivh 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="medivh 支付宝">
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+    <div>
+    
+                
+<div style="text-align:center;color: #ccc;font-size:14px;">
+------ 本文结束 ------</div>
+<br>
+<div style="border: 1px solid black">
+<div style="margin-left:10px">
+<span style="font-weight:blod">版权声明</span>
+<br>
+<p style="font-size: 10px;line-height: 30px"><a href="http://www.mknight.cn" style="color:#258FC6">Medivh's Notes</a> by <a href="http://www.mknight.cn" style="color:#258FC6">Medivh</a> is licensed under a <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" style="color:#258FC6">Creative Commons BY-NC-ND 4.0 International License</a>.<br>
+由<a href="http://www.mknight.cn" style="color:#258FC6">Medivh</a>创作并维护的<a href="http://www.mknight.cn" style="color:#258FC6">Medivh's Notes</a>博客采用<a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" style="color:#258FC6">创作共用保留署名-非商业-禁止演绎4.0国际许可证</a>。<br>
+本文首发于<a href="http://www.mknight.cn" style="color:#258FC6">Medivh</a> 博客（ <a href="http://www.mknight.cn" style="color:#258FC6">http://www.mknight.cn</a> ），版权所有，侵权必究。</p>
+</div>
+</div>
+
+        
+    </div>
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Redis/" <i="" class="fa fa-tag"> Redis</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/SpringBoot日志收集输出到ELK.html" rel="next" title="SpringBoot日志收集输出到ELK">
+                <i class="fa fa-chevron-left"></i> SpringBoot日志收集输出到ELK
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/Rsync+Inotify 实时同步.html" rel="prev" title="Rsync+Inotify 实时同步">
+                Rsync+Inotify 实时同步 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="http://img.mknight.cn/2018/1545104669394.png" alt="medivh">
+            
+              <p class="site-author-name" itemprop="name">medivh</p>
+              <p class="site-description motion-element" itemprop="description">运维的日常</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">54</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">4</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">30</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#单机"><span class="nav-number">1.</span> <span class="nav-text">单机</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#安全加固"><span class="nav-number">1.1.</span> <span class="nav-text">安全加固</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#原生主从（master-slave"><span class="nav-number">1.2.</span> <span class="nav-text">原生主从（master-slave)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Sentinel"><span class="nav-number">1.3.</span> <span class="nav-text">Sentinel</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#配置redis文件"><span class="nav-number">1.3.1.</span> <span class="nav-text">配置redis文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#配置sentinel"><span class="nav-number">1.3.2.</span> <span class="nav-text">配置sentinel</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#配置文件"><span class="nav-number">1.3.2.1.</span> <span class="nav-text">配置文件</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#启动"><span class="nav-number">1.3.2.2.</span> <span class="nav-text">启动</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#检查配置文件的变化"><span class="nav-number">1.3.2.3.</span> <span class="nav-text">检查配置文件的变化</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#基本命令"><span class="nav-number">1.3.3.</span> <span class="nav-text">基本命令</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#故障转移"><span class="nav-number">1.3.4.</span> <span class="nav-text">故障转移</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#常见问题"><span class="nav-number">1.4.</span> <span class="nav-text">常见问题</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#访问sentinel集群"><span class="nav-number">1.4.1.</span> <span class="nav-text">访问sentinel集群</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#集群-Cluster"><span class="nav-number">2.</span> <span class="nav-text">集群(Cluster)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#简介"><span class="nav-number">2.1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数据共享"><span class="nav-number">2.2.</span> <span class="nav-text">数据共享</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#集群中的主从复制"><span class="nav-number">2.3.</span> <span class="nav-text">集群中的主从复制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#集群一致性保证"><span class="nav-number">2.4.</span> <span class="nav-text">集群一致性保证</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#部署"><span class="nav-number">2.5.</span> <span class="nav-text">部署</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#配置文件-1"><span class="nav-number">2.5.1.</span> <span class="nav-text">配置文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-创建集群"><span class="nav-number">2.5.2.</span> <span class="nav-text">1 创建集群</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#修复集群"><span class="nav-number">2.5.3.</span> <span class="nav-text">修复集群</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#监控"><span class="nav-number">2.6.</span> <span class="nav-text">监控</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#备份机制"><span class="nav-number">3.</span> <span class="nav-text">备份机制</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#AOF"><span class="nav-number">3.1.</span> <span class="nav-text">AOF</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RDB"><span class="nav-number">3.2.</span> <span class="nav-text">RDB</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考资料"><span class="nav-number">4.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  <span>
+    <a target="_blank" href="https://beian.miit.gov.cn">京ICP备17063827号-1</a>
+  </span>
+  <span itemprop="copyrightYear"></span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">medivh</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+    <span title="站点总字数"></span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    
+    <span title="站点阅读时长"></span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv" title="总访客量">
+    	<span id="busuanzi_container_site_pv">
+        	本站访客数: <span id="busuanzi_value_site_uv"></span>
+   	 </span>
+    </span>
+  
+
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=6.6.0"></script>
+
+  <script src="/js/src/motion.js?v=6.6.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/affix.js?v=6.6.0"></script>
+
+  <script src="/js/src/schemes/pisces.js?v=6.6.0"></script>
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=6.6.0"></script>
+<script src="/js/src/post-details.js?v=6.6.0"></script>
+
+
+
+  
+
+
+  <script src="/js/src/bootstrap.js?v=6.6.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  
+  
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+
+  <script>
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(function (item) {
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'B1L35FebIXiGQu3MloNCxrCS-gzGzoHsz',
+        appKey: 'iQH7DjsnLwlvoMB58gpevWMC',
+        placeholder: 'Just go go',
+        avatar:'mm',
+        meta:guest,
+        pageSize:'10' || 10,
+        visitor: true
+    });
+  </script>
+
+
+
+
+  
+
+  <script>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
