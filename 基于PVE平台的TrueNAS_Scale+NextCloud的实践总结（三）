@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://img.mknight.cn/2018/1545104669394.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://img.mknight.cn/2018/1545104669394.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha256-CTSx/A06dm1B063156EVh15m6Y67pAjZZaQc89LLSrU=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"econow.cn","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.18.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="NAS专栏：  基于PVE平台的TrueNAS_Scale+NextCloud的实践总结（一） 基于PVE平台的TrueNAS_Scale+NextCloud的实践总结（二） 基于PVE平台的TrueNAS_Scale+NextCloud的实践总结（三）  前言虚拟化平台搭建好了，现在开始创建一台trues的虚拟机。TruesNAS 是之前选择的系统，其中Enterprise 是付费版，Scale">
+<meta property="og:type" content="article">
+<meta property="og:title" content="基于PVE平台的TrueNAS_Scale+NextCloud的实践总结（三）">
+<meta property="og:url" content="https://econow.cn/%E5%9F%BA%E4%BA%8EPVE%E5%B9%B3%E5%8F%B0%E7%9A%84TrueNAS_Scale+NextCloud%E7%9A%84%E5%AE%9E%E8%B7%B5%E6%80%BB%E7%BB%93%EF%BC%88%E4%B8%89%EF%BC%89">
+<meta property="og:site_name" content="Medivh&#39;s castle">
+<meta property="og:description" content="NAS专栏：  基于PVE平台的TrueNAS_Scale+NextCloud的实践总结（一） 基于PVE平台的TrueNAS_Scale+NextCloud的实践总结（二） 基于PVE平台的TrueNAS_Scale+NextCloud的实践总结（三）  前言虚拟化平台搭建好了，现在开始创建一台trues的虚拟机。TruesNAS 是之前选择的系统，其中Enterprise 是付费版，Scale">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img.mknight.cn/medivh/1669279439301.png">
+<meta property="og:image" content="https://img.mknight.cn/medivh/1669280893833.png">
+<meta property="og:image" content="https://img.mknight.cn/medivh/1669280910986.png">
+<meta property="og:image" content="https://img.mknight.cn/medivh/1669281008839.png">
+<meta property="og:image" content="https://img.mknight.cn/medivh/1669281872868.png">
+<meta property="og:image" content="https://img.mknight.cn/medivh/1669281972621.png">
+<meta property="og:image" content="https://img.mknight.cn/medivh/1669282030229.png">
+<meta property="og:image" content="https://img.mknight.cn/medivh/1669282087934.png">
+<meta property="og:image" content="https://img.mknight.cn/medivh/1669282158314.png">
+<meta property="og:image" content="https://img.mknight.cn/medivh/1669282252379.png">
+<meta property="og:image" content="https://img.mknight.cn/medivh/1669604121682.png">
+<meta property="og:image" content="https://img.mknight.cn/medivh/1669282473343.png">
+<meta property="og:image" content="https://img.mknight.cn/medivh/1669282672229.png">
+<meta property="og:image" content="https://img.mknight.cn/medivh/1669282731973.png">
+<meta property="og:image" content="https://img.mknight.cn/medivh/1669282798780.png">
+<meta property="og:image" content="https://img.mknight.cn/medivh/1669282892634.png">
+<meta property="og:image" content="https://img.mknight.cn/medivh/1669282926386.png">
+<meta property="og:image" content="https://img.mknight.cn/medivh/1669283126821.png">
+<meta property="og:image" content="https://img.mknight.cn/medivh/1669284054845.png">
+<meta property="og:image" content="https://img.mknight.cn/medivh/1669284154262.png">
+<meta property="og:image" content="https://img.mknight.cn/medivh/1669284183021.png">
+<meta property="og:image" content="https://img.mknight.cn/medivh/1669284272303.png">
+<meta property="og:image" content="https://img.mknight.cn/medivh/1669284354369.png">
+<meta property="article:published_time" content="2022-11-24T08:40:05.000Z">
+<meta property="article:modified_time" content="2023-10-30T09:45:56.635Z">
+<meta property="article:author" content="medivh">
+<meta property="article:tag" content="docker">
+<meta property="article:tag" content="nas">
+<meta property="article:tag" content="pve">
+<meta property="article:tag" content="虚拟化">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img.mknight.cn/medivh/1669279439301.png">
+
+
+<link rel="canonical" href="https://econow.cn/%E5%9F%BA%E4%BA%8EPVE%E5%B9%B3%E5%8F%B0%E7%9A%84TrueNAS_Scale+NextCloud%E7%9A%84%E5%AE%9E%E8%B7%B5%E6%80%BB%E7%BB%93%EF%BC%88%E4%B8%89%EF%BC%89">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://econow.cn/%E5%9F%BA%E4%BA%8EPVE%E5%B9%B3%E5%8F%B0%E7%9A%84TrueNAS_Scale+NextCloud%E7%9A%84%E5%AE%9E%E8%B7%B5%E6%80%BB%E7%BB%93%EF%BC%88%E4%B8%89%EF%BC%89","path":"/基于PVE平台的TrueNAS_Scale+NextCloud的实践总结（三）","title":"基于PVE平台的TrueNAS_Scale+NextCloud的实践总结（三）"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>基于PVE平台的TrueNAS_Scale+NextCloud的实践总结（三） | Medivh's castle</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Medivh's castle</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">数据蜘蛛工作室</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85"><span class="nav-number">2.</span> <span class="nav-text">安装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE"><span class="nav-number">2.1.</span> <span class="nav-text">配置</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BD%91%E7%BB%9C%E8%AE%BE%E7%BD%AE"><span class="nav-number">2.1.1.</span> <span class="nav-text">网络设置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Docker%E6%BA%90"><span class="nav-number">2.1.2.</span> <span class="nav-text">Docker源</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AD%98%E5%82%A8%E8%AE%BE%E7%BD%AE"><span class="nav-number">2.1.3.</span> <span class="nav-text">存储设置</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Vdev%E7%B1%BB%E5%9E%8B"><span class="nav-number">2.1.3.1.</span> <span class="nav-text">Vdev类型</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#1%E3%80%81Data"><span class="nav-number">2.1.3.1.1.</span> <span class="nav-text">1、Data</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#2%E3%80%81Cache"><span class="nav-number">2.1.3.1.2.</span> <span class="nav-text">2、Cache</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#3%E3%80%81Log"><span class="nav-number">2.1.3.1.3.</span> <span class="nav-text">3、Log</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#4%E3%80%81Hot-Spare"><span class="nav-number">2.1.3.1.4.</span> <span class="nav-text">4、Hot Spare</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#5%E3%80%81Metadata"><span class="nav-number">2.1.3.1.5.</span> <span class="nav-text">5、Metadata</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#6%E3%80%81Dedup"><span class="nav-number">2.1.3.1.6.</span> <span class="nav-text">6、Dedup</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#RAID%E4%BB%8B%E7%BB%8D"><span class="nav-number">2.1.3.2.</span> <span class="nav-text">RAID介绍</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SMB%E6%9C%8D%E5%8A%A1"><span class="nav-number">2.1.4.</span> <span class="nav-text">SMB服务</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#NextCloud"><span class="nav-number">2.2.</span> <span class="nav-text">NextCloud</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B7%BB%E5%8A%A0%E7%BC%93%E5%AD%98"><span class="nav-number">2.2.1.</span> <span class="nav-text">添加缓存</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%BC%80%E5%90%AF%E4%B8%8A%E4%BC%A0%E4%B8%8D%E9%99%90%E9%80%9F"><span class="nav-number">2.2.2.</span> <span class="nav-text">开启上传不限速</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8F%AF%E8%83%BD%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-number">2.2.3.</span> <span class="nav-text">可能遇到的问题</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">3.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">4.</span> <span class="nav-text">参考</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">medivh</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">95</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">48</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://econow.cn/%E5%9F%BA%E4%BA%8EPVE%E5%B9%B3%E5%8F%B0%E7%9A%84TrueNAS_Scale+NextCloud%E7%9A%84%E5%AE%9E%E8%B7%B5%E6%80%BB%E7%BB%93%EF%BC%88%E4%B8%89%EF%BC%89">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="medivh">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Medivh's castle">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="基于PVE平台的TrueNAS_Scale+NextCloud的实践总结（三） | Medivh's castle">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          基于PVE平台的TrueNAS_Scale+NextCloud的实践总结（三）
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-11-24 16:40:05" itemprop="dateCreated datePublished" datetime="2022-11-24T16:40:05+08:00">2022-11-24</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-10-30 17:45:56" itemprop="dateModified" datetime="2023-10-30T17:45:56+08:00">2023-10-30</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E4%B9%90%E8%B6%A3/" itemprop="url" rel="index"><span itemprop="name">乐趣</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>NAS专栏：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://mknight.cn/%E5%9F%BA%E4%BA%8EPVE%E5%B9%B3%E5%8F%B0%E7%9A%84TrueNAS_Scale+NextCloud%E7%9A%84%E5%AE%9E%E8%B7%B5%E6%80%BB%E7%BB%93%EF%BC%88%E4%B8%80%EF%BC%89.html#more">基于PVE平台的TrueNAS_Scale+NextCloud的实践总结（一）</a></li>
+<li><a target="_blank" rel="noopener" href="https://mknight.cn/%E5%9F%BA%E4%BA%8EPVE%E5%B9%B3%E5%8F%B0%E7%9A%84TrueNAS_Scale+NextCloud%E7%9A%84%E5%AE%9E%E8%B7%B5%E6%80%BB%E7%BB%93%EF%BC%88%E4%BA%8C%EF%BC%89.html#more">基于PVE平台的TrueNAS_Scale+NextCloud的实践总结（二）</a></li>
+<li><a target="_blank" rel="noopener" href="https://mknight.cn/%E5%9F%BA%E4%BA%8EPVE%E5%B9%B3%E5%8F%B0%E7%9A%84TrueNAS_Scale+NextCloud%E7%9A%84%E5%AE%9E%E8%B7%B5%E6%80%BB%E7%BB%93%EF%BC%88%E4%B8%89%EF%BC%89.html#more">基于PVE平台的TrueNAS_Scale+NextCloud的实践总结（三）</a></li>
+</ul>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>虚拟化平台搭建好了，现在开始创建一台trues的虚拟机。TruesNAS 是之前选择的系统，其中Enterprise 是付费版，Scale是要使用的系统。</p>
+<p><img src="https://img.mknight.cn/medivh/1669279439301.png" alt="1669279439301.png"></p>
+<p>功能概览：</p>
+<p><img src="https://img.mknight.cn/medivh/1669280893833.png" alt="1669280893833.png"></p>
+<p>路线图</p>
+<p><img src="https://img.mknight.cn/medivh/1669280910986.png" alt="1669280910986.png"></p>
+<p>下载</p>
+<p><img src="https://img.mknight.cn/medivh/1669281008839.png" alt="1669281008839.png"></p>
+<p><a target="_blank" rel="noopener" href="https://download.truenas.com/TrueNAS-SCALE-Angelfish/22.02.4/TrueNAS-SCALE-22.02.4.iso">下载链接</a></p>
+<p>网盘目录里存放了从官网下载的系统镜像，可以直接下载<a target="_blank" rel="noopener" href="https://pan.baidu.com/s/1apBdslCrIvDhZ8ii5hGAlQ?pwd=1gtj">百度网盘</a> 提取码: 1gtj 。</p>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>该部分很简单，在PVE创建虚拟机的时候选择镜像，基本按照默认选择安装即可。</p>
+<h3 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h3><p>访问登录地址<a target="_blank" rel="noopener" href="http://ip/">http://ip</a></p>
+<p><img src="https://img.mknight.cn/medivh/1669281872868.png" alt="1669281872868.png"></p>
+<p>登录后就会看到Dashboard</p>
+<p><img src="https://img.mknight.cn/medivh/1669281972621.png" alt="1669281972621.png"></p>
+<p>本地化设置在 系统设置-》常规-》本地化—》选择语言和时区</p>
+<h4 id="网络设置"><a href="#网络设置" class="headerlink" title="网络设置"></a>网络设置</h4><p>网络-》接口，点击</p>
+<p><img src="https://img.mknight.cn/medivh/1669282030229.png" alt="1669282030229.png"></p>
+<p>取消勾选DHCP，添加新的IP，然后应用</p>
+<p><img src="https://img.mknight.cn/medivh/1669282087934.png" alt="1669282087934.png"></p>
+<p>注意点击应用后要点击测试更改，然后在60s内使用新的IP访问，否则修改无效。</p>
+<p><img src="https://img.mknight.cn/medivh/1669282158314.png" alt="1669282158314.png"></p>
+<p>根据自己需要填写DNS和网关。需要注意的是NetBIOS-NS需要勾选，否则部分设备无法发现，比如小米摄像头。</p>
+<p><img src="https://img.mknight.cn/medivh/1669282252379.png" alt="1669282252379.png"></p>
+<h4 id="Docker源"><a href="#Docker源" class="headerlink" title="Docker源"></a>Docker源</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&#123;<span class="string">&quot;data-root&quot;</span>: <span class="string">&quot;/mnt/free/ix-applications/docker&quot;</span>, <span class="string">&quot;exec-opts&quot;</span>: [<span class="string">&quot;native.cgroupdriver=cgroupfs&quot;</span>], <span class="string">&quot;iptables&quot;</span>: <span class="literal">false</span>, <span class="string">&quot;bridge&quot;</span>: <span class="string">&quot;none&quot;</span>&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 增加</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="string">&quot;registry-mirrors&quot;</span>: [</span><br><span class="line">        <span class="string">&quot;http://hub-mirror.c.163.com&quot;</span>,</span><br><span class="line">        <span class="string">&quot;https://docker.mirrors.ustc.edu.cn&quot;</span>,</span><br><span class="line">        <span class="string">&quot;https://registry.docker-cn.com&quot;</span></span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="存储设置"><a href="#存储设置" class="headerlink" title="存储设置"></a>存储设置</h4><p>TrueNAS存储顺序为内存-&gt;缓存存储池-&gt;数据存储池。</p>
+<p>一个存储池可以由多个Vdev组成，而Vdev可以有多种类型。</p>
+<p><img src="https://img.mknight.cn/medivh/1669604121682.png" alt="1669604121682.png"></p>
+<h5 id="Vdev类型"><a href="#Vdev类型" class="headerlink" title="Vdev类型"></a>Vdev类型</h5><p>Vdev有以下六种类型：<br>参考：Creating Pools | (truenas.com)</p>
+<h6 id="1、Data"><a href="#1、Data" class="headerlink" title="1、Data"></a>1、Data</h6><p>基础Vdev，用于存储数据，一个存储池至少有一个Data Vdev。</p>
+<p>可以在一个池里添加多个Data Vdev，多个Data Vdev可以组成相关阵列，而一个Data Vdev又可以由多块硬盘组成的阵列构成。</p>
+<h6 id="2、Cache"><a href="#2、Cache" class="headerlink" title="2、Cache"></a>2、Cache</h6><p>ZFS L2ARC读取缓存可与快速设备一起使用以加速读取操作。相当于二级缓存，保存从内存里面调出的数据，下次直接从固态硬盘中调出。建议64G内存以上的用户使用此Vdev，不要超过内存的5倍。推荐用固态硬盘当缓存Vdev，容量不需太大，64G存最好不要超过300G容量，多了反而会增加内存的消耗。</p>
+<p>How Does L2ARC Work?<br>当系统收到读请求时，ZFS使用ARC (RAM)来处理这些请求。当ARC满了，并且有L2ARC驱动器分配给ZFS池时，ZFS使用L2ARC来处理从ARC溢出的读请求。这减少了使用较慢的硬盘驱动器，从而提高了系统性能。</p>
+<p>更多内容可查看官方说明：L2ARC | (truenas.com)</p>
+<h6 id="3、Log"><a href="#3、Log" class="headerlink" title="3、Log"></a>3、Log</h6><p>ZFS日志设备，提高同步写速度，日志设备的最小大小与池中每个设备的最小大小 (64 MB) 相同。可能存储在日志设备中的相关的数据量相对较小。提交日志事务（系统调用）时将释放日志块。日志设备的最大大小应大约为物理内存大小的 1&#x2F;2，因为这是可存储的最大潜在相关的数据量。例如，如果系统的物理内存为 16 GB，请考虑 8 GB 的最大日志设备大小。</p>
+<p>ZFS intent log（ZIL）通常被称为日志，其主要目的是数据完整性。ZIL的存在是为了跟踪正在进行的同步写操作。如果系统崩溃或断电，ZIL可以重放操作。当您在电源故障时丢失一个标准的系统缓存时，一个ZIL在系统重新启动时仍然存在。</p>
+<p>ZFS数据池使用一个存储在磁盘上的ZIL来记录同步写入，然后再刷新到存储中的最终位置。这意味着同步写操作以存储池的速度进行，并且必须写入存储池两次或两次以上(取决于磁盘冗余)。</p>
+<p>更多内容可查看官方说明：SLOG Devices | (truenas.com)</p>
+<h6 id="4、Hot-Spare"><a href="#4、Hot-Spare" class="headerlink" title="4、Hot Spare"></a>4、Hot Spare</h6><p>热备盘是指当主用磁盘故障时，预留插入Data vdev的磁盘。热备盘用于临时替换故障驱动器，以防止出现更大的池和数据丢失的情况。 当新硬盘替换故障硬盘时，热备盘恢复为非激活状态，重新作为热备盘使用。 当故障驱动器仅从池中分离时，临时热备盘将被提升为Data vdev的成员，不再作为热备盘可用。</p>
+<h6 id="5、Metadata"><a href="#5、Metadata" class="headerlink" title="5、Metadata"></a>5、Metadata</h6><p>用于创建Fusion Pools的特殊分配类，以提高元数据和小块 i&#x2F;o 性能。</p>
+<h6 id="6、Dedup"><a href="#6、Dedup" class="headerlink" title="6、Dedup"></a>6、Dedup</h6><p>Dedup vde用于存储ZFS池中的重复删除数据。需要为每X TiB的通用存储分配X GiB。例如，1 GiB的Dedup vdev容量对应1 TiB的Data vdev可用容量。</p>
+<p>根据特定的池用例，添加到vdev中的磁盘以不同的布局排列。不支持将多个具有不同布局的vdev添加到池中。当需要不同的vdev布局时，创建一个新的池。例如，pool1中有一个镜像布局的数据vdev，新创建一个poo2，将raid-z布局的vdev添加到pool2中。</p>
+<h5 id="RAID介绍"><a href="#RAID介绍" class="headerlink" title="RAID介绍"></a>RAID介绍</h5><p>条带：与RAID0类似，不过可以不同大小的硬盘组<br>镜像：与RAID1类似，磁盘镜像，至少需要两个磁盘。<br>RAIDZ1：与RAID5类似，一重奇偶校验，至少需要三块磁盘；可以坏一块硬盘不丢数据。容量和速度为N-1(N为硬盘数量)<br>RAIDZ2：与RAID6类似，双重奇偶校验，至少需要四个磁盘；可以坏2块硬盘不丢数据。容量和速度为N-2(N为硬盘数量)<br>RAIDZ3：ZFS特有的，三重奇偶校验，至少需要5个磁盘；可以坏3块盘不丢数据。容量和速度为N-3(N为硬盘数量)</p>
+<p>创建新的池，选择磁盘，此处磁盘已经使用，所以显示为空。</p>
+<p><img src="https://img.mknight.cn/medivh/1669282473343.png" alt="1669282473343.png"></p>
+<p>下面是使用了一段时间后的情况</p>
+<p><img src="https://img.mknight.cn/medivh/1669282672229.png" alt="1669282672229.png"></p>
+<h4 id="SMB服务"><a href="#SMB服务" class="headerlink" title="SMB服务"></a>SMB服务</h4><p>首先需要创建用户，我这里是给摄像头使用的</p>
+<p><img src="https://img.mknight.cn/medivh/1669282731973.png" alt="1669282731973.png"></p>
+<p>该部分需要注意主目录的位置，可以输入后自动创建并使用，其他保持默认即可。</p>
+<p><img src="https://img.mknight.cn/medivh/1669282798780.png" alt="1669282798780.png"></p>
+<p>下一步需要启动服务</p>
+<p><img src="https://img.mknight.cn/medivh/1669282892634.png" alt="1669282892634.png"></p>
+<p>对于小米摄像头来说需要启动SMB1。</p>
+<p><img src="https://img.mknight.cn/medivh/1669282926386.png" alt="1669282926386.png"></p>
+<p>输入账号密码，很完美。</p>
+<p><img src="https://img.mknight.cn/medivh/1669283126821.png" alt="1669283126821.png"></p>
+<h3 id="NextCloud"><a href="#NextCloud" class="headerlink" title="NextCloud"></a>NextCloud</h3><p>选择应用-》nextcloud</p>
+<p><img src="https://img.mknight.cn/medivh/1669284054845.png" alt="1669284054845.png"></p>
+<p>账号密码和IP都可以自定义，也可以不修改</p>
+<p><img src="https://img.mknight.cn/medivh/1669284154262.png" alt="1669284154262.png"></p>
+<p>添加两个环境变量<code>PHP_UPLOAD_LIMIT</code>和<code>PHP_MEMORY_LIMIT</code>，为了之后上传大文件</p>
+<p><img src="https://img.mknight.cn/medivh/1669284183021.png" alt="1669284183021.png"></p>
+<p>存储这块建议使用host模式，自定义存储路径</p>
+<p><img src="https://img.mknight.cn/medivh/1669284272303.png" alt="1669284272303.png"></p>
+<p>其余项目使用默认设置即可，保存后系统会自动部署。</p>
+<p>当此处展示为ACTIVE，点击Web Portal即可</p>
+<p><img src="https://img.mknight.cn/medivh/1669284354369.png" alt="1669284354369.png"></p>
+<h4 id="添加缓存"><a href="#添加缓存" class="headerlink" title="添加缓存"></a>添加缓存</h4><p>修改config.php文件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&#x27;memcache.distributed&#x27;</span> =&gt; <span class="string">&#x27;\OC\Memcache\Redis&#x27;</span>,</span><br><span class="line"><span class="string">&#x27;redis&#x27;</span> =&gt; array(</span><br><span class="line"><span class="string">&#x27;host&#x27;</span> =&gt; 192.168.31.82,</span><br><span class="line"><span class="string">&#x27;port&#x27;</span> =&gt; 6379,</span><br></pre></td></tr></table></figure>
+
+<h4 id="开启上传不限速"><a href="#开启上传不限速" class="headerlink" title="开启上传不限速"></a>开启上传不限速</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker <span class="built_in">exec</span> --user www-data CONTAINER_ID  php occ config:app:<span class="built_in">set</span> files max_chunk_size --value 0</span><br></pre></td></tr></table></figure>
+
+<h4 id="可能遇到的问题"><a href="#可能遇到的问题" class="headerlink" title="可能遇到的问题"></a>可能遇到的问题</h4><ul>
+<li>镜像下载不下来<ul>
+<li>修改docker为国内源</li>
+</ul>
+</li>
+<li>上传大文件提示服务器错误<ul>
+<li>添加参数<ul>
+<li>PHP_UPLOAD_LIMIT&#x3D;16G</li>
+<li>PHP_MEMORY_LIMIT&#x3D;16G</li>
+<li>LimitRequestBody 0 添加至html目录下的.htaccess文件</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>为Nextcloud手动添加文件-使后台上传的文件在Nextcloud中显示<ul>
+<li>sudo -u www-data php occ files:scan –all</li>
+</ul>
+</li>
+<li>为Nextcloud添加其他目录<ul>
+<li>可以在应用添加扩展host挂载目录</li>
+</ul>
+</li>
+</ul>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>安装系统其实没什么难度，困难的是后续的应用配置。</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://www.truenas.com/">https://www.truenas.com/</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.truenas.com/truenas-scale/">https://www.truenas.com/truenas-scale/</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.truenas.com/docs/">https://www.truenas.com/docs/</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/docker/" rel="tag"># docker</a>
+              <a href="/tags/nas/" rel="tag"># nas</a>
+              <a href="/tags/pve/" rel="tag"># pve</a>
+              <a href="/tags/%E8%99%9A%E6%8B%9F%E5%8C%96/" rel="tag"># 虚拟化</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/%E5%9F%BA%E4%BA%8EPVE%E5%B9%B3%E5%8F%B0%E7%9A%84TrueNAS_Scale+NextCloud%E7%9A%84%E5%AE%9E%E8%B7%B5%E6%80%BB%E7%BB%93%EF%BC%88%E4%BA%8C%EF%BC%89" rel="prev" title="基于PVE平台的TrueNAS_Scale+NextCloud的实践总结（二）">
+                  <i class="fa fa-angle-left"></i> 基于PVE平台的TrueNAS_Scale+NextCloud的实践总结（二）
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/Kubernetes%E5%85%B3%E4%BA%8EStorageClass%E7%9A%84%E5%BA%94%E7%94%A8%E2%80%94%E2%80%94Flare" rel="next" title="Kubernetes关于StorageClass的应用——Flare">
+                  Kubernetes关于StorageClass的应用——Flare <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">京ICP备17063827号-2 </a>
+      <img src="https://beian.miit.gov.cn/#/Integrated/index" alt="">
+  </div>
+  <div class="copyright">
+    &copy; 2017 – 
+    <span itemprop="copyrightYear">2023</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">medivh</span>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
