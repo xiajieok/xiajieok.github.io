@@ -17,7 +17,7 @@
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha256-CTSx/A06dm1B063156EVh15m6Y67pAjZZaQc89LLSrU=" crossorigin="anonymous">
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"econow.cn","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.18.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":true,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":true,"preload":true}}</script><script src="/js/config.js"></script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"econow.cn","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.18.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":true,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
 
     <meta name="description" content="GPT分区前提条件">
 <meta property="og:type" content="article">
@@ -263,9 +263,9 @@
 <h3 id="流程"><a href="#流程" class="headerlink" title="流程"></a>流程</h3><p>运行命令parted &#x2F;dev&#x2F;vdd开始分区。<br>运行命令mklabel gpt，将默认的MBR分区格式转为GPT分区格式。<br>运行命令mkpart primary 1 100%，划分一个主分区，并设置分区的开始位置和结束位置。<br>运行命令align-check optimal 1检查分区是否对齐。</p>
 <h3 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@ecshost~ ]# yum install -y parted</span><br><span class="line">[root@ecshost~ ]# yum install -y e2fsprogs</span><br></pre></td></tr></table></figure>
 
-<img src="https://img.econow.cn/medivh/1562063734050.png"  />
+<img data-src="https://img.econow.cn/medivh/1562063734050.png"  />
 
-<img src="https://img.econow.cn/medivh/1562063851890.png"  />
+<img data-src="https://img.econow.cn/medivh/1562063851890.png"  />
 
 
 <h2 id="名词解释："><a href="#名词解释：" class="headerlink" title="名词解释："></a>名词解释：</h2><ul>
@@ -276,19 +276,19 @@
 <li><p>LV（Logical Volume，逻辑卷），LV就是从VG中划分出来的卷，LV的使用要比PV灵活的多，可以在空间不够的情况下，增加空间。</p>
 </li>
 </ul>
-<img src="https://img.econow.cn/medivh/1560482143355.png"  />
+<img data-src="https://img.econow.cn/medivh/1560482143355.png"  />
 
 <p>就像图中所示，三块物理磁盘组成物理卷工170G；然后三个pv组成一个VG为170G；最后从VG里面分出多个LV。其中VG可以当成一块大盘。</p>
-<h2 id="实现LVM"><a href="#实现LVM" class="headerlink" title="实现LVM"></a>实现LVM</h2><p>针对于&#x2F;dev&#x2F;vdc磁盘为例<br>###1、格式化磁盘<br><img src="https://img.econow.cn/medivh/1560484200006.png"  /><br><img src="https://img.econow.cn/medivh/1560484253384.png"  /></p>
+<h2 id="实现LVM"><a href="#实现LVM" class="headerlink" title="实现LVM"></a>实现LVM</h2><p>针对于&#x2F;dev&#x2F;vdc磁盘为例<br>###1、格式化磁盘<br><img data-src="https://img.econow.cn/medivh/1560484200006.png"  /><br><img data-src="https://img.econow.cn/medivh/1560484253384.png"  /></p>
 <p>###2、创建PV<br>命令“pvcreate ＋分区”</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pvcreate /dev/vdc1</span><br></pre></td></tr></table></figure>
-<img src="https://img.econow.cn/medivh/1560484437686.png"  />
+<img data-src="https://img.econow.cn/medivh/1560484437686.png"  />
 ###3、创建VG
 命令“vgcreate ＋分区号＋分区号"
-<img src="https://img.econow.cn/medivh/1560484533113.png"  />
+<img data-src="https://img.econow.cn/medivh/1560484533113.png"  />
 ###4、创建lv
 命令“lvcreate -L Size(要建的LV大小） -n LV名+VG名”，也可以用命令“lvdisplay和lvscan”来查看LV的详细信息
-<img src="https://img.econow.cn/medivh/1560491383392.png"  />
+<img data-src="https://img.econow.cn/medivh/1560491383392.png"  />
 
 <h3 id="5、调整大小"><a href="#5、调整大小" class="headerlink" title="5、调整大小"></a>5、调整大小</h3><p>建立好lV后我们还可以通过命令“lvextend -L +Size（就是增加多少空间）＋LV的绝对路径”来增加LV的空间大小。也可以通过“lvreduce -L -Size（就是减小多少空间）＋LV的绝对路径”来减少LV的空间大小</p>
 <h3 id="6、操作"><a href="#6、操作" class="headerlink" title="6、操作"></a>6、操作</h3><p>以上的PV、VG、LV、都可以通过“pvremove +分区号、vgremove +VG名称、lvremove +lv的绝对路径（如lvremove &#x2F;dev&#x2F;vg_liwei&#x2F;lv_liwei）”命令来删除。这里就不截图了。</p>

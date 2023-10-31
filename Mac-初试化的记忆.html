@@ -17,7 +17,7 @@
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha256-CTSx/A06dm1B063156EVh15m6Y67pAjZZaQc89LLSrU=" crossorigin="anonymous">
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"econow.cn","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.18.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":true,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":true,"preload":true}}</script><script src="/js/config.js"></script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"econow.cn","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.18.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":true,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
 
     <meta name="description" content="每重装一次系统感觉就要减少一个月的寿命。人生如此短暂，还是少些忧愁吧。  重装系统后基本的配置路线：终端-&gt;开发-&gt;浏览器。浏览器最主要的配置就是同步标签和数据，关于Chrome浏览器的同步就自行解决吧。">
 <meta property="og:type" content="article">
@@ -284,7 +284,7 @@
 <p>键入命令后：</p>
 <p>按下 Return 键以输入这个命令。<br>出现提示时，请键入您的管理员密码，然后再次按下 Return 键。在您键入密码时，“终端”不会显示任何字符。<br>出现提示时，请键入 Y 以确认您要抹掉宗卷，然后按下 Return 键。在抹掉宗卷的过程中，“终端”会显示进度。<br>宗卷被抹掉后，您可能会看到一条提醒，提示“终端”要访问可移除宗卷上的文件。点按“好”以允许继续拷贝。<br>当“终端”显示操作已完成时，相应宗卷将拥有与您下载的安装器相同的名称，例如“安装 macOS Big Sur”。您现在可以退出“终端”并弹出宗卷。</p>
 <p>写入的时间有点长，主要取决于U盘的写入速度。</p>
-<img src="https://img.econow.cn/medivh/1614578974150.png"  />
+<img data-src="https://img.econow.cn/medivh/1614578974150.png"  />
 
 
 <h3 id="如果新的SSD系统不识别"><a href="#如果新的SSD系统不识别" class="headerlink" title="如果新的SSD系统不识别"></a>如果新的SSD系统不识别</h3><p>将 Mac 开机，然后立即按住 Command (⌘) 和 R 这两个按键，直至看到 Apple 标志或其他图像。从 macOS 恢复功能的实用工具窗口中，选择“磁盘工具”并点按“继续”。</p>
@@ -343,17 +343,17 @@
 
 <p>4.设置Iterm2的Tirgger特性，profiles-&gt;default-&gt;editProfiles-&gt;Advanced中的Tirgger</p>
 <p>添加两条trigger，分别设置 Regular expression，Action，Parameters，Instant如下：</p>
-<img src="https://img.econow.cn/medivh/1614522207826.png"  />
+<img data-src="https://img.econow.cn/medivh/1614522207826.png"  />
 
-<img src="https://img.econow.cn/medivh/1614522222576.png"  />
+<img data-src="https://img.econow.cn/medivh/1614522222576.png"  />
 
 
 
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">1.第一条</span><br><span class="line">        Regular expression: rz waiting to receive.\*\*B0100</span><br><span class="line">        Action: Run Silent Coprocess</span><br><span class="line">        Parameters: /usr/local/bin/iterm2-send-zmodem.sh</span><br><span class="line">        Instant: checked</span><br><span class="line">2.第二条</span><br><span class="line">        Regular expression: \*\*B00000000000000</span><br><span class="line">        Action: Run Silent Coprocess</span><br><span class="line">        Parameters: /usr/local/bin/iterm2-recv-zmodem.sh</span><br><span class="line">        Instant: checked</span><br></pre></td></tr></table></figure>
 
 <h3 id="iStat-Menus"><a href="#iStat-Menus" class="headerlink" title="iStat Menus"></a>iStat Menus</h3><p>激活码见163邮箱</p>
-<h3 id="Mac-外设键盘乱位"><a href="#Mac-外设键盘乱位" class="headerlink" title="Mac 外设键盘乱位"></a>Mac 外设键盘乱位</h3><p>修改 修饰键<br><img src="https://img.econow.cn/medivh/1614566892484.png"  /></p>
-<p>更改键位如下<br><img src="https://img.econow.cn/medivh/1614566905551.png"  /></p>
+<h3 id="Mac-外设键盘乱位"><a href="#Mac-外设键盘乱位" class="headerlink" title="Mac 外设键盘乱位"></a>Mac 外设键盘乱位</h3><p>修改 修饰键<br><img data-src="https://img.econow.cn/medivh/1614566892484.png"  /></p>
+<p>更改键位如下<br><img data-src="https://img.econow.cn/medivh/1614566905551.png"  /></p>
 <p>图片中是我自己的习惯，因人而异。</p>
 
     </div>

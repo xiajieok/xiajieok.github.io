@@ -17,7 +17,7 @@
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha256-CTSx/A06dm1B063156EVh15m6Y67pAjZZaQc89LLSrU=" crossorigin="anonymous">
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"econow.cn","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.18.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":true,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":true,"preload":true}}</script><script src="/js/config.js"></script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"econow.cn","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.18.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":true,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
 
     <meta name="description" content="简介安装">
 <meta property="og:type" content="article">
@@ -300,13 +300,13 @@
 <p>3、同步.erlang.cookie文件<br>所有节点从r0机器分发 <code>/var/lib/rabbitmq/.erlang.cookie </code>。</p>
 <p>4、在其他节点服务器操作加入集群</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">//默认是磁盘节点，如果是内存节点的话，需要加--ram参数</span><br><span class="line"></span><br><span class="line">rabbitmqctl stop_app</span><br><span class="line">rabbitmqctl join_cluster --ram rabbit@r0</span><br><span class="line">rabbitmqctl start_app</span><br><span class="line">rabbitmqctl stop_app</span><br><span class="line">rabbitmqctl join_cluster rabbit@r0</span><br><span class="line">rabbitmqctl start_app</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h4 id="验证集群"><a href="#验证集群" class="headerlink" title="验证集群"></a>验证集群</h4><p>1、节点加入集群，此处使用的主机名意义和hosts中一个意义。<br><img src="https://img.econow.cn/medivh/1553065925609.png" /></p>
-<p>2、加入集群后，检查集群状态<br><img src="https://img.econow.cn/medivh/1553065954361.png" /></p>
-<img src="https://img.econow.cn/medivh/1553069420891.png" />
+<h4 id="验证集群"><a href="#验证集群" class="headerlink" title="验证集群"></a>验证集群</h4><p>1、节点加入集群，此处使用的主机名意义和hosts中一个意义。<br><img data-src="https://img.econow.cn/medivh/1553065925609.png" /></p>
+<p>2、加入集群后，检查集群状态<br><img data-src="https://img.econow.cn/medivh/1553065954361.png" /></p>
+<img data-src="https://img.econow.cn/medivh/1553069420891.png" />
 
 <h4 id="问题整理"><a href="#问题整理" class="headerlink" title="问题整理"></a>问题整理</h4><ul>
 <li><p>之前加入集群的时候总提示错误<code>rror: unable to connect to node rabbit@test_229: nodedown</code></p>
-<img src="https://img.econow.cn/medivh/1553066819130.png" />
+<img data-src="https://img.econow.cn/medivh/1553066819130.png" />
 原因：在集群的所有机器都需要先执行`rabbitmq-server -detached`
 </li>
 <li><p>unable to connect to epmd (port 4369) on base_233: nxdomain (non-existing domain)</p>
@@ -324,7 +324,7 @@
 <p>由disc–&gt;ram</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">1.节点删除     rabbitmq-server -detached ---rabbitctl stop_app----    rabbitmqctl reset  （（--2.清除原数据（暂时备份到其他地方）--rabbitmqctl join_cluster --ram rabbit@rabbitmq1 ------------    rabbitmqctl start_app））</span><br><span class="line">2.清除原数据（暂时备份到其他地方）</span><br><span class="line">3.节点增加</span><br></pre></td></tr></table></figure>
 <p>由disc–&gt;ram<br>先恢复到单结点，重启，清数据<br>加集群 </p>
-<h3 id="镜像队列"><a href="#镜像队列" class="headerlink" title="镜像队列"></a>镜像队列</h3><h4 id="配置参数"><a href="#配置参数" class="headerlink" title="配置参数"></a>配置参数</h4><p>1、在管理界面配置<br><img src="https://img.econow.cn/medivh/1553134452790.png" /></p>
+<h3 id="镜像队列"><a href="#镜像队列" class="headerlink" title="镜像队列"></a>镜像队列</h3><h4 id="配置参数"><a href="#配置参数" class="headerlink" title="配置参数"></a>配置参数</h4><p>1、在管理界面配置<br><img data-src="https://img.econow.cn/medivh/1553134452790.png" /></p>
 <ul>
 <li><p>Virtual host： 可选参数，针对指定vhost下的queue进行设置</p>
 </li>
@@ -349,7 +349,7 @@
 </ul>
 <p>2、任意节点命令行配置</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">rabbitmqctl set_policy ha-all &quot;^&quot; &#x27;&#123;&quot;ha-mode&quot;:&quot;all&quot;&#125;&#x27;</span><br><span class="line">1</span><br><span class="line"></span><br><span class="line">// 命令行方式添加策略</span><br><span class="line">// 策略名称为ha-allqueue,策略模式为 all 即复制到所有节点，包含新增节点，策略正则表达式为 “^” 表示所有匹配所有队列名称。</span><br><span class="line">rabbitmqctl set_policy -p &lt;vhost&gt; ha-allqueue&quot;^&quot; &#x27;&#123;&quot;ha-mode&quot;:&quot;all&quot;&#125;&#x27;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>这时候就变成多个节点了。<br><img src="https://img.econow.cn/medivh/1553135352884.png" /></p>
+<p>这时候就变成多个节点了。<br><img data-src="https://img.econow.cn/medivh/1553135352884.png" /></p>
 <h2 id="负载均衡"><a href="#负载均衡" class="headerlink" title="负载均衡"></a>负载均衡</h2><p>AProxy 是一个免费的负载均衡软件，可以运行于大部分主流的 Linux 操作系统上。</p>
 <p>HAProxy 提供了 L4(TCP) 和 L7(HTTP) 两种负载均衡能力，具备丰富的功能。HAProxy 的社区非常活跃，版本更新快速（最新稳定版 1.7.2 于 2017&#x2F;01&#x2F;13 推出）。最关键的是，HAProxy 具备媲美商用负载均衡器的性能和稳定性。它当前不仅仅是免费负载均衡软件的首选，更几乎成为了唯一选择。</p>
 <p>因为 RabbitMQ 本身不提供负载均衡，下面我们就搭建 HAProxy，用作 RabbitMQ 集群的负载均衡。    </p>
@@ -366,7 +366,7 @@
 <li><a href="http://r0:8102：RabbitMQ">http://r0:8102：RabbitMQ</a> Server 服务地址（基于负载均衡）。<br>通过访问<a target="_blank" rel="noopener" href="http://r0:8100/stats%EF%BC%8C%E6%9F%A5%E7%9C%8B">http://r0:8100/stats，查看</a> HAProxy 负载均衡信息：</li>
 </ul>
 <p>实际程序访问的端口为8101</p>
-<p>这样，haproxy就可以使用啦。<br><img src="https://img.econow.cn/medivh/1553075635396.png" /></p>
+<p>这样，haproxy就可以使用啦。<br><img data-src="https://img.econow.cn/medivh/1553075635396.png" /></p>
 
     </div>
 
@@ -423,8 +423,8 @@
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/Rsync+Inotify%20%E5%AE%9E%E6%97%B6%E5%90%8C%E6%AD%A5.html" rel="next" title="Rsync+Inotify 实时同步">
-                  Rsync+Inotify 实时同步 <i class="fa fa-angle-right"></i>
+                <a href="/SpringBoot%E6%97%A5%E5%BF%97%E6%94%B6%E9%9B%86%E8%BE%93%E5%87%BA%E5%88%B0ELK.html" rel="next" title="SpringBoot日志收集输出到ELK">
+                  SpringBoot日志收集输出到ELK <i class="fa fa-angle-right"></i>
                 </a>
             </div>
           </div>

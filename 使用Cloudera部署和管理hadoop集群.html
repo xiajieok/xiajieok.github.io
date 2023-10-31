@@ -17,7 +17,7 @@
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha256-CTSx/A06dm1B063156EVh15m6Y67pAjZZaQc89LLSrU=" crossorigin="anonymous">
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"econow.cn","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.18.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":true,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":true,"preload":true}}</script><script src="/js/config.js"></script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"econow.cn","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.18.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":true,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
 
     <meta name="description" content="简介Cloude Manager 概述：">
 <meta property="og:type" content="article">
@@ -308,50 +308,50 @@
 <p>2、取代默认 JDK</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mkdir -p /usr/java</span><br><span class="line">ln -s /usr/local/jdk1.8.0_91/ /usr/java/default</span><br></pre></td></tr></table></figure>
 
-<p>因为默认情况下安装 Cloudrea Manager 的时候会自动安装一个 JDK7，所以在这里提前替换一下。如果之后检查的时候不生效，注意删除 JDK7，然后重启服务。正常的目录如下：<br><img src="https://img.econow.cn/medivh/1550050311058.png" /></p>
+<p>因为默认情况下安装 Cloudrea Manager 的时候会自动安装一个 JDK7，所以在这里提前替换一下。如果之后检查的时候不生效，注意删除 JDK7，然后重启服务。正常的目录如下：<br><img data-src="https://img.econow.cn/medivh/1550050311058.png" /></p>
 <h3 id="三、安装-Cloudrea-Manager"><a href="#三、安装-Cloudrea-Manager" class="headerlink" title="三、安装 Cloudrea Manager"></a>三、安装 Cloudrea Manager</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">cd /usr/src</span><br><span class="line">wget http://archive.cloudera.com/cm5/installer/latest/cloudera-manager-installer.bin</span><br><span class="line">chmod +x cloudera-manager-installer.bin</span><br><span class="line">./cloudera-manager-installer.bin</span><br></pre></td></tr></table></figure>
 
-<p>然后会出现以下画面，点击 Next 或者<Yes>,开始安装<br><img src="https://img.econow.cn/medivh/1550039104564.png" /></p>
-<img src="https://img.econow.cn/medivh/1550039166335.png" />
+<p>然后会出现以下画面，点击 Next 或者<Yes>,开始安装<br><img data-src="https://img.econow.cn/medivh/1550039104564.png" /></p>
+<img data-src="https://img.econow.cn/medivh/1550039166335.png" />
 最后安装完成，提示访问7180端口,账号密码都是admin
-<img src="https://img.econow.cn/medivh/1550039183944.png" />
+<img data-src="https://img.econow.cn/medivh/1550039183944.png" />
 
 <h3 id="四、数据库准备工作"><a href="#四、数据库准备工作" class="headerlink" title="四、数据库准备工作"></a>四、数据库准备工作</h3><h4 id="1-Mysql-Install"><a href="#1-Mysql-Install" class="headerlink" title="1. Mysql Install"></a>1. Mysql Install</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">rpm -Uvh  http://repo.mysql.com/mysql-community-release-el7-5.noarch.rpm</span><br><span class="line">yum install mysql-server</span><br></pre></td></tr></table></figure>
 
 <h4 id="2-Installing-the-MySQL-JDBC-Driver"><a href="#2-Installing-the-MySQL-JDBC-Driver" class="headerlink" title="2. Installing the MySQL JDBC Driver"></a>2. Installing the MySQL JDBC Driver</h4><p>If you already have the JDBC driver installed on the hosts that need it, you can skip this section. However, MySQL 5.6 requires a 5.1 driver version 5.1.26 or higher.</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">cd /usr/src</span><br><span class="line">wget https://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-java-5.1.46.tar.gz</span><br><span class="line">tar zxvf mysql-connector-java-5.1.46.tar.gz</span><br><span class="line">mkdir -pv /usr/share/java</span><br><span class="line">cd mysql-connector-java-5.1.46</span><br><span class="line">sudo cp mysql-connector-java-5.1.46-bin.jar /usr/share/java/mysql-connector-java.jar</span><br></pre></td></tr></table></figure>
 
-<h4 id="3-Creating-Databases-for-Cloudera-Software"><a href="#3-Creating-Databases-for-Cloudera-Software" class="headerlink" title="3. Creating Databases for Cloudera Software"></a>3. Creating Databases for Cloudera Software</h4><p>以下数据库名称仅供参考，只要匹配得上就行<br><img src="https://img.econow.cn/medivh/1550139934136.png" /></p>
+<h4 id="3-Creating-Databases-for-Cloudera-Software"><a href="#3-Creating-Databases-for-Cloudera-Software" class="headerlink" title="3. Creating Databases for Cloudera Software"></a>3. Creating Databases for Cloudera Software</h4><p>以下数据库名称仅供参考，只要匹配得上就行<br><img data-src="https://img.econow.cn/medivh/1550139934136.png" /></p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">mysql</span><br><span class="line">&gt; create database scm;</span><br><span class="line">&gt; grant all on *.* to &#x27;scm&#x27;@&#x27;%&#x27; identified by &#x27;scm&#x27; with grant option;</span><br><span class="line">&gt; create database hive_metastore;</span><br><span class="line">&gt; grant all on hive_metastore.* to &#x27;hive&#x27;@&#x27;%&#x27; identified by &#x27;hive&#x27; with grant option;</span><br><span class="line">&gt; flush privileges;</span><br></pre></td></tr></table></figure>
 
 <h4 id="4-Set-up-the-Cloudera-Manager-Database"><a href="#4-Set-up-the-Cloudera-Manager-Database" class="headerlink" title="4. Set up the Cloudera Manager Database"></a>4. Set up the Cloudera Manager Database</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/opt/cloudera/cm/schema/scm_prepare_database.sh  mysql cm -hlocalhost -uscm -pscm --scm-host localhost scm scm scm</span><br></pre></td></tr></table></figure>
 
 <p><a target="_blank" rel="noopener" href="https://www.cloudera.com/documentation/enterprise/latest/topics/prepare_cm_database.html">详细参数参考</a></p>
-<h3 id="五、安装-Cloudrea-Agent"><a href="#五、安装-Cloudrea-Agent" class="headerlink" title="五、安装 Cloudrea Agent"></a>五、安装 Cloudrea Agent</h3><h4 id="1-搜索主机"><a href="#1-搜索主机" class="headerlink" title="1.搜索主机"></a>1.搜索主机</h4><img src="https://img.econow.cn/medivh/1550039268472.png" />
+<h3 id="五、安装-Cloudrea-Agent"><a href="#五、安装-Cloudrea-Agent" class="headerlink" title="五、安装 Cloudrea Agent"></a>五、安装 Cloudrea Agent</h3><h4 id="1-搜索主机"><a href="#1-搜索主机" class="headerlink" title="1.搜索主机"></a>1.搜索主机</h4><img data-src="https://img.econow.cn/medivh/1550039268472.png" />
 注意搜索的时候主机名以逗号隔开，选择后点击继续。
 #### 2.选择版本
 选择使用Parcel安装，选择CDH版本,默认即可
-<img src="https://img.econow.cn/medivh/1550039358949.png" />
+<img data-src="https://img.econow.cn/medivh/1550039358949.png" />
 然后选择是否安装JDK，如果已经安装了，这里就不需要勾选
-<img src="https://img.econow.cn/medivh/1550039397866.png" />
+<img data-src="https://img.econow.cn/medivh/1550039397866.png" />
 #### 3.授权
 默认使用root用户，提供公钥或者密码来授权连接
-<img src="https://img.econow.cn/medivh/1550039466326.png" />
+<img data-src="https://img.econow.cn/medivh/1550039466326.png" />
 选择继续安装
-<img src="https://img.econow.cn/medivh/1550039533173.png" />
+<img data-src="https://img.econow.cn/medivh/1550039533173.png" />
 如果安装过程中，下载安装jdk 或 cloudera-manager-agent失败，可以在节点上手动安装，然后再在Cloudrea  Manager上继续安装。此处的JDK只是为了启动CM，和以后要用的JDK不是一回事！
 
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">yum -y install jdk</span><br><span class="line">yum -y install oracle-j2sdk1.7</span><br><span class="line">yum -y install cloudera-manager-agent</span><br></pre></td></tr></table></figure>
 
 <h4 id="4-分配-Parcelf"><a href="#4-分配-Parcelf" class="headerlink" title="4.分配 Parcelƒ"></a>4.分配 Parcelƒ</h4><p>下载 Parcel 并分配 Parcel 到各节点</p>
-<img src="https://img.econow.cn/medivh/1550039893581.png" />
+<img data-src="https://img.econow.cn/medivh/1550039893581.png" />
 
 <p>注意如果下载完后长时间不动，检查日志</p>
-<p>分配完成后点击继续，进行主机检查<br><img src="https://img.econow.cn/medivh/1550050454788.png" /><br>标注的为有可能出现问题的地方。解决后，选择重新检查即可。如果验证部分通过，下面的版本部分出现不适用也可以忽略。</p>
-<h3 id="六、添加-Services"><a href="#六、添加-Services" class="headerlink" title="六、添加 Services"></a>六、添加 Services</h3><h4 id="1-选择服务"><a href="#1-选择服务" class="headerlink" title="1.选择服务"></a>1.选择服务</h4><img src="https://img.econow.cn/medivh/1550140558695.png" />
+<p>分配完成后点击继续，进行主机检查<br><img data-src="https://img.econow.cn/medivh/1550050454788.png" /><br>标注的为有可能出现问题的地方。解决后，选择重新检查即可。如果验证部分通过，下面的版本部分出现不适用也可以忽略。</p>
+<h3 id="六、添加-Services"><a href="#六、添加-Services" class="headerlink" title="六、添加 Services"></a>六、添加 Services</h3><h4 id="1-选择服务"><a href="#1-选择服务" class="headerlink" title="1.选择服务"></a>1.选择服务</h4><img data-src="https://img.econow.cn/medivh/1550140558695.png" />
 此处会有add 的选项，点击
 
-<p>根据个人需求选择安装服务类型，也可以 选择自定义<br><img src="https://img.econow.cn/medivh/1550197444765.png" /></p>
+<p>根据个人需求选择安装服务类型，也可以 选择自定义<br><img data-src="https://img.econow.cn/medivh/1550197444765.png" /></p>
 <blockquote>
 <p>The Select Services page allows you to select the services you want to install and configure. Make sure that you have the appropriate license key for the services you want to use. You can choose from Cloudera Essentials, Data Engineering, Analytic Database, Operational Database, All Services, and Custom Services. To include Cloudera Navigator data management, check the box labeled Include Cloudera Navigator.</p>
 </blockquote>
@@ -362,11 +362,11 @@
 <h4 id="2-Assign-Roles-角色分配"><a href="#2-Assign-Roles-角色分配" class="headerlink" title="2.Assign Roles 角色分配"></a>2.Assign Roles 角色分配</h4><blockquote>
 <p>The Assign Roles page suggests role assignments for the hosts in your cluster. You can click on the hostname for a role to select a different host. You can also click the View By Host button to see all the roles assigned to a host.<br>To review the recommended role assignments, see Recommended Cluster Hosts and Role Distribution.<br>After assigning all of the roles for your services, click Continue. The Setup Database page displays.</p>
 </blockquote>
-<p>简单说就是根据实际情况来分配对应角色。<br><img src="https://img.econow.cn/medivh/1550197498148.png" /></p>
-<p><a target="_blank" rel="noopener" href="https://www.cloudera.com/documentation/enterprise/latest/topics/cm_ig_host_allocations.html#host_role_assignments">官网推荐分配策略参考</a><br>下面分别列出 3-10 和 3-20 台服务器的建议<br><img src="https://img.econow.cn/medivh/1550196758734.png" /></p>
-<img src="https://img.econow.cn/medivh/1550196815297.png" />
+<p>简单说就是根据实际情况来分配对应角色。<br><img data-src="https://img.econow.cn/medivh/1550197498148.png" /></p>
+<p><a target="_blank" rel="noopener" href="https://www.cloudera.com/documentation/enterprise/latest/topics/cm_ig_host_allocations.html#host_role_assignments">官网推荐分配策略参考</a><br>下面分别列出 3-10 和 3-20 台服务器的建议<br><img data-src="https://img.econow.cn/medivh/1550196758734.png" /></p>
+<img data-src="https://img.econow.cn/medivh/1550196815297.png" />
 下图为实际情况5个节点的分配
-<img src="https://img.econow.cn/medivh/1550196894404.png" />
+<img data-src="https://img.econow.cn/medivh/1550196894404.png" />
 #### 3.Setup Database
 >On the Setup Database page, you can enter the database names, usernames, and passwords you created in Step 4: Install and Configure Databases.
 现在开始填写数据库信息，地址、账号和密码，就是之前准备环境的时候创建的库。
@@ -375,62 +375,62 @@
 <blockquote>
 <p>After verifying that each connection is successful, click Continue. The Review Changes page displays.</p>
 </blockquote>
-<img src="https://img.econow.cn/medivh/1550197550054.png" />
+<img data-src="https://img.econow.cn/medivh/1550197550054.png" />
 注意选择Mysql！填写完成后记得验证一下。下面的库就是之前创建好的
-<img src="https://img.econow.cn/medivh/1550197181087.png" />
+<img data-src="https://img.econow.cn/medivh/1550197181087.png" />
 现在表是空的，之后就会创建以下的表
-<img src="https://img.econow.cn/medivh/1550197226238.png" />
+<img data-src="https://img.econow.cn/medivh/1550197226238.png" />
 #### 4.启动服务
-<img src="https://img.econow.cn/medivh/1550197594729.png" />
+<img data-src="https://img.econow.cn/medivh/1550197594729.png" />
 一般情况下除了hive以外，其他的服务都会正常启动。这个时候就要去修改以下hive配置。另外开一个页面，按照截图修改！
-<img src="https://img.econow.cn/medivh/1550197756375.png" />
+<img data-src="https://img.econow.cn/medivh/1550197756375.png" />
 这样之前的hive元数据库就会自动创建表了。
 
-<h2 id="集群验证"><a href="#集群验证" class="headerlink" title="集群验证"></a>集群验证</h2><h3 id="1-服务状态验证"><a href="#1-服务状态验证" class="headerlink" title="1.服务状态验证"></a>1.服务状态验证</h3><img src="https://img.econow.cn/medivh/1550197833064.png" />
+<h2 id="集群验证"><a href="#集群验证" class="headerlink" title="集群验证"></a>集群验证</h2><h3 id="1-服务状态验证"><a href="#1-服务状态验证" class="headerlink" title="1.服务状态验证"></a>1.服务状态验证</h3><img data-src="https://img.econow.cn/medivh/1550197833064.png" />
 这样所有的服务都绿了。
 ### 2.主机状态
-<img src="https://img.econow.cn/medivh/1550198340635.png" />
+<img data-src="https://img.econow.cn/medivh/1550198340635.png" />
 状态正常，且心跳时间小于15秒
 ### 3.1任务测试一
 登任意主机，执行下面任务（用Hadoop计算PI值，圆周率）
 10指的是要运行10次map任务，10000指的是每个map任务，要投掷多少次，2个参数的乘积就是总的投掷次数。 
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hadoop jar /opt/cloudera/parcels/CDH/lib/hadoop-mapreduce/hadoop-mapreduce-examples.jar pi 10 10000</span><br></pre></td></tr></table></figure>
-<img src="https://img.econow.cn/medivh/1550198625749.png" />
+<img data-src="https://img.econow.cn/medivh/1550198625749.png" />
 然后在群集-》Cluster1-》Yarn-》应用程序查看执行结果
-<img src="https://img.econow.cn/medivh/1550199361878.png" />
+<img data-src="https://img.econow.cn/medivh/1550199361878.png" />
 
-<p>执行结果：<br><img src="https://img.econow.cn/medivh/1550198647297.png" /></p>
+<p>执行结果：<br><img data-src="https://img.econow.cn/medivh/1550198647297.png" /></p>
 <h4 id="3-2-任务测试二"><a href="#3-2-任务测试二" class="headerlink" title="3.2 任务测试二"></a>3.2 任务测试二</h4><p>1.编辑一段文本，示例如下；</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">aslkl hello</span><br><span class="line">hah</span><br><span class="line">hah</span><br><span class="line">hi</span><br><span class="line">en</span><br><span class="line">word</span><br><span class="line">hello</span><br></pre></td></tr></table></figure>
 
 <p>2.上传文件到 hdfs</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">hadoop fs -mkdir /test</span><br><span class="line">#如果提示没有权限，记得修改一下</span><br><span class="line">hadoop fs -chmod 777 -R /</span><br><span class="line">hadoop fs -put s.txt  /test</span><br><span class="line">#上传</span><br><span class="line">hadoop jar /opt/cloudera/parcels/CDH/lib/hadoop-mapreduce/hadoop-mapreduce-examples.jar wordcount /test/s.txt /out/</span><br><span class="line">#执行</span><br><span class="line">hadoop fs -text  /out/*</span><br><span class="line">#查看结果</span><br></pre></td></tr></table></figure>
 
-<h4 id="4-1-MapReduce-测试"><a href="#4-1-MapReduce-测试" class="headerlink" title="4.1 MapReduce 测试"></a>4.1 MapReduce 测试</h4><p>创建表<br><img src="https://img.econow.cn/medivh/1550202246962.png" /><br>执行操作<br><img src="https://img.econow.cn/medivh/1550202281115.png" /><br>OK！</p>
-<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><h3 id="1-优化访问速度"><a href="#1-优化访问速度" class="headerlink" title="1.优化访问速度"></a>1.优化访问速度</h3><img src="https://img.econow.cn/medivh/1550199570686.png" />
+<h4 id="4-1-MapReduce-测试"><a href="#4-1-MapReduce-测试" class="headerlink" title="4.1 MapReduce 测试"></a>4.1 MapReduce 测试</h4><p>创建表<br><img data-src="https://img.econow.cn/medivh/1550202246962.png" /><br>执行操作<br><img data-src="https://img.econow.cn/medivh/1550202281115.png" /><br>OK！</p>
+<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><h3 id="1-优化访问速度"><a href="#1-优化访问速度" class="headerlink" title="1.优化访问速度"></a>1.优化访问速度</h3><img data-src="https://img.econow.cn/medivh/1550199570686.png" />
 ### 2.部分命令
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">service cloudera-scm-server stop </span><br><span class="line">service cloudera-scm-server-db stop</span><br><span class="line">#内置PostgreSQL</span><br><span class="line">service cloudera-scm-agent stop</span><br></pre></td></tr></table></figure>
 ### 3.邮件报警
 #### 1.配置邮箱
 点击 cloudera manager service 
-<img src="https://img.econow.cn/medivh/1550394449078.png" />
+<img data-src="https://img.econow.cn/medivh/1550394449078.png" />
 点击配置，搜索alert，根据实际情况填写邮箱信息。注意区分25和465端口，并且保证邮箱地址正确。
-<img src="https://img.econow.cn/medivh/1550394622296.png" />
+<img data-src="https://img.econow.cn/medivh/1550394622296.png" />
 页眉和页脚随意修改
-<img src="https://img.econow.cn/medivh/1550394734754.png" />
+<img data-src="https://img.econow.cn/medivh/1550394734754.png" />
 修改完成后点击保存，然后重启！
 
-<h4 id="2-测试邮件"><a href="#2-测试邮件" class="headerlink" title="2.测试邮件"></a>2.测试邮件</h4><img src="https://img.econow.cn/medivh/1550394787512.png" />
+<h4 id="2-测试邮件"><a href="#2-测试邮件" class="headerlink" title="2.测试邮件"></a>2.测试邮件</h4><img data-src="https://img.econow.cn/medivh/1550394787512.png" />
 点击发送测试即可
-<img src="https://img.econow.cn/medivh/1550394808019.png" />
+<img data-src="https://img.econow.cn/medivh/1550394808019.png" />
 这样就收到了测试邮件。
-<img src="https://img.econow.cn/medivh/1550394890160.png" />
+<img data-src="https://img.econow.cn/medivh/1550394890160.png" />
 #### 3.可能出现的问题
 * 日志报localhost和25端口 
-<img src="https://img.econow.cn/medivh/1550395083684.png" />
+<img data-src="https://img.econow.cn/medivh/1550395083684.png" />
 原因是修改配置后没有重启cloudera manager service 
 * QQ邮箱报535错误
-<img src="https://img.econow.cn/medivh/1550394953596.png" />
+<img data-src="https://img.econow.cn/medivh/1550394953596.png" />
 检查用户名和授权码是否正确。注意QQ邮箱的是授权码不是纯粹的密码
 
     </div>
