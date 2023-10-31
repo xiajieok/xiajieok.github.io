@@ -16,9 +16,8 @@
 
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha256-CTSx/A06dm1B063156EVh15m6Y67pAjZZaQc89LLSrU=" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"econow.cn","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.18.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"econow.cn","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.18.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":true,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
 
     <meta property="og:type" content="website">
 <meta property="og:title" content="Medivh&#39;s castle">
@@ -53,7 +52,7 @@
   </noscript>
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+<body itemscope itemtype="http://schema.org/WebPage">
   <div class="headband"></div>
 
   <main class="main">
@@ -128,12 +127,14 @@
         </a>
       </div>
       <div class="site-state-item site-state-categories">
+          <a href="/categories/">
         <span class="site-state-item-count">12</span>
-        <span class="site-state-item-name">分类</span>
+        <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
+          <a href="/tags/">
         <span class="site-state-item-count">48</span>
-        <span class="site-state-item-name">标签</span>
+        <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
 </div>
@@ -224,16 +225,15 @@
     
     <div class="post-body" itemprop="articleBody">
           <p>刚写了一个天气预报的脚本，想部署在服务器上，但是运行的时候报错，说找不到requests库，奇怪的是装上了也报错。后来发现树莓派自带的是3.2，版本有点老可能会有点不兼容吧。<br>那就装个Python3.5吧！</p>
-<h4 id="环境依赖"><a href="#环境依赖" class="headerlink" title="环境依赖"></a>环境依赖</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install libssl-dev</span><br><span class="line">sudo apt-get install openssl</span><br><span class="line"></span><br><span class="line">sudo wget https://www.python.org/ftp/python/3.5.3/Python-3.5.3.tar.xz</span><br><span class="line">tar -xvf Python-3.5.3.tar.xz</span><br><span class="line">cd Python-3.5.3</span><br><span class="line">./configure --prefix=/usr/local/python3.5</span><br><span class="line">make</span><br><span class="line">make altinstall</span><br></pre></td></tr></table></figure>
-<p>进入&#x2F;usr&#x2F;local&#x2F;python3.5 检查是否完整<br><img src='http://7xp3xc.com1.z0.glb.clouddn.com/2016/1493107147483.png' width=873></p>
-<h4 id="建立软链"><a href="#建立软链" class="headerlink" title="建立软链"></a>建立软链</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo ln -s /usr/local/python3.5/bin/python3.5 /usr/bin/python3</span><br><span class="line">sudo ln -s /usr/local/python3.5/bin/pip3 /usr/bin/pip3</span><br></pre></td></tr></table></figure>
-<p>检查版本。<br>安装完成！！！</p>
-<h3 id="错误整理"><a href="#错误整理" class="headerlink" title="错误整理"></a>错误整理</h3><p>1、 提示Ignoring ensurepip failure: pip 8.1.1 requires SSL&#x2F;TLS<br><img src='http://7xp3xc.com1.z0.glb.clouddn.com/2016/1493103640349.png' width=873><br>错误:<br>    没有安装openssl-devel<br>解决：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install libssl-dev</span><br><span class="line">sudo apt-get install openss</span><br></pre></td></tr></table></figure>
-<p>2、libssl-dev无法安装</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">The following packages have unmet dependencies:</span><br><span class="line"> libssl-dev : Depends: libssl1.0.0 (= 1.0.1-4ubuntu5) but 1.0.1-4ubuntu5.3 is to be installed</span><br><span class="line">              Recommends: libssl-doc but it is not going to be installed</span><br><span class="line">E: Unable to correct problems, you have held broken packages.</span><br></pre></td></tr></table></figure>
-<p>原因： 已安装的libssl1.0.0版本太高, 无法支持<br>解决： 参考 <a target="_blank" rel="noopener" href="http://blog.csdn.net/andy812110/article/details/24842219">这里</a></p>
-
+<h4 id="环境依赖"><a href="#环境依赖" class="headerlink" title="环境依赖"></a>环境依赖</h4>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/%E6%A0%91%E8%8E%93%E6%B4%BE%E7%BC%96%E8%AF%91%E5%AE%89%E8%A3%85Python3-5.html#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -325,25 +325,14 @@
     
     <div class="post-body" itemprop="articleBody">
           <h3 id="初识Hexo"><a href="#初识Hexo" class="headerlink" title="初识Hexo"></a>初识Hexo</h3><p>Hexo是一个快速的、简单的、功能强大的博客框架。你可以通过Markdown语言写文章，然后hexo帮你生成一个带有漂亮主题的静态页面。<br>最近入手了一个树莓派，所以有事没事就想着折腾它，后来无意中看到了hexo的博客，真漂亮！就试着在派上部署一下环境试试。</p>
-<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><h4 id="依赖环境"><a href="#依赖环境" class="headerlink" title="依赖环境"></a>依赖环境</h4><p>hexo依赖于nodejs，因此记得先装一下nodejs。有些平台上就编译一下吧，比如在树莓派上就得好几个小时，那就在那编译着吧。。。<br>编译安装nodejs</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">wget https://nodejs.org/dist/v10.15.3/node-v10.15.3.tar.gz</span><br><span class="line">tar -zxvf node-v10.15.3.tar.gz   </span><br><span class="line">cd node-v10.15.3   </span><br><span class="line">./configure   </span><br><span class="line">make   </span><br><span class="line">make install   </span><br><span class="line">node -v</span><br></pre></td></tr></table></figure>
-<p>安装完成后安装hexo<br>Node, npm和Git都安装成功, 开始安装hexo</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo npm install hexo -g</span><br><span class="line">#-g表示全局安装, npm默认为当前项目安装</span><br></pre></td></tr></table></figure>
-<h4 id="安装组件"><a href="#安装组件" class="headerlink" title="安装组件"></a>安装组件</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">sudo npm install hexo-deployer-git --save</span><br><span class="line">#hexo 使用git</span><br></pre></td></tr></table></figure>
-<h4 id="检查版本"><a href="#检查版本" class="headerlink" title="检查版本"></a>检查版本</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">Jack:~ jack$ hexo version</span><br><span class="line">hexo-cli: 1.0.2</span><br><span class="line">os: Darwin 15.4.0 darwin x64</span><br><span class="line">http_parser: 2.6.2</span><br><span class="line">node: 5.10.1</span><br><span class="line">v8: 4.6.85.31</span><br><span class="line">uv: 1.8.0</span><br><span class="line">zlib: 1.2.8</span><br><span class="line">ares: 1.10.1-DEV</span><br><span class="line">icu: 56.1</span><br><span class="line">modules: 47</span><br><span class="line">openssl: 1.0.2g</span><br></pre></td></tr></table></figure>
-
-<h4 id="Hexo初始化"><a href="#Hexo初始化" class="headerlink" title="Hexo初始化"></a>Hexo初始化</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">hexo init hexo  </span><br><span class="line">#执行init命令初始化到你指定的hexo目录</span><br><span class="line">初始化后目录结构</span><br><span class="line">-rw-r--r--    1 jack  staff  1483  4 21 10:19 _config.yml</span><br><span class="line">drwxr-xr-x  288 jack  staff  9792  4 21 10:24 node_modules/</span><br><span class="line">-rw-r--r--    1 jack  staff   443  4 21 10:19 package.json</span><br><span class="line">drwxr-xr-x    5 jack  staff   170  4 21 10:19 scaffolds/</span><br><span class="line">drwxr-xr-x    3 jack  staff   102  4 21 10:19 source/</span><br><span class="line">drwxr-xr-x    3 jack  staff   102  4 21 10:19 themes/</span><br><span class="line"></span><br><span class="line">npm install    #install before start blogging</span><br><span class="line">hexo generate       #自动根据当前目录下文件,生成静态网页</span><br><span class="line">hexo server         #运行本地服务</span><br></pre></td></tr></table></figure>
-<p>浏览器输入<a target="_blank" rel="noopener" href="http://localhost:4000/">http://localhost:4000</a>就可以看到效果。</p>
-<h3 id="配置github"><a href="#配置github" class="headerlink" title="配置github"></a>配置github</h3><img src='http://7xp3xc.com1.z0.glb.clouddn.com/2016/1492755503227.png' width=873>
-### 配置域名
-repo->settings-> 检查是否和配置文件一致
-
-<h3 id="部署"><a href="#部署" class="headerlink" title="部署"></a>部署</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo depoly</span><br></pre></td></tr></table></figure>
-<p>访问<br>如果出现404，检查配置文件和域名是否一致。<br><a target="_blank" rel="noopener" href="http://xiajieok.github.io/">http://xiajieok.github.io</a></p>
-<h3 id="常见错误"><a href="#常见错误" class="headerlink" title="常见错误"></a>常见错误</h3><p>如果出现ERROR Deployer not found: git<br>安装</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-deployer-git --save</span><br></pre></td></tr></table></figure>
-<p>– end</p>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/Hexo-%E5%8D%9A%E5%AE%A2%E7%B3%BB%E7%BB%9F%E6%90%AD%E5%BB%BA.html#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -435,22 +424,15 @@ repo->settings-> 检查是否和配置文件一致
     
     <div class="post-body" itemprop="articleBody">
           <p>有一天把hexo配置好了，但是每次更新后还有手动部署太麻烦。正好有个pm2的工具，完全可以代替我们做这些事。</p>
-<h4 id="安装-pm2"><a href="#安装-pm2" class="headerlink" title="安装 pm2"></a>安装 pm2</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g pm2</span><br></pre></td></tr></table></figure>
-
-<p>在博客source目录新建start.json</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">var process = require(<span class="string">&#x27;child_process&#x27;</span>);</span><br><span class="line">process.exec(<span class="string">&#x27; hexo g -d&#x27;</span>, <span class="keyword">function</span> (error, stdout, stderr) &#123;</span><br><span class="line">    <span class="keyword">if</span> (error !== null) &#123;</span><br><span class="line">            console.log(<span class="string">&#x27;exec error: &#x27;</span> + error);</span><br><span class="line">    &#125;</span><br><span class="line"> &#125;);</span><br></pre></td></tr></table></figure>
-
-<h4 id="新建watch-json"><a href="#新建watch-json" class="headerlink" title="新建watch.json"></a>新建watch.json</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line"> <span class="string">&quot;apps&quot;</span> : [&#123;</span><br><span class="line"> <span class="string">&quot;name&quot;</span>       : <span class="string">&quot;blog&quot;</span>,</span><br><span class="line"> <span class="string">&quot;script&quot;</span>     : <span class="string">&quot;./start.js&quot;</span>,</span><br><span class="line"> <span class="string">&quot;exec_interpreter&quot;</span>: <span class="string">&quot;node&quot;</span>,</span><br><span class="line"> <span class="string">&quot;exec_mode&quot;</span>  : <span class="string">&quot;fork_mode&quot;</span>,</span><br><span class="line"> <span class="string">&quot;watch&quot;</span>      : <span class="string">&quot;_posts&quot;</span></span><br><span class="line">  &#125;]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>使用pm2命令实现监控文件变动自动提交</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pm2 start watch.json</span><br></pre></td></tr></table></figure>
-
-<h4 id="pm2常用命令"><a href="#pm2常用命令" class="headerlink" title="pm2常用命令"></a>pm2常用命令</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">pm2 list</span><br><span class="line">pm2 logs</span><br><span class="line">pm2 start watch.json</span><br><span class="line">pm2 show &lt;<span class="built_in">id</span>|name&gt;</span><br></pre></td></tr></table></figure>
-
-<img src="https://img.econow.cn/2018/1544954010476.png" width="826"/>
-
-<p>这样就会发现Hexo已经被自动部署到github啦，而且时刻保持最新版</p>
-
+<h4 id="安装-pm2"><a href="#安装-pm2" class="headerlink" title="安装 pm2"></a>安装 pm2</h4>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/%E5%85%A8%E8%87%AA%E5%8A%A8%E9%83%A8%E7%BD%B2Hexo-%E5%88%B0github.html#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -541,38 +523,15 @@ repo->settings-> 检查是否和配置文件一致
     
     
     <div class="post-body" itemprop="articleBody">
-          <h3 id="自定义域名"><a href="#自定义域名" class="headerlink" title="自定义域名"></a>自定义域名</h3><h4 id="购买域名"><a href="#购买域名" class="headerlink" title="购买域名"></a>购买域名</h4><p>阿里云省事，但是要记得不是所有域名都可以备案的，尤其是那些便宜的！！！</p>
-<h4 id="域名解析"><a href="#域名解析" class="headerlink" title="域名解析"></a>域名解析</h4><p>有了域名后，xxx.github.io 增加cname<br><img src="http://img.econow.cn/2016/1493360584432.png" width="873"/><br>说明：192.30.252.154和192.30.252.153是github服务器对应的ip地址，这步一定要设置，否则访问不了</p>
-<h4 id="添加CNAME"><a href="#添加CNAME" class="headerlink" title="添加CNAME"></a>添加CNAME</h4><p>然后回到博客项目根目录，在source&#x2F;下新建一个名为CNAME的文件，里面的内容写入xxxx.com即可。</p>
-<h3 id="配置搜索"><a href="#配置搜索" class="headerlink" title="配置搜索"></a>配置搜索</h3><p>NexT主题支持集成 Swiftype、 微搜索、Local Search 和 Algolia,Swiftype和Algolia都只有一段时间的试用期，可以采用Hexo提供的Local Search,原理是通过hexo-generator-search插件在本地生成一个search.xml文件，搜索的时候从这个文件中根据关键字检索出相应的链接。<br>安装 hexo-generator-search</p>
-<p>在站点的根目录下执行以下命令：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#安装 hexo-generator-searchdb</span><br><span class="line">$ npm install hexo-generator-search --save</span><br><span class="line">$ npm install hexo-generator-searchdb --save</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h4 id="启用搜索"><a href="#启用搜索" class="headerlink" title="启用搜索"></a>启用搜索</h4><p>编辑 站点配置文件，新增以下内容到任意位置：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">search:</span><br><span class="line">  path: search.xml</span><br><span class="line">  field: post</span><br><span class="line">  format: html</span><br><span class="line">  limit: 10000</span><br></pre></td></tr></table></figure>
-<h4 id="验证搜索"><a href="#验证搜索" class="headerlink" title="验证搜索"></a>验证搜索</h4><img src="https://img.econow.cn/medivh/1493345650335.png" width="873"/>
-
-<h3 id="修改背景色"><a href="#修改背景色" class="headerlink" title="修改背景色"></a>修改背景色</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">vim themes/next/source/css/_custom/custom.styl</span><br><span class="line">//Custom styles.</span><br><span class="line">body &#123;</span><br><span class="line">	background:rgb(250, 235, 215);</span><br><span class="line">  #可以设置背景色或者背景图片</span><br><span class="line">&#125;</span><br><span class="line">//首页文章阴影样式</span><br><span class="line">.post &#123;</span><br><span class="line">    margin-top: 60px;</span><br><span class="line">    margin-bottom: 60px;</span><br><span class="line">    padding: 25px;</span><br><span class="line">    -webkit-box-shadow: 0 0 14px rgba(202, 203, 203, .5);</span><br><span class="line">    -moz-box-shadow: 0 0 14px rgba(202, 203, 204, .5);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="开启动画效果"><a href="#开启动画效果" class="headerlink" title="开启动画效果"></a>开启动画效果</h3><p>修改_config.yml,true为开启，false为关闭。<br><img src="http://7xp3xc.com1.z0.glb.clouddn.com/2016/1493347316086.png" width="873"/><br>但是有个问题，three_waves这个动画效果开启后，风扇就开始狂转，建议选择其它效果。</p>
-<h3 id="开启访问量统计"><a href="#开启访问量统计" class="headerlink" title="开启访问量统计"></a>开启访问量统计</h3><h4 id="申请帐号"><a href="#申请帐号" class="headerlink" title="申请帐号"></a>申请帐号</h4><p><a target="_blank" rel="noopener" href="https://leancloud.cn/">注册帐号</a></p>
-<h4 id="创建应用"><a href="#创建应用" class="headerlink" title="创建应用"></a>创建应用</h4><img src="http://7xp3xc.com1.z0.glb.clouddn.com/2016/1493358213242.png" width="873"/>
-#### 创建class
-<img src="http://7xp3xc.com1.z0.glb.clouddn.com/2016/1493358279110.png" width="873"/>
-#### 获取key
-<img src="http://7xp3xc.com1.z0.glb.clouddn.com/2016/1493358329637.png" width="873"/>
-#### 修改配置文件_confi.yml
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">leancloud_visitors:</span><br><span class="line">  enable: true</span><br><span class="line">  app_id: B1L35FebIXXX3MloNCxrCS-gzGzoHsz</span><br><span class="line">  app_key: iQH7DjsXXXMB58gpevWMC</span><br></pre></td></tr></table></figure>
-重新加载后就出来了，但是只能在外网访问的时候才会增加。
-<img src="http://7xp3xc.com1.z0.glb.clouddn.com/2016/1493358386367.png" width="873"/>
-按照Next官方手册给的LeanCloud教程
-弄完以后，次数格式出现了xx:xx:xx的形式，当时的内心是崩溃的。Why?经多方的研究和询问以后发现是因为Next主题已经集成了LeanCloud，而我们只需要配置主题_config.yml即可，但是，坑爹的又出现了，把教程里面的配置过的东西删除后，次数就完全不显示了，再次经过多方的研究，解决了这个问题，所以在此记录。
-### 增加评论功能
-
-<h4 id="获取key"><a href="#获取key" class="headerlink" title="获取key"></a>获取key</h4><p>登录<a target="_blank" rel="noopener" href="https://manage.gentie.163.com/">网易云跟帖</a> 获取你的 Product Key<br><img src="http://7xp3xc.com1.z0.glb.clouddn.com/2016/1493360341707.png" width="873"/></p>
-<h4 id="编辑主题配置文件"><a href="#编辑主题配置文件" class="headerlink" title="编辑主题配置文件"></a>编辑主题配置文件</h4><p>编辑 gentie_productKey 字段，设置如下：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gentie_productKey: #your-gentie-product-key</span><br></pre></td></tr></table></figure>
-<p>请注意，您在云跟帖管理后台设置的域名必须跟您站点的域名一致</p>
-
+          <h3 id="自定义域名"><a href="#自定义域名" class="headerlink" title="自定义域名"></a>自定义域名</h3><h4 id="购买域名"><a href="#购买域名" class="headerlink" title="购买域名"></a>购买域名</h4>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/Hexo-Next-%E4%B8%BB%E9%A2%98%E9%85%8D%E7%BD%AE.html#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -684,7 +643,6 @@ repo->settings-> 检查是否和配置文件一致
     <div class="footer-inner">
 
   <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">京ICP备17063827号-2 </a>
-      <img src="https://beian.miit.gov.cn/#/Integrated/index" alt="">
   </div>
   <div class="copyright">
     &copy; 2017 – 
@@ -703,6 +661,7 @@ repo->settings-> 检查是否和配置文件一致
     <i class="fa fa-arrow-up fa-lg"></i>
     <span>0%</span>
   </div>
+  <div class="reading-progress-bar"></div>
 
 <noscript>
   <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
@@ -711,7 +670,9 @@ repo->settings-> 检查是否和配置文件一致
 
   
   <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
-<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pangu/4.0.7/pangu.min.js" integrity="sha256-j+yj56cdEY2CwkVtGyz18fNybFGpMGJ8JxG3GSyO2+I=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/next-boot.js"></script>
 
   
 

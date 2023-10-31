@@ -16,9 +16,8 @@
 
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha256-CTSx/A06dm1B063156EVh15m6Y67pAjZZaQc89LLSrU=" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"econow.cn","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.18.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"econow.cn","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.18.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":true,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
 
     <meta property="og:type" content="website">
 <meta property="og:title" content="Medivh&#39;s castle">
@@ -53,7 +52,7 @@
   </noscript>
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+<body itemscope itemtype="http://schema.org/WebPage">
   <div class="headband"></div>
 
   <main class="main">
@@ -128,12 +127,14 @@
         </a>
       </div>
       <div class="site-state-item site-state-categories">
+          <a href="/categories/">
         <span class="site-state-item-count">12</span>
-        <span class="site-state-item-name">分类</span>
+        <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
+          <a href="/tags/">
         <span class="site-state-item-count">48</span>
-        <span class="site-state-item-name">标签</span>
+        <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
 </div>
@@ -208,41 +209,14 @@
     
     <div class="post-body" itemprop="articleBody">
           <h2 id="Yum-安装"><a href="#Yum-安装" class="headerlink" title="Yum 安装"></a>Yum 安装</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">rpm -Uvh  http://repo.mysql.com/mysql-community-release-el7-5.noarch.rpm</span><br><span class="line">yum install mysql-server</span><br></pre></td></tr></table></figure>
-<h2 id="主从同步-读写分离"><a href="#主从同步-读写分离" class="headerlink" title="主从同步&#x2F;读写分离"></a>主从同步&#x2F;读写分离</h2><h3 id="master"><a href="#master" class="headerlink" title="master"></a>master</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">server-id = 1  #(标识为master库)</span><br><span class="line">log-bin=mysql-bin</span><br><span class="line">binlog_format=mixed </span><br><span class="line">binlog-ignore-db=mysql</span><br><span class="line">replicate-ignore-db=mysql</span><br><span class="line">binlog_cache_size = 1M</span><br><span class="line">binlog_format=mixed</span><br><span class="line">expire_logs_days=3</span><br></pre></td></tr></table></figure>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">#1.创建账号并授权</span><br><span class="line">GRANT REPLICATION SLAVE ON *.* TO backup@&#x27;%&#x27; IDENTIFIED BY &#x27;backup&#x27;;</span><br><span class="line">flush privileges;</span><br><span class="line">#2.锁表</span><br><span class="line">FLUSH TABLES WITH READ LOCK;</span><br><span class="line">#3.查看当前状态</span><br><span class="line">show master status;</span><br></pre></td></tr></table></figure>
-<img src="https://img.econow.cn/medivh/1550219754792.png" />
-备份导出，并将SQL文件传输给slave服务器执行导入。
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysqldump -uroot  --all-databases &gt; /tmp/mydb.sql</span><br></pre></td></tr></table></figure>
-
-
-<h3 id="slave"><a href="#slave" class="headerlink" title="slave"></a>slave</h3><p>1、修改配置文件</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">server_id=2</span><br><span class="line">binlog-ignore-db=mysql #不记录binlog</span><br><span class="line">replicate-ignore-db=mysql #不复制test库的binlog</span><br><span class="line">log-bin=mysql-bin</span><br><span class="line">binlog_cache_size = 1M</span><br><span class="line">binlog_format=mixed</span><br><span class="line">expire_logs_days=3</span><br></pre></td></tr></table></figure>
-<p>2、导入SQL文件</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">source mydb.sql;</span><br></pre></td></tr></table></figure>
-<p>3、开启同步</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CHANGE MASTER TO MASTER_HOST=&#x27;192.168.1.228&#x27;,MASTER_USER=&#x27;backup&#x27;,MASTER_PASSWORD=&#x27;backup&#x27;,MASTER_LOG_FILE=&#x27;mysql-bin.000003&#x27;,MASTER_LOG_POS=399;</span><br></pre></td></tr></table></figure>
-<p>4、设置只读<br>对于需要保证master-slave主从同步的salve库，如果要设置为只读状态，需要执行的命令为：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; show global variables like &quot;%read_only%&quot;;</span><br><span class="line">#查看只读状态</span><br><span class="line">mysql&gt; set global read_only=1;</span><br></pre></td></tr></table></figure>
-<p>将salve库从只读状态变为读写状态，需要执行的命令是：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; set global read_only=0;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>1.read_only&#x3D;1只读模式，不会影响slave同步复制的功能，所以在MySQL slave库中设定了read_only&#x3D;1后，通过 show slave status\G 命令查看salve状态，可以看到salve仍然会读取master上的日志，并且在slave库中应用日志，保证主从数据库同步一致；</li>
-<li>2.read_only&#x3D;1只读模式，可以限定普通用户进行数据修改的操作，但不会限定具有super权限的用户的数据修改操作；在MySQL中设置read_only&#x3D;1后，普通的应用用户进行insert、update、delete等会产生数据变化的DML操作时，都会报出数据库处于只读模式不能发生数据变化的错误，但具有super权限的用户，例如在本地或远程通过root用户登录到数据库，还是可以进行数据变化的DML操作；</li>
-</ul>
-<p>5、检查状态</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">show slave status\G</span><br></pre></td></tr></table></figure>
-<p>检查是否和Master状态一致，并且两个线程是否为YES。<br><img src="https://img.econow.cn/medivh/1550219967672.png" /></p>
-<h3 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h3><p>在Master上执行以下语句，解除锁表状态。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">UNLOCK TABLES</span><br></pre></td></tr></table></figure>
-<h2 id="访问"><a href="#访问" class="headerlink" title="访问"></a>访问</h2><h2 id="查询"><a href="#查询" class="headerlink" title="查询"></a>查询</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">查询最新10条数据  顺序、倒序</span><br><span class="line"></span><br><span class="line">select  * from t_web_001_member LIMIT 10</span><br><span class="line">select * from t_web_001_member ORDER BY memberId  desc limit 10</span><br></pre></td></tr></table></figure>
-<h2 id="更新"><a href="#更新" class="headerlink" title="更新"></a>更新</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">1、update</span><br><span class="line">update table name set guarantee_id =&#x27;34&#x27; and guarantee_name = &#x27;xxxx’ where demand_id = 1567;</span><br><span class="line">2、insert into </span><br><span class="line">insert into table(field1,field2) values(value1,value2)</span><br><span class="line">3、delete</span><br><span class="line">delete from table where 范围</span><br><span class="line"></span><br><span class="line">-- select * from t_web_001_member where DATE(regtime) = &#x27;2017-09-13&#x27; and  memberId &gt; 165949;</span><br><span class="line">select * from t_web_001_member where DATE(regtime) = &#x27;2017-09-12&#x27;;</span><br><span class="line">-- select * from t_web_001_member where DATE(regtime) = &#x27;2017-09-13&#x27; and  memberId &gt; 165949;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">-- UPDATE  t_web_001_member  set regtime= DATE_FORMAT(ADDDATE(date_sub(&#x27;2017-09-12 07:00:00&#x27;,interval 0 day) , INTERVAL FLOOR(0 + RAND() * 120) MINUTE),&#x27;%Y-%m-%d %H:%i:%s&#x27;) where DATE(regtime) = &#x27;2017-09-13&#x27; and  memberId &gt; 165949 </span><br><span class="line"></span><br><span class="line"></span><br><span class="line">insert into</span><br><span class="line">INSERT INTO t_web_001_member(userName, mobile, loginpwd,regtime,mobile_state, isAccountIn) SELECT username, mobile, PASSWORD, create_time,1, 1 FROM t_user;</span><br><span class="line"></span><br><span class="line">清空某列的数据</span><br><span class="line">update t_web_001_member set regtime =null;</span><br></pre></td></tr></table></figure>
-<h2 id="权限"><a href="#权限" class="headerlink" title="权限"></a>权限</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">5.7设置root密码</span><br><span class="line">update mysql.user set authentication_string=password(&#x27;123qwe&#x27;) where user=&#x27;root&#x27; and Host = &#x27;localhost&#x27;;</span><br><span class="line"></span><br><span class="line">DATE_FORMAT(ADDDATE(date_sub(&#x27;2017-09-05 07:00:00&#x27;,interval -1 day) , INTERVAL FLOOR(0 + RAND() * 120) MINUTE),&#x27;%Y-%m-%d %H:%i:%s&#x27;)</span><br><span class="line">日期随机 </span><br><span class="line"></span><br><span class="line">mysqladmin -u root password &quot;newpass&quot;</span><br><span class="line">mysqladmin -u root password “ios&quot; </span><br><span class="line"></span><br><span class="line"></span><br><span class="line">create database zabbix charset utf8;</span><br><span class="line">create database car charset utf8;</span><br><span class="line">grant all privileges on car.* to &#x27;car&#x27;@&#x27;%&#x27; identified by &#x27;xxxxxx&#x27;;</span><br><span class="line">flush privileges;</span><br><span class="line"></span><br><span class="line">#给普通用户建库的权限</span><br><span class="line">grant select,delete,update,create,drop,alter,insert on *.* to &#x27;xx&#x27;@&#x27;%&#x27; ;</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h2 id="导出"><a href="#导出" class="headerlink" title="导出"></a>导出</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">导入导出</span><br><span class="line">-d  表结构</span><br><span class="line">#导出数据和表结构</span><br><span class="line">mysqldump -uroot -p dbname &gt; dbname.sql</span><br><span class="line">#导出多张表</span><br><span class="line">mysqldump -uroot -password dbname table1 table2 &gt;db.sql</span><br><span class="line"></span><br><span class="line">#导出表结</span><br><span class="line">mysqldump -uroot -p -d     dbname &gt; dbname.sql</span><br><span class="line">#导出某张表的数据和表结构</span><br><span class="line">mysqldump -uroot -pdbpasswd  dbname &gt;db.sql;</span><br><span class="line">#导出某张表的表结构</span><br><span class="line">mysqldump -uroot -pdbpasswd dbname test&gt;db.sql;</span><br><span class="line"></span><br><span class="line">导出部分字段不为空的数据</span><br><span class="line">#select COUNT(*) from t_user where mobile !=&#x27;&#x27; and real_name !=&#x27;&#x27; and real_name !=&#x27;Null&#x27;</span><br></pre></td></tr></table></figure>
-<h3 id="binlog-查看"><a href="#binlog-查看" class="headerlink" title="binlog 查看"></a>binlog 查看</h3><blockquote>
-<p>参数说明:<br>-v, –verbose 用于输出基于row模式的binlog日志，<br>-vv 为列数据类型添加注释 –base64-output&#x3D;decode-rows 解码binlog里经过base64编码的内容</p>
-</blockquote>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysqlbinlog -vv --base64-output=decode-rows  mysql-binlog.xxxx &gt; new.sql</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/mysql%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C.html#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -319,7 +293,14 @@
     <div class="post-body" itemprop="articleBody">
           <p>时间久远，不建议直接使用，仅供参考。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line"># Interactive pptp vpn  install script for an OpenVZ VPS</span><br><span class="line"># surport  : Cenost ,Fedora  6.x </span><br><span class="line"># Augest 24, 2014 v1.00</span><br><span class="line">#url ：   http://www.dabu.info/?p=2178</span><br><span class="line"></span><br><span class="line">echo &quot;######################################################&quot;</span><br><span class="line">echo &quot;Interactive PoPToP Install Script for an OpenVZ VPS&quot;</span><br><span class="line">echo</span><br><span class="line">echo &quot;Make sure to contact your provider and have them enable&quot;</span><br><span class="line">echo &quot;IPtables and ppp modules prior to setting up PoPToP.&quot;</span><br><span class="line">echo &quot;PPP can also be enabled from SolusVM.&quot;</span><br><span class="line">echo</span><br><span class="line">echo &quot;You need to set up the server before creating more users.&quot;</span><br><span class="line">echo &quot;A separate user is required per connection or machine.&quot;</span><br><span class="line">echo &quot;######################################################&quot;</span><br><span class="line">echo</span><br><span class="line">echo</span><br><span class="line">echo &quot;######################################################&quot;</span><br><span class="line">echo &quot;Select on option:&quot;</span><br><span class="line">echo &quot;1) Set up new PoPToP server AND create one user&quot;</span><br><span class="line">echo &quot;2) Create additional users&quot;</span><br><span class="line">echo &quot;######################################################&quot;</span><br><span class="line">read x</span><br><span class="line">if test $x -eq 1; then</span><br><span class="line">echo &quot;Enter username that you want to create (eg. client1 or john):&quot;</span><br><span class="line">read u</span><br><span class="line">echo &quot;Specify password that you want the server to use:&quot;</span><br><span class="line">read p</span><br><span class="line"></span><br><span class="line">## get the VPS IP</span><br><span class="line">#ip=`ifconfig venet0:0 | grep &#x27;inet addr&#x27; | awk &#123;&#x27;print $2&#x27;&#125; | sed s/.*://`</span><br><span class="line"></span><br><span class="line">echo</span><br><span class="line">echo &quot;######################################################&quot;</span><br><span class="line">echo &quot;Downloading and Installing ppp  and   pptpd  &quot;</span><br><span class="line">echo &quot;######################################################&quot;</span><br><span class="line">yum   install  ppp   -y</span><br><span class="line">rpm -q|grep epel || rpm -Uvh http://poptop.sourceforge.net/yum/stable/rhel6/pptp-release-current.noarch.rpm</span><br><span class="line">yum    install  pptpd  -y</span><br><span class="line"></span><br><span class="line">echo</span><br><span class="line">echo &quot;######################################################&quot;</span><br><span class="line">echo &quot;Creating Server Config&quot;</span><br><span class="line">echo &quot;######################################################&quot;</span><br><span class="line">cp /etc/ppp/options.pptpd /etc/ppp/options.pptpd.bak</span><br><span class="line">sed -i &#x27;70a ms-dns 10.202.72.116&#x27;    /etc/ppp/options.pptpd</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># setting up pptpd.conf</span><br><span class="line">sed -i &#x27;101a localip 192.168.9.1&#x27;    /etc/pptpd.conf</span><br><span class="line">sed -i &#x27;102a  remoteip 192.168.9.11-30&#x27;    /etc/pptpd.conf</span><br><span class="line"></span><br><span class="line"># adding new user</span><br><span class="line">echo &quot;$u * $p *&quot; &gt;&gt; /etc/ppp/chap-secrets</span><br><span class="line"></span><br><span class="line">echo</span><br><span class="line">echo &quot;######################################################&quot;</span><br><span class="line">echo &quot;Forwarding IPv4 and Enabling it on boot&quot;</span><br><span class="line">echo &quot;######################################################&quot;</span><br><span class="line">cat &gt;&gt; /etc/sysctl.conf &lt;&lt;END</span><br><span class="line">net.ipv4.ip_forward=1</span><br><span class="line">END</span><br><span class="line">sysctl -p</span><br><span class="line"></span><br><span class="line">echo</span><br><span class="line">echo &quot;######################################################&quot;</span><br><span class="line">echo &quot;Updating IPtables Routing and Enabling it on boot&quot;</span><br><span class="line">echo &quot;######################################################&quot;</span><br><span class="line">iptables -t nat -A POSTROUTING -o eth1 -j  MASQUERADE</span><br><span class="line"># saves iptables routing rules and enables them on-boot</span><br><span class="line">iptables-save &gt; /etc/sysconfig/iptables</span><br><span class="line"></span><br><span class="line">cat &gt; /etc/network/if-pre-up.d/iptables &lt;&lt;END</span><br><span class="line">#!/bin/sh</span><br><span class="line">iptables-restore &lt; /etc/sysconfig/iptables</span><br><span class="line">END</span><br><span class="line"></span><br><span class="line">chmod +x /etc/network/if-pre-up.d/iptables</span><br><span class="line">cat &gt;&gt; /etc/ppp/ip-up &lt;&lt;END</span><br><span class="line">ifconfig ppp0 mtu 1400</span><br><span class="line">END</span><br><span class="line"></span><br><span class="line">echo</span><br><span class="line">echo &quot;######################################################&quot;</span><br><span class="line">echo &quot;Restarting PoPToP&quot;</span><br><span class="line">echo &quot;######################################################&quot;</span><br><span class="line">sleep 5</span><br><span class="line">/etc/init.d/pptpd restart</span><br><span class="line"></span><br><span class="line">echo</span><br><span class="line">echo &quot;######################################################&quot;</span><br><span class="line">echo &quot;Server setup complete!&quot;</span><br><span class="line">echo &quot;Connect to your VPS at $ip with these credentials:&quot;</span><br><span class="line">echo &quot;Username:$u ##### Password: $p&quot;</span><br><span class="line">echo &quot;######################################################&quot;</span><br><span class="line"></span><br><span class="line"># runs this if option 2 is selected</span><br><span class="line">elif test $x -eq 2; then</span><br><span class="line">echo &quot;Enter username that you want to create (eg. client1 or john):&quot;</span><br><span class="line">read u</span><br><span class="line">echo &quot;Specify password that you want the server to use:&quot;</span><br><span class="line">read p</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># adding new user</span><br><span class="line">echo &quot;$u * $p *&quot; &gt;&gt; /etc/ppp/chap-secrets</span><br><span class="line"></span><br><span class="line">echo</span><br><span class="line">echo &quot;######################################################&quot;</span><br><span class="line">echo &quot;Addtional user added!&quot;</span><br><span class="line">echo &quot;Connect to your VPS at $ip with these credentials:&quot;</span><br><span class="line">echo &quot;Username:$u ##### Password: $p&quot;</span><br><span class="line">echo &quot;######################################################&quot;</span><br><span class="line"></span><br><span class="line">else</span><br><span class="line">echo &quot;Invalid selection, quitting.&quot;</span><br><span class="line">exit</span><br><span class="line">fi</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/pptp%20vpn%20%E9%83%A8%E7%BD%B2%E8%84%9A%E6%9C%AC.html#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -405,48 +386,14 @@
     <div class="post-body" itemprop="articleBody">
           <p>CentOS</p>
 <p>Caution: This guide was originally written for Kubernetes 1.1.0 and is deprecated and is replaced by kubeadm.<br>Prerequisites</p>
-<p>To configure Kubernetes with CentOS, you’ll need a machine to act as a master, and one or more CentOS 7 hosts to act as cluster nodes.<br>Starting a clusteru</p>
-<p>This is a getting started guide for CentOS. It is a manual configuration so you understand all the underlying packages &#x2F; services &#x2F; ports, etc…<br>The Kubernetes package provides a few services: kube-apiserver, kube-scheduler, kube-controller-manager, kubelet, kube-proxy. These services are managed by systemd and the configuration resides in a central location: &#x2F;etc&#x2F;kubernetes. We will break the services up between the hosts. The first host, centos-master, will be the Kubernetes master. This host will run the kube-apiserver, kube-controller-manager and kube-scheduler. In addition, the master will also run etcd. The remaining hosts, centos-minion-n will be the nodes and run kubelet, proxy, cadvisor and docker.<br>All of them run flanneld as networking overlay.<br>System Information:<br>Hosts:<br>Please replace host IP with your environment.</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">centos-master = 192.168.121.9</span><br><span class="line">centos-minion-1 = 192.168.121.65</span><br><span class="line">centos-minion-2 = 192.168.121.66</span><br><span class="line">centos-minion-3 = 192.168.121.67</span><br></pre></td></tr></table></figure>
-<p>Prepare the hosts:</p>
-<ul>
-<li>Create a &#x2F;etc&#x2F;yum.repos.d&#x2F;virt7-docker-common-release.repo on all hosts - centos-{master,minion-n} with following information.<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[virt7-docker-common-release]</span><br><span class="line">name=virt7-docker-common-release</span><br><span class="line">baseurl=http://cbs.centos.org/repos/virt7-docker-common-release/x86_64/os/</span><br><span class="line">gpgcheck=0</span><br></pre></td></tr></table></figure></li>
-<li>Install Kubernetes, etcd and flannel on all hosts - centos-{master,minion-n}. This will also pull in docker and cadvisor.<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum -y install --enablerepo=virt7-docker-common-release kubernetes etcd flannel</span><br></pre></td></tr></table></figure></li>
-<li>Add master and node to &#x2F;etc&#x2F;hosts on all machines (not needed if hostnames already in DNS)<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">echo &quot;192.168.121.9    centos-master</span><br><span class="line">192.168.121.65    centos-minion-1</span><br><span class="line">192.168.121.66  centos-minion-2</span><br><span class="line">192.168.121.67  centos-minion-3&quot; &gt;&gt; /etc/hosts</span><br><span class="line">```  </span><br><span class="line">* Edit /etc/kubernetes/config which will be the same on all hosts to contain:</span><br></pre></td></tr></table></figure></li>
-</ul>
-<h1 id="logging-to-stderr-means-we-get-it-in-the-systemd-journal"><a href="#logging-to-stderr-means-we-get-it-in-the-systemd-journal" class="headerlink" title="logging to stderr means we get it in the systemd journal"></a>logging to stderr means we get it in the systemd journal</h1><p>KUBE_LOGTOSTDERR&#x3D;”–logtostderr&#x3D;true”</p>
-<h1 id="journal-message-level-0-is-debug"><a href="#journal-message-level-0-is-debug" class="headerlink" title="journal message level, 0 is debug"></a>journal message level, 0 is debug</h1><p>KUBE_LOG_LEVEL&#x3D;”–v&#x3D;0”</p>
-<h1 id="Should-this-cluster-be-allowed-to-run-privileged-docker-containers"><a href="#Should-this-cluster-be-allowed-to-run-privileged-docker-containers" class="headerlink" title="Should this cluster be allowed to run privileged docker containers"></a>Should this cluster be allowed to run privileged docker containers</h1><p>KUBE_ALLOW_PRIV&#x3D;”–allow-privileged&#x3D;false”</p>
-<h1 id="How-the-replication-controller-and-scheduler-find-the-kube-apiserver"><a href="#How-the-replication-controller-and-scheduler-find-the-kube-apiserver" class="headerlink" title="How the replication controller and scheduler find the kube-apiserver"></a>How the replication controller and scheduler find the kube-apiserver</h1><p>KUBE_MASTER&#x3D;”–master&#x3D;<a target="_blank" rel="noopener" href="http://centos-master:8080/">http://centos-master:8080</a>“</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">* Disable the firewall on the master and all the nodes, as docker does not play well with other firewall rule managers. CentOS won’t let you disable the firewall as long as SELinux is enforcing, so that needs to be disabled first.</span><br><span class="line">* If you disable SELinux, make sure you reboot your machine before continuing to more steps.</span><br></pre></td></tr></table></figure>
-<p>setenforce 0<br>systemctl disable iptables-services firewalld<br>systemctl stop iptables-services firewalld</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Configure the Kubernetes services on the master.</span><br><span class="line">* Edit /etc/etcd/etcd.conf to appear as such:</span><br></pre></td></tr></table></figure>
-<h1 id="member"><a href="#member" class="headerlink" title="[member]"></a>[member]</h1><p>ETCD_NAME&#x3D;default<br>ETCD_DATA_DIR&#x3D;”&#x2F;var&#x2F;lib&#x2F;etcd&#x2F;default.etcd”<br>ETCD_LISTEN_CLIENT_URLS&#x3D;”<a target="_blank" rel="noopener" href="http://0.0.0.0:2379/">http://0.0.0.0:2379</a>“</p>
-<p>#[cluster]<br>ETCD_ADVERTISE_CLIENT_URLS&#x3D;”<a target="_blank" rel="noopener" href="http://0.0.0.0:2379/">http://0.0.0.0:2379</a>“</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">* Edit /etc/kubernetes/apiserver to appear as such:</span><br></pre></td></tr></table></figure>
-<h1 id="The-address-on-the-local-server-to-listen-to"><a href="#The-address-on-the-local-server-to-listen-to" class="headerlink" title="The address on the local server to listen to."></a>The address on the local server to listen to.</h1><p>KUBE_API_ADDRESS&#x3D;”–address&#x3D;0.0.0.0”</p>
-<h1 id="The-port-on-the-local-server-to-listen-on"><a href="#The-port-on-the-local-server-to-listen-on" class="headerlink" title="The port on the local server to listen on."></a>The port on the local server to listen on.</h1><p>KUBE_API_PORT&#x3D;”–port&#x3D;8080”</p>
-<h1 id="Port-kubelets-listen-on"><a href="#Port-kubelets-listen-on" class="headerlink" title="Port kubelets listen on"></a>Port kubelets listen on</h1><p>KUBELET_PORT&#x3D;”–kubelet-port&#x3D;10250”</p>
-<h1 id="Comma-separated-list-of-nodes-in-the-etcd-cluster"><a href="#Comma-separated-list-of-nodes-in-the-etcd-cluster" class="headerlink" title="Comma separated list of nodes in the etcd cluster"></a>Comma separated list of nodes in the etcd cluster</h1><p>KUBE_ETCD_SERVERS&#x3D;”–etcd-servers&#x3D;<a target="_blank" rel="noopener" href="http://centos-master:2379/">http://centos-master:2379</a>“</p>
-<h1 id="Address-range-to-use-for-services"><a href="#Address-range-to-use-for-services" class="headerlink" title="Address range to use for services"></a>Address range to use for services</h1><p>KUBE_SERVICE_ADDRESSES&#x3D;”–service-cluster-ip-range&#x3D;10.254.0.0&#x2F;16”</p>
-<h1 id="Add-your-own"><a href="#Add-your-own" class="headerlink" title="Add your own!"></a>Add your own!</h1><p>KUBE_API_ARGS&#x3D;””</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">* Start ETCD and configure it to hold the network overlay configuration on master: Warning This network must be unused in your network infrastructure! 172.30.0.0/16 is free in our network.</span><br></pre></td></tr></table></figure>
-<p>systemctl start etcd<br>etcdctl mkdir &#x2F;kube-centos&#x2F;network<br>etcdctl mk &#x2F;kube-centos&#x2F;network&#x2F;config “{ &quot;Network&quot;: &quot;10.1.0.0&#x2F;16&quot;, &quot;SubnetLen&quot;: 24, &quot;Backend&quot;: { &quot;Type&quot;: &quot;vxlan&quot; } }”</p>
-<ul>
-<li>Configure flannel to overlay Docker network in &#x2F;etc&#x2F;sysconfig&#x2F;flanneld on the master (also in the nodes as we’ll see):<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">```</span><br><span class="line"># Flanneld configuration options</span><br><span class="line"></span><br><span class="line"># etcd url location.  Point this to the server where etcd runs</span><br><span class="line">FLANNEL_ETCD_ENDPOINTS=&quot;http://centos-master:2379&quot;</span><br><span class="line"></span><br><span class="line"># etcd config key.  This is the configuration key that flannel queries</span><br><span class="line"># For address range assignment</span><br><span class="line">FLANNEL_ETCD_PREFIX=&quot;/kube-centos/network&quot;</span><br><span class="line"></span><br><span class="line"># Any additional options that you want to pass</span><br><span class="line">#FLANNEL_OPTIONS=&quot;&quot;</span><br></pre></td></tr></table></figure></li>
-<li>Start the appropriate services on master:<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">for SERVICES in etcd kube-apiserver kube-controller-manager kube-scheduler flanneld; do</span><br><span class="line">    systemctl restart $SERVICES</span><br><span class="line">    systemctl enable $SERVICES</span><br><span class="line">    systemctl status $SERVICES</span><br><span class="line">done</span><br></pre></td></tr></table></figure>
-Configure the Kubernetes services on the nodes.<br>We need to configure the kubelet and start the kubelet and proxy</li>
-<li>Edit &#x2F;etc&#x2F;kubernetes&#x2F;kubelet to appear as such:<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"># The address for the info server to serve on</span><br><span class="line">KUBELET_ADDRESS=&quot;--address=0.0.0.0&quot;</span><br><span class="line"></span><br><span class="line"># The port for the info server to serve on</span><br><span class="line">KUBELET_PORT=&quot;--port=10250&quot;</span><br><span class="line"></span><br><span class="line"># You may leave this blank to use the actual hostname</span><br><span class="line"># Check the node number!</span><br><span class="line">KUBELET_HOSTNAME=&quot;--hostname-override=centos-minion-n&quot;</span><br><span class="line"></span><br><span class="line"># Location of the api-server</span><br><span class="line">KUBELET_API_SERVER=&quot;--api-servers=http://centos-master:8080&quot;</span><br><span class="line"></span><br><span class="line"># Add your own!</span><br><span class="line">KUBELET_ARGS=&quot;&quot;</span><br></pre></td></tr></table></figure></li>
-<li>Configure flannel to overlay Docker network in &#x2F;etc&#x2F;sysconfig&#x2F;flanneld (in all the nodes)<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"># Flanneld configuration options</span><br><span class="line"></span><br><span class="line"># etcd url location.  Point this to the server where etcd runs</span><br><span class="line">FLANNEL_ETCD_ENDPOINTS=&quot;http://centos-master:2379&quot;</span><br><span class="line"></span><br><span class="line"># etcd config key.  This is the configuration key that flannel queries</span><br><span class="line"># For address range assignment</span><br><span class="line">FLANNEL_ETCD_PREFIX=&quot;/kube-centos/network&quot;</span><br><span class="line"></span><br><span class="line"># Any additional options that you want to pass</span><br><span class="line">#FLANNEL_OPTIONS=&quot;&quot;</span><br></pre></td></tr></table></figure></li>
-<li>Start the appropriate services on node (centos-minion-n).<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">for SERVICES in kube-proxy kubelet flanneld docker; do</span><br><span class="line">    systemctl restart $SERVICES</span><br><span class="line">    systemctl enable $SERVICES</span><br><span class="line">    systemctl status $SERVICES</span><br><span class="line">done</span><br></pre></td></tr></table></figure></li>
-<li>Configure kubectl<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">kubectl config set-cluster default-cluster --server=http://centos-master:8080</span><br><span class="line">kubectl config set-context default-context --cluster=default-cluster --user=default-admin</span><br><span class="line">kubectl config use-context default-context</span><br></pre></td></tr></table></figure>
-You should be finished!</li>
-<li>Check to make sure the cluster can see the node (on centos-master)<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl get nodes</span><br><span class="line">NAME                   STATUS     AGE     VERSION</span><br><span class="line">centos-minion-1        Ready      3d      v1.6.0+fff5156</span><br><span class="line">centos-minion-2        Ready      3d      v1.6.0+fff5156</span><br><span class="line">centos-minion-3        Ready      3d      v1.6.0+fff5156</span><br></pre></td></tr></table></figure>
-The cluster should be running! Launch a test pod.<br>Support Level</li>
-</ul>
-<p>IaaS Provider	Config. Mgmt	OS	Networking	Docs	Conforms	Support Level<br>Bare-metal	custom	CentOS	flannel	docs	 	Community (@coolsvap)<br>For support level information on all solutions, see the Table of solutions chart.<br>Create an Issue Edit this Page</p>
-<h3 id="问题处理"><a href="#问题处理" class="headerlink" title="问题处理"></a>问题处理</h3><p>跨节点无法通信</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">iptables -P INPUT ACCEPT</span><br><span class="line">iptables -P FORWARD ACCEPT</span><br><span class="line">iptables -F</span><br><span class="line">iptables -L -n</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/kubernetes%E6%9C%80%E6%96%B0%E9%83%A8%E7%BD%B2%E6%96%87%E6%A1%A3.html#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -531,252 +478,14 @@ The cluster should be running! Launch a test pod.<br>Support Level</li>
     
     <div class="post-body" itemprop="articleBody">
           <h2 id="七牛云"><a href="#七牛云" class="headerlink" title="七牛云"></a>七牛云</h2><p>安装requests库</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install requests</span><br></pre></td></tr></table></figure>
-<h4 id="获取图床信息"><a href="#获取图床信息" class="headerlink" title="获取图床信息"></a>获取图床信息</h4><p>选择新建存储空间，记住这个空间的名字。</p>
-<img src="https://img.econow.cn/blog/1545128054650.png"/>
-
-
-<h4 id="获取访问域名"><a href="#获取访问域名" class="headerlink" title="获取访问域名"></a>获取访问域名</h4><img src="https://img.econow.cn/blog/1545128359995.png" />
-
-<p>注意该测试域名有效期30天，并且每天限流30G，也足够测试使用啦，以后最好还是绑定自己的域名。</p>
-<h4 id="图床认证信息"><a href="#图床认证信息" class="headerlink" title="图床认证信息"></a>图床认证信息</h4><p>获取AK和SK</p>
-<img src="https://img.econow.cn/blog/1545128556695.png" />
-
-<h2 id="Alfred"><a href="#Alfred" class="headerlink" title="Alfred"></a>Alfred</h2><h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p>下载地址<br><a target="_blank" rel="noopener" href="https://img.econow.cn/alfred%203.0.3.dmg">https://img.econow.cn/alfred%203.0.3.dmg</a><br>提取码<code>wkem</code> 必须得激活，不然用不了workflow.</p>
-<p>OS X 10.14 激活参考<a target="_blank" rel="noopener" href="https://img.econow.cn/alfred_3.0_CORE%20Keygen.app.zip">https://img.econow.cn/alfred_3.0_CORE%20Keygen.app.zip</a></p>
-<p>今天试了一下MacBook Pro 2021 版本的也没啥问题。</p>
-<h3 id="workflow"><a href="#workflow" class="headerlink" title="workflow"></a>workflow</h3><p>下载地址<br><a target="_blank" rel="noopener" href="https://img.econow.cn/markdown_img.alfredworkflow">https://img.econow.cn/markdown_img.alfredworkflow</a> </p>
-<h3 id="workflow-1"><a href="#workflow-1" class="headerlink" title="workflow"></a>workflow</h3><p>在 alfred 里面输入mdimgsetup,就会弹出一个文本文档，如下：<br><img src="https://img.econow.cn/medivh/1545129537529.png" /></p>
-<ul>
-<li>ak&#x2F;sk</li>
-<li>URL改为自己的域名或者测试域名</li>
-<li>bucket就是刚才创建的，注意保持一致</li>
-</ul>
-<h3 id="调整URL"><a href="#调整URL" class="headerlink" title="调整URL"></a>调整URL</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"># coding: utf-8</span><br><span class="line">from clipboard import get_paste_img_file</span><br><span class="line">from upload import upload_qiniu</span><br><span class="line">import util</span><br><span class="line">import os</span><br><span class="line">import subprocess</span><br><span class="line">import sys</span><br><span class="line">import time</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">if not os.path.exists(util.CONFIG_FILE):</span><br><span class="line">    util.generate_config_file()</span><br><span class="line"></span><br><span class="line">config = util.read_config()</span><br><span class="line">if not config:</span><br><span class="line">    util.notice(&#x27;请先设置你的七牛图床信息&#x27;)</span><br><span class="line">    util.open_with_editor(util.CONFIG_FILE)</span><br><span class="line">    sys.exit(0)</span><br><span class="line"></span><br><span class="line">url = &#x27;%s/%s&#x27; % (config[&#x27;url&#x27;], config[&#x27;prefix&#x27;])</span><br><span class="line"></span><br><span class="line">img_file, need_format, format = get_paste_img_file()</span><br><span class="line">if img_file:</span><br><span class="line">    # has image</span><br><span class="line"></span><br><span class="line">    # use time to generate a unique upload_file name, we can not use the tmp file name</span><br><span class="line">    upload_name = &quot;%s.%s&quot; % (int(time.time() * 1000), format)</span><br><span class="line">    if need_format:</span><br><span class="line">        size_str = subprocess.check_output(&#x27;sips -g pixelWidth %s | tail -n1 | cut -d&quot; &quot; -f4&#x27; % img_file.name, shell=True)</span><br><span class="line">        size = int(size_str.strip()) / 2</span><br><span class="line">        markdown_url = &#x27;&lt;img src=&quot;%s/%s&quot;  /&gt;&#x27; % (url, upload_name)</span><br><span class="line">    else:</span><br><span class="line">        markdown_url = &#x27;%s/%s&#x27; % (url, upload_name)</span><br><span class="line"></span><br><span class="line">    # make it to clipboard</span><br><span class="line">    os.system(&quot;echo &#x27;%s&#x27; | pbcopy&quot; % markdown_url)</span><br><span class="line">    os.system(&#x27;osascript -e \&#x27;tell application &quot;System Events&quot; to keystroke &quot;v&quot; using command down\&#x27;&#x27;)</span><br><span class="line">    upload_file = util.try_compress_png(img_file, format!=&#x27;gif&#x27;)</span><br><span class="line">    if not upload_qiniu(upload_file.name, upload_name): util.notice(&quot;上传图片到图床失败，请检查网络后重试&quot;)</span><br><span class="line">else:</span><br><span class="line">    util.notice(&quot;剪切版里没有图片！&quot;)</span><br></pre></td></tr></table></figure>
-<p>根据个人需求，设置markdown_url拼接格式。如果出现什么问题，而且没有弹窗就再次导入alfed文件。</p>
-<h2 id="使用方式"><a href="#使用方式" class="headerlink" title="使用方式"></a>使用方式</h2><p>###截图<br>使用任意截图工具截图之后，在任意编辑器里面你需要插入markdown格式图片的地方，按下cmd + ctrl + P即可！</p>
-<h3 id="已有图片"><a href="#已有图片" class="headerlink" title="已有图片"></a>已有图片</h3><p>如果你已经有一张图片了，希望上传到图床得到一个链接；通常的方式需要图床客户端或者浏览器插件，通过这个alfred插件：<br>直接复制本地图片，然后按下cmd + ctrl + P 就能得到图床的链接！</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://econow.cn/kubernetes%20%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98%E7%9A%84%E6%8E%A2%E8%AE%A8.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="medivh">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Medivh's castle">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Medivh's castle">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/kubernetes%20%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98%E7%9A%84%E6%8E%A2%E8%AE%A8.html" class="post-title-link" itemprop="url">kubernetes 常见问题的探讨</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2023-10-31 10:15:08" itemprop="dateCreated datePublished" datetime="2023-10-31T10:15:08+08:00">2023-10-31</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E4%BA%91%E5%8E%9F%E7%94%9F/" itemprop="url" rel="index"><span itemprop="name">云原生</span></a>
-        </span>
-    </span>
-
-  
-    <span id="/kubernetes%20%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98%E7%9A%84%E6%8E%A2%E8%AE%A8.html" class="post-meta-item leancloud_visitors" data-flag-title="kubernetes 常见问题的探讨" title="阅读次数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-eye"></i>
-      </span>
-      <span class="post-meta-item-text">阅读次数：</span>
-      <span class="leancloud-visitors-count"></span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>关于kubernetes 部署复杂是其特点之一，而网络问题则是最为常见的类型之一。</p>
-<h3 id="场景-a-b-c-node上的pod互通，但是对d-node无法访问"><a href="#场景-a-b-c-node上的pod互通，但是对d-node无法访问" class="headerlink" title="场景 a&#x2F;b&#x2F;c node上的pod互通，但是对d node无法访问"></a>场景 a&#x2F;b&#x2F;c node上的pod互通，但是对d node无法访问</h3><blockquote>
-<ul>
-<li>个别服务出现无法访问另一个服务的情况；</li>
-<li>测试判断无法ping通;</li>
-<li>080端口无法访问;</li>
-<li>经测试其他node上的pod均无法访问该node上的pod。</li>
-</ul>
-</blockquote>
-<p>根据以上背景，初步断定是网络问题。</p>
-<h4 id="通讯链路"><a href="#通讯链路" class="headerlink" title="通讯链路"></a>通讯链路</h4><img src="https://img.econow.cn/medivh/1630319238909.png"  />
-
-<p>详细示例</p>
-<img src="https://img.econow.cn/medivh/1630319277207.png"  />
-
-<ul>
-<li><p>数据从源容器中发出，经所在主机的docker0网卡转发到flannel网卡；</p>
-</li>
-<li><p>flannel通过etcd维护的路由表将数据发送给目的主机；</p>
-</li>
-<li><p>源主机的flanneld服务将原数据内容UDP封装和根据自己的路由表传递给目的地节点的flanneld服务；</p>
-</li>
-<li><p>数据到达后解包，然后直接进入目的节点的flannel网卡；</p>
-</li>
-<li><p>之后转发到目的主机的docker0网卡；</p>
-</li>
-<li><p>最后docker0路由到目标容器。</p>
-</li>
-</ul>
-<h4 id="检查网卡"><a href="#检查网卡" class="headerlink" title="检查网卡"></a>检查网卡</h4><p>首先查看a&#x2F;b&#x2F;c网卡，检查docker0和flannel是否在同一网段。<br><img src="https://img.econow.cn/medivh/1630317106237.png"  /><br>检查结果正常。<br>检查d节点网卡<br><img src="https://img.econow.cn/medivh/1630317240889.png"  /><br>检查结果正常。</p>
-<h4 id="检查路由表"><a href="#检查路由表" class="headerlink" title="检查路由表"></a>检查路由表</h4><p>查看a&#x2F;b&#x2F;c路由表<br><img src="https://img.econow.cn/medivh/1630317434299.png"/></p>
-<blockquote>
-<p>10.100.0.0 指向flannel<br>10.100.54.0 指向docker0<br>192.168.1.0 指向 ens3，局域网地址</p>
-</blockquote>
-<p>查看d路由表<br><img src="https://img.econow.cn/medivh/1630317458997.png"  /></p>
-<blockquote>
-<p>10.100.0.0 指向flannel<br>10.100.41.0 指向docker0<br>192.168.1.0 指向 ens3，局域网地址</p>
-</blockquote>
-<p>路由表无异常。<br>也可以使用下列命令，效果一样：<code>route -n</code></p>
-<h4 id="防火墙"><a href="#防火墙" class="headerlink" title="防火墙"></a>防火墙</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">iptables -P FORWARD ACCEPT</span><br></pre></td></tr></table></figure>
-
-<h4 id="ip-forwad"><a href="#ip-forwad" class="headerlink" title="ip forwad"></a>ip forwad</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@test_243 ~]#  sysctl -a|grep ip_forward</span><br><span class="line">net.ipv4.ip_forward = 1</span><br><span class="line">net.ipv4.ip_forward_use_pmtu = 0</span><br></pre></td></tr></table></figure>
-<p>如果没有打开转发，则使用以下方式。</p>
-<h5 id="临时"><a href="#临时" class="headerlink" title="临时"></a>临时</h5><blockquote>
-<p>临时生效的配置方式，在系统重启，或对系统的网络服务进行重启后都会失效。这种方式可用于临时测试、或做实验时使用。</p>
-</blockquote>
-<p>方案一<br>sysctl 命令的 -w 参数可以实时修改Linux的内核参数，并生效。所以使用如下命令可以开发Linux的路由转发功能。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sysctl -w net.ipv4.ip_forward=1</span><br></pre></td></tr></table></figure>
-<p>方案二<br>内核参数在Linux文件系统中的映射出的文件：&#x2F;proc&#x2F;sys&#x2F;net&#x2F;ipv4&#x2F;ip_forward中记录了Linux系统当前对路由转发功能的支持情况。文件中的值为0,说明禁止进行IP转发；如果是1,则说明IP转发功能已经打开。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo 1 &gt; /proc/sys/net/ipv4/ip_forward</span><br></pre></td></tr></table></figure>
-
-
-<h5 id="永久"><a href="#永久" class="headerlink" title="永久"></a>永久</h5><p>在sysctl.conf配置文件中有一项名为<code>net.ipv4.ip_forward</code>的配置项，用于配置Linux内核中的<code>net.ipv4.ip_forward</code>参数。其值为0,说明禁止进行IP转发；如果是1,则说明IP转发功能已经打开。</p>
-<p>需要注意的是，修改sysctl.conf文件后需要执行指令<code>sysctl -p </code>后新的配置才会生效。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/sysctl.d/99-sysctl.conf </span><br><span class="line">...</span><br><span class="line"># 结尾添加：</span><br><span class="line">net.ipv4.ip_forward = 1</span><br><span class="line">:wq</span><br><span class="line">[root@CentOS ~]# sysctl -p</span><br><span class="line">net.ipv4.ip_forward = 1   //查看修改结果.</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h4 id="etcd"><a href="#etcd" class="headerlink" title="etcd"></a>etcd</h4><blockquote>
-<p>检查etcd数据是否正常</p>
-</blockquote>
-<img src="https://img.econow.cn/medivh/1630321077720.png"  />
-核对网段和Mac地址是否一致。
-<img src="https://img.econow.cn/medivh/1630321154640.png"  />
-事实证明`10.100.41.0`的网卡和实际的网卡Mac地址并不一致，所以导致源主机没有找到真实的目的主机。
-
-<img src="https://img.econow.cn/medivh/1630321352642.png"  />
-
-<p>最后发现，原<code>10.100.41.0</code>的网卡对应的是另外一台历史机器，造成的网卡冲突导致的这一后果。</p>
-<h5 id="etcd的基本使用"><a href="#etcd的基本使用" class="headerlink" title="etcd的基本使用"></a>etcd的基本使用</h5><p>etcd是一个分布式的、可靠的k-v存储系统，它用于存储分布式系统中的关键数据。在kubernetes中保存集群所有的网络配置和对象的状态信息。在集群中共有两个服务需要用到etcd来协同和存储配置：</p>
-<ul>
-<li>flannel，对于其他网络差价也需要用到etcd;</li>
-<li>kubernetes本身，包括各种对象的状态和元信息配置</li>
-</ul>
-<p>获取 集群网络配置<br><img src="https://img.econow.cn/medivh/1630462961875.png"  /></p>
-<p>获取子网列表<br><img src="https://img.econow.cn/medivh/1630463028275.png"  /></p>
-<p>获取主机网卡信息<br><img src="https://img.econow.cn/medivh/1630463053579.png"  /></p>
-<p>帮助信息</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line">NAME:</span><br><span class="line">   etcdctl - A simple command line client for etcd.</span><br><span class="line"></span><br><span class="line">WARNING:</span><br><span class="line">   Environment variable ETCDCTL_API is not set; defaults to etcdctl v2.</span><br><span class="line">   Set environment variable ETCDCTL_API=3 to use v3 API or ETCDCTL_API=2 to use v2 API.</span><br><span class="line"></span><br><span class="line">USAGE:</span><br><span class="line">   etcdctl [global options] command [command options] [arguments...]</span><br><span class="line"></span><br><span class="line">VERSION:</span><br><span class="line">   3.2.22</span><br><span class="line"></span><br><span class="line">COMMANDS:</span><br><span class="line">     backup          backup an etcd directory</span><br><span class="line">     cluster-health  check the health of the etcd cluster</span><br><span class="line">     mk              make a new key with a given value</span><br><span class="line">     mkdir           make a new directory</span><br><span class="line">     rm              remove a key or a directory</span><br><span class="line">     rmdir           removes the key if it is an empty directory or a key-value pair</span><br><span class="line">     get             retrieve the value of a key</span><br><span class="line">     ls              retrieve a directory</span><br><span class="line">     set             set the value of a key</span><br><span class="line">     setdir          create a new directory or update an existing directory TTL</span><br><span class="line">     update          update an existing key with a given value</span><br><span class="line">     updatedir       update an existing directory</span><br><span class="line">     watch           watch a key for changes</span><br><span class="line">     exec-watch      watch a key for changes and exec an executable</span><br><span class="line">     member          member add, remove and list subcommands</span><br><span class="line">     user            user add, grant and revoke subcommands</span><br><span class="line">     role            role add, grant and revoke subcommands</span><br><span class="line">     auth            overall auth controls</span><br><span class="line">     help, h         Shows a list of commands or help for one command</span><br><span class="line"></span><br><span class="line">GLOBAL OPTIONS:</span><br><span class="line">   --debug                          output cURL commands which can be used to reproduce the request</span><br><span class="line">   --no-sync                        don&#x27;t synchronize cluster information before sending request</span><br><span class="line">   --output simple, -o simple       output response in the given format (simple, `extended` or `json`) (default: &quot;simple&quot;)</span><br><span class="line">   --discovery-srv value, -D value  domain name to query for SRV records describing cluster endpoints</span><br><span class="line">   --insecure-discovery             accept insecure SRV records describing cluster endpoints</span><br><span class="line">   --peers value, -C value          DEPRECATED - &quot;--endpoints&quot; should be used instead</span><br><span class="line">   --endpoint value                 DEPRECATED - &quot;--endpoints&quot; should be used instead</span><br><span class="line">   --endpoints value                a comma-delimited list of machine addresses in the cluster (default: &quot;http://127.0.0.1:2379,http://127.0.0.1:4001&quot;)</span><br><span class="line">   --cert-file value                identify HTTPS client using this SSL certificate file</span><br><span class="line">   --key-file value                 identify HTTPS client using this SSL key file</span><br><span class="line">   --ca-file value                  verify certificates of HTTPS-enabled servers using this CA bundle</span><br><span class="line">   --username value, -u value       provide username[:password] and prompt if password is not supplied.</span><br><span class="line">   --timeout value                  connection timeout per request (default: 2s)</span><br><span class="line">   --total-timeout value            timeout for the command execution (except watch) (default: 5s)</span><br><span class="line">   --help, -h                       show help</span><br><span class="line">   --version, -v                    print the version</span><br></pre></td></tr></table></figure>
-
-<h5 id="常见操作"><a href="#常见操作" class="headerlink" title="常见操作"></a>常见操作</h5><ul>
-<li>set 指定某个键的值</li>
-</ul>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@xxx ~]# etcdctl set t1 &quot;v1&quot;</span><br><span class="line">v1</span><br><span class="line">[root@xxx ~]# etcdctl ls /</span><br><span class="line">/t1</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>get获取指定键的值</li>
-</ul>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@xxx ~]# etcdctl get t1</span><br><span class="line">v1</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>rm&#x2F;rmdir  删除键</li>
-</ul>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@scm ~]# etcdctl rm t1</span><br><span class="line">PrevNode.Value: v1</span><br><span class="line">[root@scm ~]# etcdctl get t1</span><br><span class="line">Error:  100: Key not found (/t1) [127844346]</span><br></pre></td></tr></table></figure>
-
-<h3 id="网卡地址不在一个网段"><a href="#网卡地址不在一个网段" class="headerlink" title="网卡地址不在一个网段"></a>网卡地址不在一个网段</h3><p>在kubernetes集群中某些服务启动顺序是特定的，必须是先启动flannel然后再启动docker。</p>
-<p>flannel服务启动时主要做了以下几步的工作：</p>
-<ul>
-<li>从etcd中获取network的配置信息；</li>
-<li>划分subnet，并在etcd中进行注册；</li>
-<li>将子网信息记录到&#x2F;run&#x2F;flannel&#x2F;subnet.env中。</li>
-</ul>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@xxx ~]# cat /run/flannel/subnet.env</span><br><span class="line">FLANNEL_NETWORK=10.100.0.0/16</span><br><span class="line">FLANNEL_SUBNET=10.100.28.1/24</span><br><span class="line">FLANNEL_MTU=1450</span><br><span class="line">FLANNEL_IPMASQ=false</span><br></pre></td></tr></table></figure>
-<p>之后将会有一个脚本将subnet.env转写成一个docker的环境变量文件&#x2F;run&#x2F;flannel&#x2F;docker</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@xxx ~]# cat /run/flannel/docker</span><br><span class="line">DOCKER_OPT_BIP=&quot;--bip=10.100.28.1/24&quot;</span><br><span class="line">DOCKER_OPT_IPMASQ=&quot;--ip-masq=true&quot;</span><br><span class="line">DOCKER_OPT_MTU=&quot;--mtu=1450&quot;</span><br><span class="line">DOCKER_NETWORK_OPTIONS=&quot; --bip=10.100.28.1/24 --ip-masq=true --mtu=1450&quot;</span><br></pre></td></tr></table></figure>
-
-<p>然后是Docker服务</p>
-<p>Docker服务会根据flannel拿到的网段然后把pod启动在这些网段，这样kubernetes在寻址pod的时候就会找到相应的宿主机，进行通讯。如果Docker服务和Flannel服务没有这种关联关系的化，很可能Docker先用原来的ip段启动，而这个段并没有写到etcd中，导致寻址失败。</p>
-<h3 id="kubernetes的高可用"><a href="#kubernetes的高可用" class="headerlink" title="kubernetes的高可用"></a>kubernetes的高可用</h3><p>首先简单介绍一下常见的负载均衡类型，主要分为两类：四层和七层。<br>四层负载均衡是指负载均衡器用IP+Port的方式接收请求，再直接转发到后端对应的服务器上。工作在传输层。客户端和服务器之间建立一次TCP连接，而负载均衡设备至少起类似路由器的转发动作。常见的软件比如LVS。<br>七层负载均衡是根据虚拟的URL或者主机名来接收请求，经过处理后再转向响应的后端服务器上。工作在应用层，且建立两次连接。</p>
-<ul>
-<li>客户端到负载均衡器，负载均衡根据消息中的内容来做出负载均衡的决定；</li>
-<li>然后建立负载均衡器到后端服务器的连接；</li>
-</ul>
-<p>负载均衡器需要先代理最终的服务器和客户端建立TCP连接后，才可能接收到客户端发送的真正应用层内容的保温，再根据报文中的特定字段，再加上负载均衡设备的服务器选择方式，决定最终选的服务器。常见的软件比如NGINX。</p>
-<p>kubernetes部署架构</p>
-<img src="https://img.econow.cn/medivh/1630476462885.png"  />
-
-<p>kubernetes集群的高可用实际是各个核心组件的高可用。<br><img src="https://img.econow.cn/medivh/1630476228212.png"  /></p>
-<ul>
-<li>apiserver 通过 keepalived+haproxy 实现高可用，当某个节点故障时触发 keepalived vip 转移，haproxy 负责将流量负载到 apiserver 节点；</li>
-<li>controller-manager k8s 内部通过选举方式产生领导者(由 –leader-elect 选型控制，默认为 true)，同一时刻集群内只有一个 controller-manager 组件运行，其余处于 backup 状态；</li>
-<li>scheduler k8s 内部通过选举方式产生领导者(由 –leader-elect 选型控制，默认为 true)，同一时刻集群内只有一个scheduler组件运行，其余处于 backup 状态；</li>
-<li>etcd 通过运行 kubeadm 方式自动创建集群来实现高可用，部署的节点数为奇数，3节点方式最多容忍一台机器宕机。</li>
-</ul>
-<p>多节点的核心点就是需要指向一个核心的地址或者VIP。node请求apiserver时不时直接指向master服务器，而是通过一个虚拟地址来分发到某个master。</p>
-<h4 id="常规高可用"><a href="#常规高可用" class="headerlink" title="常规高可用"></a>常规高可用</h4><p>方案一、</p>
-<ul>
-<li>haproxy，提供高可用性，负载均衡，基于 TCP 和 HTTP 的代理，支持数以万记的并发连接</li>
-<li>keepalived，是以 VRRP(虚拟路由冗余协议)协议为基础, 包括一个 master 和多个 backup。 master 劫持 vip 对外提供服务。master 发送组播，backup 节点收不到 vrrp 包时认为 master 宕机，此时选出剩余优先级最高的节点作为新的 master, 劫持 vip。keepalived 是保证高可用的重要组件。</li>
-</ul>
-<p>haproxy 提供代理后端apiserver的功能，keepalived提供健康检查和切换IP的用途。</p>
-<p>方案二、</p>
-<ul>
-<li>nginx</li>
-<li>keepalived</li>
-</ul>
-<p>该方案和方案一类似，也是使用代理功能，只不过使用的是NGINX提供的四层转发。</p>
-<h4 id="阿里云环境的负载均衡"><a href="#阿里云环境的负载均衡" class="headerlink" title="阿里云环境的负载均衡"></a>阿里云环境的负载均衡</h4><p>阿里云云服务器不支持再单独购买 IP，无法安装配置 keepalived，进行负载均衡。如果需要配置负载均衡，可以直接购买负载均衡，进行负载均衡配置。这样就可以省略代理和keepalived的配置，只需要使用slb即可，注意后端服务指向的是master的apiserver的地址和端口。</p>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/markdown%20%E5%9B%BE%E5%BA%8A%E7%94%9F%E6%88%90.html#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -861,118 +570,107 @@ The cluster should be running! Launch a test pod.<br>Support Level</li>
     
     <div class="post-body" itemprop="articleBody">
           <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>使用kubeadm搭建一套kubernetes集群很简单，但是一个单节点的master并不能满足我们在生产环境的需求。因此必须得解决单点的问题后才能考虑在生产环境大面积推广应用。</p>
-<p>实践目标</p>
-<ol>
-<li>至少2个以上的master节点可以同时管理集群;</li>
-<li>集群的所有功能正常可用；</li>
-<li>支持后续扩展；</li>
-</ol>
-<h3 id="环境准备"><a href="#环境准备" class="headerlink" title="环境准备"></a>环境准备</h3><p>参考master单节点安装，此处不再具体描述。<br><strong>系统参数</strong> 修改系统内核参数：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">setenforce 0 </span><br><span class="line">sed -i <span class="string">&#x27;s/SELINUX=enforcing/SELINUX=disabled/&#x27;</span> /etc/selinux/config  </span><br><span class="line">systemctl stop firewalld &amp;&amp; systemctl <span class="built_in">disable</span> firewalld</span><br><span class="line">swapoff -a </span><br><span class="line">sed -i <span class="string">&#x27;s/.*swap.*/#&amp;/&#x27;</span> /etc/fstab </span><br><span class="line"></span><br><span class="line"><span class="built_in">cat</span> &gt;&gt; /etc/sysctl.conf &lt;&lt;<span class="string">eof</span></span><br><span class="line"><span class="string">net.bridge.bridge-nf-call-ip6tables = 1</span></span><br><span class="line"><span class="string">net.bridge.bridge-nf-call-iptables = 1</span></span><br><span class="line"><span class="string">vm.swappiness=0</span></span><br><span class="line"><span class="string">eof</span></span><br><span class="line"></span><br><span class="line">sysctl -p</span><br><span class="line">lsmod | grep ip</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/kubadm%E9%AB%98%E5%8F%AF%E7%94%A8.html#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
 
-<p><strong>docker相关</strong> 安装docker。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cat</span> &lt;&lt;<span class="string">EOF &gt; /etc/yum.repos.d/kubernetes.repo</span></span><br><span class="line"><span class="string">[kubernetes]</span></span><br><span class="line"><span class="string">name=Kubernetes</span></span><br><span class="line"><span class="string">baseurl=https://mirrors.aliyun.com/kubernetes/yum/repos/kubernetes-el7-x86_64</span></span><br><span class="line"><span class="string">enabled=1</span></span><br><span class="line"><span class="string">gpgcheck=0</span></span><br><span class="line"><span class="string">EOF</span></span><br><span class="line"></span><br><span class="line">yum remove docker \</span><br><span class="line">                  docker-client \</span><br><span class="line">                  docker-client-latest \</span><br><span class="line">                  docker-common \</span><br><span class="line">                  docker-latest \</span><br><span class="line">                  docker-latest-logrotate \</span><br><span class="line">                  docker-logrotate \</span><br><span class="line">                  docker-selinux \</span><br><span class="line">                  docker-engine-selinux \</span><br><span class="line">                  docker-engine</span><br><span class="line">                  </span><br><span class="line">yum install -y yum-utils device-mapper-persistent-data lvm2</span><br><span class="line">yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo</span><br><span class="line">yum makecache fast</span><br><span class="line">yum -y install docker-ce</span><br><span class="line">systemctl <span class="built_in">enable</span> docker</span><br><span class="line">systemctl start docker</span><br><span class="line"></span><br><span class="line">docker --version</span><br></pre></td></tr></table></figure>
+    
+    
+    
 
-<p><strong>安装相关组件</strong> 安装kubeadm必须组件</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 安装其他组件</span></span><br><span class="line">yum install -y kubelet kubeadm kubectl</span><br><span class="line"></span><br><span class="line"><span class="comment"># 也可以指定版本</span></span><br><span class="line">yum install -y kubelet-1.23.4 kubeadm-1.23.4 kubectl-1.23.4 --disableexcludes=kubernetes</span><br></pre></td></tr></table></figure>
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
 
-<h3 id="配置NGINX代理"><a href="#配置NGINX代理" class="headerlink" title="配置NGINX代理"></a>配置NGINX代理</h3><p>kube-apiserver高可用可以直接起多个节点，很多使用keepalive，haproxy来进行高可用配置，但是在大部分的公有云上无法使用vip。公有云上可以使用公有云提供的LoadBalance,这里我们使用nginx来代替.<br>nginx stream 四层协议的转发、代理或者负载均衡.</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">yum -y install nginx nginx-mod-stream</span><br><span class="line"></span><br><span class="line">stream &#123;</span><br><span class="line">  log_format  main  <span class="string">&#x27;$remote_addr [$time_local]&#x27;</span></span><br><span class="line">                    <span class="string">&#x27;$protocol $status $bytes_sent $bytes_received&#x27;</span></span><br><span class="line">                    <span class="string">&#x27;$session_time&#x27;</span>;</span><br><span class="line">  server &#123;</span><br><span class="line">    listen 16443;</span><br><span class="line">    proxy_pass kubeapi;</span><br><span class="line">    access_log  /var/log/nginx/access.log  main;</span><br><span class="line">  &#125;</span><br><span class="line">  upstream kubeapi &#123;</span><br><span class="line">    server 192.168.1.109:6443;</span><br><span class="line">    server 192.168.1.217:6443;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
-<h3 id="部署集群"><a href="#部署集群" class="headerlink" title="部署集群"></a>部署集群</h3><p><strong>获取默认配置文件</strong> 导出</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubeadm config <span class="built_in">print</span> init-defaults &gt; kubeadm-config.yaml</span><br></pre></td></tr></table></figure>
 
-<p><strong>根据实际情况修改配置文件</strong> 注意修改</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">apiVersion: kubeadm.k8s.io/v1beta3</span><br><span class="line">bootstrapTokens:</span><br><span class="line">- <span class="built_in">groups</span>:</span><br><span class="line">  - system:bootstrappers:kubeadm:default-node-token</span><br><span class="line">  token: abcdef.0123456789abcdef <span class="comment"># 自定义token</span></span><br><span class="line">  ttl: 24h0m0s</span><br><span class="line">  usages:</span><br><span class="line">  - signing</span><br><span class="line">  - authentication</span><br><span class="line">kind: InitConfiguration</span><br><span class="line">localAPIEndpoint:</span><br><span class="line">  advertiseAddress: 192.168.1.109 <span class="comment"># master节点ip</span></span><br><span class="line">  bindPort: 6443</span><br><span class="line">nodeRegistration:</span><br><span class="line">  criSocket: /var/run/dockershim.sock</span><br><span class="line">  imagePullPolicy: IfNotPresent</span><br><span class="line">  name: node</span><br><span class="line">  taints: null</span><br><span class="line">---</span><br><span class="line">apiServer:</span><br><span class="line">  timeoutForControlPlane: 4m0s</span><br><span class="line">apiVersion: kubeadm.k8s.io/v1beta3</span><br><span class="line">certificatesDir: /etc/kubernetes/pki</span><br><span class="line">clusterName: kubernetes</span><br><span class="line">controlPlaneEndpoint: 192.168.1.109:16443 <span class="comment"># 集群apiserver地址和端口</span></span><br><span class="line">controllerManager: &#123;&#125;</span><br><span class="line">dns: &#123;&#125;</span><br><span class="line">etcd: </span><br><span class="line">  <span class="built_in">local</span>:</span><br><span class="line">    dataDir: /var/lib/etcd   <span class="comment"># 修改etcd数据目录，也可以修改为外部etcd</span></span><br><span class="line">imageRepository: registry.cn-hangzhou.aliyuncs.com/google_containers <span class="comment"># 仓库地址</span></span><br><span class="line">kind: ClusterConfiguration</span><br><span class="line">kubernetesVersion: 1.23.4 <span class="comment"># 版本</span></span><br><span class="line">networking:</span><br><span class="line">  dnsDomain: cluster.local</span><br><span class="line">  serviceSubnet: 10.96.0.0/12</span><br><span class="line">  podSubnet: 10.244.0.0/16</span><br><span class="line">scheduler: &#123;&#125;</span><br><span class="line">---</span><br><span class="line">apiVersion: kubelet.config.k8s.io/v1beta1</span><br><span class="line">kind: KubeletConfiguration</span><br><span class="line">cgroupDriver: cgroupfs</span><br><span class="line">---</span><br><span class="line">apiVersion: kubeproxy.config.k8s.io/v1alpha1</span><br><span class="line">kind: KubeProxyConfiguration</span><br><span class="line">mode: ipvs</span><br></pre></td></tr></table></figure>
 
-<p>配置说明：</p>
-<ul>
-<li>controlPlaneEndpoint：为集群apiserver监听端口16443</li>
-<li>imageRepository:由于国内无法访问google镜像仓库k8s.gcr.io，这里指定为私有仓库地址  registry.cn-hangzhou.aliyuncs.com&#x2F;google_containers</li>
-<li>podSubnet:指定的IP地址段与后续部署的网络插件相匹配</li>
-</ul>
-<h4 id="执行初始化"><a href="#执行初始化" class="headerlink" title="执行初始化"></a>执行初始化</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">kubeadm init --config=kubeadm-config.yaml --upload-certs | <span class="built_in">tee</span> kubeadm-init.log</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+    
 
-<blockquote>
-<p>该命令指定了初始化时需要使用的配置文件，其中添加–upload-certs参数可以在后续执行加入节点时自动分发证书文件。<br>低版本注意使用–experimental-upload-certs。</p>
-</blockquote>
-<p><img src="evernotecid://2D277EDE-88BA-4DB6-AE12-A2B952C4D28E/appyinxiangcom/3119051/ENResource/p3036" alt="c6e534cbec32dfef14cfc2bb8f027c9e.png"></p>
-<p>kubeadm init主要执行了以下操作：</p>
-<ol>
-<li>[init]：指定版本进行初始化操作</li>
-<li>[preflight] ：初始化前的检查和下载所需要的Docker镜像文件</li>
-<li>[kubelet-start]：生成kubelet的配置文件”&#x2F;var&#x2F;lib&#x2F;kubelet&#x2F;config.yaml”，没有这个文件kubelet无法启动，所以初始化之前的kubelet实际上启动失败。</li>
-<li>[certificates]：生成Kubernetes使用的证书，存放在&#x2F;etc&#x2F;kubernetes&#x2F;pki目录中。</li>
-<li>[kubeconfig] ：生成 KubeConfig 文件，存放在&#x2F;etc&#x2F;kubernetes目录中，组件之间通信需要使用对应文件。</li>
-<li>[control-plane]：使用&#x2F;etc&#x2F;kubernetes&#x2F;manifest目录下的YAML文件，安装 Master 组件。</li>
-<li>[etcd]：使用&#x2F;etc&#x2F;kubernetes&#x2F;manifest&#x2F;etcd.yaml安装Etcd服务。</li>
-<li>[wait-control-plane]：等待control-plan部署的Master组件启动。</li>
-<li>[apiclient]：检查Master组件服务状态。</li>
-<li>[uploadconfig]：更新配置</li>
-<li>[kubelet]：使用configMap配置kubelet。</li>
-<li>[patchnode]：更新CNI信息到Node上，通过注释的方式记录。</li>
-<li>[mark-control-plane]：为当前节点打标签，打了角色Master，和不可调度标签，这样默认就不会使用Master节点来运行Pod。</li>
-<li>[bootstrap-token]：生成token记录下来，后边使用kubeadm join往集群中添加节点时会用到</li>
-<li>[addons]：安装附加组件CoreDNS和kube-proxy</li>
-</ol>
-<blockquote>
-<p>无论是初始化失败或者集群已经完全搭建成功，你都可以直接执行kubeadm reset命令清理集群或节点，然后重新执行kubeadm init或kubeadm join相关操作即可。<br>注意清理<code>.kube</code>目录</p>
-</blockquote>
-<p><strong>配置网络插件</strong> calico</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">kubectl apply -f https://docs.projectcalico.org/v3.21/manifests/calico.yaml</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
-<h3 id="其他节点加入集群"><a href="#其他节点加入集群" class="headerlink" title="其他节点加入集群"></a>其他节点加入集群</h3><p><strong>master</strong> join</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">kubeadm <span class="built_in">join</span> 192.168.1.109:16443 --token abcdef.0123456789abcdef \</span><br><span class="line">	--discovery-token-ca-cert-hash sha256:b9852b8ec72c5f26988763325e9da155de6136a3c3a62f48749bb4b6e09c37c0 \</span><br><span class="line">	--control-plane</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<div class="post-block">
+  
+  
 
-<p>执行后会自动生成相关文件和目录</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-node-217 kubernetes]<span class="comment"># ll</span></span><br><span class="line">total 28</span><br><span class="line">-rw------- 1 root root 5638 Feb 22 17:07 admin.conf</span><br><span class="line">-rw------- 1 root root 5673 Feb 22 17:07 controller-manager.conf</span><br><span class="line">-rw------- 1 root root 1955 Feb 22 17:07 kubelet.conf</span><br><span class="line">drwx------ 2 root root   96 Feb 22 17:07 manifests</span><br><span class="line">drwxr-xr-x 2 root root  288 Feb 22 17:07 pki</span><br><span class="line">-rw------- 1 root root 5621 Feb 22 17:07 scheduler.conf</span><br></pre></td></tr></table></figure>
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://econow.cn/kubernetes%20%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98%E7%9A%84%E6%8E%A2%E8%AE%A8.html">
 
-<blockquote>
-<p>如果在某些特殊情况下需要手动上传的话，注意传输以下文件即可：<br>admin.conf<br>pki&#x2F;ca.*<br>pki&#x2F;front-proxy*<br>pki&#x2F;sa*</p>
-</blockquote>
-<p><strong>worker</strong> 新node</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">kubeadm <span class="built_in">join</span> 192.168.1.109:16443 --token abcdef.0123456789abcdef \</span><br><span class="line">	--discovery-token-ca-cert-hash sha256:b9852b8ec72c5f26988763325e9da155de6136a3c3a62f48749bb4b6e09c37c0</span><br></pre></td></tr></table></figure>
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="medivh">
+    </span>
 
-<p>无论在master节点或node节点，要能够执行kubectl命令必须进行以下配置</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> -p <span class="variable">$HOME</span>/.kube</span><br><span class="line">sudo <span class="built_in">cp</span> -i /etc/kubernetes/admin.conf <span class="variable">$HOME</span>/.kube/config</span><br><span class="line">sudo <span class="built_in">chown</span> $(<span class="built_in">id</span> -u):$(<span class="built_in">id</span> -g) <span class="variable">$HOME</span>/.kube/config</span><br></pre></td></tr></table></figure>
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Medivh's castle">
+      <meta itemprop="description" content="">
+    </span>
 
-<p><strong>检查集群</strong><br>两台master节点展示信息一致。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">[root@uat-109 ~]<span class="comment"># kubectl get nodes</span></span><br><span class="line">NAME            STATUS   ROLES                  AGE    VERSION</span><br><span class="line">k8s-node-217    Ready    control-plane,master   8m2s   v1.23.4</span><br><span class="line">master          Ready    control-plane,master   30h    v1.23.4</span><br><span class="line">test-216-tips   Ready    &lt;none&gt;                 27h    v1.23.4</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">[root@k8s-node-217 ~]<span class="comment"># kubectl get nodes</span></span><br><span class="line">NAME            STATUS   ROLES                  AGE    VERSION</span><br><span class="line">k8s-node-217    Ready    control-plane,master   8m9s   v1.23.4</span><br><span class="line">master          Ready    control-plane,master   30h    v1.23.4</span><br><span class="line">test-216-tips   Ready    &lt;none&gt;                 27h    v1.23.4</span><br></pre></td></tr></table></figure>
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Medivh's castle">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/kubernetes%20%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98%E7%9A%84%E6%8E%A2%E8%AE%A8.html" class="post-title-link" itemprop="url">kubernetes 常见问题的探讨</a>
+        </h2>
 
-<h3 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h3><p><strong>删除节点</strong><br>在master节点上执行：<br><code>kubectl drain node-xxx --delete-local-data --force --ignore-daemonsets</code></p>
-<p>当节点变成不可调度状态时候 SchedulingDisabled，执行<br><code>kubectl delete node node-xxx</code></p>
-<p><strong>ipvs</strong></p>
-<blockquote>
-<p>参考：<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/89f126b241db">https://www.jianshu.com/p/89f126b241db</a></p>
-</blockquote>
-<p>IPVS简介：</p>
-<p>尽管 Kubernetes 在版本v1.6中已经支持5000个节点，但使用 iptables 的 kube-proxy 实<br>际上是将集群扩展到5000个节点的瓶颈。 在5000节点集群中使用 NodePort 服务，如<br>果有2000个服务并且每个服务有10个 pod，这将在每个工作节点上至少产生20000个<br>iptable 记录，这可能使内核非常繁忙。</p>
-<p>ipvs (IP Virtual Server) 实现了传输层负载均衡，也就是我们常说的4层LAN交换，作为<br>Linux 内核的一部分。ipvs运行在主机上，在真实服务器集群前充当负载均衡器。ipvs<br>可以将基于TCP和UDP的服务请求转发到真实服务器上，并使真实服务器的服务在单个<br>IP 地址上显示为虚拟服务。</p>
-<p>我们知道kube-proxy支持 iptables 和 ipvs 两种模式， 在kubernetes v1.8 中引入了 ipvs<br>模式，在 v1.9 中处于 beta 阶段，在 v1.11 中已经正式可用了。iptables 模式在 v1.1 中<br>就添加支持了，从 v1.2版本开始 iptables 就是 kube-proxy 默认的操作模式，ipvs 和<br>iptables 都是基于netfilter的。ipvs 会使用 iptables 进行包过滤、SNAT、masquared。<br>具体来说，ipvs 将使用ipset来存储需要DROP或masquared的流量的源或目标地址，<br>以确保 iptables 规则的数量是恒定的，这样我们就不需要关心我们有多少服务了。</p>
-<p>启动ipvs的要求：</p>
-<p>k8s版本 &gt;&#x3D; v1.11<br>使用ipvs需要安装相应的工具来处理”yum install ipset ipvsadm -y“<br>确保 ipvs已经加载内核模块， ip_vs、ip_vs_rr、ip_vs_wrr、ip_vs_sh、<br>nf_conntrack_ipv4。如果这些内核模块不加载，当kube-proxy启动后，会退回到iptables模式。</p>
-<p>先前基于iptables规则表的DNAT-&gt;SNAT方式来处理外部客户端到k8s集群pod内的流量<br>和集群内部流量(cluster-ip到pod ip)，无需在宿主机上管理cluster-ip都由iptables来进行<br>管理。</p>
-<p>使用IPVS后是需要对vs(虚拟服务也就是vip)进行管理，由于IPVS的DNAT钩子挂在<br>INPUT链上，因此必须要让内核识别 VIP(cluster-ip) 是本机的 IP。k8s 通过设置将<br>service cluster ip 绑定到虚拟网卡kube-ipvs0，其中下面的10.96.x.x都是VIP，也就<br>是cluster-ip。</p>
-<p><img src="evernotecid://2D277EDE-88BA-4DB6-AE12-A2B952C4D28E/appyinxiangcom/3119051/ENResource/p3037" alt="9b5302edcad44e440bbb8dbb5ccb128e.png"></p>
-<p>kube-proxy 开启 ipvs</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install ipset ipvsadm -y</span><br></pre></td></tr></table></figure>
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
 
-<p>修改ConfigMap的kube-system&#x2F;kube-proxy中的config.conf，mode: “ipvs”</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">[root@master k8s]<span class="comment"># kubectl edit cm kube-proxy -n kube-system</span></span><br><span class="line">...</span><br><span class="line">    ipvs:</span><br><span class="line">      excludeCIDRs: null</span><br><span class="line">      minSyncPeriod: 0s</span><br><span class="line">      scheduler: <span class="string">&quot;&quot;</span></span><br><span class="line">      strictARP: <span class="literal">false</span></span><br><span class="line">      syncPeriod: 30s</span><br><span class="line">    kind: KubeProxyConfiguration</span><br><span class="line">    metricsBindAddress: 127.0.0.1:10249</span><br><span class="line">    mode: <span class="string">&quot;ipvs&quot;</span></span><br><span class="line">    nodePortAddresses: null</span><br><span class="line">    oomScoreAdj: -999</span><br><span class="line">    portRange: <span class="string">&quot;&quot;</span></span><br><span class="line">    resourceContainer: /kube-proxy</span><br><span class="line">...</span><br><span class="line"></span><br><span class="line">configmap/kube-proxy edited</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+      <time title="创建时间：2023-10-31 10:15:08" itemprop="dateCreated datePublished" datetime="2023-10-31T10:15:08+08:00">2023-10-31</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E4%BA%91%E5%8E%9F%E7%94%9F/" itemprop="url" rel="index"><span itemprop="name">云原生</span></a>
+        </span>
+    </span>
 
-<p>对于Kubernetes来说，可以直接将这三个Pod删除之后，会自动重建。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@master k8s]<span class="comment"># kubectl get pods -n kube-system|grep proxy</span></span><br><span class="line">kube-proxy-fn68r                           1/1     Running             0             75s</span><br><span class="line">kube-proxy-hrjls                           1/1     Running             0             78s</span><br><span class="line">kube-proxy-ltbqk                           1/1     Running             0             77s</span><br></pre></td></tr></table></figure>
+  
+    <span id="/kubernetes%20%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98%E7%9A%84%E6%8E%A2%E8%AE%A8.html" class="post-meta-item leancloud_visitors" data-flag-title="kubernetes 常见问题的探讨" title="阅读次数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span class="leancloud-visitors-count"></span>
+    </span>
+</div>
 
-<p>批量删除 kube-proxy</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl get pod -n kube-system | grep kube-proxy | awk <span class="string">&#x27;&#123;system(&quot;kubectl delete pod &quot;$1&quot; -n kube-system&quot;)&#125;&#x27;</span></span><br></pre></td></tr></table></figure>
+        </div>
+      </header>
 
-<p>由于你已经通过ConfigMap修改了kube-proxy的配置，所以后期增加的Node节点，会直接使用ipvs模式。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">[root@master ~]<span class="comment">#  kubectl logs kube-proxy-hrjls -n kube-system</span></span><br><span class="line">I0222 09:25:27.699369       1 node.go:163] Successfully retrieved node IP: 192.168.1.109</span><br><span class="line">I0222 09:25:27.699464       1 server_others.go:138] <span class="string">&quot;Detected node IP&quot;</span> address=<span class="string">&quot;192.168.1.109&quot;</span></span><br><span class="line">I0222 09:25:27.774905       1 server_others.go:269] <span class="string">&quot;Using ipvs Proxier&quot;</span></span><br><span class="line">I0222 09:25:27.774932       1 server_others.go:271] <span class="string">&quot;Creating dualStackProxier for ipvs&quot;</span></span><br><span class="line">I0222 09:25:27.775016       1 server_others.go:491] <span class="string">&quot;Detect-local-mode set to ClusterCIDR, but no IPv6 cluster CIDR defined, , defaulting to no-op detect-local for IPv6&quot;</span></span><br><span class="line">E0222 09:25:27.775284       1 proxier.go:379] <span class="string">&quot;Can&#x27;t set sysctl, kernel version doesn&#x27;t satisfy minimum version requirements&quot;</span> sysctl=<span class="string">&quot;net/ipv4/vs/conn_reuse_mode&quot;</span> minimumKernelVersion=<span class="string">&quot;4.1&quot;</span></span><br><span class="line">I0222 09:25:27.775454       1 proxier.go:438] <span class="string">&quot;IPVS scheduler not specified, use rr by default&quot;</span></span><br><span class="line">E0222 09:25:27.775637       1 proxier.go:379] <span class="string">&quot;Can&#x27;t set sysctl, kernel version doesn&#x27;t satisfy minimum version requirements&quot;</span> sysctl=<span class="string">&quot;net/ipv4/vs/conn_reuse_mode&quot;</span> minimumKernelVersion=<span class="string">&quot;4.1&quot;</span></span><br><span class="line">I0222 09:25:27.775756       1 proxier.go:438] <span class="string">&quot;IPVS scheduler not specified, use rr by default&quot;</span></span><br><span class="line">I0222 09:25:27.775850       1 ipset.go:113] <span class="string">&quot;Ipset name truncated&quot;</span> ipSetName=<span class="string">&quot;KUBE-6-LOAD-BALANCER-SOURCE-CIDR&quot;</span> truncatedName=<span class="string">&quot;KUBE-6-LOAD-BALANCER-SOURCE-CID&quot;</span></span><br><span class="line">I0222 09:25:27.775890       1 ipset.go:113] <span class="string">&quot;Ipset name truncated&quot;</span> ipSetName=<span class="string">&quot;KUBE-6-NODE-PORT-LOCAL-SCTP-HASH&quot;</span> truncatedName=<span class="string">&quot;KUBE-6-NODE-PORT-LOCAL-SCTP-HAS&quot;</span></span><br><span class="line">I0222 09:25:27.776321       1 server.go:656] <span class="string">&quot;Version info&quot;</span> version=<span class="string">&quot;v1.23.4&quot;</span></span><br><span class="line">I0222 09:25:27.783258       1 conntrack.go:52] <span class="string">&quot;Setting nf_conntrack_max&quot;</span> nf_conntrack_max=131072</span><br><span class="line">I0222 09:25:27.783815       1 config.go:317] <span class="string">&quot;Starting service config controller&quot;</span></span><br><span class="line">I0222 09:25:27.783883       1 shared_informer.go:240] Waiting <span class="keyword">for</span> caches to <span class="built_in">sync</span> <span class="keyword">for</span> service config</span><br><span class="line">I0222 09:25:27.783942       1 config.go:226] <span class="string">&quot;Starting endpoint slice config controller&quot;</span></span><br><span class="line">I0222 09:25:27.783963       1 shared_informer.go:240] Waiting <span class="keyword">for</span> caches to <span class="built_in">sync</span> <span class="keyword">for</span> endpoint slice config</span><br><span class="line">I0222 09:25:27.884501       1 shared_informer.go:247] Caches are synced <span class="keyword">for</span> endpoint slice config</span><br><span class="line">I0222 09:25:27.884570       1 shared_informer.go:247] Caches are synced <span class="keyword">for</span> service config</span><br></pre></td></tr></table></figure>
-
-<p>日志中打印出了Using ipvs Proxier，说明ipvs模式已经开启。</p>
-<p>使用ipvsadm测试，可以查看之前创建的Service已经使用LVS创建了集群。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[root@master ~]<span class="comment"># ipvsadm</span></span><br><span class="line">IP Virtual Server version 1.2.1 (size=4096)</span><br><span class="line">Prot LocalAddress:Port Scheduler Flags</span><br><span class="line">  -&gt; RemoteAddress:Port           Forward Weight ActiveConn InActConn</span><br><span class="line">TCP  master:https rr</span><br><span class="line">  -&gt; master:sun-sr-https         Masq    1      0          13</span><br><span class="line">  -&gt; master1:sun-sr-https   Masq    1      0          14</span><br><span class="line">TCP  master:domain rr</span><br><span class="line">TCP  master:9153 rr</span><br><span class="line">UDP  master:domain rr</span><br></pre></td></tr></table></figure>
-
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>关于kubernetes 部署复杂是其特点之一，而网络问题则是最为常见的类型之一。</p>
+<h3 id="场景-a-b-c-node上的pod互通，但是对d-node无法访问"><a href="#场景-a-b-c-node上的pod互通，但是对d-node无法访问" class="headerlink" title="场景 a&#x2F;b&#x2F;c node上的pod互通，但是对d node无法访问"></a>场景 a&#x2F;b&#x2F;c node上的pod互通，但是对d node无法访问</h3>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/kubernetes%20%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98%E7%9A%84%E6%8E%A2%E8%AE%A8.html#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -1057,8 +755,14 @@ The cluster should be running! Launch a test pod.<br>Support Level</li>
     
     <div class="post-body" itemprop="articleBody">
           <h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">brew install influxdb</span><br><span class="line"></span><br><span class="line">ln -sfv /usr/local/opt/influxdb/*.plist ~/Library/LaunchAgents</span><br><span class="line"></span><br><span class="line"># 配置文件在/etc/influxdb/influxdb.conf ，如果没有就将/usr/local/etc/influxdb.conf 拷一个过去</span><br><span class="line"></span><br><span class="line">配置缓存：cache-max-memory-size</span><br><span class="line"></span><br><span class="line">#启动服务</span><br><span class="line"></span><br><span class="line">launchctl load ~/Library/LaunchAgents/homebrew.mxcl.influxdb.plist</span><br><span class="line"></span><br><span class="line">#停止服务</span><br><span class="line"></span><br><span class="line">launchctl unload ~/Library/LaunchAgents/homebrew.mxcl.influxdb.plist</span><br><span class="line"></span><br><span class="line">#前台启动</span><br><span class="line"></span><br><span class="line">influxd -config /usr/local/etc/influxdb.conf</span><br><span class="line"></span><br><span class="line">查看influxdb运行配置</span><br><span class="line"></span><br><span class="line">influxd config</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">启动客户端</span><br><span class="line"></span><br><span class="line">influx -precision rfc3339</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h2 id="操作"><a href="#操作" class="headerlink" title="操作"></a>操作</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">1、创建数据库</span><br><span class="line"></span><br><span class="line">create database mydb</span><br><span class="line"></span><br><span class="line">2、删除数据库</span><br><span class="line"></span><br><span class="line">drop database mydb</span><br><span class="line"></span><br><span class="line">3、使用数据库</span><br><span class="line"></span><br><span class="line">use mydb</span><br><span class="line"></span><br><span class="line">4、插入数据库</span><br><span class="line"></span><br><span class="line">insert mt,type=item,sensor=sensor01 value=3,is_delete=0</span><br><span class="line"></span><br><span class="line">注意：第一次插入数据会确定数据类型，之后的插入不能换数据类型。</span><br><span class="line"></span><br><span class="line">插入同一时间的数据会覆盖旧的，时间是主键。可以乱序插入。</span><br><span class="line"></span><br><span class="line">5、查询</span><br><span class="line"></span><br><span class="line">select * from mt</span><br><span class="line"></span><br><span class="line">where 中对字符串的过滤必须用单引号，tag默认为字符串类型</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/influxdb%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8.html#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -1143,17 +847,98 @@ The cluster should be running! Launch a test pod.<br>Support Level</li>
     
     <div class="post-body" itemprop="articleBody">
           <h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>首先根据es版本来选择search-guard,当前环境为5.4.1，因此选择对应版本。其他5.x参考 <a target="_blank" rel="noopener" href="https://docs.search-guard.com/v5/search-guard-versions">https://docs.search-guard.com/v5/search-guard-versions</a></p>
-<p><a target="_blank" rel="noopener" href="https://docs.search-guard.com/v5/search-guard-installation">https://docs.search-guard.com/v5/search-guard-installation</a></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">[joy@es_a2_1_19 elasticsearch]$ bin/elasticsearch-plugin install -b  com.floragunn:search-guard-5:5.4.1-15</span><br><span class="line">-&gt; Downloading com.floragunn:search-guard-5:5.4.1-15 from maven central</span><br><span class="line">[=================================================] 100%</span><br><span class="line">@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@</span><br><span class="line">@     WARNING: plugin requires additional permissions     @</span><br><span class="line">@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@</span><br><span class="line">* java.io.FilePermission /proc/sys/net/core/somaxconn read</span><br><span class="line">* java.lang.RuntimePermission accessClassInPackage.sun.misc</span><br><span class="line">* java.lang.RuntimePermission accessClassInPackage.sun.nio.ch</span><br><span class="line">* java.lang.RuntimePermission accessClassInPackage.sun.security.x509</span><br><span class="line">* java.lang.RuntimePermission accessDeclaredMembers</span><br><span class="line">* java.lang.RuntimePermission getClassLoader</span><br><span class="line">* java.lang.RuntimePermission loadLibrary.*</span><br><span class="line">* java.lang.RuntimePermission setContextClassLoader</span><br><span class="line">* java.lang.RuntimePermission shutdownHooks</span><br><span class="line">* java.lang.reflect.ReflectPermission suppressAccessChecks</span><br><span class="line">* java.security.SecurityPermission getProperty.ssl.KeyManagerFactory.algorithm</span><br><span class="line">* java.security.SecurityPermission setProperty.ocsp.enable</span><br><span class="line">* java.util.PropertyPermission com.sun.security.enableCRLDP write</span><br><span class="line">* java.util.PropertyPermission es.set.netty.runtime.available.processors write</span><br><span class="line">* java.util.PropertyPermission java.security.debug write</span><br><span class="line">* java.util.PropertyPermission java.security.krb5.conf write</span><br><span class="line">* java.util.PropertyPermission javax.security.auth.useSubjectCredsOnly write</span><br><span class="line">* java.util.PropertyPermission sun.nio.ch.bugLevel write</span><br><span class="line">* java.util.PropertyPermission sun.security.krb5.debug write</span><br><span class="line">* java.util.PropertyPermission sun.security.spnego.debug write</span><br><span class="line">* javax.security.auth.AuthPermission doAs</span><br><span class="line">* javax.security.auth.AuthPermission modifyPrivateCredentials</span><br><span class="line">* javax.security.auth.kerberos.ServicePermission * accept</span><br><span class="line">See http://docs.oracle.com/javase/8/docs/technotes/guides/security/permissions.html</span><br><span class="line">for descriptions of what these permissions allow and the associated risks.</span><br><span class="line">-&gt; Installed search-guard-5</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/kibana%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86%E2%80%94%E2%80%94SearchGuard.html#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
 
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">[joy@es_a2_1_19 tools]$ sh install_demo_configuration.sh</span><br><span class="line">## Search Guard Demo Installer ##</span><br><span class="line">Warning: Do not use on production or public reachable systems</span><br><span class="line">Continue? [y/N] y</span><br><span class="line">Elasticsearch install type: .tar.gz</span><br><span class="line">Elasticsearch config dir: /home/joy/elasticsearch/config</span><br><span class="line">Detected Elasticsearch Version: 5.4.1</span><br><span class="line">Detected Search Guard Version: 5.4.1-15</span><br><span class="line"></span><br><span class="line">### Success</span><br><span class="line">### Execute this script now on all your nodes and then start all nodes</span><br><span class="line">### After the whole cluster is up execute:</span><br><span class="line">/home/joy/elasticsearch/plugins/search-guard-5/tools/sgadmin.sh -cd /home/joy/elasticsearch/plugins/search-guard-5/sgconfig -cn searchguard_demo -ks /home/joy/elasticsearch/config/kirk.jks -ts /home/joy/elasticsearch/config/truststore.jks -nhnv</span><br><span class="line">### or run ./sgadmin_demo.sh</span><br><span class="line">### Then open https://localhost:9200 an login with admin/admin</span><br><span class="line">### (Just ignore the ssl certificate warning because we installed a self signed demo certificate)</span><br></pre></td></tr></table></figure>
-<p>elasticsearch.yml将会自动增加下列内容</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">######## Start Search Guard Demo Configuration ########</span><br><span class="line">searchguard.ssl.transport.keystore_filepath: keystore.jks</span><br><span class="line">searchguard.ssl.transport.truststore_filepath: truststore.jks</span><br><span class="line">searchguard.ssl.transport.enforce_hostname_verification: false</span><br><span class="line">searchguard.ssl.http.enabled: true</span><br><span class="line">searchguard.ssl.http.keystore_filepath: keystore.jks</span><br><span class="line">searchguard.ssl.http.truststore_filepath: truststore.jks</span><br><span class="line">searchguard.authcz.admin_dn:</span><br><span class="line">  - CN=kirk,OU=client,O=client,L=test, C=de</span><br><span class="line"></span><br><span class="line">cluster.name: searchguard_demo</span><br><span class="line">network.host: 0.0.0.0</span><br><span class="line">######## End Search Guard Demo Configuration ########</span><br></pre></td></tr></table></figure>
+    
+    
+    
 
-<p>但是最终还是失败了，以后再看</p>
-<p><a target="_blank" rel="noopener" href="https://my.oschina.net/huangweibin/blog/820858">https://my.oschina.net/huangweibin/blog/820858</a><br><a target="_blank" rel="noopener" href="https://www.cnblogs.com/marility/p/9392645.html">https://www.cnblogs.com/marility/p/9392645.html</a><br><a target="_blank" rel="noopener" href="http://xiaoqiangge.com/aritcle/1536058241842.html">http://xiaoqiangge.com/aritcle/1536058241842.html</a><br><a target="_blank" rel="noopener" href="https://blog.csdn.net/sinat_39562444/article/details/88235809">https://blog.csdn.net/sinat_39562444&#x2F;article&#x2F;details&#x2F;88235809</a></p>
-<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a target="_blank" rel="noopener" href="https://github.com/floragunncom/search-guard">https://github.com/floragunncom/search-guard</a></p>
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
 
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://econow.cn/hello-world.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="medivh">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Medivh's castle">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Medivh's castle">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/hello-world.html" class="post-title-link" itemprop="url">Hello World</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-10-31 10:15:08" itemprop="dateCreated datePublished" datetime="2023-10-31T10:15:08+08:00">2023-10-31</time>
+    </span>
+
+  
+    <span id="/hello-world.html" class="post-meta-item leancloud_visitors" data-flag-title="Hello World" title="阅读次数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span class="leancloud-visitors-count"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/hello-world.html#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -1238,109 +1023,14 @@ The cluster should be running! Launch a test pod.<br>Support Level</li>
     
     <div class="post-body" itemprop="articleBody">
           <h3 id="一、freeswitch"><a href="#一、freeswitch" class="headerlink" title="一、freeswitch"></a>一、freeswitch</h3><p>注意区分CentOS 6&#x2F;7，不同版本编译的时候会有些差别。比如6上不会提示opus-devel，但是7必须安装。</p>
-<h3 id="二、Libshout"><a href="#二、Libshout" class="headerlink" title="二、Libshout"></a>二、Libshout</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install -y http://mirror.centos.org/centos/7/os/x86_64/Packages/libshout-2.2.2-11.el7.x86_64.rpm</span><br></pre></td></tr></table></figure>
-<h3 id="三、执行命令："><a href="#三、执行命令：" class="headerlink" title="三、执行命令："></a>三、执行命令：</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install -y http://files.freeswitch.org/freeswitch-release-1-6.noarch.rpm</span><br></pre></td></tr></table></figure>
-<h3 id="四、按照依赖"><a href="#四、按照依赖" class="headerlink" title="四、按照依赖"></a>四、按照依赖</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install -y git alsa-lib-devel autoconf automake bison broadvoice-devel bzip2 curl-devel libmpg123-devel libmp3lame-devel db-devel e2fsprogs-devel flite-devel g722_1-devel gcc-c++ gdbm-devel gnutls-devel ilbc2-devel ldns-devel libcodec2-devel libcurl-devel libedit-devel libidn-devel libjpeg-devel libmemcached-devel libogg-devel libsilk-devel libsndfile-devel libtheora-devel libtiff-devel libtool libuuid-devel libvorbis-devel libxml2-devel lua-devel lzo-devel mongo-c-driver-devel ncurses-devel net-snmp-devel openssl-devel opus-devel pcre-devel perl perl-ExtUtils-Embed pkgconfig portaudio-devel postgresql-devel python26-devel python-devel soundtouch-devel speex-devel sqlite-devel unbound-devel unixODBC-devel wget which yasm zlib-devel opus-devel libvorbis libvorbis-devel libogg libogg-devel</span><br></pre></td></tr></table></figure>
-
-<h3 id="五、下载"><a href="#五、下载" class="headerlink" title="五、下载"></a>五、下载</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd /usr/local/src</span><br><span class="line">git clone -b v1.6 https://freeswitch.org/stash/scm/fs/freeswitch.git freeswitch</span><br></pre></td></tr></table></figure>
-
-<h3 id="六、编译"><a href="#六、编译" class="headerlink" title="六、编译"></a>六、编译</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">cd /usr/local/src/freeswitch</span><br><span class="line">./bootstrap.sh -j</span><br><span class="line"></span><br><span class="line">./configure  --enable-core-odbc-support --enable-zrtp \</span><br><span class="line">            --enable-core-pgsql-support \</span><br><span class="line">            --enable-static-v8 --disable-parallel-build-v8</span><br><span class="line"></span><br><span class="line">#或者执行命令：</span><br><span class="line">./configure -C --enable-core-odbc-support --enable-zrtp \</span><br><span class="line">            --enable-core-pgsql-support \</span><br><span class="line">            --enable-static-v8 --disable-parallel-build-v8</span><br></pre></td></tr></table></figure>
-<h3 id="七、-编辑modoul-xml"><a href="#七、-编辑modoul-xml" class="headerlink" title="七、 编辑modoul.xml"></a>七、 编辑modoul.xml</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">将 #applications/mod_callcenter 、 #formats/mod_shout 、 #say/mod_say_zh  #applications/mod_curl 的&quot;#&quot;给去掉并，保存</span><br><span class="line">如果make的时候抛错，吧 #formats/mod_shout的注释重新加上。</span><br></pre></td></tr></table></figure>
-
-<h3 id="八、继续编译安装"><a href="#八、继续编译安装" class="headerlink" title="八、继续编译安装"></a>八、继续编译安装</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">make</span><br><span class="line">make -j install</span><br><span class="line"></span><br><span class="line">#以下命令执行时下载文件的时间会很久</span><br><span class="line">make -j cd-sounds-install</span><br><span class="line">make -j cd-moh-install</span><br></pre></td></tr></table></figure>
-<h4 id="九、相关配置文件"><a href="#九、相关配置文件" class="headerlink" title="九、相关配置文件"></a>九、相关配置文件</h4><p>线路参数</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">conf/sip_profiles/external/uckefu.xml</span><br><span class="line">&lt;include&gt;</span><br><span class="line">    &lt;gateway name=&quot;uckef&quot;&gt;</span><br><span class="line">        &lt;param name=&quot;proxy&quot; value=&quot;59.110.14.46:6060&quot;/&gt;</span><br><span class="line">	&lt;param name=&quot;from-user&quot; value=&quot;3000001&quot;/&gt;</span><br><span class="line">	&lt;param name=&quot;register&quot; value=&quot;false&quot;/&gt;</span><br><span class="line">    &lt;/gateway&gt;</span><br><span class="line">&lt;/include&gt;</span><br></pre></td></tr></table></figure>
-<p>电话号码</p>
-<p>资料：<a target="_blank" rel="noopener" href="https://blog.csdn.net/tcscy/article/details/71169688">https://blog.csdn.net/tcscy/article/details/71169688</a></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://econow.cn/hello-world.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="medivh">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Medivh's castle">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Medivh's castle">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/hello-world.html" class="post-title-link" itemprop="url">Hello World</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2023-10-31 10:15:08" itemprop="dateCreated datePublished" datetime="2023-10-31T10:15:08+08:00">2023-10-31</time>
-    </span>
-
-  
-    <span id="/hello-world.html" class="post-meta-item leancloud_visitors" data-flag-title="Hello World" title="阅读次数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-eye"></i>
-      </span>
-      <span class="post-meta-item-text">阅读次数：</span>
-      <span class="leancloud-visitors-count"></span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/freeswitch%E9%83%A8%E7%BD%B2%E6%96%87%E6%A1%A3.html#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -1369,7 +1059,6 @@ The cluster should be running! Launch a test pod.<br>Support Level</li>
     <div class="footer-inner">
 
   <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">京ICP备17063827号-2 </a>
-      <img src="https://beian.miit.gov.cn/#/Integrated/index" alt="">
   </div>
   <div class="copyright">
     &copy; 2017 – 
@@ -1388,6 +1077,7 @@ The cluster should be running! Launch a test pod.<br>Support Level</li>
     <i class="fa fa-arrow-up fa-lg"></i>
     <span>0%</span>
   </div>
+  <div class="reading-progress-bar"></div>
 
 <noscript>
   <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
@@ -1396,7 +1086,9 @@ The cluster should be running! Launch a test pod.<br>Support Level</li>
 
   
   <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
-<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pangu/4.0.7/pangu.min.js" integrity="sha256-j+yj56cdEY2CwkVtGyz18fNybFGpMGJ8JxG3GSyO2+I=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/next-boot.js"></script>
 
   
 

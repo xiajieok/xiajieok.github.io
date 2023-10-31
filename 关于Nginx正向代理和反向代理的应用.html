@@ -16,9 +16,8 @@
 
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha256-CTSx/A06dm1B063156EVh15m6Y67pAjZZaQc89LLSrU=" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"econow.cn","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.18.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"econow.cn","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.18.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":true,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
 
     <meta name="description" content="代理代理（Proxy）也称网络代理，是一种特殊的网络服务，允许一个（一般为客户端）通过这个服务与另一个网络终端（一般为服务器）进行非直接的连接。一些网关、路由器等网络设备具备网络代理功能。一般认为代理服务有利于保障网络终端的隐私或安全，防止攻击。代理也可以称为正向代理。所谓代理服务器就是位于发起请求的客户端与原始服务器端之间的一台跳板服务器，正向代理可以隐藏客户端，反向代理可以隐藏原始服务器。提供">
 <meta property="og:type" content="article">
@@ -64,7 +63,7 @@
   </noscript>
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+<body itemscope itemtype="http://schema.org/WebPage">
   <div class="headband"></div>
 
   <main class="main">
@@ -140,12 +139,14 @@
         </a>
       </div>
       <div class="site-state-item site-state-categories">
+          <a href="/categories/">
         <span class="site-state-item-count">12</span>
-        <span class="site-state-item-name">分类</span>
+        <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
+          <a href="/tags/">
         <span class="site-state-item-count">48</span>
-        <span class="site-state-item-name">标签</span>
+        <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
 </div>
@@ -305,15 +306,32 @@
   </button>
   <div class="post-reward">
       <div>
-        <img src="/images/wechatpay.png" alt="medivh 微信">
+        <img src="/images/wechatpay.jpg" alt="medivh 微信">
         <span>微信</span>
       </div>
       <div>
-        <img src="/images/alipay.png" alt="medivh 支付宝">
+        <img src="/images/alipay.jpg" alt="medivh 支付宝">
         <span>支付宝</span>
       </div>
 
   </div>
+</div>
+
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>medivh
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://econow.cn/%E5%85%B3%E4%BA%8ENginx%E6%AD%A3%E5%90%91%E4%BB%A3%E7%90%86%E5%92%8C%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86%E7%9A%84%E5%BA%94%E7%94%A8.html" title="关于Ngin正向代理和反向代理的应用">https://econow.cn/关于Nginx正向代理和反向代理的应用.html</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
 </div>
 
           <div class="post-tags">
@@ -350,7 +368,6 @@
     <div class="footer-inner">
 
   <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">京ICP备17063827号-2 </a>
-      <img src="https://beian.miit.gov.cn/#/Integrated/index" alt="">
   </div>
   <div class="copyright">
     &copy; 2017 – 
@@ -369,6 +386,7 @@
     <i class="fa fa-arrow-up fa-lg"></i>
     <span>0%</span>
   </div>
+  <div class="reading-progress-bar"></div>
 
 <noscript>
   <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
@@ -377,7 +395,9 @@
 
   
   <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
-<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pangu/4.0.7/pangu.min.js" integrity="sha256-j+yj56cdEY2CwkVtGyz18fNybFGpMGJ8JxG3GSyO2+I=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/next-boot.js"></script>
 
   
 

@@ -16,16 +16,15 @@
 
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha256-CTSx/A06dm1B063156EVh15m6Y67pAjZZaQc89LLSrU=" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"econow.cn","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.18.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"econow.cn","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.18.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":true,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="前言使用kubeadm搭建一套kubernetes集群很简单，但是一个单节点的master并不能满足我们在生产环境的需求。因此必须得解决单点的问题后才能考虑在生产环境大面积推广应用。 实践目标  至少2个以上的master节点可以同时管理集群; 集群的所有功能正常可用； 支持后续扩展；  环境准备参考master单节点安装，此处不再具体描述。系统参数 修改系统内核参数： 1234567891011">
+    <meta name="description" content="前言使用kubeadm搭建一套kubernetes集群很简单，但是一个单节点的master并不能满足我们在生产环境的需求。因此必须得解决单点的问题后才能考虑在生产环境大面积推广应用。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="kubadm 高可用">
 <meta property="og:url" content="https://econow.cn/kubadm%E9%AB%98%E5%8F%AF%E7%94%A8.html">
 <meta property="og:site_name" content="Medivh&#39;s castle">
-<meta property="og:description" content="前言使用kubeadm搭建一套kubernetes集群很简单，但是一个单节点的master并不能满足我们在生产环境的需求。因此必须得解决单点的问题后才能考虑在生产环境大面积推广应用。 实践目标  至少2个以上的master节点可以同时管理集群; 集群的所有功能正常可用； 支持后续扩展；  环境准备参考master单节点安装，此处不再具体描述。系统参数 修改系统内核参数： 1234567891011">
+<meta property="og:description" content="前言使用kubeadm搭建一套kubernetes集群很简单，但是一个单节点的master并不能满足我们在生产环境的需求。因此必须得解决单点的问题后才能考虑在生产环境大面积推广应用。">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="evernotecid://2D277EDE-88BA-4DB6-AE12-A2B952C4D28E/appyinxiangcom/3119051/ENResource/p3036">
 <meta property="og:image" content="evernotecid://2D277EDE-88BA-4DB6-AE12-A2B952C4D28E/appyinxiangcom/3119051/ENResource/p3037">
@@ -61,7 +60,7 @@
   </noscript>
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+<body itemscope itemtype="http://schema.org/WebPage">
   <div class="headband"></div>
 
   <main class="main">
@@ -137,12 +136,14 @@
         </a>
       </div>
       <div class="site-state-item site-state-categories">
+          <a href="/categories/">
         <span class="site-state-item-count">12</span>
-        <span class="site-state-item-name">分类</span>
+        <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
+          <a href="/tags/">
         <span class="site-state-item-count">48</span>
-        <span class="site-state-item-name">标签</span>
+        <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
 </div>
@@ -352,15 +353,32 @@
   </button>
   <div class="post-reward">
       <div>
-        <img src="/images/wechatpay.png" alt="medivh 微信">
+        <img src="/images/wechatpay.jpg" alt="medivh 微信">
         <span>微信</span>
       </div>
       <div>
-        <img src="/images/alipay.png" alt="medivh 支付宝">
+        <img src="/images/alipay.jpg" alt="medivh 支付宝">
         <span>支付宝</span>
       </div>
 
   </div>
+</div>
+
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>medivh
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://econow.cn/kubadm%E9%AB%98%E5%8F%AF%E7%94%A8.html" title="kubadm 高可用">https://econow.cn/kubadm高可用.html</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
 </div>
 
           <div class="post-tags">
@@ -371,13 +389,13 @@
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/influxdb%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8.html" rel="prev" title="influxdb基本使用">
-                  <i class="fa fa-angle-left"></i> influxdb基本使用
+                <a href="/kubernetes%20%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98%E7%9A%84%E6%8E%A2%E8%AE%A8.html" rel="prev" title="kubernetes 常见问题的探讨">
+                  <i class="fa fa-angle-left"></i> kubernetes 常见问题的探讨
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/kubernetes%20%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98%E7%9A%84%E6%8E%A2%E8%AE%A8.html" rel="next" title="kubernetes 常见问题的探讨">
-                  kubernetes 常见问题的探讨 <i class="fa fa-angle-right"></i>
+                <a href="/markdown%20%E5%9B%BE%E5%BA%8A%E7%94%9F%E6%88%90.html" rel="next" title="Markdown 图床设置">
+                  Markdown 图床设置 <i class="fa fa-angle-right"></i>
                 </a>
             </div>
           </div>
@@ -397,7 +415,6 @@
     <div class="footer-inner">
 
   <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">京ICP备17063827号-2 </a>
-      <img src="https://beian.miit.gov.cn/#/Integrated/index" alt="">
   </div>
   <div class="copyright">
     &copy; 2017 – 
@@ -416,6 +433,7 @@
     <i class="fa fa-arrow-up fa-lg"></i>
     <span>0%</span>
   </div>
+  <div class="reading-progress-bar"></div>
 
 <noscript>
   <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
@@ -424,7 +442,9 @@
 
   
   <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
-<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pangu/4.0.7/pangu.min.js" integrity="sha256-j+yj56cdEY2CwkVtGyz18fNybFGpMGJ8JxG3GSyO2+I=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/next-boot.js"></script>
 
   
 

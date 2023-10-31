@@ -16,9 +16,8 @@
 
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha256-CTSx/A06dm1B063156EVh15m6Y67pAjZZaQc89LLSrU=" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"econow.cn","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.18.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"econow.cn","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.18.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":true,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
 
     <meta property="og:type" content="website">
 <meta property="og:title" content="Medivh&#39;s castle">
@@ -53,7 +52,7 @@
   </noscript>
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+<body itemscope itemtype="http://schema.org/WebPage">
   <div class="headband"></div>
 
   <main class="main">
@@ -128,12 +127,14 @@
         </a>
       </div>
       <div class="site-state-item site-state-categories">
+          <a href="/categories/">
         <span class="site-state-item-count">12</span>
-        <span class="site-state-item-name">分类</span>
+        <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
+          <a href="/tags/">
         <span class="site-state-item-count">48</span>
-        <span class="site-state-item-name">标签</span>
+        <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
 </div>
@@ -218,7 +219,14 @@
     <div class="post-body" itemprop="articleBody">
           <p>Deployment、StatefulSet以及DeamonSet这三种编排概念都有一些共同点，实际上编排的对象都是在线业务。一般的在线业务是一种长时间的作业，比如NGINX、Tomcat，这些应用一旦运行起来，除非出错或者停止，否则容器进程会一直保持在Running状态。</p>
 <p>还有一类是离线业务，或者叫做Batch Job。这种业务在计算完成后就直接退出了。</p>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/Kubernetes%20job%E7%9A%84%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3.html#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -303,26 +311,14 @@
     
     <div class="post-body" itemprop="articleBody">
           <h2 id="版本"><a href="#版本" class="headerlink" title="版本"></a>版本</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">JDK     1.8.0_91</span><br><span class="line">Tomecat apache-tomcat-8.0.45</span><br><span class="line">Jenkins 1.121.3</span><br></pre></td></tr></table></figure>
-<h2 id="环境依赖"><a href="#环境依赖" class="headerlink" title="环境依赖"></a>环境依赖</h2><h3 id="JDK"><a href="#JDK" class="headerlink" title="JDK"></a>JDK</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">cd /usr/src/ &amp;&amp; tar -zxvf ./jdk1.8.0_91.tar.gz -C /usr/local</span><br><span class="line">ln -s /usr/local/jdk1.8.0_91 /usr/local/java</span><br><span class="line">echo &#x27;</span><br><span class="line">#JDK</span><br><span class="line">############################################################</span><br><span class="line">export JAVA_HOME=/usr/local/java</span><br><span class="line">export PATH=$JAVA_HOME/bin:$PATH</span><br><span class="line">############################################################</span><br><span class="line">&#x27; &gt;&gt; /etc/profile</span><br><span class="line">source /etc/profile</span><br></pre></td></tr></table></figure>
-<h3 id="maven"><a href="#maven" class="headerlink" title="maven"></a>maven</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">cd /usr/src/</span><br><span class="line">wget http://mirrors.cnnic.cn/apache/maven/maven-3/3.0.5/binaries/apache-maven-3.0.5-bin.tar.gz</span><br><span class="line">tar -zxvf apache-maven-3.0.5-bin.tar.gz  -C /usr/local</span><br><span class="line">cd /usr/local</span><br><span class="line">ln -s apache-maven-3.0.5 maven</span><br><span class="line"></span><br><span class="line">echo &#x27;</span><br><span class="line">#maven</span><br><span class="line">############################################################</span><br><span class="line">export MAVEN_HOME=/usr/local/maven</span><br><span class="line">export PATH=$&#123;MAVEN_HOME&#125;/bin:$&#123;PATH&#125;</span><br><span class="line">############################################################</span><br><span class="line">&#x27; &gt;&gt; /etc/profile</span><br><span class="line">source /etc/profile</span><br></pre></td></tr></table></figure>
-<h2 id="安装部署"><a href="#安装部署" class="headerlink" title="安装部署"></a>安装部署</h2><h3 id="部署war包"><a href="#部署war包" class="headerlink" title="部署war包"></a>部署war包</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd /usr/src</span><br><span class="line">wget http://mirrors.jenkins.io/war-stable/latest/jenkins.war</span><br><span class="line">cp jenkins.war /usr/local/apache-tomcat-8.0.45/webapps</span><br></pre></td></tr></table></figure>
-<h3 id="启动tomcat"><a href="#启动tomcat" class="headerlink" title="启动tomcat"></a>启动tomcat</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/usr/local/apache-tomcat-8.0.45/bin/catalina.sh start</span><br></pre></td></tr></table></figure>
-<h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><p>访问<a target="_blank" rel="noopener" href="http://192.168.1.232:8080/jenkins">http://192.168.1.232:8080/jenkins</a> 根据提示输入初始化安装的key<br>如果提示离线安装，可以选择跳过代理设置。之后再设置插件管理中的更新地址，更改https为http。</p>
-<blockquote>
-<p>注意，有时候第一次启动后登录会出现空白页面，解决方式：重启一下就好了。如果还不能解决，那你就遇上大问题了。youxia</p>
-</blockquote>
-<h3 id="1-修改主目录"><a href="#1-修改主目录" class="headerlink" title="1 修改主目录"></a>1 修改主目录</h3><ol>
-<li>修改&#x2F;etc&#x2F;profile<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">############################################################</span><br><span class="line">JENKINS_HOME=/xxxx/jenkins/data</span><br><span class="line">############################################################</span><br></pre></td></tr></table></figure></li>
-<li>修改tomcat<br>增加以下内容</li>
-</ol>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">export JENKINS_HOME=&quot;/xxxx/jenkins/data&quot;</span><br></pre></td></tr></table></figure>
-
-
-
-<h3 id="2-配置插件"><a href="#2-配置插件" class="headerlink" title="2 配置插件"></a>2 配置插件</h3><p>系统管理-管理插件-高级，将URL修改为http，然后重新获取即可。<br><img src="https://img.econow.cn/medivh/1553484237221.png" /></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">创建项目</span><br><span class="line">切换到指定目录</span><br><span class="line">mvn archetype:create -DgroupId=com.learn -DartifactId=LearnNew -DarchetypeArtifactId=maven-archetype-webapp</span><br></pre></td></tr></table></figure>
-
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/Jenkins%202.121%20%E9%83%A8%E7%BD%B2.html#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -409,43 +405,15 @@
           <blockquote>
 <p>fat转fit简单，直接在web界面操作即可。但是fit转fat就困难多了。</p>
 </blockquote>
-<h2 id="TFTP服务器"><a href="#TFTP服务器" class="headerlink" title="TFTP服务器"></a>TFTP服务器</h2><p>MAC：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">brew install tftp</span><br><span class="line"></span><br><span class="line">chmod -R 777 /private/tftpboot</span><br><span class="line">#/private/tftpboot是默认路径，需要改变其读写权限(非常重要)</span><br><span class="line">#开启</span><br><span class="line">sudo launchctl load -F /System/Library/LaunchDaemons/tftp.plist</span><br><span class="line">sudo launchctl start com.apple.tftpd</span><br><span class="line"></span><br><span class="line">#关闭</span><br><span class="line">sudo launchctl unload -F /System/Library/LaunchDaemons/tftp.plist</span><br><span class="line">sudo launchctl stop com.apple.tftpd</span><br></pre></td></tr></table></figure>
-<p>使用</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">***:~ ***$ tftp</span><br><span class="line">tftp&gt; connect localhost</span><br><span class="line">tftp&gt; status</span><br><span class="line">Connected to localhost.</span><br><span class="line">Mode: netascii Verbose: off Tracing: off</span><br><span class="line">Rexmt-interval: 5 seconds, Max-timeout: 25 seconds</span><br><span class="line">tftp&gt; verbose</span><br><span class="line">Verbose mode on.</span><br><span class="line">tftp&gt; get 1.txt</span><br><span class="line">getting from localhost:1.txt to 1.txt [netascii]</span><br><span class="line">Received 9 bytes in 0.0 seconds [inf bits/sec]</span><br><span class="line">tftp&gt; quit</span><br></pre></td></tr></table></figure>
-<p>准备固件</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">wget https://img.econow.cn/network/apwtu430_v1.06.btw</span><br><span class="line">wget https://img.econow.cn/network/wa4300s_fat.bin</span><br></pre></td></tr></table></figure>
-<h2 id="版本降级"><a href="#版本降级" class="headerlink" title="版本降级"></a>版本降级</h2><ul>
-<li><p>检查设备信息</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;H3C&gt;display device manuinfo</span><br><span class="line">DEVICE_NAME:WAP712C</span><br><span class="line">DEVICE_SERIAL_NUMBER:2198  01A0 X491 7CG0 04F8</span><br><span class="line">MAC_ADDRESS:307B-ACB2-5800</span><br><span class="line">MANUFACTURING_DATE:2017-12-20</span><br><span class="line">VENDOR_NAME:H3C</span><br></pre></td></tr></table></figure></li>
-<li><p>开机启动检查软件版本信息</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">System is starting...</span><br><span class="line"></span><br><span class="line">Press Ctrl+D to access BASIC-BOOTWARE MENU</span><br><span class="line"></span><br><span class="line">Booting Normal Extended BootWare</span><br><span class="line"></span><br><span class="line">The Extended BootWare is self-decompressing.................................</span><br><span class="line"></span><br><span class="line">...Done.  </span><br><span class="line"></span><br><span class="line">****************************************************************************</span><br><span class="line"></span><br><span class="line">*                                                                          *</span><br><span class="line"></span><br><span class="line">*                   H3C WA5530 BootWare, Version 7.09                      *</span><br><span class="line"></span><br><span class="line">*                                                                          *</span><br><span class="line"></span><br><span class="line">****************************************************************************</span><br><span class="line"></span><br><span class="line">Copyright (c) 2004-2017 New H3C Technologies Co., Ltd.</span><br></pre></td></tr></table></figure>
-<p>注意此处的BootWare版本为7.09，要切换Fat模式必须降级。</p>
-</li>
-<li><p>降级</p>
-</li>
-</ul>
-<p>第一步 格式化文件系统 Control + F</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">==========================&lt;EXTENDED-BOOTWARE MENU&gt;=============</span><br><span class="line"></span><br><span class="line">|&lt;1&gt; Boot System                                                           |</span><br><span class="line"></span><br><span class="line">|&lt;2&gt; Enter Serial SubMenu                                                  |</span><br><span class="line"></span><br><span class="line">|&lt;3&gt; Enter Ethernet SubMenu                                                |</span><br><span class="line"></span><br><span class="line">|&lt;4&gt; File Control                                                          |</span><br><span class="line"></span><br><span class="line">|&lt;5&gt; Restore to Factory Default Configuration                              |</span><br><span class="line"></span><br><span class="line">|&lt;6&gt; Skip Current System Configuration                                     |</span><br><span class="line"></span><br><span class="line">|&lt;7&gt; BootWare Operation Menu                                               |</span><br><span class="line"></span><br><span class="line">|&lt;8&gt; Skip Authentication for Console Login                                 |</span><br><span class="line"></span><br><span class="line">|&lt;9&gt; Storage Device Operation                                              |</span><br><span class="line"></span><br><span class="line">|&lt;0&gt; Reboot                                                                |</span><br></pre></td></tr></table></figure>
-<p>第二步：进入V7boot 通过网卡口，传入V6 AP bin文件，提示更新boot版本的时候选择Y</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">进入V7boot 通过网卡口，传入V6 AP bin文件，提示更新boot版本的时候选择Y</span><br><span class="line"></span><br><span class="line">Enter your choice(0-5): 5</span><br><span class="line"></span><br><span class="line">==========================&lt;ETHERNET PARAMETER SET&gt;==========================</span><br><span class="line">|Note:       &#x27;.&#x27; = Clear field.                                            |</span><br><span class="line">|            &#x27;-&#x27; = Go to previous field.                                   |</span><br><span class="line">|         Ctrl+D = Quit.                                                   |</span><br><span class="line">============================================================================</span><br><span class="line">Protocol (FTP or TFTP) :tftp</span><br><span class="line">Load File Name         :apwtu430_v1.06.btw</span><br><span class="line">                       :</span><br><span class="line">Target File Name       :apwtu430_v1.06.btw</span><br><span class="line">                       :</span><br><span class="line">Server IP Address      :192.168.21.1</span><br><span class="line">Local IP Address       :192.168.21.2</span><br><span class="line">Subnet Mask            :255.255.255.0</span><br><span class="line">Gateway IP Address     :0.0.0.0</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>第三步：导入V6 AP版本</p>
-<p>简单来说和之前的部分一样，tftp导入</p>
-<p>第四步：重启，降级完成</p>
-<h2 id="切换模式"><a href="#切换模式" class="headerlink" title="切换模式"></a>切换模式</h2><p>重启完成后，展示以下界面，可以选择FAT模式。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">| &lt;1&gt; Display Current Device Model                          |</span><br><span class="line"></span><br><span class="line">| &lt;2&gt; Set The Device Into FIT AP Model                      |</span><br><span class="line"></span><br><span class="line">| &lt;3&gt; Set The Device Into FAT AP Model                      |</span><br><span class="line"></span><br><span class="line">| &lt;0&gt; Exit To Main Menu     </span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a target="_blank" rel="noopener" href="http://kms2.h3c.com/View.aspx?id=57788">http://kms2.h3c.com/View.aspx?id=57788</a></p>
-<ul>
-<li>h3c 公共账号 yx800&#x2F;01230123</li>
-<li><a target="_blank" rel="noopener" href="https://img.econow.cn/network/wa4300s_fit.bin">https://img.econow.cn/network/wa4300s_fit.bin</a></li>
-</ul>
-<p>降级boot<br><img src="https://img.econow.cn/medivh/1561364179876.png"  /><br>重启，再次格式化<br>切换模式，导入fat镜像文件</p>
-<img src="https://img.econow.cn/medivh/1561362961838.png"  />
-
-
-<p>初始化ip</p>
-
+<h2 id="TFTP服务器"><a href="#TFTP服务器" class="headerlink" title="TFTP服务器"></a>TFTP服务器</h2>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/H3C%20wap712c%20Fit%20to%20Fat.html#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -533,9 +501,14 @@
 <p>由于使用ELK对日志进行集中管理，grok表达式无法验证是否正确，所以使用Grok Debugger进行调试，但是由于国外网站上不去（<a target="_blank" rel="noopener" href="http://grokdebug.herokuapp.com/%EF%BC%89%EF%BC%8C%E4%BB%8A%E5%A4%A9%E5%8E%BB%E7%94%A8%E5%9B%BD%E5%86%85%E7%9A%84%E4%B8%80%E4%B8%AA%E7%BD%91%E7%AB%99%E5%8F%91%E7%8E%B0%E4%B9%9F%E8%BF%9B%E4%B8%8D%E5%8E%BB%E4%BA%86%EF%BC%88http://grok.qiexun.net/%EF%BC%89%EF%BC%8C%E5%A5%BD%E6%97%A0%E5%A5%88%E5%8F%AA%E8%83%BD%E8%87%AA%E5%B7%B1%E5%8A%A8%E6%89%8B%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AA">http://grokdebug.herokuapp.com/），今天去用国内的一个网站发现也进不去了（http://grok.qiexun.net/），好无奈只能自己动手搭建一个</a>.</p>
 </blockquote>
 <p>以下内容参考网络搜索到的资料。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line">yum -y install  openssl-devel gcc</span><br><span class="line"></span><br><span class="line">wget https://cache.ruby-china.com/pub/ruby/2.1/ruby-2.1.7.tar.gz</span><br><span class="line"></span><br><span class="line">tar zxvf ruby-2.1.7.tar.gz -C /usr/local/</span><br><span class="line">cd /usr/local/ruby-2.1.7</span><br><span class="line">./configure --prefix=/usr/local/ruby2.1.7</span><br><span class="line">make &amp;&amp; make install</span><br><span class="line">echo &#x27;export PATH=/usr/local/ruby2.1.7/bin:$PATH&#x27;&gt;&gt;/etc/profile</span><br><span class="line">source /etc/profile</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 安装rubygems工具</span><br><span class="line">[https://rubygems.org/pages/download](https://rubygems.org/pages/download)</span><br><span class="line">wget https://rubygems.org/rubygems/rubygems-3.0.3.tgz</span><br><span class="line">tar zxvf rubygems-3.0.3.tgz -C /usr/local/</span><br><span class="line">cd /usr/local/rubygems-3.0.3/</span><br><span class="line">ruby setup.rb</span><br><span class="line"></span><br><span class="line">#替换gem源</span><br><span class="line">gem sources --add https://gems.ruby-china.com/ --remove https://rubygems.org/</span><br><span class="line">gem sources -l</span><br><span class="line"></span><br><span class="line">#Grokbug的安装</span><br><span class="line">mkdir /usr/local/grokbug</span><br><span class="line">cd /usr/local/grokbug</span><br><span class="line">wget https://codeload.github.com/nickethier/grokdebug/zip/master</span><br><span class="line">unzip master</span><br><span class="line">mv grokdebug-master/* .</span><br><span class="line">rm -rf grokdebug-master/</span><br><span class="line"></span><br><span class="line">#查看缺少的组件，这一步的时候报了点错，但是似乎不影响后面的运行。</span><br><span class="line"></span><br><span class="line">ruby config.ru</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#安装组件及对应的版本，缺少什么就再安装什么</span><br><span class="line">gem install bundler</span><br><span class="line">gem install cabin -v=0.5.0</span><br><span class="line">gem install haml -v=3.1.7</span><br><span class="line">gem install jls-grok -v=0.10.10</span><br><span class="line">gem install json -v=1.7.5</span><br><span class="line">gem install kgio -v=2.8.0</span><br><span class="line">gem install rack -v=1.4.1</span><br><span class="line">gem install rack-protection -v=1.2.0</span><br><span class="line">gem install raindrops -v=0.11.0  </span><br><span class="line">gem install shotgun -v=0.9</span><br><span class="line">gem install tilt -v=1.3.3</span><br><span class="line">gem install sinatra -v=1.3.3</span><br><span class="line">gem install unicorn -v=4.6.3</span><br><span class="line"></span><br><span class="line">#替换Google的jquery源，将使用google的源替换为国内的新浪源</span><br><span class="line">cd views</span><br><span class="line">sed -i &#x27;s#//ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js#//lib.sinaapp.com/js/jquery/1.8.1/jquery.min.js#g&#x27; index.haml</span><br><span class="line">sed -i &#x27;s#//ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js#//lib.sinaapp.com/js/jquery-ui/1.9.2/jquery-ui.min.js#g&#x27; index.haml</span><br><span class="line">sed -i &#x27;s#//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js#//lib.sinaapp.com/js/jquery/1.7.2/jquery.min.js#g&#x27; patterns.haml</span><br><span class="line">sed -i &#x27;s#//ajax.googleapis.com/ajax/libs/jqueryui/1.9.0/themes/ui-lightness/jquery-ui.css#//lib.sinaapp.com/js/jquery-ui/1.9.0/themes/ui-lightness/jquery-ui.css#g&#x27; layout.haml</span><br><span class="line">sed -i &#x27;s#//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js#//lib.sinaapp.com/js/jquery/1.7.2/jquery.min.js#g&#x27; discover.haml</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#启动服务，9333 就是访问的端口，可以自定义</span><br><span class="line">cd /usr/local/grokbug</span><br><span class="line">unicorn -p 9333 -c ./unicorn  #仅一次运行</span><br><span class="line">#后台运行</span><br><span class="line">nohup bundle exec unicorn -p 9333 -c ./unicorn &amp;</span><br></pre></td></tr></table></figure>
-
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/Grok%20Debugger%20%E6%9C%AC%E5%9C%B0%E5%8C%96%E5%AE%89%E8%A3%85.html#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -620,16 +593,14 @@
     
     <div class="post-body" itemprop="articleBody">
           <h3 id="配置文件编辑"><a href="#配置文件编辑" class="headerlink" title="配置文件编辑"></a>配置文件编辑</h3><p>vi &#x2F;etc&#x2F;gitlab&#x2F;gitlab.rb </p>
-<ul>
-<li>添加：<code>nginx[&#39;enable&#39;] = false</code></li>
-<li>Set the username of the non-bundled web-server user 设置gitlab的用户名为你的webserver(也就是我的ngxin)的用户名还是在gitlab.rb中添加：<code>web_server[&#39;external_users&#39;] = [&#39;nginx&#39;]</code>(因为我的nginx的username是‘nginx’)</li>
-<li><code>gitlab_rails[&#39;trusted_proxies&#39;] = [ &#39;127.0.0.1&#39; ]</code></li>
-<li><code>gitlab_workhorse[&#39;listen_network&#39;] = &quot;tcp&quot;</code></li>
-<li><code>gitlab_workhorse[&#39;listen_addr&#39;] = &quot;127.0.0.1:8181&quot;</code></li>
-</ul>
-<p>我们重载配置文件,执行命令：<code>gitlab-ctl reconfigure</code>等待完成。<code>gitlab-ctl start/stop</code>分别是启动和停止命令</p>
-<h3 id="nginx配置文件"><a href="#nginx配置文件" class="headerlink" title="nginx配置文件"></a>nginx配置文件</h3><p>增加一个站点即可，注意监听的是之前配置的8181端口。<br><img src="https://img.econow.cn/medivh/1547453735621.png" /></p>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/Gitlab%E4%BD%BF%E7%94%A8%E6%9C%AC%E5%9C%B0Nginx.html#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -713,105 +684,15 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><h3 id="基本组件"><a href="#基本组件" class="headerlink" title="基本组件"></a>基本组件</h3><ul>
-<li>Elasticsearch 作为存储和索引这些数据;</li>
-<li>Filebeat 日志文件托运,传送给Logstash;</li>
-<li>Logstash 去插入数据到elasticsearch;</li>
-<li>Kibana 作为展示平台。</li>
-</ul>
-<h3 id="基本架构"><a href="#基本架构" class="headerlink" title="基本架构"></a>基本架构</h3><img src="https://img.econow.cn/2018/1539223733259.png" width="870"/>
-
-<p>其中filebeat是作为轻量级的logstash来工作。每台机器上只需要部署filebeat,然后向1台logstash传输即可。</p>
-<h3 id="实际相关"><a href="#实际相关" class="headerlink" title="实际相关"></a>实际相关</h3><p>服务器</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">10.110.1.18 Filebeat+Logstash+Elasticsearch+Kibana</span><br></pre></td></tr></table></figure>
-<p>路径</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">/usr/local/elk</span><br><span class="line">/etc/filebeat</span><br></pre></td></tr></table></figure>
-<p>版本</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">elasticsearch-6.4.2</span><br><span class="line">kibana-6.4.2</span><br><span class="line">logstash-6.4.2</span><br><span class="line">filebeat-6.4.2</span><br></pre></td></tr></table></figure>
-<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><h3 id="依赖环境"><a href="#依赖环境" class="headerlink" title="依赖环境"></a>依赖环境</h3><p>Elasticsearch requires at least Java 8. Specifically as of this writing, it is recommended that you use the Oracle JDK version 1.8.0_131. Java installation varies from platform to platform so we won’t go into those details here. Oracle’s recommended installation documentation can be found on Oracle’s website. Suffice to say, before you install Elasticsearch, please check your Java version first by running (and then install&#x2F;upgrade accordingly if needed):</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">java version &quot;1.8.0_91&quot;</span><br><span class="line">Java(TM) SE Runtime Environment (build 1.8.0_91-b14)</span><br><span class="line">Java HotSpot(TM) 64-Bit Server VM (build 25.91-b14, mixed mode)</span><br></pre></td></tr></table></figure>
-<p>简单说jdk版本必须为1.8以上。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">cd /usr/src/ &amp;&amp; tar -zxvf ./jdk1.8.0_91.tar.gz -C /usr/local</span><br><span class="line">ln -s /usr/local/jdk1.8.0_91 /usr/local/java</span><br><span class="line">echo &#x27;</span><br><span class="line">#JDK</span><br><span class="line">############################################################</span><br><span class="line">export JAVA_HOME=/usr/local/java</span><br><span class="line">export PATH=$JAVA_HOME/bin:$PATH</span><br><span class="line">############################################################</span><br><span class="line">&#x27; &gt;&gt; /etc/profile</span><br><span class="line">source /etc/profile</span><br><span class="line">java -version</span><br></pre></td></tr></table></figure>
-<h3 id="系统参数设定"><a href="#系统参数设定" class="headerlink" title="系统参数设定"></a>系统参数设定</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">echo &quot;vm.max_map_count=262144&quot; &gt;&gt; /etc/sysctl.conf</span><br><span class="line">echo &quot;</span><br><span class="line">* soft nofile 65536</span><br><span class="line">* hard nofile 65536&quot; &gt;&gt; /etc/security/limits.conf &amp;&amp; \</span><br><span class="line">   echo &quot;ulimit -c unlimited&quot; &gt;&gt; /etc/profile</span><br></pre></td></tr></table></figure>
-<p>如果es启动的时候不生效，可以关闭当前窗口，重新打开。</p>
-<h3 id="下载"><a href="#下载" class="headerlink" title="下载"></a>下载</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">cd /usr/src</span><br><span class="line">wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-6.4.2.tar.gz</span><br><span class="line">wget https://artifacts.elastic.co/downloads/kibana/kibana-6.4.2-linux-x86_64.tar.gz</span><br><span class="line">wget https://artifacts.elastic.co/downloads/logstash/logstash-6.4.2.tar.gz</span><br><span class="line">mkdir /usr/local/elk</span><br><span class="line">wget https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-6.6.1-x86_64.rpm</span><br><span class="line"></span><br><span class="line">yum install filebeat-6.6.1-x86_64.rpm</span><br><span class="line">tar -zxvf elasticsearch-6.4.2.tar.gz -C /usr/local/elk/</span><br><span class="line">tar -zxvf kibana-6.4.2-linux-x86_64.tar.gz -C /usr/local/elk/</span><br><span class="line">tar -zxvf logstash-6.4.2.tar.gz -C /usr/local/elk/</span><br><span class="line">cd /usr/local/elk</span><br><span class="line">ln -s elasticsearch-6.4.2/ elasticsearch</span><br><span class="line">ln -s filebeat-6.4.2-linux-x86_64/ filebeat</span><br><span class="line">ln -s logstash-6.4.2/ logstash</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>其中filebeat有些特殊，如果需要读取&#x2F;var&#x2F;log下的日志，注意启用用户的权限问题。至于安装方式可以选择RPM方式，启动更为简单，毕竟启动后基本就不会再动。</p>
-<h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><h3 id="elasticsearch"><a href="#elasticsearch" class="headerlink" title="elasticsearch"></a>elasticsearch</h3><h4 id="配置文件"><a href="#配置文件" class="headerlink" title="配置文件"></a>配置文件</h4><p>需要修改的地方，重点是data目录，注意磁盘空间，时间久了会爆满的！！！</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">#vim /usr/local/elk/elasticsearch/config/elasticsearch.yml</span><br><span class="line"></span><br><span class="line">cluster.name: es</span><br><span class="line">node.name: elk-1</span><br><span class="line">path.data: /joyfs/oam/elk/es-data</span><br><span class="line">path.logs: /joyfs/oam/elk/es-logs</span><br><span class="line">network.host: 0.0.0.0</span><br></pre></td></tr></table></figure>
-<h4 id="启动"><a href="#启动" class="headerlink" title="启动"></a>启动</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/usr/local/elk/elasticsearch/./bin/elasticsearch -d</span><br></pre></td></tr></table></figure>
-<h4 id="检查"><a href="#检查" class="headerlink" title="检查"></a>检查</h4><p>访问9200端口或者浏览器也可以。出现下面信息表示运行正常。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">curl http://127.0.0.1:9200</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<img src="https://img.econow.cn/2018/1539164622896.png" width="387"/>
-
-<h3 id="kibana"><a href="#kibana" class="headerlink" title="kibana"></a>kibana</h3><h4 id="配置文件-1"><a href="#配置文件-1" class="headerlink" title="配置文件"></a>配置文件</h4><p>基本没有什么需要配置的</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">#vim /usr/local/elk/kibana/config/kibana.yml</span><br><span class="line"></span><br><span class="line">server.host: &quot;10.110.1.18&quot;</span><br><span class="line">#切换地图高德，最后加上这一段</span><br><span class="line">tilemap.url: &#x27;http://webrd02.is.autonavi.com/appmaptile?lang=zh_cn&amp;size=1&amp;scale=1&amp;style=7&amp;x=&#123;x&#125;&amp;y=&#123;y&#125;&amp;z=&#123;z&#125;&#x27;</span><br><span class="line">tilemap.options.minZoom: &quot;1&quot;</span><br><span class="line">tilemap.options.maxZoom: &quot;10&quot;</span><br></pre></td></tr></table></figure>
-<h4 id="启动-1"><a href="#启动-1" class="headerlink" title="启动"></a>启动</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nohup ./bin/kibana &amp;</span><br></pre></td></tr></table></figure>
-<p>访问默认5601端口</p>
-<img src="https://img.econow.cn/2018/1539167701059.png" width="317"/>
-
-
-
-<h3 id="filebeat"><a href="#filebeat" class="headerlink" title="filebeat"></a>filebeat</h3><h4 id="配置文件-2"><a href="#配置文件-2" class="headerlink" title="配置文件"></a>配置文件</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">#=========================== Filebeat inputs =============================</span><br><span class="line"></span><br><span class="line">filebeat.inputs:</span><br><span class="line">#按照以下示例增加多个日志类型</span><br><span class="line">- input_type: log</span><br><span class="line">  enabled: true</span><br><span class="line">  paths:</span><br><span class="line">    - /joyfs/logs/nginx/9011/c1/logs/access.log</span><br><span class="line">    - /joyfs/logs/nginx/9011/c1/logs/error.log</span><br><span class="line">    - /joyfs/logs/nginx/9011/a1/logs/access.log</span><br><span class="line">    - /joyfs/logs/nginx/9011/a1/logs/error.log</span><br><span class="line">  fields:</span><br><span class="line">    service: nginx_joy_app</span><br><span class="line"></span><br><span class="line">#----------------------------- Logstash output --------------------------------</span><br><span class="line">output.logstash:</span><br><span class="line">  #该地址为filebeat =&gt; logstash 地址端口</span><br><span class="line">  hosts: [&quot;10.110.1.18:5044&quot;]</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>如果需要配置logstash的负载均衡，就需要增加下面的配置</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">output.logstash:</span><br><span class="line">  hosts: [&quot;localhost:5044&quot;, &quot;localhost:5045&quot;]</span><br><span class="line">  loadbalance: true</span><br></pre></td></tr></table></figure>
-
-
-<h4 id="启动-2"><a href="#启动-2" class="headerlink" title="启动"></a>启动</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nohup ./bin/filebeat &amp;</span><br></pre></td></tr></table></figure>
-<p>检查日志如果不报错就可以。</p>
-<h3 id="logstash"><a href="#logstash" class="headerlink" title="logstash"></a>logstash</h3><h4 id="配置文件-3"><a href="#配置文件-3" class="headerlink" title="配置文件"></a>配置文件</h4><p>没啥可修改的，如果愿意的话修改一下日志目录和data目录</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#vim /usr/local/elk/logstash/config/logstash.yml</span><br><span class="line"></span><br><span class="line">path.data: /joyfs/oam/elk/logstash-data</span><br><span class="line">path.logs: /joyfs/oam/elk/logstash-logs</span><br></pre></td></tr></table></figure>
-<h4 id="过滤执行文件"><a href="#过滤执行文件" class="headerlink" title="过滤执行文件"></a>过滤执行文件</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br></pre></td><td class="code"><pre><span class="line">#vim /usr/local/elk/logstash/config/conf.d/joy.conf</span><br><span class="line"></span><br><span class="line">input &#123;</span><br><span class="line">     beats &#123;</span><br><span class="line">           port =&gt; 5044</span><br><span class="line">      &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">filter &#123;</span><br><span class="line">    if [fields][service] == &quot;nginx_joy_app&quot; &#123;</span><br><span class="line">      grok &#123;</span><br><span class="line">            match =&gt; &#123; &quot;message&quot; =&gt; &#x27;%&#123;IP&#125; - %&#123;NGUSER:auth&#125; \[%&#123;HTTPDATE:timestamp&#125;\] &quot;%&#123;WORD:verb&#125; %&#123;URIPATHPARAM:request&#125; HTTP/%&#123;NUMBER:httpversion&#125;&quot; %&#123;NUMBER:response&#125; (?:%&#123;NUMBER:bytes&#125;|-) (?:%&#123;NOTSPACE:request&#125;|-) (?:&quot;(?:%&#123;URI:referrer&#125;|-)&quot;|%&#123;QS:referrer&#125;) %&#123;QS:agent&#125; %&#123;IPORHOST:clientip&#125; %&#123;URIHOST&#125; %&#123;BASE10NUM:request_duration&#125;&#x27; &#125;</span><br><span class="line">      &#125;</span><br><span class="line">      useragent &#123;</span><br><span class="line">        source =&gt; &quot;agent&quot;</span><br><span class="line">        target =&gt; &quot;device&quot;</span><br><span class="line">      &#125;</span><br><span class="line">      date &#123;</span><br><span class="line">         match =&gt; [ &quot;timestamp&quot;,&quot;dd/MMM/yyyy:HH:mm:ss Z&quot;]</span><br><span class="line">      &#125;</span><br><span class="line">      geoip &#123;</span><br><span class="line"></span><br><span class="line">        source =&gt; &quot;clientip&quot;</span><br><span class="line">        target =&gt; &quot;geoip&quot;</span><br><span class="line">        database =&gt; &quot;/usr/local/elk/logstash/GeoLite/GeoLite2-City.mmdb&quot;</span><br><span class="line">        add_field =&gt; [ &quot;[geoip][coordinates]&quot;, &quot;%&#123;[geoip][longitude]&#125;&quot; ]</span><br><span class="line">        add_field =&gt; [ &quot;[geoip][coordinates]&quot;, &quot;%&#123;[geoip][latitude]&#125;&quot;  ]</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">      mutate &#123;</span><br><span class="line">        convert =&gt; [ &quot;[geoip][coordinates]&quot;, &quot;float&quot;]</span><br><span class="line">        remove_field =&gt; [</span><br><span class="line">                &quot;tags&quot;,</span><br><span class="line">                &quot;offset&quot;,</span><br><span class="line">                &quot;host&quot;,</span><br><span class="line">                &quot;beat&quot;</span><br><span class="line">            ]</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    if [fields][service] == &quot;system&quot; &#123;</span><br><span class="line">      grok &#123;</span><br><span class="line">        match =&gt; &#123; &quot;message&quot; =&gt; &quot;%&#123;COMBINEDAPACHELOG&#125;&quot;&#125;</span><br><span class="line">      &#125;</span><br><span class="line">      mutate &#123;</span><br><span class="line">            remove_field =&gt; [</span><br><span class="line">                &quot;tags&quot;,</span><br><span class="line">                &quot;offset&quot;,</span><br><span class="line">                &quot;host&quot;,</span><br><span class="line">                &quot;beat&quot;</span><br><span class="line">            ]</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">output &#123;</span><br><span class="line">  if [fields][service] == &quot;nginx_joy_app&quot;&#123;</span><br><span class="line">    elasticsearch &#123;</span><br><span class="line">        hosts =&gt; [&quot;127.0.0.1:9200&quot;]</span><br><span class="line">        index =&gt; &quot;logstash-nginx_joy_app-%&#123;+YYYY.MM.dd&#125;&quot;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  if [fields][service] == &quot;system&quot;&#123;</span><br><span class="line">    elasticsearch &#123;</span><br><span class="line">        hosts =&gt; [&quot;127.0.0.1:9200&quot;]</span><br><span class="line">        index =&gt; &quot;system_oam-%&#123;+YYYY.MM.dd&#125;&quot;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>注意nginx日志索引必须为”logstash-xxxx”,否则地图会找不到字段。</p>
-<h4 id="配置地图"><a href="#配置地图" class="headerlink" title="配置地图"></a>配置地图</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">cd /usr/local/elk/logstash</span><br><span class="line">mkdir GeoLite</span><br><span class="line">cd GeoLite</span><br><span class="line">wget http://geolite.maxmind.com/download/geoip/database/GeoLite2-City.mmdb.gz</span><br><span class="line">gunzip GeoLite2-City.mmdb.gz</span><br></pre></td></tr></table></figure>
-<p>注意和配置文件里的GeoLite2-City.mmdb路径保持一致！！！</p>
-<h4 id="启动-3"><a href="#启动-3" class="headerlink" title="启动"></a>启动</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nohup ./bin/logstash &amp;</span><br></pre></td></tr></table></figure>
-
-
-<h2 id="kibana画图"><a href="#kibana画图" class="headerlink" title="kibana画图"></a>kibana画图</h2><p>visualize-&gt;Maps-&gt;Coordinate Map</p>
-<img src="https://img.econow.cn/2018/1539169330458.png" width="346"/>
-
-<img src="https://img.econow.cn/2018/1539169363305.png" width="192"/>
-
-<h2 id="问题整理"><a href="#问题整理" class="headerlink" title="问题整理"></a>问题整理</h2><h3 id="1、创建地图时找不到字段"><a href="#1、创建地图时找不到字段" class="headerlink" title="1、创建地图时找不到字段"></a>1、创建地图时找不到字段</h3><img src="https://img.econow.cn/2018/1539222082965.png" width="348"/>
-
-<p>**问题分析：  **</p>
-<blockquote>
-<p>索引格式为[nginx-xxx-]YYYY-MM的日志文件由logstash输出到Elasticsearch；在 elasticsearch 中，所有的数据都有一个类型，什么样的类型，就可以在其上做一些对应类型的特殊操作。geo信息中的location字段是经纬度，我们需要使用经纬度来定位地理位置；在 elasticsearch 中，对于经纬度来说，要想使用 elasticsearch 提供的地理位置查询相关的功能，就需要构造一个结构，并且将其类型属性设置为geo_point，此错误明显是由于我们的geo的location字段类型不是geo_point。</p>
-</blockquote>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GET nginx_joy_app-2018.10.11/_mapping</span><br></pre></td></tr></table></figure>
-<img src="https://img.econow.cn/2018/1539222419814.png" width="579"/>
-说明创建的index中location字段类型和要求的geo_point不一致。
-
-<p><strong>解决方案:</strong></p>
-<ul>
-<li>修改ES模板</li>
-<li>logstash配置文件中的output,命名设置为logstash-xxx的index</li>
-</ul>
-<img src="https://img.econow.cn/2018/1539222688909.png" width="422"/>
-
-
-<p>如果以上方式还是不能解决geo_point的问题，那就碰上事了。 </p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">GET _all/_mapping</span><br><span class="line">&quot;properties&quot;: &#123;</span><br><span class="line">          &quot;@timestamp&quot;: &#123;</span><br><span class="line">            &quot;type&quot;: &quot;date&quot;</span><br><span class="line">          &#125;,</span><br><span class="line">          &quot;@version&quot;: &#123;</span><br><span class="line">            &quot;type&quot;: &quot;keyword&quot;</span><br><span class="line">          &#125;,</span><br><span class="line">          &quot;geoip&quot;: &#123;</span><br><span class="line">            &quot;dynamic&quot;: &quot;true&quot;,</span><br><span class="line">            &quot;properties&quot;: &#123;</span><br><span class="line">              &quot;ip&quot;: &#123;</span><br><span class="line">                &quot;type&quot;: &quot;ip&quot;</span><br><span class="line">              &#125;,</span><br><span class="line">              &quot;latitude&quot;: &#123;</span><br><span class="line">                &quot;type&quot;: &quot;half_float&quot;</span><br><span class="line">              &#125;,</span><br><span class="line">              &quot;location&quot;: &#123;</span><br><span class="line">                &quot;type&quot;: &quot;geo_point&quot;</span><br><span class="line">              &#125;,</span><br><span class="line">              &quot;longitude&quot;: &#123;</span><br><span class="line">                &quot;type&quot;: &quot;half_float&quot;</span><br><span class="line">              &#125;</span><br><span class="line">            &#125;</span><br><span class="line">          &#125;</span><br><span class="line">        &#125; </span><br><span class="line">```  </span><br><span class="line"></span><br><span class="line">如果检查发现找不到任何geo_point相关字段，说明这个模板就有问题。我的理解是es启动后才会依据内置模板&quot;logstash-xxxx&quot;,这样就有了geo_point这个字段。</span><br><span class="line"></span><br><span class="line">但是如果logstash在es之前启动就会造成es没有来得及匹配内置模板，这样就把所有的索引都认为是应用自定义模板。这样logstash是什么数据，es展示的就是什么数据了。</span><br><span class="line"></span><br><span class="line">### 2、配置完logstash，但是kibana或者es不显示index</span><br><span class="line">**分析**</span><br><span class="line">* 检查filebeat配置文件中搜集的日志路径是否正确,相关日志是否真的存在。</span><br><span class="line">&lt;img src=&quot;https://img.econow.cn/2018/1539223116186.png&quot; width=&quot;374&quot;/&gt;</span><br><span class="line"></span><br><span class="line">* 检查logstash中的filter是否和filebeat中的service保持一致</span><br><span class="line">&lt;img src=&quot;https://img.econow.cn/2018/1539223223935.png&quot; width=&quot;415&quot;/&gt;</span><br><span class="line"></span><br><span class="line">* 检查logstash中的output，service是否一致</span><br><span class="line">&lt;img src=&quot;https://img.econow.cn/2018/1539223282424.png&quot; width=&quot;434&quot;/&gt;</span><br><span class="line"></span><br><span class="line">### logstash时区问题</span><br><span class="line"></span><br><span class="line">2.x</span><br></pre></td></tr></table></figure>
-
-<p>input { stdin {} }<br>output { stdout { codec &#x3D;&gt; rubydebug } }<br>filter {<br>  date {<br>    match &#x3D;&gt; [“message”,”UNIX_MS”]#message在实际应用中修改为自己的字段<br>    target &#x3D;&gt; “@timestamp”<br>  }<br> ruby {<br>   code &#x3D;&gt; “event[‘timestamp’] &#x3D; LogStash::Timestamp.new(event[‘@timestamp’]+ 8<em>60</em>60)”<br> }<br> ruby {<br>   code &#x3D;&gt; “event[‘@timestamp’]&#x3D; event[‘timestamp’]”<br> }<br> mutate {<br>   remove_field &#x3D;&gt; [“timestamp”]<br> }</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">5.x</span><br></pre></td></tr></table></figure>
-
-<p>input { stdin {} }<br>output { stdout { codec &#x3D;&gt; rubydebug } }<br>filter {<br>  date {<br>    match &#x3D;&gt; [“message”,”UNIX_MS”]<br>    target &#x3D;&gt; “@timestamp”<br>  }<br> ruby {<br>   code &#x3D;&gt; “event.set(‘timestamp’, event.get(‘@timestamp’).time.localtime + 8<em>60</em>60)”<br> }<br> ruby {<br>   code &#x3D;&gt; “event.set(‘@timestamp’,event.get(‘timestamp’))”<br> }<br> mutate {<br>   remove_field &#x3D;&gt; [“timestamp”]<br> }</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">**解决**</span><br><span class="line">如果保证以上配置文件service字段一致，那么基本就没问题了。</span><br><span class="line"></span><br><span class="line">3. logstash 调试</span><br><span class="line"></span><br><span class="line">先上一段配置代码,关于很多文章里面都提到了rubydebug.一看其实也清楚,就是调试的,但是怎么生效能,怎么查看日志呢</span><br><span class="line">需要后面使用--verbose --debug</span><br></pre></td></tr></table></figure>
-<p>output {<br>    stdout {<br>        codec &#x3D;&gt; rubydebug<br>    }<br>}</p>
-<p> bin&#x2F;logstash -f test_grok.conf –verbose –debug</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">这样直接在前台启动,便可以看到日志输出到终端.</span><br><span class="line"></span><br><span class="line">4. logstash Nginx 代理</span><br></pre></td></tr></table></figure>
-<p>stream {<br>    upstream logstash {<br>        hash $remote_addr consistent;<br>        server A:4560;<br>        server B:4560;<br>    }<br>    server {<br>        listen       5560;<br>        proxy_pass   logstash;<br>        proxy_protocol on;<br>    }<br>}</p>
-<pre><code>
-## 相关资料
-[http://grokdebug.herokuapp.com/](http://grokdebug.herokuapp.com/)
-[https://www.elastic.co/products/beats/filebeat](https://www.elastic.co/products/beats/filebeat)
-[https://www.elastic.co/products/elasticsearch](https://www.elastic.co/products/elasticsearch)
-[https://www.elastic.co/products/logstash](https://www.elastic.co/products/logstash)
-[https://www.elastic.co/products/kibana](https://www.elastic.co/products/kibana)
-[http://bbotte.com/logs-service/elasticsearch-template-and-mapping/](http://bbotte.com/logs-service/elasticsearch-template-and-mapping/)
-</code></pre>
-
+          <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><h3 id="基本组件"><a href="#基本组件" class="headerlink" title="基本组件"></a>基本组件</h3>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/ELK%E9%83%A8%E7%BD%B2.html#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -895,37 +776,15 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><h3 id="报警方式"><a href="#报警方式" class="headerlink" title="报警方式"></a>报警方式</h3><ul>
-<li>Email</li>
-<li>JIRA</li>
-<li>OpsGenie</li>
-<li>Commands</li>
-<li>HipChat</li>
-<li>MS Teams</li>
-<li>Slack</li>
-<li>Telegram</li>
-<li>AWS SNS</li>
-<li>VictorOps</li>
-<li>PagerDuty</li>
-<li>Exotel</li>
-<li>Twilio</li>
-<li>Gitter</li>
-</ul>
-<h3 id="前置条件"><a href="#前置条件" class="headerlink" title="前置条件"></a>前置条件</h3><ul>
-<li>Elasticsearch</li>
-<li>Python 2.7</li>
-<li>pip</li>
-<li>python-pip python-dev libffi-dev libssl-dev</li>
-</ul>
-<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><h3 id="安装-1"><a href="#安装-1" class="headerlink" title="安装"></a>安装</h3><ul>
-<li>pip<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install elastalert</span><br></pre></td></tr></table></figure></li>
-<li>github<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/Yelp/elastalert.git</span><br></pre></td></tr></table></figure></li>
-</ul>
-<h3 id="安装模块"><a href="#安装模块" class="headerlink" title="安装模块"></a>安装模块</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pip install &quot;setuptools&gt;=11.3&quot;</span><br><span class="line">python setup.py install</span><br></pre></td></tr></table></figure>
-<h3 id="elasticsearch-py"><a href="#elasticsearch-py" class="headerlink" title="elasticsearch-py"></a>elasticsearch-py</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">#Elasticsearch 5.0+:</span><br><span class="line">pip install &quot;elasticsearch&gt;=5.0.0&quot;</span><br><span class="line"></span><br><span class="line">#Elasticsearch 2.X:</span><br><span class="line">pip install &quot;elasticsearch&lt;3.0.0&quot;</span><br></pre></td></tr></table></figure>
-<h3 id="可能出现的问题"><a href="#可能出现的问题" class="headerlink" title="可能出现的问题"></a>可能出现的问题</h3><p>提示<code>Could not find suitable distribution for Requirement.parse(&#39;thehive4py&gt;=1.4.</code></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install thehive4py</span><br></pre></td></tr></table></figure>
-<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2>
+          <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><h3 id="报警方式"><a href="#报警方式" class="headerlink" title="报警方式"></a>报警方式</h3>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/Elastalert%E5%AE%89%E8%A3%85%E5%8F%8A%E4%BD%BF%E7%94%A8.html#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -1015,29 +874,15 @@
 <li>之前使用基于alpine的基础镜像来制作应用镜像时会遇到一些小麻烦，主要是因为和linux 多有不同，并且不能直接运行Oracle jdk；<br>综上所述，因此决定使用基于CentOS来构建镜像。</li>
 </ul>
 </blockquote>
-<h3 id="初始化镜像"><a href="#初始化镜像" class="headerlink" title="初始化镜像"></a>初始化镜像</h3><h4 id="拉取基础镜像"><a href="#拉取基础镜像" class="headerlink" title="拉取基础镜像"></a>拉取基础镜像</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker pull centos</span><br></pre></td></tr></table></figure>
-<h4 id="自定义jdk版本"><a href="#自定义jdk版本" class="headerlink" title="自定义jdk版本"></a>自定义jdk版本</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">#解压</span><br><span class="line">tar xvcf jre-8u191-linux-x64.tar.gz</span><br><span class="line">#进入目录</span><br><span class="line">cd jre1.8.0_161/</span><br><span class="line">#删除文本文件</span><br><span class="line">rm -rf COPYRIGHT LICENSE README release THIRDPARTYLICENSEREADME-JAVAFX.txtTHIRDPARTYLICENSEREADME.txt Welcome.html</span><br><span class="line">#删除其他无用文件</span><br><span class="line">rm -rf     lib/plugin.jar \</span><br><span class="line">        lib/ext/jfxrt.jar \</span><br><span class="line">        bin/javaws \</span><br><span class="line">        lib/javaws.jar \</span><br><span class="line">        lib/desktop \</span><br><span class="line">        plugin \</span><br><span class="line">        lib/deploy* \</span><br><span class="line">        lib/*javafx* \</span><br><span class="line">        lib/*jfx* \</span><br><span class="line">        lib/amd64/libdecora_sse.so \</span><br><span class="line">        lib/amd64/libprism_*.so \</span><br><span class="line">        lib/amd64/libfxplugins.so \</span><br><span class="line">        lib/amd64/libglass.so \</span><br><span class="line">        lib/amd64/libgstreamer-lite.so \</span><br><span class="line">        lib/amd64/libjavafx*.so \</span><br><span class="line">        lib/amd64/libjfx*.so</span><br></pre></td></tr></table></figure>
-<p>最后再重新打包</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar -zcvf jre-8u191-linux-x64.tar.gz jre1.8.0_191/</span><br></pre></td></tr></table></figure>
-
-<h4 id="构建JDK"><a href="#构建JDK" class="headerlink" title="构建JDK"></a>构建JDK</h4><ul>
-<li>编写Dockerfile<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">cat &lt;&lt;EOF &gt; Dockerfile</span><br><span class="line"></span><br><span class="line">FROM centos:latest</span><br><span class="line">MAINTAINER by medivh</span><br><span class="line">RUN rm -f /etc/localtime  &amp;&amp; ln -s /usr/share/zoneinfo/Asia/Shanghai /etc/localtime &amp;&amp; mkdir  /usr/local/java &amp;&amp; useradd joy</span><br><span class="line">#相对路径jar,把java添加到容器中</span><br><span class="line">ADD jre-8u191-linux-x64.tar.gz /usr/local/java/</span><br><span class="line"></span><br><span class="line">#配置java环境变量</span><br><span class="line">ENV JAVA_HOME /usr/local/java/jdk1.8.0_91</span><br><span class="line">ENV JRE_HOME $JAVA_HOME/jre</span><br><span class="line">ENV CLASSPATH $JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar:$JRE_HOME/lib:$CLASSPATH</span><br><span class="line">ENV PATH $JAVA_HOME/bin:$PATH</span><br><span class="line"></span><br><span class="line">USER joy</span><br><span class="line">RUN mkdir /home/joy/logs &amp;&amp; mkdir /home/joy/src</span><br><span class="line"></span><br><span class="line">EOF</span><br></pre></td></tr></table></figure></li>
-<li>构建镜像<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker build -t 192.168.1.232:5000/base/jdk:1.8.0_91_v.0.5 .</span><br></pre></td></tr></table></figure>
-因为镜像需要推送到仓库，因此在构建镜像的时候直接打标签了。</li>
-</ul>
-<h3 id="构建服务镜像"><a href="#构建服务镜像" class="headerlink" title="构建服务镜像"></a>构建服务镜像</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"># Version: 0.0.1</span><br><span class="line">FROM 192.168.1.232:5000/base/jdk:1.8.0_91_v.0.5</span><br><span class="line">ENV LC_ALL en_US.UTF-8</span><br><span class="line">WORKDIR    /home/joy/src</span><br><span class="line">ADD xxxxx-SNAPSHOT.war /home/joy/src</span><br><span class="line">EXPOSE 8080</span><br><span class="line">ENTRYPOINT [&quot;java&quot;, &quot;-jar&quot;, &quot;xxxxx.jar&quot;,&quot;--server.port=8080&quot;,&quot;--Djava.security.egd=file:/dev/./urandom&quot;]</span><br></pre></td></tr></table></figure>
-
-
-
-<h4 id="文件说明"><a href="#文件说明" class="headerlink" title="文件说明"></a>文件说明</h4><ul>
-<li>from 基于之前构建好的jdk镜像</li>
-<li>修改时区</li>
-<li>workdir 设定工作目录，类似于cd命令</li>
-<li>ADD 添加war包或者jar包</li>
-<li>EXPOSE 暴露端口，默认设置为8080</li>
-<li>ENTRYPOINT 程序启动相关参数</li>
-</ul>
-
+<h3 id="初始化镜像"><a href="#初始化镜像" class="headerlink" title="初始化镜像"></a>初始化镜像</h3>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/Docker%E6%A0%87%E5%87%86%E9%95%9C%E5%83%8F%E5%88%B6%E4%BD%9C.html#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -1121,62 +966,15 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h2 id="集群简介"><a href="#集群简介" class="headerlink" title="集群简介"></a>集群简介</h2><h2 id="Swarm"><a href="#Swarm" class="headerlink" title="Swarm"></a>Swarm</h2><h3 id="初始化swarm"><a href="#初始化swarm" class="headerlink" title="初始化swarm"></a>初始化swarm</h3><h4 id="方法一"><a href="#方法一" class="headerlink" title="方法一"></a>方法一</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker pull swarm</span><br></pre></td></tr></table></figure>
-<p>创建集群token，获取全球唯一的 token，作为集群唯一标识</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker run --rm swarm create</span><br><span class="line">a253407f93a759e7b1d69a49cf669732</span><br></pre></td></tr></table></figure>
-<p>加入集群</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -d swarm join -addr=192.168.1.228:2379  token://a253407f93a759e7b1d69a49cf669732</span><br></pre></td></tr></table></figure>
-<h4 id="方法二"><a href="#方法二" class="headerlink" title="方法二"></a>方法二</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker swarm init --advertise-addr 192.168.1.228</span><br></pre></td></tr></table></figure>
-<img src="https://img.econow.cn/medivh/1546500467791.png" />
-使用下面一段，在其它节点上执行加入集群
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker swarm join --token SWMTKN-1-1g17yyrfepskeffufewmgfiewffqemcc8kjsy9x1zbjucqu4ms-dcp6ub8tjc2yq6bh7qbhs926e 192.168.1.228:2377</span><br></pre></td></tr></table></figure>
-### 检查
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker node ls</span><br></pre></td></tr></table></figure>
-<img src="https://img.econow.cn/medivh/1546500808458.png" />
-
-<h2 id="集群管理"><a href="#集群管理" class="headerlink" title="集群管理"></a>集群管理</h2><p>离开集群</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker swarm leave</span><br></pre></td></tr></table></figure>
-<p>部署</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">docker stack deploy -c ws.yml  sys01</span><br><span class="line"></span><br><span class="line">-c 指定yaml文件</span><br><span class="line">name stack 名称</span><br></pre></td></tr></table></figure>
-<p>检查</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker stack ls</span><br></pre></td></tr></table></figure>
-<img src="https://img.econow.cn/medivh/1546933824902.png" />
-
-<p>stack 详细信息</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker stack ps sys01</span><br></pre></td></tr></table></figure>
-<img src="https://img.econow.cn/medivh/1546933878894.png" />
-
-<p>检查service</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker service ls</span><br></pre></td></tr></table></figure>
-<img src="https://img.econow.cn/medivh/1546933935686.png" />
-
-<p>删除</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker stack rm sys01</span><br><span class="line">docker service rm xxxx</span><br></pre></td></tr></table></figure>
-<h3 id="节点状态"><a href="#节点状态" class="headerlink" title="节点状态"></a>节点状态</h3><h4 id="AVAILABILITY-的三种状态："><a href="#AVAILABILITY-的三种状态：" class="headerlink" title="AVAILABILITY 的三种状态："></a>AVAILABILITY 的三种状态：</h4><ul>
-<li><p>Active：调度器能够安排任务到该节点</p>
-</li>
-<li><p>Pause：调度器不能够安排任务到该节点，但是已经存在的任务会继续运行</p>
-</li>
-<li><p>Drain：调度器不能够安排任务到该节点，而且会停止已存在的任务，并将这些任务分配到其他 Active 状态的节点</p>
-</li>
-</ul>
-<h4 id="MANAGER-STATUS-的三种状态"><a href="#MANAGER-STATUS-的三种状态" class="headerlink" title="MANAGER STATUS 的三种状态"></a>MANAGER STATUS 的三种状态</h4><ul>
-<li><p>Leader：为群体做出所有群管理和编排决策的主要管理者节点</p>
-</li>
-<li><p>Reachable：如果 Leader 节点变为不可用，该节点有资格被选举为新的 Leader</p>
-</li>
-<li><p>Unavailable：该节点不能和其他 Manager 节点产生任何联系，这种情况下，应该添加一个新的 Manager 节点到集群，或者将一个 Worker  节点提升为 Manager 节点</p>
-</li>
-</ul>
-<h3 id="更新节点"><a href="#更新节点" class="headerlink" title="更新节点"></a>更新节点</h3><h4 id="改变节点的可用性-availability"><a href="#改变节点的可用性-availability" class="headerlink" title="改变节点的可用性(availability)"></a>改变节点的可用性(availability)</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker node update --availability drain WorkerA</span><br></pre></td></tr></table></figure>
-<h4 id="添加-移除标签元数据"><a href="#添加-移除标签元数据" class="headerlink" title="添加&#x2F;移除标签元数据"></a>添加&#x2F;移除标签元数据</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker node update --label-add foo --label-add bar=baz WorkerA</span><br></pre></td></tr></table></figure>
-
-<p>类型一：–label-add <key></p>
-<p>类型二：–label-add <key>&#x3D;<value></p>
-<h4 id="升级-降级节点"><a href="#升级-降级节点" class="headerlink" title="升级&#x2F;降级节点"></a>升级&#x2F;降级节点</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[升级] docker node promote WorkerA</span><br><span class="line"></span><br><span class="line">[降级] docker node demote WorkerA</span><br></pre></td></tr></table></figure>
-
-
-<h3 id="基本命令"><a href="#基本命令" class="headerlink" title="基本命令"></a>基本命令</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">docker swarm init               #初始化集群</span><br><span class="line">docker swarm join-token worker  #查看工作节点的 token</span><br><span class="line">docker swarm join-token manager #查看管理节点的 token</span><br><span class="line">docker swarm join               #加入集群中</span><br><span class="line"></span><br><span class="line">docker node ls      #查看所有集群节点</span><br><span class="line">docker node rm      #删除某个节点（-f强制删除）</span><br><span class="line">docker node inspect ##查看节点详情</span><br><span class="line">docker node demote  #节点降级，由管理节点降级为工作节点</span><br><span class="line">docker node promote #节点升级，由工作节点升级为管理节点</span><br><span class="line">docker node update  #更新节点</span><br><span class="line">docker node ps      #查看节点中的 Task 任务</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">docker service create   #部署服务</span><br><span class="line">docker service inspect  #查看服务详情</span><br><span class="line">docker service logs     #产看某个服务日志</span><br><span class="line">docker service ls       #查看所有服务详情</span><br><span class="line">docker service rm       #删除某个服务（-f强制删除）</span><br><span class="line">docker service scale    #设置某个服务个数</span><br><span class="line">docker service update   #更新某个服务</span><br></pre></td></tr></table></figure>
+          <h2 id="集群简介"><a href="#集群简介" class="headerlink" title="集群简介"></a>集群简介</h2><h2 id="Swarm"><a href="#Swarm" class="headerlink" title="Swarm"></a>Swarm</h2>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/Docker%20%E5%AE%9E%E8%B7%B5%E6%80%BB%E7%BB%93%EF%BC%88%E4%BA%8C%EF%BC%89.html#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -1260,84 +1058,15 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h2 id="关于版本"><a href="#关于版本" class="headerlink" title="关于版本"></a>关于版本</h2><h3 id="版本概述"><a href="#版本概述" class="headerlink" title="版本概述"></a>版本概述</h3><p>Docker从1.13版本之后采用时间线的方式作为版本号，分为社区版CE和企业版EE。而在此之前CentOS官方自带的版本是这样的：</p>
-<p>社区版是免费提供给个人开发者和小型团体使用的，企业版会提供额外的收费服务，比如经过官方测试认证过的基础设施、容器、插件等。社区版按照stable和edge两种方式发布，每个季度更新stable版本，如17.06，17.09；每个月份更新edge版本，如17.09，17.10。  </p>
-<img src="https://img.econow.cn/2018/1545117093997.png" />
-
-<h3 id="版本比较"><a href="#版本比较" class="headerlink" title="版本比较"></a>版本比较</h3><img src="https://img.econow.cn/2018/1545117979095.png" />
-### 防火墙
-关闭firewall
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">systemctl stop firewalld.service</span><br><span class="line">systemctl disable firewalld.service</span><br></pre></td></tr></table></figure>
-
-<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">yum remove docker \</span><br><span class="line">                  docker-client \</span><br><span class="line">                  docker-client-latest \</span><br><span class="line">                  docker-common \</span><br><span class="line">                  docker-latest \</span><br><span class="line">                  docker-latest-logrotate \</span><br><span class="line">                  docker-logrotate \</span><br><span class="line">                  docker-selinux \</span><br><span class="line">                  docker-engine-selinux \</span><br><span class="line">                  docker-engine</span><br><span class="line">                  </span><br><span class="line">yum install -y yum-utils device-mapper-persistent-data lvm2</span><br><span class="line">yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo</span><br><span class="line">yum makecache fast</span><br><span class="line">yum -y install docker-ce</span><br><span class="line">systemctl enable docker</span><br></pre></td></tr></table></figure>
-<h3 id="使用普通用户"><a href="#使用普通用户" class="headerlink" title="使用普通用户"></a>使用普通用户</h3><ul>
-<li><p>1、 首先创建docker用户组，如果docker用户组存在可以忽略</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo groupadd docker</span><br></pre></td></tr></table></figure></li>
-<li><p>2、把用户添加进docker组中</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo gpasswd -a $&#123;USER&#125; docker</span><br></pre></td></tr></table></figure></li>
-<li><p>3、重启docker</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo service docker restart</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>4、如果普通用户执行docker命令，如果提示<code>get …… dial unix /var/run/docker.sock</code>权限不够，则修改<code>/var/run/docker.sock</code>权限<br>使用root用户执行如下命令，即可</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo chmod a+rw /var/run/docker.sock</span><br></pre></td></tr></table></figure></li>
-</ul>
-<h3 id="配置仓库"><a href="#配置仓库" class="headerlink" title="配置仓库"></a>配置仓库</h3><p>18.03</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/systemd/system/multi-user.target.wants/docker.service</span><br><span class="line">#加入</span><br><span class="line">ExecStart=/usr/bin/dockerd -H unix:// --registry-mirror=http://192.168.1.232:5000</span><br></pre></td></tr></table></figure>
-<img src="https://img.econow.cn/medivh/1546486336192.png" />
-
-<p>19.03</p>
-<p>修改daemon.json</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/docker/daemon.json</span><br><span class="line">&#123;&quot;insecure-registries&quot;:[&quot;192.168.1.232:5000&quot;]&#125;</span><br></pre></td></tr></table></figure>
-<p>这样就可以使用自己的镜像仓库啦。如果没有配置这些，会提示</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Get https://192.168.1.232:5000/v1/users/: http: server gave HTTP response to HTTPS client</span><br></pre></td></tr></table></figure>
-
-<h3 id="镜像示例"><a href="#镜像示例" class="headerlink" title="镜像示例"></a>镜像示例</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">FROM 10.110.1.18:5000/base/jdk:1.8.0</span><br><span class="line">ENV LC_ALL en_US.UTF-8</span><br><span class="line">WORKDIR    /home/joy/src</span><br><span class="line">COPY  	xxx.war	 /home/joy/src</span><br><span class="line">EXPOSE 8080</span><br><span class="line">ENTRYPOINT [&quot;java&quot;, &quot;-jar&quot;, &quot;xxx.war&quot;,&quot;--server.port=8080&quot;,&quot;--Djava.security.egd=file:/dev/./urandom&quot;]</span><br></pre></td></tr></table></figure>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">-Xms2g -Xmx2g -Xmn512m -XX:PermSize=128M -XX:MaxPermSize=128m -XX:SurvivorRatio=6</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">docker run -d -m 2g  -e JAVA_OPTIONS=&#x27;-Xmx1g -Xms1g -Xmn512m  -XX:PermSize=64m -XX:MaxPermSize=256m&#x27;   10.110.1.18:5000/base/xxxx:latest  /bin/bash</span><br></pre></td></tr></table></figure>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">-Xms：java Heap初始大小， 默认是物理内存的1/64。</span><br><span class="line">-Xmx：java Heap最大值，不可超过物理内存。</span><br><span class="line">-Xmn：young generation的heap大小，一般设置为Xmx的3、4分之一 。增大年轻代后，将会减小年老代大小，可以根据监控合理设置。</span><br><span class="line">-Xss：每个线程的Stack大小，而最佳值应该是128K,默认值好像是512k。</span><br><span class="line">-XX:PermSize：设定内存的永久保存区初始大小，缺省值为64M。</span><br><span class="line">-XX:MaxPermSize：设定内存的永久保存区最大大小，缺省值为64M。</span><br><span class="line">-XX:SurvivorRatio：Eden区与Survivor区的大小比值，设置为8，则两个Survivor区与一个Eden区的比值为2:8，一个Survivor区占整个年轻代的1/10。</span><br><span class="line">-XX:+UseParallelGC：F年轻代使用并发收集，而年老代仍旧使用串行收集。</span><br><span class="line">-XX:+UseParNewGC：设置年轻代为并行收集，JDK5.0以上，JVM会根据系统配置自行设置，所无需再设置此值。</span><br><span class="line">-XX:ParallelGCThreads：并行收集器的线程数，值最好配置与处理器数目相等 同样适用于CMS。</span><br><span class="line">-XX:+UseParallelOldGC：年老代垃圾收集方式为并行收集(Parallel Compacting)。</span><br><span class="line">-XX:MaxGCPauseMillis：每次年轻代垃圾回收的最长时间(最大暂停时间)，如果无法满足此时间，JVM会自动调整年轻代大小，以满足此值。</span><br><span class="line">-XX:+ScavengeBeforeFullGC：Full GC前调用YGC,默认是true。</span><br></pre></td></tr></table></figure>
-
-
-<h2 id="镜像库"><a href="#镜像库" class="headerlink" title="镜像库"></a>镜像库</h2><h2 id="基本命令"><a href="#基本命令" class="headerlink" title="基本命令"></a>基本命令</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br></pre></td><td class="code"><pre><span class="line">docker search centos                                       # 查找源中镜像</span><br><span class="line">docker pull centos:6                                       # 从官方下载centos的docker镜像</span><br><span class="line"></span><br><span class="line">docker images                                              # 查看docker镜像</span><br><span class="line">docker ps                                                  # 查看docker启动的容器</span><br><span class="line">docker ps -a                                               # 查看docker所有容器 包括未启动的</span><br><span class="line">docker rm $(docker ps -a -q)                    #删除所有停止的容器</span><br><span class="line"></span><br><span class="line">docker run -d -t -i centos:6 /bin/bash          # 启动docker隔离的容器 -t 让Docker分配一个伪终端,并绑定到容器的标准输入上. -i 则让容器的标准输入保持打开. -d 守护进程</span><br><span class="line">docker attach ID                                           # 进入后台的容器 指定容器ID   # util-linux 也可以进入容器</span><br><span class="line">docker logs ID                                             # 获取容器内输出信息</span><br><span class="line"></span><br><span class="line">docker stop ID                                             # 停止已启动的容器</span><br><span class="line">docker start ID                                            # 启动已停止的容器</span><br><span class="line">docker restart ID                                          # 重启容器</span><br><span class="line"></span><br><span class="line">docker export 7691a814370e &gt; centos_a.tar                  # 导出容器快照到本地</span><br><span class="line">cat centos_a.tar | docker import - test/centos_a:v1.0      # 从容器快照文件中再导入为镜像</span><br><span class="line"></span><br><span class="line">docker save -o centos.6.tar centos:6                       # 保存镜像到文件</span><br><span class="line">docker load --input centos.6.tar                           # 载入镜像文件</span><br><span class="line"></span><br><span class="line">docker rm 容器ID                                           # 删除终止状态的容器   加-f强制终止运行中的容器</span><br><span class="line">docker rmi test/centos_a:v1.0                              # 移除本地镜像   在删除镜像之前要先用 docker rm 删掉依赖于这个镜像的所有容器</span><br><span class="line">docker commit -m &#x27;nginx from centos7&#x27; 12bf9d3e4d94  medivh/nginx:v1          提交更改到一个镜像</span><br><span class="line">docker rm `docker ps -a|grep Exited|awk &#x27;&#123;print $1&#125;&#x27;`      # 删除所有退出的容器</span><br><span class="line">brctl show                                                 # 查看网桥</span><br><span class="line"></span><br><span class="line">docker pull library/nginx</span><br><span class="line"></span><br><span class="line">docker run --name some-nginx -v /some/content:/usr/share/nginx/html:ro -d nginx</span><br><span class="line"></span><br><span class="line">mkdir testa                            # 创建静态资源目录</span><br><span class="line">vim testa/a.txt</span><br><span class="line">aaaaaa</span><br><span class="line"></span><br><span class="line">vim Dockerfile                         # 创建 Dockerfile 文件</span><br><span class="line">FROM nginx</span><br><span class="line">COPY testa /usr/share/nginx/html       # 拷贝前面创建的静态资源目录</span><br><span class="line"></span><br><span class="line"># Dockerfile用来创建一个自定义的image,包含了用户指定的软件依赖等。当前目录下包含Dockerfile,使用命令build来创建新的image,并命名为 some-content-nginx</span><br><span class="line">docker build -t some-content-nginx .</span><br><span class="line"></span><br><span class="line">docker run --name some-nginx -d some-content-nginx</span><br><span class="line"></span><br><span class="line">docker run --name XXX -d -p 8080:80 XXX-nginx             # 暴漏端口的方式，将容器80端口映射到主机8080端口，可以直接访问</span><br><span class="line">docker run --name XXX -d -p 127.0.0.1::80 XXX-nginx     #将容器80端口映射到主机某个端口，访问主机该端口</span><br><span class="line">docker run --name XXX -d -P  XXX-nginx     #将容器80端口映射到主机某个端口，访问主机该端口</span><br><span class="line">docker run -d --name db training/postgres</span><br><span class="line">docker run -d -P --name web --link db:db training/webapp python app.py          # 新建立容器,并连接db容器   --link name:alias    </span><br><span class="line"></span><br><span class="line"># 启动仓库容器</span><br><span class="line">docker run -d -p 5000:5000 -v /data/registry:/tmp/registry registry</span><br><span class="line"></span><br><span class="line"># 可以拉取一个比较小的images做测试</span><br><span class="line">docker pull ubuntu</span><br><span class="line"></span><br><span class="line"># 更改images的tag</span><br><span class="line">sudo docker tag ubuntu 192.168.11.247:5000/ubuntu</span><br><span class="line"></span><br><span class="line"># Push images</span><br><span class="line">sudo docker push 192.168.11.247:5000/ubuntu</span><br><span class="line"></span><br><span class="line"># Pull images</span><br><span class="line">sudo docker pull 192.168.11.247:5000/ubuntu</span><br><span class="line"></span><br><span class="line"># 通过API查看</span><br><span class="line">curl http://192.168.11.247:5000/v1/search</span><br><span class="line"></span><br><span class="line"># 在私有仓库搜索</span><br><span class="line">docker search 192.168.11.247:5000/ubuntu</span><br><span class="line"></span><br><span class="line">导入</span><br><span class="line">cd CentOS-6.6_Base</span><br><span class="line">tar -c .|docker import - &quot;centos-6.6/base&quot;</span><br><span class="line"></span><br><span class="line">创建一个带ssh的images</span><br><span class="line">docker build -t &quot;CentOS-6.6/sshd&quot; .</span><br><span class="line"></span><br><span class="line">启动一个实例:</span><br><span class="line">docker run -d -p 127.0.0.1:1994:22 CentOS-6.6/sshd</span><br><span class="line"></span><br><span class="line">导出镜像    </span><br><span class="line">docker save IMAGENAME | bzip2 -9 -c&gt;img.tar.bz2</span><br><span class="line"></span><br><span class="line">导入镜像(换一台机器)</span><br><span class="line">bzip2 -d -c &lt;img.tar.bz2 | docker load</span><br><span class="line">curl http://localhost:8080/a.txt</span><br></pre></td></tr></table></figure>
-
-<h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><h3 id="进入容器脚本"><a href="#进入容器脚本" class="headerlink" title="进入容器脚本"></a>进入容器脚本</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line">CNAME=$1</span><br><span class="line">CPID=$(docker inspect --format &quot;&#123;&#123;.State.Pid&#125;&#125;&quot; $CNAME)</span><br><span class="line">nsenter --target &quot;$CPID&quot; --mount --uts  --ipc --net --pid</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">go XXX($cname)</span><br></pre></td></tr></table></figure>
-<p>使用的时候直接 脚本+容器ID。</p>
-<h3 id="文件互传"><a href="#文件互传" class="headerlink" title="文件互传"></a>文件互传</h3><p>文件传输</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker cp foo.txt mycontainer:/foo.txt</span><br><span class="line">docker cp mycontainer:/foo.txt foo.txt</span><br></pre></td></tr></table></figure>
-<h2 id="优化"><a href="#优化" class="headerlink" title="优化"></a>优化</h2><p>精简Docker镜像尺寸的好处：</p>
-<ol>
-<li>减少构建时间</li>
-<li>减少磁盘使用量</li>
-<li>减少下载时间</li>
-<li>因为包含文件少，攻击面减小，提高了安全性</li>
-<li>提高部署速度</li>
-</ol>
-<h3 id="镜像优化"><a href="#镜像优化" class="headerlink" title="镜像优化"></a>镜像优化</h3><h4 id="优化基础镜像"><a href="#优化基础镜像" class="headerlink" title="优化基础镜像"></a>优化基础镜像</h4><p>推荐使用alpine&#x2F;busybox，实在不行就只能用CentOS了。</p>
-<h4 id="串联-Dockerfile-指令"><a href="#串联-Dockerfile-指令" class="headerlink" title="串联 Dockerfile 指令"></a>串联 Dockerfile 指令</h4><p>大家在定义Dockerfile时，如果太多的使用RUN指令，经常会导致镜像有特别多的层，镜像很臃肿，而且甚至会碰到超出最大层数（127层）限制的问题，遵循 Dockerfile 最佳实践，我们应该把多个命令串联合并为一个 RUN（通过运算符&amp;&amp;和&#x2F; 来实现），每一个 RUN 要精心设计，确保安装构建最后进行清理，这样才可以降低镜像体积，以及最大化的利用构建缓存。<br>将多条RUN命令串联起来构建的镜像大小是每条命令分别RUN的三分之一。</p>
-<h4 id="使用多阶段构建"><a href="#使用多阶段构建" class="headerlink" title="使用多阶段构建"></a>使用多阶段构建</h4><p>Dockerfile中每条指令都会为镜像增加一个镜像层，并且你需要在移动到下一个镜像层之前清理不需要的组件。实际上，有一个Dockerfile用于开发（其中包含构建应用程序所需的所有内容）以及一个用于生产的瘦客户端，它只包含你的应用程序以及运行它所需的内容。这被称为“建造者模式”。Docker 17.05.0-ce版本以后支持多阶段构建。使用多阶段构建，你可以在Dockerfile中使用多个FROM语句，每条FROM指令可以使用不同的基础镜像，这样您可以选择性地将服务组件从一个阶段COPY到另一个阶段，在最终镜像中只保留需要的内容。</p>
-<p>下面是一个使用COPY –from 和 FROM … AS … 的Dockerfile：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"># Compile</span><br><span class="line">FROM golang:1.9.0 AS builder</span><br><span class="line">WORKDIR /go/src/v9.git...com/.../k8s-monitor</span><br><span class="line">COPY . .</span><br><span class="line">WORKDIR /go/src/v9.git...com/.../k8s-monitor</span><br><span class="line">RUN make build</span><br><span class="line">RUN mv k8s-monitor /root</span><br><span class="line"></span><br><span class="line"># Package</span><br><span class="line"># Use scratch image</span><br><span class="line">FROM scratch</span><br><span class="line">WORKDIR /root/</span><br><span class="line">COPY --from=builder /root .</span><br><span class="line">EXPOSE 8080</span><br><span class="line">CMD [&quot;/root/k8s-monitor&quot;]</span><br></pre></td></tr></table></figure>
-<p>构建镜像，你会发现生成的镜像只有上面COPY 指令指定的内容，镜像大小只有2M。这样在以前使用两个Dockerfile（一个Dockerfile用于开发和一个用于生产的瘦客户端），现在使用多阶段构建就可以搞定。</p>
-<h4 id="修改docker0"><a href="#修改docker0" class="headerlink" title="修改docker0"></a>修改docker0</h4><p>在此文件中添加如下一行，然后重启服务。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/docker/daemon.json </span><br><span class="line">&#123;</span><br><span class="line">&quot;bip&quot;: &quot;192.168.102.1/24&quot;</span><br><span class="line">&#125;</span><br><span class="line">systemctl restart docker</span><br></pre></td></tr></table></figure>
-<h4 id="构建业务服务镜像技巧"><a href="#构建业务服务镜像技巧" class="headerlink" title="构建业务服务镜像技巧"></a>构建业务服务镜像技巧</h4><ul>
-<li>不变或者变化很少的体积较大的依赖库和经常修改的自有代码分开；</li>
-<li>因为cache缓存在运行Docker build命令的本地机器上，建议固定使用某台机器来进行Docker build，以便利用cache。</li>
-</ul>
-<h4 id="其他优化技巧"><a href="#其他优化技巧" class="headerlink" title="其他优化技巧"></a>其他优化技巧</h4><p>如果在RUN命令中执行apt、apk或者yum类工具，可以借助这些工具提供的一些小技巧来减少镜像层数量及镜像大小。举几个例子：</p>
-<p>（1）在执行<code>apt-get install -y</code> 时增加选项<code>— no-install-recommends </code>，可以不用安装建议性（非必须）的依赖，也可以在执行<code>apk add </code>时添加选项<code>--no-cache</code> 达到同样效果；</p>
-<p>（2）执行yum install -y 时候， 可以同时安装多个工具，比如<code>yum install -y gcc gcc-c++ make …</code>。将所有<code>yum install</code> 任务放在一条RUN命令上执行，从而减少镜像层的数量；</p>
-<p>（3）组件的安装和清理要串联在一条指令里面，如<code>apk --update add php7 &amp;&amp; rm -rf /var/cache/apk/*</code>，因为Dockerfile的每条指令都会产生一个文件层，如果将<code>apk add …</code> 和<code> rm -rf …</code> 命令分开，清理无法减小apk命令产生的文件层的大小。清理镜像中缓存文件；CentOS等系统使用yum clean all 命令清理。</p>
-<h2 id="安全"><a href="#安全" class="headerlink" title="安全"></a>安全</h2><h2 id="疑难杂症"><a href="#疑难杂症" class="headerlink" title="疑难杂症"></a>疑难杂症</h2><ul>
-<li><p>1、docker dead 无法删除</p>
-<ul>
-<li>1、检查挂载信息  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grep docker /proc/*/mountinfo &gt; x.log</span><br></pre></td></tr></table></figure></li>
-<li>2、 获取进程ID  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grep -nr &#x27;/var/lib/docker/overlay2/bd47a216d1bc2e72ba3155169faee246b2352fe919c8fb4708891ad31d1d31c7/diff&#x27; x.log | awk -F &#x27;:&#x27; &#x27;&#123;print $2&#125;&#x27;|awk -F &#x27;/&#x27; &#x27;&#123;print $3&#125;’</span><br></pre></td></tr></table></figure></li>
-<li>3、杀死所有相关进程</li>
-</ul>
-</li>
-<li><p>2、故障</p>
-</li>
-</ul>
-
+          <h2 id="关于版本"><a href="#关于版本" class="headerlink" title="关于版本"></a>关于版本</h2><h3 id="版本概述"><a href="#版本概述" class="headerlink" title="版本概述"></a>版本概述</h3>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/Docker%20%E5%AE%9E%E8%B7%B5%E6%80%BB%E7%BB%93%EF%BC%88%E4%B8%80%EF%BC%89.html#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -1366,7 +1095,6 @@
     <div class="footer-inner">
 
   <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">京ICP备17063827号-2 </a>
-      <img src="https://beian.miit.gov.cn/#/Integrated/index" alt="">
   </div>
   <div class="copyright">
     &copy; 2017 – 
@@ -1385,6 +1113,7 @@
     <i class="fa fa-arrow-up fa-lg"></i>
     <span>0%</span>
   </div>
+  <div class="reading-progress-bar"></div>
 
 <noscript>
   <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
@@ -1393,7 +1122,9 @@
 
   
   <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
-<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pangu/4.0.7/pangu.min.js" integrity="sha256-j+yj56cdEY2CwkVtGyz18fNybFGpMGJ8JxG3GSyO2+I=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/next-boot.js"></script>
 
   
 

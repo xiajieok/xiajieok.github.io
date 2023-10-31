@@ -16,16 +16,15 @@
 
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha256-CTSx/A06dm1B063156EVh15m6Y67pAjZZaQc89LLSrU=" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"econow.cn","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.18.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"econow.cn","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.18.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":true,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="NAS专栏：  基于PVE平台的TrueNAS_Scale+NextCloud的实践总结（一） 基于PVE平台的TrueNAS_Scale+NextCloud的实践总结（二） 基于PVE平台的TrueNAS_Scale+NextCloud的实践总结（三）  前言上一篇文章中记录了软件和硬件的选型，这篇记录虚拟化系统安装和使用的坎坷。 PVE简介Proxmox VE is a complete, o">
+    <meta name="description" content="NAS专栏：  基于PVE平台的TrueNAS_Scale+NextCloud的实践总结（一） 基于PVE平台的TrueNAS_Scale+NextCloud的实践总结（二） 基于PVE平台的TrueNAS_Scale+NextCloud的实践总结（三）">
 <meta property="og:type" content="article">
 <meta property="og:title" content="基于PVE平台的TrueNAS_Scale+NextCloud的实践总结（二）">
 <meta property="og:url" content="https://econow.cn/%E5%9F%BA%E4%BA%8EPVE%E5%B9%B3%E5%8F%B0%E7%9A%84TrueNAS_Scale+NextCloud%E7%9A%84%E5%AE%9E%E8%B7%B5%E6%80%BB%E7%BB%93%EF%BC%88%E4%BA%8C%EF%BC%89">
 <meta property="og:site_name" content="Medivh&#39;s castle">
-<meta property="og:description" content="NAS专栏：  基于PVE平台的TrueNAS_Scale+NextCloud的实践总结（一） 基于PVE平台的TrueNAS_Scale+NextCloud的实践总结（二） 基于PVE平台的TrueNAS_Scale+NextCloud的实践总结（三）  前言上一篇文章中记录了软件和硬件的选型，这篇记录虚拟化系统安装和使用的坎坷。 PVE简介Proxmox VE is a complete, o">
+<meta property="og:description" content="NAS专栏：  基于PVE平台的TrueNAS_Scale+NextCloud的实践总结（一） 基于PVE平台的TrueNAS_Scale+NextCloud的实践总结（二） 基于PVE平台的TrueNAS_Scale+NextCloud的实践总结（三）">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://img.econow.cn/medivh/1669274054326.png">
 <meta property="og:image" content="https://img.econow.cn/medivh/1669272337063.png">
@@ -83,7 +82,7 @@
   </noscript>
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+<body itemscope itemtype="http://schema.org/WebPage">
   <div class="headband"></div>
 
   <main class="main">
@@ -159,12 +158,14 @@
         </a>
       </div>
       <div class="site-state-item site-state-categories">
+          <a href="/categories/">
         <span class="site-state-item-count">12</span>
-        <span class="site-state-item-name">分类</span>
+        <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
+          <a href="/tags/">
         <span class="site-state-item-count">48</span>
-        <span class="site-state-item-name">标签</span>
+        <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
 </div>
@@ -395,15 +396,32 @@
   </button>
   <div class="post-reward">
       <div>
-        <img src="/images/wechatpay.png" alt="medivh 微信">
+        <img src="/images/wechatpay.jpg" alt="medivh 微信">
         <span>微信</span>
       </div>
       <div>
-        <img src="/images/alipay.png" alt="medivh 支付宝">
+        <img src="/images/alipay.jpg" alt="medivh 支付宝">
         <span>支付宝</span>
       </div>
 
   </div>
+</div>
+
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>medivh
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://econow.cn/%E5%9F%BA%E4%BA%8EPVE%E5%B9%B3%E5%8F%B0%E7%9A%84TrueNAS_Scale+NextCloud%E7%9A%84%E5%AE%9E%E8%B7%B5%E6%80%BB%E7%BB%93%EF%BC%88%E4%BA%8C%EF%BC%89" title="基于PVE平台的TrueNAS_Scale+NextCloud的实践总结（二）">https://econow.cn/基于PVE平台的TrueNAS_Scale+NextCloud的实践总结（二）</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
 </div>
 
           <div class="post-tags">
@@ -443,7 +461,6 @@
     <div class="footer-inner">
 
   <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">京ICP备17063827号-2 </a>
-      <img src="https://beian.miit.gov.cn/#/Integrated/index" alt="">
   </div>
   <div class="copyright">
     &copy; 2017 – 
@@ -462,6 +479,7 @@
     <i class="fa fa-arrow-up fa-lg"></i>
     <span>0%</span>
   </div>
+  <div class="reading-progress-bar"></div>
 
 <noscript>
   <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
@@ -470,7 +488,9 @@
 
   
   <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
-<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pangu/4.0.7/pangu.min.js" integrity="sha256-j+yj56cdEY2CwkVtGyz18fNybFGpMGJ8JxG3GSyO2+I=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/next-boot.js"></script>
 
   
 

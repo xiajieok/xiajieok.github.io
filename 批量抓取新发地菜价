@@ -16,16 +16,15 @@
 
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha256-CTSx/A06dm1B063156EVh15m6Y67pAjZZaQc89LLSrU=" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"econow.cn","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.18.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"econow.cn","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.18.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":true,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="此篇是之前写的另外一个爬虫项目，只不过后来又了若干版本的演变，因此记录下来。 技术点 多线程 asyncio aiohttp aiofiles  逻辑该项目抓取的逻辑比较简单，直接根据api获取数据后存储即可，无需从源代码上筛选节点。 多线程的方式 需要注意线程数量和limit值，否则容易把网站搞崩！  下列代码实现两种功能，全量和增量，适用flag来标识：  全量数据，抓取全部，如果出现失败的会">
+    <meta name="description" content="此篇是之前写的另外一个爬虫项目，只不过后来又了若干版本的演变，因此记录下来。 技术点">
 <meta property="og:type" content="article">
 <meta property="og:title" content="批量抓取新发地菜价">
 <meta property="og:url" content="https://econow.cn/%E6%89%B9%E9%87%8F%E6%8A%93%E5%8F%96%E6%96%B0%E5%8F%91%E5%9C%B0%E8%8F%9C%E4%BB%B7">
 <meta property="og:site_name" content="Medivh&#39;s castle">
-<meta property="og:description" content="此篇是之前写的另外一个爬虫项目，只不过后来又了若干版本的演变，因此记录下来。 技术点 多线程 asyncio aiohttp aiofiles  逻辑该项目抓取的逻辑比较简单，直接根据api获取数据后存储即可，无需从源代码上筛选节点。 多线程的方式 需要注意线程数量和limit值，否则容易把网站搞崩！  下列代码实现两种功能，全量和增量，适用flag来标识：  全量数据，抓取全部，如果出现失败的会">
+<meta property="og:description" content="此篇是之前写的另外一个爬虫项目，只不过后来又了若干版本的演变，因此记录下来。 技术点">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-09-30T03:00:03.000Z">
 <meta property="article:modified_time" content="2023-10-31T02:15:08.716Z">
@@ -59,7 +58,7 @@
   </noscript>
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+<body itemscope itemtype="http://schema.org/WebPage">
   <div class="headband"></div>
 
   <main class="main">
@@ -135,12 +134,14 @@
         </a>
       </div>
       <div class="site-state-item site-state-categories">
+          <a href="/categories/">
         <span class="site-state-item-count">12</span>
-        <span class="site-state-item-name">分类</span>
+        <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
+          <a href="/tags/">
         <span class="site-state-item-count">48</span>
-        <span class="site-state-item-name">标签</span>
+        <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
 </div>
@@ -264,15 +265,32 @@
   </button>
   <div class="post-reward">
       <div>
-        <img src="/images/wechatpay.png" alt="medivh 微信">
+        <img src="/images/wechatpay.jpg" alt="medivh 微信">
         <span>微信</span>
       </div>
       <div>
-        <img src="/images/alipay.png" alt="medivh 支付宝">
+        <img src="/images/alipay.jpg" alt="medivh 支付宝">
         <span>支付宝</span>
       </div>
 
   </div>
+</div>
+
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>medivh
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://econow.cn/%E6%89%B9%E9%87%8F%E6%8A%93%E5%8F%96%E6%96%B0%E5%8F%91%E5%9C%B0%E8%8F%9C%E4%BB%B7" title="批量抓取新发地菜价">https://econow.cn/批量抓取新发地菜价</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
 </div>
 
           <div class="post-tags">
@@ -310,7 +328,6 @@
     <div class="footer-inner">
 
   <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">京ICP备17063827号-2 </a>
-      <img src="https://beian.miit.gov.cn/#/Integrated/index" alt="">
   </div>
   <div class="copyright">
     &copy; 2017 – 
@@ -329,6 +346,7 @@
     <i class="fa fa-arrow-up fa-lg"></i>
     <span>0%</span>
   </div>
+  <div class="reading-progress-bar"></div>
 
 <noscript>
   <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
@@ -337,7 +355,9 @@
 
   
   <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
-<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pangu/4.0.7/pangu.min.js" integrity="sha256-j+yj56cdEY2CwkVtGyz18fNybFGpMGJ8JxG3GSyO2+I=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/next-boot.js"></script>
 
   
 
