@@ -3,11 +3,12 @@
 <head>
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width">
-<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.3.0">
 
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="https://img.mknight.cn/2018/1545104669394.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="https://img.mknight.cn/2018/1545104669394.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://img.econow.cn/2018/1545104669394.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://img.econow.cn/2018/1545104669394.png">
   <link rel="mask-icon" href="/images/logo.svg" color="#222">
 
 <link rel="stylesheet" href="/css/main.css">
@@ -17,7 +18,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha256-CTSx/A06dm1B063156EVh15m6Y67pAjZZaQc89LLSrU=" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"econow.cn","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.18.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"econow.cn","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.18.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
 
     <meta name="description" content="定义一个正常的请求过程如下：  用户发出请求 建立NGINX连接 发送响应 接收程序的响应数据 关闭NGINX连接  request_timerequest processing time in seconds with a milliseconds resolution; time elapsed between the first bytes were read from the client">
 <meta property="og:type" content="article">
@@ -26,15 +27,15 @@
 <meta property="og:site_name" content="Medivh&#39;s castle">
 <meta property="og:description" content="定义一个正常的请求过程如下：  用户发出请求 建立NGINX连接 发送响应 接收程序的响应数据 关闭NGINX连接  request_timerequest processing time in seconds with a milliseconds resolution; time elapsed between the first bytes were read from the client">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://img.mknight.cn/medivh/1637907742862.png">
-<meta property="og:image" content="https://img.mknight.cn/medivh/1637907762851.png">
-<meta property="og:image" content="https://img.mknight.cn/medivh/1637918539854.png">
-<meta property="article:published_time" content="2023-10-30T09:45:56.631Z">
-<meta property="article:modified_time" content="2023-10-30T09:45:56.631Z">
+<meta property="og:image" content="https://img.econow.cn/medivh/1637907742862.png">
+<meta property="og:image" content="https://img.econow.cn/medivh/1637907762851.png">
+<meta property="og:image" content="https://img.econow.cn/medivh/1637918539854.png">
+<meta property="article:published_time" content="2023-10-31T02:15:08.700Z">
+<meta property="article:modified_time" content="2023-10-31T02:15:08.700Z">
 <meta property="article:author" content="medivh">
 <meta property="article:tag" content="nginx">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://img.mknight.cn/medivh/1637907742862.png">
+<meta name="twitter:image" content="https://img.econow.cn/medivh/1637907742862.png">
 
 
 <link rel="canonical" href="https://econow.cn/request_time%E5%92%8Cupstream_response_time%E7%9A%84%E5%8C%BA%E5%88%AB.html">
@@ -47,6 +48,8 @@
 <title>request_time和upstream_response_time的区别 | Medivh's castle</title>
   
 
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?21ded952ca9fc25e2b0630494a17ec7f"></script>
 
 
 
@@ -92,7 +95,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-search"><a href="/search" rel="section"><i class="fa fa-search fa-fw"></i>搜索</a></li>
   </ul>
 </nav>
 
@@ -195,7 +198,7 @@
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2023-10-30 17:45:56" itemprop="dateCreated datePublished" datetime="2023-10-30T17:45:56+08:00">2023-10-30</time>
+      <time title="创建时间：2023-10-31 10:15:08" itemprop="dateCreated datePublished" datetime="2023-10-31T10:15:08+08:00">2023-10-31</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -208,6 +211,13 @@
     </span>
 
   
+    <span id="/request_time%E5%92%8Cupstream_response_time%E7%9A%84%E5%8C%BA%E5%88%AB.html" class="post-meta-item leancloud_visitors" data-flag-title="request_time和upstream_response_time的区别" title="阅读次数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span class="leancloud-visitors-count"></span>
+    </span>
 </div>
 
         </div>
@@ -231,8 +241,8 @@
 <p>如果要从access_log中查看较慢的接口的话，可以在<code>log_format</code>中加入<code>$upstream_response_time</code>。</p>
 <h3 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h3><p>从网上看到下列一组图片，感觉画的很形象。</p>
 <ul>
-<li><code>request_time</code>是从接收到客户端的第一个字节开始，到把所有的响应数据都发送完为止。<br><img src="https://img.mknight.cn/medivh/1637907742862.png" alt="1637907742862.png"></li>
-<li><code>upstream_response_time</code>是从与后端建立TCP连接开始到接收完响应数据并关闭连接为止。<br><img src="https://img.mknight.cn/medivh/1637907762851.png" alt="1637907762851.png"></li>
+<li><code>request_time</code>是从接收到客户端的第一个字节开始，到把所有的响应数据都发送完为止。<br><img src="https://img.econow.cn/medivh/1637907742862.png" alt="1637907742862.png"></li>
+<li><code>upstream_response_time</code>是从与后端建立TCP连接开始到接收完响应数据并关闭连接为止。<br><img src="https://img.econow.cn/medivh/1637907762851.png" alt="1637907762851.png"></li>
 </ul>
 <p>所以，<code>request_time</code>会大于等于<code>upstream_response_time</code>。</p>
 <h3 id="性能优化"><a href="#性能优化" class="headerlink" title="性能优化"></a>性能优化</h3><p>对于较高的request—_time很可能是由于连接速度较慢的客户端造成的，对此无能为力，但是较高的request_time并不代表服务器或者程序的性能不够。总体来说，没必要在request_time上花费较多时间，而是应该重点关注upstream_response_time。</p>
@@ -240,7 +250,7 @@
 
 <h2 id="NGINX的文件传输"><a href="#NGINX的文件传输" class="headerlink" title="NGINX的文件传输"></a>NGINX的文件传输</h2><h3 id="sendile"><a href="#sendile" class="headerlink" title="sendile"></a>sendile</h3><p>参数sendfile on 用于开启文件高效传输模式，同时配合tcp_nopush on 和tcp_nodelay on 两个指令，可防止网络及磁盘I&#x2F;O阻塞，提升Nginx工作效率。但需要注意的是，linux内核版本2.5.9以后的版本中两者是可以兼容的。</p>
 <p>三个指令都开启的好处是，sendfile可以开启高效的文件传输模式，tcp_nopush开启可以确保在发送到客户端之前数据包已经充分“填满”， 这大大减少了网络开销，并加快了文件发送的速度。 然后，当它到达最后一个可能因为没有“填满”而暂停的数据包时，Nginx会忽略tcp_nopush参数， 然后，tcp_nodelay强制套接字发送数据。</p>
-<p><img src="https://img.mknight.cn/medivh/1637918539854.png" alt="1637918539854.png"></p>
+<p><img src="https://img.econow.cn/medivh/1637918539854.png" alt="1637918539854.png"></p>
 <h3 id="tcp-nopush"><a href="#tcp-nopush" class="headerlink" title="tcp_nopush"></a>tcp_nopush</h3><p>当有数据时，先别着急发送, 确保数据包已经装满数据, 避免了网络拥塞。需要我们等到数据量达到最大时才通过网络一次发送全部数据，这种数据传输方式有益于大量数据的通信性能，典型的应用就是文件服务器。<br>对于nginx配置文件中的tcp_nopush，默认就是tcp_nopush,不需要特别指定，这个选项对于www，ftp等大文件很有帮助。</p>
 <h3 id="tcp-nodelay"><a href="#tcp-nodelay" class="headerlink" title="tcp_nodelay"></a>tcp_nodelay</h3><p>有时要抓紧发货, 确保数据尽快发送, 提高可数据传输效率。</p>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>平时对request_time和upstream_response_time这两个参数没什么研究，关注的不多，主要关注request_time。但是最近阿里云的日志服务统计数据出现了异常，request_time和upstream_response_time的值完全违反了字段定义的原则。理论上request_time无论如何也会大于upstream_response_time的，但是客服死活不承认。无奈之下，好好研究一番，通过阿里云官网文档截图和历史正常数据已经现在的异常数据，客服最终承认存在问题，表示整改。<br>事实证明，阿里云的客服技术水平也是良莠不齐。</p>
@@ -257,21 +267,39 @@
     
 
     <footer class="post-footer">
+          <div class="reward-container">
+  <div>请我一杯咖啡吧！</div>
+  <button>
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/wechatpay.png" alt="medivh 微信">
+        <span>微信</span>
+      </div>
+      <div>
+        <img src="/images/alipay.png" alt="medivh 支付宝">
+        <span>支付宝</span>
+      </div>
+
+  </div>
+</div>
+
           <div class="post-tags">
-              <a href="/tags/nginx/" rel="tag"># nginx</a>
+              <a href="/tags/nginx/" rel="tag"><i class="fa fa-tag"></i> nginx</a>
           </div>
 
         
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/Mac%20%E5%88%9D%E5%A7%8B%E5%8C%96%E7%8E%AF%E5%A2%83.html" rel="prev" title="Mac 初始化环境">
-                  <i class="fa fa-angle-left"></i> Mac 初始化环境
+                <a href="/matplotlib%20%E5%AD%A6%E4%B9%A0.html" rel="prev" title="matplotlib 学习">
+                  <i class="fa fa-angle-left"></i> matplotlib 学习
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/Gitlab%E4%BD%BF%E7%94%A8%E6%9C%AC%E5%9C%B0Nginx.html" rel="next" title="Gitlab使用本地Nginx">
-                  Gitlab使用本地Nginx <i class="fa fa-angle-right"></i>
+                <a href="/%E4%BD%BF%E7%94%A8Cloudera%E9%83%A8%E7%BD%B2%E5%92%8C%E7%AE%A1%E7%90%86hadoop%E9%9B%86%E7%BE%A4.html" rel="next" title="使用Cloudera部署和管理hadoop集群">
+                  使用Cloudera部署和管理hadoop集群 <i class="fa fa-angle-right"></i>
                 </a>
             </div>
           </div>
@@ -330,6 +358,8 @@
   
 
 
+  <script class="next-config" data-name="leancloud_visitors" type="application/json">{"enable":true,"app_id":"g1GwilqmVAUne2tDEDncEChG-gzGzoHsz","app_key":"YB2e5dSKMmMYYCtaSzxp9fdS","server_url":null,"security":true}</script>
+  <script src="/js/third-party/statistics/lean-analytics.js"></script>
 
 
 

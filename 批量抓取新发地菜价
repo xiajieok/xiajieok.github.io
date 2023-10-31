@@ -3,11 +3,12 @@
 <head>
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width">
-<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.3.0">
 
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="https://img.mknight.cn/2018/1545104669394.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="https://img.mknight.cn/2018/1545104669394.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://img.econow.cn/2018/1545104669394.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://img.econow.cn/2018/1545104669394.png">
   <link rel="mask-icon" href="/images/logo.svg" color="#222">
 
 <link rel="stylesheet" href="/css/main.css">
@@ -17,7 +18,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha256-CTSx/A06dm1B063156EVh15m6Y67pAjZZaQc89LLSrU=" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"econow.cn","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.18.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"econow.cn","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.18.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
 
     <meta name="description" content="此篇是之前写的另外一个爬虫项目，只不过后来又了若干版本的演变，因此记录下来。 技术点 多线程 asyncio aiohttp aiofiles  逻辑该项目抓取的逻辑比较简单，直接根据api获取数据后存储即可，无需从源代码上筛选节点。 多线程的方式 需要注意线程数量和limit值，否则容易把网站搞崩！  下列代码实现两种功能，全量和增量，适用flag来标识：  全量数据，抓取全部，如果出现失败的会">
 <meta property="og:type" content="article">
@@ -27,7 +28,7 @@
 <meta property="og:description" content="此篇是之前写的另外一个爬虫项目，只不过后来又了若干版本的演变，因此记录下来。 技术点 多线程 asyncio aiohttp aiofiles  逻辑该项目抓取的逻辑比较简单，直接根据api获取数据后存储即可，无需从源代码上筛选节点。 多线程的方式 需要注意线程数量和limit值，否则容易把网站搞崩！  下列代码实现两种功能，全量和增量，适用flag来标识：  全量数据，抓取全部，如果出现失败的会">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-09-30T03:00:03.000Z">
-<meta property="article:modified_time" content="2023-10-30T09:45:56.646Z">
+<meta property="article:modified_time" content="2023-10-31T02:15:08.716Z">
 <meta property="article:author" content="medivh">
 <meta property="article:tag" content="爬虫">
 <meta property="article:tag" content="python">
@@ -44,6 +45,8 @@
 <title>批量抓取新发地菜价 | Medivh's castle</title>
   
 
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?21ded952ca9fc25e2b0630494a17ec7f"></script>
 
 
 
@@ -89,7 +92,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-search"><a href="/search" rel="section"><i class="fa fa-search fa-fw"></i>搜索</a></li>
   </ul>
 </nav>
 
@@ -199,7 +202,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-10-30 17:45:56" itemprop="dateModified" datetime="2023-10-30T17:45:56+08:00">2023-10-30</time>
+      <time title="修改时间：2023-10-31 10:15:08" itemprop="dateModified" datetime="2023-10-31T10:15:08+08:00">2023-10-31</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -212,6 +215,13 @@
     </span>
 
   
+    <span id="/%E6%89%B9%E9%87%8F%E6%8A%93%E5%8F%96%E6%96%B0%E5%8F%91%E5%9C%B0%E8%8F%9C%E4%BB%B7" class="post-meta-item leancloud_visitors" data-flag-title="批量抓取新发地菜价" title="阅读次数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span class="leancloud-visitors-count"></span>
+    </span>
 </div>
 
         </div>
@@ -247,9 +257,27 @@
     
 
     <footer class="post-footer">
+          <div class="reward-container">
+  <div>请我一杯咖啡吧！</div>
+  <button>
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/wechatpay.png" alt="medivh 微信">
+        <span>微信</span>
+      </div>
+      <div>
+        <img src="/images/alipay.png" alt="medivh 支付宝">
+        <span>支付宝</span>
+      </div>
+
+  </div>
+</div>
+
           <div class="post-tags">
-              <a href="/tags/%E7%88%AC%E8%99%AB/" rel="tag"># 爬虫</a>
-              <a href="/tags/python/" rel="tag"># python</a>
+              <a href="/tags/%E7%88%AC%E8%99%AB/" rel="tag"><i class="fa fa-tag"></i> 爬虫</a>
+              <a href="/tags/python/" rel="tag"><i class="fa fa-tag"></i> python</a>
           </div>
 
         
@@ -321,6 +349,8 @@
   
 
 
+  <script class="next-config" data-name="leancloud_visitors" type="application/json">{"enable":true,"app_id":"g1GwilqmVAUne2tDEDncEChG-gzGzoHsz","app_key":"YB2e5dSKMmMYYCtaSzxp9fdS","server_url":null,"security":true}</script>
+  <script src="/js/third-party/statistics/lean-analytics.js"></script>
 
 
 

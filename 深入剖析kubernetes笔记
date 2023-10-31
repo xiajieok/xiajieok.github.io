@@ -3,11 +3,12 @@
 <head>
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width">
-<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.3.0">
 
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="https://img.mknight.cn/2018/1545104669394.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="https://img.mknight.cn/2018/1545104669394.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://img.econow.cn/2018/1545104669394.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://img.econow.cn/2018/1545104669394.png">
   <link rel="mask-icon" href="/images/logo.svg" color="#222">
 
 <link rel="stylesheet" href="/css/main.css">
@@ -17,7 +18,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha256-CTSx/A06dm1B063156EVh15m6Y67pAjZZaQc89LLSrU=" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"econow.cn","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.18.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"econow.cn","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.18.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
 
     <meta name="description" content="编排永远是容器云项目的灵魂所在，也是kubernetes社区持久生命力的源泉。  服务类型 IaaS 基础设施服务，Infrastucture-as-a-servicePasS 平台服务，Platform-as-a-serviceSaaS 软件服务，Software-as-a-service   SaaS 是软件的开发、管理和部署都交给第三方，不需要关心技术问题，拿来即用。普通用户接触到的互联网">
 <meta property="og:type" content="article">
@@ -26,16 +27,16 @@
 <meta property="og:site_name" content="Medivh&#39;s castle">
 <meta property="og:description" content="编排永远是容器云项目的灵魂所在，也是kubernetes社区持久生命力的源泉。  服务类型 IaaS 基础设施服务，Infrastucture-as-a-servicePasS 平台服务，Platform-as-a-serviceSaaS 软件服务，Software-as-a-service   SaaS 是软件的开发、管理和部署都交给第三方，不需要关心技术问题，拿来即用。普通用户接触到的互联网">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://img.mknight.cn/medivh/1645088256165.png">
-<meta property="og:image" content="https://img.mknight.cn/medivh/1645094370477.png">
+<meta property="og:image" content="https://img.econow.cn/medivh/1645088256165.png">
+<meta property="og:image" content="https://img.econow.cn/medivh/1645094370477.png">
 <meta property="og:image" content="evernotecid://2D277EDE-88BA-4DB6-AE12-A2B952C4D28E/appyinxiangcom/3119051/ENNote/p952?hash=1b6fac0f3400e2e1e7d7fec737d824c6">
-<meta property="og:image" content="https://img.mknight.cn/medivh/1661754735804.png">
+<meta property="og:image" content="https://img.econow.cn/medivh/1661754735804.png">
 <meta property="article:published_time" content="2022-08-29T05:59:00.000Z">
-<meta property="article:modified_time" content="2023-10-30T09:45:56.643Z">
+<meta property="article:modified_time" content="2023-10-31T02:15:08.710Z">
 <meta property="article:author" content="medivh">
 <meta property="article:tag" content="Kubernetes">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://img.mknight.cn/medivh/1645088256165.png">
+<meta name="twitter:image" content="https://img.econow.cn/medivh/1645088256165.png">
 
 
 <link rel="canonical" href="https://econow.cn/%E6%B7%B1%E5%85%A5%E5%89%96%E6%9E%90kubernetes%E7%AC%94%E8%AE%B0">
@@ -48,6 +49,8 @@
 <title>深入剖析kubernetes笔记 | Medivh's castle</title>
   
 
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?21ded952ca9fc25e2b0630494a17ec7f"></script>
 
 
 
@@ -93,7 +96,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-search"><a href="/search" rel="section"><i class="fa fa-search fa-fw"></i>搜索</a></li>
   </ul>
 </nav>
 
@@ -203,7 +206,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-10-30 17:45:56" itemprop="dateModified" datetime="2023-10-30T17:45:56+08:00">2023-10-30</time>
+      <time title="修改时间：2023-10-31 10:15:08" itemprop="dateModified" datetime="2023-10-31T10:15:08+08:00">2023-10-31</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -216,6 +219,13 @@
     </span>
 
   
+    <span id="/%E6%B7%B1%E5%85%A5%E5%89%96%E6%9E%90kubernetes%E7%AC%94%E8%AE%B0" class="post-meta-item leancloud_visitors" data-flag-title="深入剖析kubernetes笔记" title="阅读次数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span class="leancloud-visitors-count"></span>
+    </span>
 </div>
 
         </div>
@@ -230,7 +240,7 @@
 <h2 id="服务类型"><a href="#服务类型" class="headerlink" title="服务类型"></a>服务类型</h2><blockquote>
 <p>IaaS 基础设施服务，Infrastucture-as-a-service<br>PasS 平台服务，Platform-as-a-service<br>SaaS 软件服务，Software-as-a-service</p>
 </blockquote>
-<p><img src="https://img.mknight.cn/medivh/1645088256165.png" alt="1645088256165.png"></p>
+<p><img src="https://img.econow.cn/medivh/1645088256165.png" alt="1645088256165.png"></p>
 <p><strong>SaaS</strong> 是软件的开发、管理和部署都交给第三方，不需要关心技术问题，拿来即用。普通用户接触到的互联网服务几乎都是SaaS，比如：微信、钉钉、百度云盘等。</p>
 <p><strong>PaaS</strong> 提供软件部署平台，抽象掉了硬件和操作系统细节，可以无缝的扩展。开发者只需要关注自己的业务逻辑，不需要关注底层.比如Google APP Engine、阿里云轻量应用服务器等。</p>
 <p><strong>IaaS</strong> 是云服务的最底层，提供一些基础资源。它和PaaS的区别是用户需要自己控制底层，实现基础设施的使用逻辑。比如Amazon EC2、阿里云ECS等。</p>
@@ -245,7 +255,7 @@
 <p>容器本身没有价值，有价值的是容器编排。</p>
 <p>容器的核心功能就是通过约束和修改进程的动态表现，从而为其创造出一个“边界”。对于 Docker 等大多数 Linux 容器来说，Cgroups 技术是用来制造约束的主要手段，而 Namespace 技术是用来修改进程视图的主要方法。</p>
 <p>在创建容器进程的时候，指定了这个进程所需要启用的一组 Namespace 参数。这样容器就只能看到当前 Namespace 所限定的资源、文件、设备、状态或者配置。而对于宿主机以及其他不相关的程序就完全看不到了。<br>容器只是一种特殊的进程。</p>
-<h3 id="隔离与限制"><a href="#隔离与限制" class="headerlink" title="隔离与限制"></a>隔离与限制</h3><p><img src="https://img.mknight.cn/medivh/1645094370477.png" alt="虚拟机和容器的对比"></p>
+<h3 id="隔离与限制"><a href="#隔离与限制" class="headerlink" title="隔离与限制"></a>隔离与限制</h3><p><img src="https://img.econow.cn/medivh/1645094370477.png" alt="虚拟机和容器的对比"></p>
 <p>敏捷和高性能是容器相对于虚拟机的最大优势，也是它能够在 PaaS 这种细粒度的资源管理平台上大型起到的重要原因。不过，基于 Namespace 的隔离机制相比于虚拟化技术不足的地方就是，隔离的不彻底。</p>
 <p>容器只是允许在宿主机上的一种特殊进程，那么多个容器之间使用的就还是一个宿主机的操作系统内核。</p>
 <h3 id="Pod"><a href="#Pod" class="headerlink" title="Pod"></a>Pod</h3><p>Pod 到底是什么，<strong>其实是一组共享了某些资源的容器。</strong></p>
@@ -301,7 +311,7 @@
 <p>deployment 控制 rs版本,rs 控制pod副本数。</p>
 <p>Deployment 控制器实际操纵的是ReplicaSet对象，而不是Pod对象。实际上控制的是ReplicaSet的数目，以及每个ReplicaSet的属性。<br>而每一个应用的版本，对应的证书一个ReplicaSet，这个版本应用的Pod数量，则有ReplicaSet通过它自己的控制器来保证。<br><img src="evernotecid://2D277EDE-88BA-4DB6-AE12-A2B952C4D28E/appyinxiangcom/3119051/ENNote/p952?hash=1b6fac0f3400e2e1e7d7fec737d824c6" alt="1b6fac0f3400e2e1e7d7fec737d824c6.jpeg"></p>
 <p>将一个集群中正在允许的多个Pod版本，交替的逐一升级的过程，就是滚动更新。</p>
-<p><img src="https://img.mknight.cn/medivh/1661754735804.png" alt="1661754735804.png"></p>
+<p><img src="https://img.econow.cn/medivh/1661754735804.png" alt="1661754735804.png"></p>
 
     </div>
 
@@ -310,8 +320,26 @@
     
 
     <footer class="post-footer">
+          <div class="reward-container">
+  <div>请我一杯咖啡吧！</div>
+  <button>
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/wechatpay.png" alt="medivh 微信">
+        <span>微信</span>
+      </div>
+      <div>
+        <img src="/images/alipay.png" alt="medivh 支付宝">
+        <span>支付宝</span>
+      </div>
+
+  </div>
+</div>
+
           <div class="post-tags">
-              <a href="/tags/Kubernetes/" rel="tag"># Kubernetes</a>
+              <a href="/tags/Kubernetes/" rel="tag"><i class="fa fa-tag"></i> Kubernetes</a>
           </div>
 
         
@@ -383,6 +411,8 @@
   
 
 
+  <script class="next-config" data-name="leancloud_visitors" type="application/json">{"enable":true,"app_id":"g1GwilqmVAUne2tDEDncEChG-gzGzoHsz","app_key":"YB2e5dSKMmMYYCtaSzxp9fdS","server_url":null,"security":true}</script>
+  <script src="/js/third-party/statistics/lean-analytics.js"></script>
 
 
 

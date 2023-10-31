@@ -3,11 +3,12 @@
 <head>
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width">
-<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.3.0">
 
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="https://img.mknight.cn/2018/1545104669394.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="https://img.mknight.cn/2018/1545104669394.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://img.econow.cn/2018/1545104669394.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://img.econow.cn/2018/1545104669394.png">
   <link rel="mask-icon" href="/images/logo.svg" color="#222">
 
 <link rel="stylesheet" href="/css/main.css">
@@ -17,7 +18,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha256-CTSx/A06dm1B063156EVh15m6Y67pAjZZaQc89LLSrU=" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"econow.cn","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.18.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"econow.cn","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.18.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
 
     <meta name="description" content="关于kubernetes 部署复杂是其特点之一，而网络问题则是最为常见的类型之一。 场景 a&#x2F;b&#x2F;c node上的pod互通，但是对d node无法访问  个别服务出现无法访问另一个服务的情况； 测试判断无法ping通; 080端口无法访问; 经测试其他node上的pod均无法访问该node上的pod。   根据以上背景，初步断定是网络问题。 通讯链路  详细示例    数据从">
 <meta property="og:type" content="article">
@@ -26,25 +27,25 @@
 <meta property="og:site_name" content="Medivh&#39;s castle">
 <meta property="og:description" content="关于kubernetes 部署复杂是其特点之一，而网络问题则是最为常见的类型之一。 场景 a&#x2F;b&#x2F;c node上的pod互通，但是对d node无法访问  个别服务出现无法访问另一个服务的情况； 测试判断无法ping通; 080端口无法访问; 经测试其他node上的pod均无法访问该node上的pod。   根据以上背景，初步断定是网络问题。 通讯链路  详细示例    数据从">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://img.mknight.cn/medivh/1630319238909.png">
-<meta property="og:image" content="https://img.mknight.cn/medivh/1630319277207.png">
-<meta property="og:image" content="https://img.mknight.cn/medivh/1630317106237.png">
-<meta property="og:image" content="https://img.mknight.cn/medivh/1630317240889.png">
-<meta property="og:image" content="https://img.mknight.cn/medivh/1630317434299.png">
-<meta property="og:image" content="https://img.mknight.cn/medivh/1630317458997.png">
-<meta property="og:image" content="https://img.mknight.cn/medivh/1630321077720.png">
-<meta property="og:image" content="https://img.mknight.cn/medivh/1630321154640.png">
-<meta property="og:image" content="https://img.mknight.cn/medivh/1630321352642.png">
-<meta property="og:image" content="https://img.mknight.cn/medivh/1630462961875.png">
-<meta property="og:image" content="https://img.mknight.cn/medivh/1630463028275.png">
-<meta property="og:image" content="https://img.mknight.cn/medivh/1630463053579.png">
-<meta property="og:image" content="https://img.mknight.cn/medivh/1630476462885.png">
-<meta property="og:image" content="https://img.mknight.cn/medivh/1630476228212.png">
-<meta property="article:published_time" content="2023-10-30T09:45:56.610Z">
-<meta property="article:modified_time" content="2023-10-30T09:45:56.610Z">
+<meta property="og:image" content="https://img.econow.cn/medivh/1630319238909.png">
+<meta property="og:image" content="https://img.econow.cn/medivh/1630319277207.png">
+<meta property="og:image" content="https://img.econow.cn/medivh/1630317106237.png">
+<meta property="og:image" content="https://img.econow.cn/medivh/1630317240889.png">
+<meta property="og:image" content="https://img.econow.cn/medivh/1630317434299.png">
+<meta property="og:image" content="https://img.econow.cn/medivh/1630317458997.png">
+<meta property="og:image" content="https://img.econow.cn/medivh/1630321077720.png">
+<meta property="og:image" content="https://img.econow.cn/medivh/1630321154640.png">
+<meta property="og:image" content="https://img.econow.cn/medivh/1630321352642.png">
+<meta property="og:image" content="https://img.econow.cn/medivh/1630462961875.png">
+<meta property="og:image" content="https://img.econow.cn/medivh/1630463028275.png">
+<meta property="og:image" content="https://img.econow.cn/medivh/1630463053579.png">
+<meta property="og:image" content="https://img.econow.cn/medivh/1630476462885.png">
+<meta property="og:image" content="https://img.econow.cn/medivh/1630476228212.png">
+<meta property="article:published_time" content="2023-10-31T02:15:08.697Z">
+<meta property="article:modified_time" content="2023-10-31T02:15:08.698Z">
 <meta property="article:author" content="medivh">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://img.mknight.cn/medivh/1630319238909.png">
+<meta name="twitter:image" content="https://img.econow.cn/medivh/1630319238909.png">
 
 
 <link rel="canonical" href="https://econow.cn/kubernetes%20%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98%E7%9A%84%E6%8E%A2%E8%AE%A8.html">
@@ -57,6 +58,8 @@
 <title>kubernetes 常见问题的探讨 | Medivh's castle</title>
   
 
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?21ded952ca9fc25e2b0630494a17ec7f"></script>
 
 
 
@@ -102,7 +105,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-search"><a href="/search" rel="section"><i class="fa fa-search fa-fw"></i>搜索</a></li>
   </ul>
 </nav>
 
@@ -205,7 +208,7 @@
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2023-10-30 17:45:56" itemprop="dateCreated datePublished" datetime="2023-10-30T17:45:56+08:00">2023-10-30</time>
+      <time title="创建时间：2023-10-31 10:15:08" itemprop="dateCreated datePublished" datetime="2023-10-31T10:15:08+08:00">2023-10-31</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -218,6 +221,13 @@
     </span>
 
   
+    <span id="/kubernetes%20%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98%E7%9A%84%E6%8E%A2%E8%AE%A8.html" class="post-meta-item leancloud_visitors" data-flag-title="kubernetes 常见问题的探讨" title="阅读次数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span class="leancloud-visitors-count"></span>
+    </span>
 </div>
 
         </div>
@@ -236,10 +246,10 @@
 </ul>
 </blockquote>
 <p>根据以上背景，初步断定是网络问题。</p>
-<h4 id="通讯链路"><a href="#通讯链路" class="headerlink" title="通讯链路"></a>通讯链路</h4><img src="https://img.mknight.cn/medivh/1630319238909.png"  />
+<h4 id="通讯链路"><a href="#通讯链路" class="headerlink" title="通讯链路"></a>通讯链路</h4><img src="https://img.econow.cn/medivh/1630319238909.png"  />
 
 <p>详细示例</p>
-<img src="https://img.mknight.cn/medivh/1630319277207.png"  />
+<img src="https://img.econow.cn/medivh/1630319277207.png"  />
 
 <ul>
 <li><p>数据从源容器中发出，经所在主机的docker0网卡转发到flannel网卡；</p>
@@ -255,12 +265,12 @@
 <li><p>最后docker0路由到目标容器。</p>
 </li>
 </ul>
-<h4 id="检查网卡"><a href="#检查网卡" class="headerlink" title="检查网卡"></a>检查网卡</h4><p>首先查看a&#x2F;b&#x2F;c网卡，检查docker0和flannel是否在同一网段。<br><img src="https://img.mknight.cn/medivh/1630317106237.png"  /><br>检查结果正常。<br>检查d节点网卡<br><img src="https://img.mknight.cn/medivh/1630317240889.png"  /><br>检查结果正常。</p>
-<h4 id="检查路由表"><a href="#检查路由表" class="headerlink" title="检查路由表"></a>检查路由表</h4><p>查看a&#x2F;b&#x2F;c路由表<br><img src="https://img.mknight.cn/medivh/1630317434299.png"/></p>
+<h4 id="检查网卡"><a href="#检查网卡" class="headerlink" title="检查网卡"></a>检查网卡</h4><p>首先查看a&#x2F;b&#x2F;c网卡，检查docker0和flannel是否在同一网段。<br><img src="https://img.econow.cn/medivh/1630317106237.png"  /><br>检查结果正常。<br>检查d节点网卡<br><img src="https://img.econow.cn/medivh/1630317240889.png"  /><br>检查结果正常。</p>
+<h4 id="检查路由表"><a href="#检查路由表" class="headerlink" title="检查路由表"></a>检查路由表</h4><p>查看a&#x2F;b&#x2F;c路由表<br><img src="https://img.econow.cn/medivh/1630317434299.png"/></p>
 <blockquote>
 <p>10.100.0.0 指向flannel<br>10.100.54.0 指向docker0<br>192.168.1.0 指向 ens3，局域网地址</p>
 </blockquote>
-<p>查看d路由表<br><img src="https://img.mknight.cn/medivh/1630317458997.png"  /></p>
+<p>查看d路由表<br><img src="https://img.econow.cn/medivh/1630317458997.png"  /></p>
 <blockquote>
 <p>10.100.0.0 指向flannel<br>10.100.41.0 指向docker0<br>192.168.1.0 指向 ens3，局域网地址</p>
 </blockquote>
@@ -285,12 +295,12 @@
 <h4 id="etcd"><a href="#etcd" class="headerlink" title="etcd"></a>etcd</h4><blockquote>
 <p>检查etcd数据是否正常</p>
 </blockquote>
-<img src="https://img.mknight.cn/medivh/1630321077720.png"  />
+<img src="https://img.econow.cn/medivh/1630321077720.png"  />
 核对网段和Mac地址是否一致。
-<img src="https://img.mknight.cn/medivh/1630321154640.png"  />
+<img src="https://img.econow.cn/medivh/1630321154640.png"  />
 事实证明`10.100.41.0`的网卡和实际的网卡Mac地址并不一致，所以导致源主机没有找到真实的目的主机。
 
-<img src="https://img.mknight.cn/medivh/1630321352642.png"  />
+<img src="https://img.econow.cn/medivh/1630321352642.png"  />
 
 <p>最后发现，原<code>10.100.41.0</code>的网卡对应的是另外一台历史机器，造成的网卡冲突导致的这一后果。</p>
 <h5 id="etcd的基本使用"><a href="#etcd的基本使用" class="headerlink" title="etcd的基本使用"></a>etcd的基本使用</h5><p>etcd是一个分布式的、可靠的k-v存储系统，它用于存储分布式系统中的关键数据。在kubernetes中保存集群所有的网络配置和对象的状态信息。在集群中共有两个服务需要用到etcd来协同和存储配置：</p>
@@ -298,9 +308,9 @@
 <li>flannel，对于其他网络差价也需要用到etcd;</li>
 <li>kubernetes本身，包括各种对象的状态和元信息配置</li>
 </ul>
-<p>获取 集群网络配置<br><img src="https://img.mknight.cn/medivh/1630462961875.png"  /></p>
-<p>获取子网列表<br><img src="https://img.mknight.cn/medivh/1630463028275.png"  /></p>
-<p>获取主机网卡信息<br><img src="https://img.mknight.cn/medivh/1630463053579.png"  /></p>
+<p>获取 集群网络配置<br><img src="https://img.econow.cn/medivh/1630462961875.png"  /></p>
+<p>获取子网列表<br><img src="https://img.econow.cn/medivh/1630463028275.png"  /></p>
+<p>获取主机网卡信息<br><img src="https://img.econow.cn/medivh/1630463053579.png"  /></p>
 <p>帮助信息</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line">NAME:</span><br><span class="line">   etcdctl - A simple command line client for etcd.</span><br><span class="line"></span><br><span class="line">WARNING:</span><br><span class="line">   Environment variable ETCDCTL_API is not set; defaults to etcdctl v2.</span><br><span class="line">   Set environment variable ETCDCTL_API=3 to use v3 API or ETCDCTL_API=2 to use v2 API.</span><br><span class="line"></span><br><span class="line">USAGE:</span><br><span class="line">   etcdctl [global options] command [command options] [arguments...]</span><br><span class="line"></span><br><span class="line">VERSION:</span><br><span class="line">   3.2.22</span><br><span class="line"></span><br><span class="line">COMMANDS:</span><br><span class="line">     backup          backup an etcd directory</span><br><span class="line">     cluster-health  check the health of the etcd cluster</span><br><span class="line">     mk              make a new key with a given value</span><br><span class="line">     mkdir           make a new directory</span><br><span class="line">     rm              remove a key or a directory</span><br><span class="line">     rmdir           removes the key if it is an empty directory or a key-value pair</span><br><span class="line">     get             retrieve the value of a key</span><br><span class="line">     ls              retrieve a directory</span><br><span class="line">     set             set the value of a key</span><br><span class="line">     setdir          create a new directory or update an existing directory TTL</span><br><span class="line">     update          update an existing key with a given value</span><br><span class="line">     updatedir       update an existing directory</span><br><span class="line">     watch           watch a key for changes</span><br><span class="line">     exec-watch      watch a key for changes and exec an executable</span><br><span class="line">     member          member add, remove and list subcommands</span><br><span class="line">     user            user add, grant and revoke subcommands</span><br><span class="line">     role            role add, grant and revoke subcommands</span><br><span class="line">     auth            overall auth controls</span><br><span class="line">     help, h         Shows a list of commands or help for one command</span><br><span class="line"></span><br><span class="line">GLOBAL OPTIONS:</span><br><span class="line">   --debug                          output cURL commands which can be used to reproduce the request</span><br><span class="line">   --no-sync                        don&#x27;t synchronize cluster information before sending request</span><br><span class="line">   --output simple, -o simple       output response in the given format (simple, `extended` or `json`) (default: &quot;simple&quot;)</span><br><span class="line">   --discovery-srv value, -D value  domain name to query for SRV records describing cluster endpoints</span><br><span class="line">   --insecure-discovery             accept insecure SRV records describing cluster endpoints</span><br><span class="line">   --peers value, -C value          DEPRECATED - &quot;--endpoints&quot; should be used instead</span><br><span class="line">   --endpoint value                 DEPRECATED - &quot;--endpoints&quot; should be used instead</span><br><span class="line">   --endpoints value                a comma-delimited list of machine addresses in the cluster (default: &quot;http://127.0.0.1:2379,http://127.0.0.1:4001&quot;)</span><br><span class="line">   --cert-file value                identify HTTPS client using this SSL certificate file</span><br><span class="line">   --key-file value                 identify HTTPS client using this SSL key file</span><br><span class="line">   --ca-file value                  verify certificates of HTTPS-enabled servers using this CA bundle</span><br><span class="line">   --username value, -u value       provide username[:password] and prompt if password is not supplied.</span><br><span class="line">   --timeout value                  connection timeout per request (default: 2s)</span><br><span class="line">   --total-timeout value            timeout for the command execution (except watch) (default: 5s)</span><br><span class="line">   --help, -h                       show help</span><br><span class="line">   --version, -v                    print the version</span><br></pre></td></tr></table></figure>
 
@@ -339,9 +349,9 @@
 </ul>
 <p>负载均衡器需要先代理最终的服务器和客户端建立TCP连接后，才可能接收到客户端发送的真正应用层内容的保温，再根据报文中的特定字段，再加上负载均衡设备的服务器选择方式，决定最终选的服务器。常见的软件比如NGINX。</p>
 <p>kubernetes部署架构</p>
-<img src="https://img.mknight.cn/medivh/1630476462885.png"  />
+<img src="https://img.econow.cn/medivh/1630476462885.png"  />
 
-<p>kubernetes集群的高可用实际是各个核心组件的高可用。<br><img src="https://img.mknight.cn/medivh/1630476228212.png"  /></p>
+<p>kubernetes集群的高可用实际是各个核心组件的高可用。<br><img src="https://img.econow.cn/medivh/1630476228212.png"  /></p>
 <ul>
 <li>apiserver 通过 keepalived+haproxy 实现高可用，当某个节点故障时触发 keepalived vip 转移，haproxy 负责将流量负载到 apiserver 节点；</li>
 <li>controller-manager k8s 内部通过选举方式产生领导者(由 –leader-elect 选型控制，默认为 true)，同一时刻集群内只有一个 controller-manager 组件运行，其余处于 backup 状态；</li>
@@ -370,18 +380,36 @@
     
 
     <footer class="post-footer">
+          <div class="reward-container">
+  <div>请我一杯咖啡吧！</div>
+  <button>
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/wechatpay.png" alt="medivh 微信">
+        <span>微信</span>
+      </div>
+      <div>
+        <img src="/images/alipay.png" alt="medivh 支付宝">
+        <span>支付宝</span>
+      </div>
+
+  </div>
+</div>
+
 
         
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/H3C%20wap712c%20Fit%20to%20Fat.html" rel="prev" title="H3C wap712c Fit to Fat">
-                  <i class="fa fa-angle-left"></i> H3C wap712c Fit to Fat
+                <a href="/kubadm%E9%AB%98%E5%8F%AF%E7%94%A8.html" rel="prev" title="kubadm 高可用">
+                  <i class="fa fa-angle-left"></i> kubadm 高可用
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/Docker%20%E5%AE%9E%E8%B7%B5%E6%80%BB%E7%BB%93%EF%BC%88%E4%B8%80%EF%BC%89.html" rel="next" title="Docker 实践总结（一）">
-                  Docker 实践总结（一） <i class="fa fa-angle-right"></i>
+                <a href="/markdown%20%E5%9B%BE%E5%BA%8A%E7%94%9F%E6%88%90.html" rel="next" title="Markdown 图床设置">
+                  Markdown 图床设置 <i class="fa fa-angle-right"></i>
                 </a>
             </div>
           </div>
@@ -440,6 +468,8 @@
   
 
 
+  <script class="next-config" data-name="leancloud_visitors" type="application/json">{"enable":true,"app_id":"g1GwilqmVAUne2tDEDncEChG-gzGzoHsz","app_key":"YB2e5dSKMmMYYCtaSzxp9fdS","server_url":null,"security":true}</script>
+  <script src="/js/third-party/statistics/lean-analytics.js"></script>
 
 
 

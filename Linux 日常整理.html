@@ -3,11 +3,12 @@
 <head>
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width">
-<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.3.0">
 
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="https://img.mknight.cn/2018/1545104669394.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="https://img.mknight.cn/2018/1545104669394.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://img.econow.cn/2018/1545104669394.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://img.econow.cn/2018/1545104669394.png">
   <link rel="mask-icon" href="/images/logo.svg" color="#222">
 
 <link rel="stylesheet" href="/css/main.css">
@@ -17,7 +18,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha256-CTSx/A06dm1B063156EVh15m6Y67pAjZZaQc89LLSrU=" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"econow.cn","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.18.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"econow.cn","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.18.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
 
     <meta name="description" content="时间同步the NTP socket is in use, exiting问题12345678[root@esx4 ~]# ntpdate ntp.api.bz21 Sep 14:39:09 ntpdate[24744]: the NTP socket is in use, exiting[root@esx4 ~]# service ntpd stopShutting down ntpd:">
 <meta property="og:type" content="article">
@@ -26,14 +27,14 @@
 <meta property="og:site_name" content="Medivh&#39;s castle">
 <meta property="og:description" content="时间同步the NTP socket is in use, exiting问题12345678[root@esx4 ~]# ntpdate ntp.api.bz21 Sep 14:39:09 ntpdate[24744]: the NTP socket is in use, exiting[root@esx4 ~]# service ntpd stopShutting down ntpd:">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://img.mknight.cn/medivh/1551426333101.png">
-<meta property="og:image" content="https://img.mknight.cn/medivh/1551426435903.png">
-<meta property="article:published_time" content="2023-10-30T09:45:56.625Z">
-<meta property="article:modified_time" content="2023-10-30T09:45:56.625Z">
+<meta property="og:image" content="https://img.econow.cn/medivh/1551426333101.png">
+<meta property="og:image" content="https://img.econow.cn/medivh/1551426435903.png">
+<meta property="article:published_time" content="2023-10-31T02:15:08.683Z">
+<meta property="article:modified_time" content="2023-10-31T02:15:08.683Z">
 <meta property="article:author" content="medivh">
 <meta property="article:tag" content="linux">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://img.mknight.cn/medivh/1551426333101.png">
+<meta name="twitter:image" content="https://img.econow.cn/medivh/1551426333101.png">
 
 
 <link rel="canonical" href="https://econow.cn/Linux%20%E6%97%A5%E5%B8%B8%E6%95%B4%E7%90%86.html">
@@ -46,6 +47,8 @@
 <title>Linux 日常整理 | Medivh's castle</title>
   
 
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?21ded952ca9fc25e2b0630494a17ec7f"></script>
 
 
 
@@ -91,7 +94,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-search"><a href="/search" rel="section"><i class="fa fa-search fa-fw"></i>搜索</a></li>
   </ul>
 </nav>
 
@@ -194,7 +197,7 @@
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2023-10-30 17:45:56" itemprop="dateCreated datePublished" datetime="2023-10-30T17:45:56+08:00">2023-10-30</time>
+      <time title="创建时间：2023-10-31 10:15:08" itemprop="dateCreated datePublished" datetime="2023-10-31T10:15:08+08:00">2023-10-31</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -207,6 +210,13 @@
     </span>
 
   
+    <span id="/Linux%20%E6%97%A5%E5%B8%B8%E6%95%B4%E7%90%86.html" class="post-meta-item leancloud_visitors" data-flag-title="Linux 日常整理" title="阅读次数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span class="leancloud-visitors-count"></span>
+    </span>
 </div>
 
         </div>
@@ -222,7 +232,7 @@
 <h3 id="JDK"><a href="#JDK" class="headerlink" title="JDK"></a>JDK</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line">cd /usr/src/ &amp;&amp; tar -zxvf ./jre-8u191-linux-x64.tar.gz -C /usr/local</span><br><span class="line">ln -s /usr/local/jdk1.8.0_91/ /usr/local/java</span><br><span class="line">echo &#x27;</span><br><span class="line">#JDK</span><br><span class="line">############################################################</span><br><span class="line">export JAVA_HOME=/usr/local/java</span><br><span class="line">export PATH=$JAVA_HOME/bin:$PATH</span><br><span class="line">############################################################</span><br><span class="line">&#x27; &gt;&gt; /etc/profile</span><br><span class="line">source /etc/profile</span><br><span class="line">java -version</span><br></pre></td></tr></table></figure>
 <h3 id="监控"><a href="#监控" class="headerlink" title="监控"></a>监控</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">cd /usr/src/ &amp;&amp; wget 10.110.1.18/open-falcon-agnt.tar.gz &amp;&amp; tar -xvf open-falcon-agnt.tar.gz -C /usr/local &amp;&amp; chmod 755 /usr/local/open-falcon -R  &amp;&amp; cd   /usr/local/open-falcon</span><br><span class="line">./open-falcon start agent</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
 <h3 id="name-or-service-not-known"><a href="#name-or-service-not-known" class="headerlink" title="name or service not known"></a>name or service not known</h3><p>配置jumpserver发邮件的时候提示<code>name or service not known</code>。<br>检查发现能ping通<code>smtp.exmail.qq.com</code>，但是不知道为啥发不出邮件</p>
-<p>使用以下命令，然后加入hosts文件,即可<br><img src="https://img.mknight.cn/medivh/1551426333101.png" /><br><img src="https://img.mknight.cn/medivh/1551426435903.png" /></p>
+<p>使用以下命令，然后加入hosts文件,即可<br><img src="https://img.econow.cn/medivh/1551426333101.png" /><br><img src="https://img.econow.cn/medivh/1551426435903.png" /></p>
 <h3 id="查看文件编码"><a href="#查看文件编码" class="headerlink" title="查看文件编码"></a>查看文件编码</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">vim </span><br><span class="line"></span><br><span class="line">:set fileencoding</span><br></pre></td></tr></table></figure>
 <h3 id="find"><a href="#find" class="headerlink" title="find"></a>find</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br></pre></td><td class="code"><pre><span class="line">#查找30天以前的文件</span><br><span class="line">find . -name &quot;*.png&quot; -ctime +1</span><br><span class="line"></span><br><span class="line">find -name april*                      在当前目录下查找以april开始的文件</span><br><span class="line">find -name april* fprint file        在当前目录下查找以april开始的文件，并把结果输出到file中</span><br><span class="line">find -name ap* -o -name may* 查找以ap或may开头的文件</span><br><span class="line">find /mnt -name tom.txt -ftype vfat 在/mnt下查找名称为tom.txt且文件系统类型为vfat的文件</span><br><span class="line">find /mnt -name t.txt ! -ftype vfat   在/mnt下查找名称为tom.txt且文件系统类型不为vfat的文件</span><br><span class="line">find /tmp -name wa* -type l           在/tmp下查找名为wa开头且类型为符号链接的文件</span><br><span class="line">find /home -mtime -2                 在/home下查最近两天内改动过的文件</span><br><span class="line">find /home   -atime -1                  查1天之内被存取过的文件</span><br><span class="line">find /home -mmin   +60                  在/home下查60分钟前改动过的文件</span><br><span class="line">find /home -amin +30                  查最近30分钟前被存取过的文件</span><br><span class="line">find /home -newer tmp.txt             在/home下查更新时间比tmp.txt近的文件或目录</span><br><span class="line">find /home -anewer tmp.txt            在/home下查存取时间比tmp.txt近的文件或目录</span><br><span class="line">find /home -used -2                  列出文件或目录被改动过之后，在2日内被存取过的文件或目录</span><br><span class="line">find /home -user cnscn                列出/home目录内属于用户cnscn的文件或目录</span><br><span class="line">find /home -uid +501                 列出/home目录内用户的识别码大于501的文件或目录</span><br><span class="line">find /home -group cnscn              列出/home内组为cnscn的文件或目录</span><br><span class="line">find /home -gid 501                   列出/home内组id为501的文件或目录</span><br><span class="line">find /home -nouser                    列出/home内不属于本地用户的文件或目录</span><br><span class="line">find /home -nogroup                   列出/home内不属于本地组的文件或目录</span><br><span class="line">find /home   -name tmp.txt   -maxdepth 4 列出/home内的tmp.txt 查时深度最多为3层</span><br><span class="line">find /home -name tmp.txt -mindepth 3 从第2层开始查</span><br><span class="line">find /home -empty                     查找大小为0的文件或空目录</span><br><span class="line">find /home -size +512k               查大于512k的文件</span><br><span class="line">find /home -size -512k               查小于512k的文件</span><br><span class="line">find /home -links +2                 查硬连接数大于2的文件或目录</span><br><span class="line">find /home -perm 0700                查权限为700的文件或目录</span><br><span class="line">find /tmp -name tmp.txt -exec cat &#123;&#125; /;</span><br><span class="line">find /tmp -name tmp.txt -ok rm &#123;&#125; /;</span><br><span class="line"></span><br><span class="line">find   / -amin   -10       # 查找在系统中最后10分钟访问的文件</span><br><span class="line">find   / -atime -2         # 查找在系统中最后48小时访问的文件</span><br><span class="line">find   / -empty              # 查找在系统中为空的文件或者文件夹</span><br><span class="line">find   / -group cat        # 查找在系统中属于 groupcat的文件</span><br><span class="line">find   / -mmin -5         # 查找在系统中最后5分钟里修改过的文件</span><br><span class="line">find   / -mtime -1        #查找在系统中最后24小时里修改过的文件</span><br><span class="line">find   / -nouser             #查找在系统中属于作废用户的文件</span><br><span class="line">find   / -user   fred       #查找在系统中属于FRED这个用户的文件</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">-name filename             #查找名为filename的文件</span><br><span class="line">-perm                       #按执行权限来查找</span><br><span class="line">-user   username            #按文件属主来查找</span><br><span class="line">-group groupname            #按组来查找</span><br><span class="line">-mtime -n +n               #按文件更改时间来查找文件，-n指n天以内，+n指n天以前</span><br><span class="line">-atime   -n +n              #按文件访问时间来查</span><br><span class="line">-perm                        #按执行权限来查找</span><br><span class="line">-user   username            #按文件属主来查找</span><br><span class="line">-group groupname            #按组来查找</span><br><span class="line">-mtime -n +n               #按文件更改时间来查找文件，-n指n天以内，+n指n天以前</span><br><span class="line">-atime   -n +n              #按文件访问时间来查找文件，-n指n天以内，+n指n天以前 </span><br><span class="line">-ctime   -n +n              #按文件创建时间来查找文件，-n指n天以内，+n指n天以前 </span><br><span class="line">-nogroup                    #查无有效属组的文件，即文件的属组在/etc/groups中不存在</span><br><span class="line">-nouser                     #查无有效属主的文件，即文件的属主在/etc/passwd中不存</span><br><span class="line">-newer f1 !f2              找文件，-n指n天以内，+n指n天以前 </span><br><span class="line">-ctime   -n +n              #按文件创建时间来查找文件，-n指n天以内，+n指n天以前 </span><br><span class="line">-nogroup                    #查无有效属组的文件，即文件的属组在/etc/groups中不存在</span><br><span class="line">-nouser                     #查无有效属主的文件，即文件的属主在/etc/passwd中不存</span><br><span class="line">-newer f1 !f2              #查更改时间比f1新但比f2旧的文件</span><br><span class="line">-type    b/d/c/p/l/f        #查是块设备、目录、字符设备、管道、符号链接、普通文件</span><br><span class="line">-size     n[c]              #查长度为n块[或n字节]的文件</span><br><span class="line">-depth                      #使查找在进入子目录前先行查找完本目录</span><br><span class="line">-fstype                     #查更改时间比f1新但比f2旧的文件</span><br><span class="line">-type    b/d/c/p/l/f        #查是块设备、目录、字符设备、管道、符号链接、普通文件</span><br><span class="line">-size     n[c]              #查长度为n块[或n字节]的文件</span><br><span class="line">-depth                      #使查找在进入子目录前先行查找完本目录</span><br><span class="line">-fstype                     #查位于某一类型文件系统中的文件，这些文件系统类型通常可 在/etc/fstab中找到</span><br><span class="line">-mount                      #查文件时不跨越文件系统mount点</span><br><span class="line">-follow                     #如果遇到符号链接文件，就跟踪链接所指的文件</span><br><span class="line">-cpio                   #查位于某一类型文件系统中的文件，这些文件系统类型通常可 在/etc/fstab中找到</span><br><span class="line">-mount                      #查文件时不跨越文件系统mount点</span><br><span class="line">-follow                     #如果遇到符号链接文件，就跟踪链接所指的文件</span><br><span class="line">-cpio                       #对匹配的文件使用cpio命令，将他们备份到磁带设备中</span><br><span class="line">-prune                      #忽略某个目录</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
@@ -267,21 +277,39 @@
     
 
     <footer class="post-footer">
+          <div class="reward-container">
+  <div>请我一杯咖啡吧！</div>
+  <button>
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/wechatpay.png" alt="medivh 微信">
+        <span>微信</span>
+      </div>
+      <div>
+        <img src="/images/alipay.png" alt="medivh 支付宝">
+        <span>支付宝</span>
+      </div>
+
+  </div>
+</div>
+
           <div class="post-tags">
-              <a href="/tags/linux/" rel="tag"># linux</a>
+              <a href="/tags/linux/" rel="tag"><i class="fa fa-tag"></i> linux</a>
           </div>
 
         
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/freeswitch%E9%83%A8%E7%BD%B2%E6%96%87%E6%A1%A3.html" rel="prev" title="freeswitch部署文档">
-                  <i class="fa fa-angle-left"></i> freeswitch部署文档
+                <a href="/Kubernetes%E7%9A%84%E8%B0%83%E5%BA%A6.html" rel="prev" title="Kubernetes的调度">
+                  <i class="fa fa-angle-left"></i> Kubernetes的调度
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/elasticsearch-dump%20%E8%BF%81%E7%A7%BBes%E6%95%B0%E6%8D%AE%20%EF%BC%88elasticdump%EF%BC%89.html" rel="next" title="elasticsearch-dump 迁移es数据 （elasticdump）">
-                  elasticsearch-dump 迁移es数据 （elasticdump） <i class="fa fa-angle-right"></i>
+                <a href="/Mac%20%E5%88%9D%E5%A7%8B%E5%8C%96%E7%8E%AF%E5%A2%83.html" rel="next" title="Mac 初始化环境">
+                  Mac 初始化环境 <i class="fa fa-angle-right"></i>
                 </a>
             </div>
           </div>
@@ -340,6 +368,8 @@
   
 
 
+  <script class="next-config" data-name="leancloud_visitors" type="application/json">{"enable":true,"app_id":"g1GwilqmVAUne2tDEDncEChG-gzGzoHsz","app_key":"YB2e5dSKMmMYYCtaSzxp9fdS","server_url":null,"security":true}</script>
+  <script src="/js/third-party/statistics/lean-analytics.js"></script>
 
 
 

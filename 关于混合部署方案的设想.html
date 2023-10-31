@@ -3,11 +3,12 @@
 <head>
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width">
-<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.3.0">
 
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="https://img.mknight.cn/2018/1545104669394.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="https://img.mknight.cn/2018/1545104669394.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://img.econow.cn/2018/1545104669394.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://img.econow.cn/2018/1545104669394.png">
   <link rel="mask-icon" href="/images/logo.svg" color="#222">
 
 <link rel="stylesheet" href="/css/main.css">
@@ -17,7 +18,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha256-CTSx/A06dm1B063156EVh15m6Y67pAjZZaQc89LLSrU=" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"econow.cn","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.18.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"econow.cn","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.18.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
 
     <meta name="description" content="理论依据在时效性上来区分任务，常规的任务一般分为在线任务和离线任务。其中在线任务消耗的资源相对较少，但是要求相应时间较短，比如web服务；而离线任务则对时效性要求不高，但是任务量大，需要的资源更多。因此把两种项目混合部署在一起就叫做混合部署。 大多数进程可以分为I&#x2F;O密集型和CPU密集型。I&#x2F;O密集型程序将大多数时间都花在了I&#x2F;O操作而不是运算上，而CPU密集型程序正">
 <meta property="og:type" content="article">
@@ -26,14 +27,14 @@
 <meta property="og:site_name" content="Medivh&#39;s castle">
 <meta property="og:description" content="理论依据在时效性上来区分任务，常规的任务一般分为在线任务和离线任务。其中在线任务消耗的资源相对较少，但是要求相应时间较短，比如web服务；而离线任务则对时效性要求不高，但是任务量大，需要的资源更多。因此把两种项目混合部署在一起就叫做混合部署。 大多数进程可以分为I&#x2F;O密集型和CPU密集型。I&#x2F;O密集型程序将大多数时间都花在了I&#x2F;O操作而不是运算上，而CPU密集型程序正">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://img.mknight.cn/medivh/1630553329133.png">
-<meta property="og:image" content="https://img.mknight.cn/medivh/1630553335430.png">
-<meta property="article:published_time" content="2023-10-30T09:45:56.611Z">
-<meta property="article:modified_time" content="2023-10-30T09:45:56.611Z">
+<meta property="og:image" content="https://img.econow.cn/medivh/1630553329133.png">
+<meta property="og:image" content="https://img.econow.cn/medivh/1630553335430.png">
+<meta property="article:published_time" content="2023-10-31T02:15:08.716Z">
+<meta property="article:modified_time" content="2023-10-31T02:15:08.717Z">
 <meta property="article:author" content="medivh">
 <meta property="article:tag" content="Kubernetes">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://img.mknight.cn/medivh/1630553329133.png">
+<meta name="twitter:image" content="https://img.econow.cn/medivh/1630553329133.png">
 
 
 <link rel="canonical" href="https://econow.cn/%E5%85%B3%E4%BA%8E%E6%B7%B7%E5%90%88%E9%83%A8%E7%BD%B2%E6%96%B9%E6%A1%88%E7%9A%84%E8%AE%BE%E6%83%B3.html">
@@ -46,6 +47,8 @@
 <title>关于混合部署方案的设想 | Medivh's castle</title>
   
 
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?21ded952ca9fc25e2b0630494a17ec7f"></script>
 
 
 
@@ -91,7 +94,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-search"><a href="/search" rel="section"><i class="fa fa-search fa-fw"></i>搜索</a></li>
   </ul>
 </nav>
 
@@ -194,7 +197,7 @@
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2023-10-30 17:45:56" itemprop="dateCreated datePublished" datetime="2023-10-30T17:45:56+08:00">2023-10-30</time>
+      <time title="创建时间：2023-10-31 10:15:08" itemprop="dateCreated datePublished" datetime="2023-10-31T10:15:08+08:00">2023-10-31</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -207,6 +210,13 @@
     </span>
 
   
+    <span id="/%E5%85%B3%E4%BA%8E%E6%B7%B7%E5%90%88%E9%83%A8%E7%BD%B2%E6%96%B9%E6%A1%88%E7%9A%84%E8%AE%BE%E6%83%B3.html" class="post-meta-item leancloud_visitors" data-flag-title="关于混合部署方案的设想" title="阅读次数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span class="leancloud-visitors-count"></span>
+    </span>
 </div>
 
         </div>
@@ -217,8 +227,8 @@
     
     <div class="post-body" itemprop="articleBody"><h2 id="理论依据"><a href="#理论依据" class="headerlink" title="理论依据"></a>理论依据</h2><p>在时效性上来区分任务，常规的任务一般分为在线任务和离线任务。其中在线任务消耗的资源相对较少，但是要求相应时间较短，比如web服务；而离线任务则对时效性要求不高，但是任务量大，需要的资源更多。因此把两种项目混合部署在一起就叫做混合部署。</p>
 <p>大多数进程可以分为I&#x2F;O密集型和CPU密集型。I&#x2F;O密集型程序将大多数时间都花在了I&#x2F;O操作而不是运算上，而CPU密集型程序正好相反，将大多数时间花在了运算上，而很少产生I&#x2F;O操作。选出一个I&#x2F;O密集型和CPU密集型程序的良好组合，对于长期调度器是非常重要的。否则，假如所有的程序都是CPU密集型的，那么I&#x2F;O队列将会几乎永远都是空的，这样就会导致一些设备从来没被使用过，系统资源分配就是不均衡的。显然，性能极佳的系统必然是CPU密集型和I&#x2F;O密集型程序的组合。在现代操作系统中，这被用来保证实时进程能获得足够的CPU时间来完成任务。但我们的当前绝大部分项目并不能做到资源的和谐组合——cpu使用率远低于内存使用率。这样的特点也方便混合部署的时候只需要考虑内存的瓶颈即可。</p>
-<h2 id="资源使用率现状"><a href="#资源使用率现状" class="headerlink" title="资源使用率现状"></a>资源使用率现状</h2><p>通俗来讲，我们希望使用提高资源使用率的同时降低成本。任务类型的分类是提高资源利用率的理论依据，只不过迫于现实，实践过程中会有些偏差。<br>当前的现状，大部分CPU平均使用率长期在30%以内徘徊，极大的浪费资源。<br><img src="https://img.mknight.cn/medivh/1630553329133.png"  /></p>
-<p>而对于内存调整的空间较为有限，个别实例有操作空间。<br><img src="https://img.mknight.cn/medivh/1630553335430.png"  /></p>
+<h2 id="资源使用率现状"><a href="#资源使用率现状" class="headerlink" title="资源使用率现状"></a>资源使用率现状</h2><p>通俗来讲，我们希望使用提高资源使用率的同时降低成本。任务类型的分类是提高资源利用率的理论依据，只不过迫于现实，实践过程中会有些偏差。<br>当前的现状，大部分CPU平均使用率长期在30%以内徘徊，极大的浪费资源。<br><img src="https://img.econow.cn/medivh/1630553329133.png"  /></p>
+<p>而对于内存调整的空间较为有限，个别实例有操作空间。<br><img src="https://img.econow.cn/medivh/1630553335430.png"  /></p>
 <p>当前的实例用途类型基本分为三类：</p>
 <ul>
 <li>大数据集群<ul>
@@ -271,22 +281,37 @@
     
 
     <footer class="post-footer">
+          <div class="reward-container">
+  <div>请我一杯咖啡吧！</div>
+  <button>
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/wechatpay.png" alt="medivh 微信">
+        <span>微信</span>
+      </div>
+      <div>
+        <img src="/images/alipay.png" alt="medivh 支付宝">
+        <span>支付宝</span>
+      </div>
+
+  </div>
+</div>
+
           <div class="post-tags">
-              <a href="/tags/Kubernetes/" rel="tag"># Kubernetes</a>
+              <a href="/tags/Kubernetes/" rel="tag"><i class="fa fa-tag"></i> Kubernetes</a>
           </div>
 
         
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/Docker%20%E5%AE%9E%E8%B7%B5%E6%80%BB%E7%BB%93%EF%BC%88%E4%B8%80%EF%BC%89.html" rel="prev" title="Docker 实践总结（一）">
-                  <i class="fa fa-angle-left"></i> Docker 实践总结（一）
+                <a href="/%E6%95%B0%E6%8D%AE%E5%BA%93%E6%93%8D%E4%BD%9C%E5%AE%A1%E6%89%B9%E8%A7%84%E8%8C%83.html" rel="prev" title="数据库操作审批规范">
+                  <i class="fa fa-angle-left"></i> 数据库操作审批规范
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/%E5%85%B3%E4%BA%8E%E5%AF%B9Flask%E7%9A%84%E7%90%86%E8%A7%A3%E5%92%8C%E8%AE%B0%E5%BD%95.html" rel="next" title="Flask 学习">
-                  Flask 学习 <i class="fa fa-angle-right"></i>
-                </a>
             </div>
           </div>
     </footer>
@@ -344,6 +369,8 @@
   
 
 
+  <script class="next-config" data-name="leancloud_visitors" type="application/json">{"enable":true,"app_id":"g1GwilqmVAUne2tDEDncEChG-gzGzoHsz","app_key":"YB2e5dSKMmMYYCtaSzxp9fdS","server_url":null,"security":true}</script>
+  <script src="/js/third-party/statistics/lean-analytics.js"></script>
 
 
 

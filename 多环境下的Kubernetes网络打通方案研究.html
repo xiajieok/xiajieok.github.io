@@ -3,11 +3,12 @@
 <head>
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width">
-<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.3.0">
 
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="https://img.mknight.cn/2018/1545104669394.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="https://img.mknight.cn/2018/1545104669394.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://img.econow.cn/2018/1545104669394.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://img.econow.cn/2018/1545104669394.png">
   <link rel="mask-icon" href="/images/logo.svg" color="#222">
 
 <link rel="stylesheet" href="/css/main.css">
@@ -17,7 +18,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha256-CTSx/A06dm1B063156EVh15m6Y67pAjZZaQc89LLSrU=" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"econow.cn","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.18.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"econow.cn","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.18.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
 
     <meta name="description" content="前言 本文中的Kubernetes集群统称为集群。  现实的工作环境中，我们可能会在开发环境使用Kubernetes，也会在测试和开发环境使用Kubernetes。而一般来说，大部分人不会直接去连接或访问生产环境的集群，但是对于开发环境就不一样了。很多开发人员需要经常访问开发环境，而不是在本地起一堆依赖的服务。而且真的只有这么一个问题吗？ 常见问题整理了若干常见的问题：  开发人员本地服务访问开发">
 <meta property="og:type" content="article">
@@ -26,15 +27,15 @@
 <meta property="og:site_name" content="Medivh&#39;s castle">
 <meta property="og:description" content="前言 本文中的Kubernetes集群统称为集群。  现实的工作环境中，我们可能会在开发环境使用Kubernetes，也会在测试和开发环境使用Kubernetes。而一般来说，大部分人不会直接去连接或访问生产环境的集群，但是对于开发环境就不一样了。很多开发人员需要经常访问开发环境，而不是在本地起一堆依赖的服务。而且真的只有这么一个问题吗？ 常见问题整理了若干常见的问题：  开发人员本地服务访问开发">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://img.mknight.cn/medivh/1651052056989.png">
-<meta property="og:image" content="https://img.mknight.cn/medivh/1651115644098.png">
-<meta property="og:image" content="https://img.mknight.cn/medivh/1651117439545.png">
-<meta property="article:published_time" content="2023-10-30T09:45:56.644Z">
-<meta property="article:modified_time" content="2023-10-30T09:45:56.644Z">
+<meta property="og:image" content="https://img.econow.cn/medivh/1651052056989.png">
+<meta property="og:image" content="https://img.econow.cn/medivh/1651115644098.png">
+<meta property="og:image" content="https://img.econow.cn/medivh/1651117439545.png">
+<meta property="article:published_time" content="2023-10-31T02:15:08.712Z">
+<meta property="article:modified_time" content="2023-10-31T02:15:08.712Z">
 <meta property="article:author" content="medivh">
 <meta property="article:tag" content="Kubernetes">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://img.mknight.cn/medivh/1651052056989.png">
+<meta name="twitter:image" content="https://img.econow.cn/medivh/1651052056989.png">
 
 
 <link rel="canonical" href="https://econow.cn/%E5%A4%9A%E7%8E%AF%E5%A2%83%E4%B8%8B%E7%9A%84Kubernetes%E7%BD%91%E7%BB%9C%E6%89%93%E9%80%9A%E6%96%B9%E6%A1%88%E7%A0%94%E7%A9%B6.html">
@@ -47,6 +48,8 @@
 <title>多环境下的Kubernetes网络打通方案研究 | Medivh's castle</title>
   
 
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?21ded952ca9fc25e2b0630494a17ec7f"></script>
 
 
 
@@ -92,7 +95,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-search"><a href="/search" rel="section"><i class="fa fa-search fa-fw"></i>搜索</a></li>
   </ul>
 </nav>
 
@@ -195,7 +198,7 @@
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2023-10-30 17:45:56" itemprop="dateCreated datePublished" datetime="2023-10-30T17:45:56+08:00">2023-10-30</time>
+      <time title="创建时间：2023-10-31 10:15:08" itemprop="dateCreated datePublished" datetime="2023-10-31T10:15:08+08:00">2023-10-31</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -208,6 +211,13 @@
     </span>
 
   
+    <span id="/%E5%A4%9A%E7%8E%AF%E5%A2%83%E4%B8%8B%E7%9A%84Kubernetes%E7%BD%91%E7%BB%9C%E6%89%93%E9%80%9A%E6%96%B9%E6%A1%88%E7%A0%94%E7%A9%B6.html" class="post-meta-item leancloud_visitors" data-flag-title="多环境下的Kubernetes网络打通方案研究" title="阅读次数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span class="leancloud-visitors-count"></span>
+    </span>
 </div>
 
         </div>
@@ -237,12 +247,12 @@
 </ol>
 <h3 id="场景一、注册中心eureka的应用"><a href="#场景一、注册中心eureka的应用" class="headerlink" title="场景一、注册中心eureka的应用"></a>场景一、注册中心eureka的应用</h3><p>首先eureka可以使用StatefulSet的方式，实现一个集群的部署。以下文件可以直接使用：</p>
 <ul>
-<li>服务配置文件 <a target="_blank" rel="noopener" href="https://img.mknight.cn/k8s/eureka/eureka-svc-np.yaml">https://img.mknight.cn/k8s/eureka/eureka-svc-np.yaml</a></li>
-<li>StatefulSet 文件 <a target="_blank" rel="noopener" href="https://img.mknight.cn/k8s/eureka/eureka-sts.yaml">https://img.mknight.cn/k8s/eureka/eureka-sts.yaml</a></li>
-<li>Service 文件 <a target="_blank" rel="noopener" href="https://img.mknight.cn/k8s/eureka/eureka-svc-np.yaml">https://img.mknight.cn/k8s/eureka/eureka-svc-np.yaml</a></li>
+<li>服务配置文件 <a target="_blank" rel="noopener" href="https://img.econow.cn/k8s/eureka/eureka-svc-np.yaml">https://img.econow.cn/k8s/eureka/eureka-svc-np.yaml</a></li>
+<li>StatefulSet 文件 <a target="_blank" rel="noopener" href="https://img.econow.cn/k8s/eureka/eureka-sts.yaml">https://img.econow.cn/k8s/eureka/eureka-sts.yaml</a></li>
+<li>Service 文件 <a target="_blank" rel="noopener" href="https://img.econow.cn/k8s/eureka/eureka-svc-np.yaml">https://img.econow.cn/k8s/eureka/eureka-svc-np.yaml</a></li>
 </ul>
 <h4 id="1-办公网访问应用"><a href="#1-办公网访问应用" class="headerlink" title="1. 办公网访问应用"></a>1. 办公网访问应用</h4><p>开发人员本地访问的时候可以使用NodePort的方式访问，也可以使用Ingress的方式访问。</p>
-<p><img src="https://img.mknight.cn/medivh/1651052056989.png" alt="1651052056989.png"></p>
+<p><img src="https://img.econow.cn/medivh/1651052056989.png" alt="1651052056989.png"></p>
 <p>如图所示，创建了两个Python的应用，并注册到eureka。代码如下：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/python</span></span><br><span class="line"><span class="comment"># -*- coding: UTF-8 -*-</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">@time:2022/04/27</span></span><br><span class="line"><span class="string">@file:test_eureka.py</span></span><br><span class="line"><span class="string">@author:medivh</span></span><br><span class="line"><span class="string">@IDE:PyCharm </span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask</span><br><span class="line"><span class="keyword">import</span> py_eureka_client.eureka_client <span class="keyword">as</span> eureka_client</span><br><span class="line"></span><br><span class="line">app = Flask(__name__)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">setEureka</span>():</span><br><span class="line">    eureka_client.init(eureka_server=<span class="string">&quot;http://192.168.1.217:31331/eureka&quot;</span>,</span><br><span class="line">                       app_name=<span class="string">&quot;flask_server-2&quot;</span>,</span><br><span class="line">                       <span class="comment"># 当前组件的主机名，可选参数，如果不填写会自动计算一个，如果服务和 eureka 服务器部署在同一台机器，请必须填写，否则会计算出 127.0.0.1</span></span><br><span class="line">                       instance_host=<span class="string">&#x27;10.1.3.141&#x27;</span>,</span><br><span class="line">                       instance_port=<span class="number">5001</span>,</span><br><span class="line">                       <span class="comment"># 调用其他服务时的高可用策略，可选，默认为随机</span></span><br><span class="line">                       ha_strategy=eureka_client.HA_STRATEGY_RANDOM)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">setEureka()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">hello_world</span>():</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;Hello World!&#x27;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/info&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">hello_info</span>():</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;Hello Info!&#x27;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    app.run(debug=<span class="literal">True</span>, threaded=<span class="literal">True</span>, port=<span class="number">5001</span>, host=<span class="string">&quot;0.0.0.0&quot;</span>)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
@@ -289,7 +299,7 @@
 <h5 id="setps-2"><a href="#setps-2" class="headerlink" title="setps 2"></a>setps 2</h5><p>在办公网的出口路由上设置静态路由，将集群的Pod和Service网段，路由到master节点。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 在路由器上需要做的配置：</span></span><br><span class="line">ip route add -net  10.200.0.0/16 gw 192.168.1.109</span><br><span class="line">ip route add -net  10.96.0.0/12 gw 192.168.1.109</span><br></pre></td></tr></table></figure>
 
-<p><img src="https://img.mknight.cn/medivh/1651115644098.png" alt="1651115644098.png"></p>
+<p><img src="https://img.econow.cn/medivh/1651115644098.png" alt="1651115644098.png"></p>
 <h5 id="setps-3"><a href="#setps-3" class="headerlink" title="setps 3"></a>setps 3</h5><p>这个时候在办公网主机上<code>ping</code> 集群中的Pod或者service的IP，理论上就是通的。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Pod </span></span><br><span class="line">➜  ~ traceroute 10.200.96.148</span><br><span class="line">traceroute to 10.200.96.148 (10.200.96.148), 64 hops max, 52 byte packets</span><br><span class="line"> 1  10.1.3.1 (10.1.3.1)  2.781 ms  2.422 ms  2.388 ms</span><br><span class="line"> 2  bogon (192.168.1.109)  2.723 ms  3.352 ms  3.647 ms</span><br><span class="line"> 3  bogon (10.200.96.128)  3.724 ms  3.485 ms  3.417 ms</span><br><span class="line"> 4  10.200.96.148 (10.200.96.148)  3.551 ms  3.440 ms  3.390 ms</span><br><span class="line"></span><br><span class="line"> <span class="comment"># service </span></span><br><span class="line"></span><br><span class="line"> ➜  ~ traceroute 10.96.230.195</span><br><span class="line">traceroute to 10.96.230.195 (10.96.230.195), 64 hops max, 52 byte packets</span><br><span class="line"> 1  10.1.3.1 (10.1.3.1)  5.698 ms  2.482 ms  2.375 ms</span><br><span class="line"> 2  10.96.230.195 (10.96.230.195)  2.774 ms  2.807 ms  2.834 ms</span><br></pre></td></tr></table></figure>
 
@@ -338,7 +348,7 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 办公网</span></span><br><span class="line">➜  ~ traceroute 10.100.5.7</span><br><span class="line">traceroute to 10.100.5.7 (10.100.5.7), 64 hops max, 52 byte packets</span><br><span class="line"> 1  bogon (10.1.3.1)  2.699 ms  2.201 ms  2.140 ms</span><br><span class="line"> 2  *.demo.yourdomain.com (192.168.1.243)  2.213 ms  7.957 ms  7.389 ms</span><br><span class="line"> 3  bogon (10.100.5.0)  2.902 ms  4.637 ms  2.616 ms</span><br><span class="line"> 4  bogon (10.100.5.7)  4.109 ms  3.944 ms  2.782 ms</span><br><span class="line"></span><br><span class="line"> <span class="comment"># A集群到B集群</span></span><br><span class="line">~ tracepath 10.100.5.7</span><br><span class="line"> 1?: [LOCALHOST]                                         pmtu 1500</span><br><span class="line"> 1:  gateway                                               0.365ms</span><br><span class="line"> 1:  gateway                                               2.044ms</span><br><span class="line"> 2:  192.168.1.243                                         0.767ms</span><br><span class="line"> 3:  192.168.1.243                                         0.848ms pmtu 1450</span><br><span class="line"> 3:  10.100.5.0                                            1.536ms</span><br><span class="line"> 4:  10.100.5.7                                            1.382ms reached</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 <p>办公网通过注册中心调用</p>
-<p><img src="https://img.mknight.cn/medivh/1651117439545.png" alt="1651117439545.png"></p>
+<p><img src="https://img.econow.cn/medivh/1651117439545.png" alt="1651117439545.png"></p>
 <h3 id="以域名形式访问Service"><a href="#以域名形式访问Service" class="headerlink" title="以域名形式访问Service"></a>以域名形式访问Service</h3><p>实现了办公网和集群的网络互通后，就可以实现自由访问Pod和Service了。但是由于Pod IP会经常变化，Service IP也不是很容易记住，所以希望通过内网DNS的形式访问<code>*.cluser.local</code>时自动解析相应的IP。</p>
 <h4 id="steps-1-获取coredns的IP"><a href="#steps-1-获取coredns的IP" class="headerlink" title="steps 1. 获取coredns的IP"></a>steps 1. 获取coredns的IP</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">~ kubectl get svc -n kube-system -l k8s-app=kube-dns</span><br><span class="line">NAME       TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)                  AGE</span><br><span class="line">kube-dns   ClusterIP   10.96.0.10   &lt;none&gt;        53/UDP,53/TCP,9153/TCP   34d</span><br></pre></td></tr></table></figure>
 
@@ -366,21 +376,39 @@
     
 
     <footer class="post-footer">
+          <div class="reward-container">
+  <div>请我一杯咖啡吧！</div>
+  <button>
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/wechatpay.png" alt="medivh 微信">
+        <span>微信</span>
+      </div>
+      <div>
+        <img src="/images/alipay.png" alt="medivh 支付宝">
+        <span>支付宝</span>
+      </div>
+
+  </div>
+</div>
+
           <div class="post-tags">
-              <a href="/tags/Kubernetes/" rel="tag"># Kubernetes</a>
+              <a href="/tags/Kubernetes/" rel="tag"><i class="fa fa-tag"></i> Kubernetes</a>
           </div>
 
         
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/OpenFalcon%20CentOS%207.2%E9%83%A8%E7%BD%B2.html" rel="prev" title="OpenFalcon CentOS 7.2部署">
-                  <i class="fa fa-angle-left"></i> OpenFalcon CentOS 7.2部署
+                <a href="/%E5%85%B3%E4%BA%8E%E5%AF%B9Flask%E7%9A%84%E7%90%86%E8%A7%A3%E5%92%8C%E8%AE%B0%E5%BD%95.html" rel="prev" title="Flask 学习">
+                  <i class="fa fa-angle-left"></i> Flask 学习
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/Redis%E9%9B%86%E7%BE%A4%E6%8A%80%E6%9C%AF%E6%BC%94%E5%8F%98.html" rel="next" title="Redis集群技术演变">
-                  Redis集群技术演变 <i class="fa fa-angle-right"></i>
+                <a href="/%E5%85%B3%E4%BA%8E%E5%8D%8F%E7%A8%8B%E7%9A%84%E8%AE%A4%E7%9F%A5.html" rel="next" title="关于协程的认知">
+                  关于协程的认知 <i class="fa fa-angle-right"></i>
                 </a>
             </div>
           </div>
@@ -439,6 +467,8 @@
   
 
 
+  <script class="next-config" data-name="leancloud_visitors" type="application/json">{"enable":true,"app_id":"g1GwilqmVAUne2tDEDncEChG-gzGzoHsz","app_key":"YB2e5dSKMmMYYCtaSzxp9fdS","server_url":null,"security":true}</script>
+  <script src="/js/third-party/statistics/lean-analytics.js"></script>
 
 
 
