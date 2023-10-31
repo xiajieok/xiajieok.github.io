@@ -254,7 +254,7 @@
     
     <div class="post-body" itemprop="articleBody"><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>上一篇介绍了 StatefulSet 的基础原理，但是只使用了应用之一的拓扑状态。这一篇将会介绍使用存储状态。</p>
 <h3 id="应用背景"><a href="#应用背景" class="headerlink" title="应用背景"></a>应用背景</h3><p>应用的多个实例分别绑定了不同的存储数据。典型例子就是一个数据库应用的多个存储实例。StatefulSet 的核心功能就是通过某种方式记录这些状态，然后在Pod被重新创建时，能够为新Pod恢复这些状态。比较典型之一，Redis的主从架构。</p>
-<h3 id="知识点解析"><a href="#知识点解析" class="headerlink" title="知识点解析"></a>知识点解析</h3><h4 id="主从架构"><a href="#主从架构" class="headerlink" title="主从架构"></a>主从架构</h4><p><img data-src="https://img.econow.cn/medivh/1649409054685.png" alt="1649409054685.png"></p>
+<h3 id="知识点解析"><a href="#知识点解析" class="headerlink" title="知识点解析"></a>知识点解析</h3><h4 id="主从架构"><a href="#主从架构" class="headerlink" title="主从架构"></a>主从架构</h4><p><img src="https://img.econow.cn/medivh/1649409054685.png" alt="1649409054685.png"></p>
 <p>当我们启动多个redis实例的时候，他们相互之间就可以通过slaveof 命令形成主库和从库关系，之后会按照三个阶段完成数据的第一次同步。</p>
 <ol>
 <li>第一阶段是主从库间建立连接、协商同步的过程，主要是为全量复制做准备。在这一步，从库和主库建立连接，并告诉主库即将建立连接，主库确认回复后，主从库间就可以开始同步了。</li>

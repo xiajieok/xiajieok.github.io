@@ -274,7 +274,7 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g hexo-cli</span><br></pre></td></tr></table></figure>
 
 <p>官方说的，强烈建议永远安装最新版本的 Hexo，以及 推荐的 Node.js 版本。</p>
-<img data-src="https://img.econow.cn/medivh/1610785615949.png"  />
+<img src="https://img.econow.cn/medivh/1610785615949.png"  />
 
 <h2 id="建站"><a href="#建站" class="headerlink" title="建站"></a>建站</h2><p>安装完 Hexo 完成后，请执行下列命令，Hexo 将会在指定文件夹中新建所需要的文件。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> &lt;folder&gt;</span><br><span class="line">hexo init</span><br></pre></td></tr></table></figure>
@@ -283,16 +283,16 @@
 <li>source 资源文件夹是存放用户资源的地方。除<code>_posts</code>文件夹之外，开头命名为<code>_</code> (下划线)的文件 &#x2F; 文件夹和隐藏的文件将会被忽略。Markdown 和 HTML 文件会被解析并放到 public 文件夹，而其他文件会被拷贝过去。</li>
 <li>themes 主题 文件夹。Hexo 会根据主题来生成静态页面。</li>
 </ul>
-<h3 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h3><h4 id="网站"><a href="#网站" class="headerlink" title="网站"></a>网站</h4><img data-src="https://img.econow.cn/medivh/1610789448691.png"/>
+<h3 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h3><h4 id="网站"><a href="#网站" class="headerlink" title="网站"></a>网站</h4><img src="https://img.econow.cn/medivh/1610789448691.png"/>
 
-<h4 id="网址"><a href="#网址" class="headerlink" title="网址"></a>网址</h4><img data-src="https://img.econow.cn/medivh/1610789480090.png"/>
+<h4 id="网址"><a href="#网址" class="headerlink" title="网址"></a>网址</h4><img src="https://img.econow.cn/medivh/1610789480090.png"/>
 
-<h4 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h4><img data-src="https://img.econow.cn/medivh/1610789507680.png"  />
+<h4 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h4><img src="https://img.econow.cn/medivh/1610789507680.png"  />
 
 <blockquote>
 <p>如果您刚刚开始接触 Hexo，通常没有必要修改这一部分的值。</p>
 </blockquote>
-<h4 id="文章"><a href="#文章" class="headerlink" title="文章"></a>文章</h4><img data-src="https://img.econow.cn/medivh/1610789600428.png"/>
+<h4 id="文章"><a href="#文章" class="headerlink" title="文章"></a>文章</h4><img src="https://img.econow.cn/medivh/1610789600428.png"/>
 
 <blockquote>
 <p>相对地址<br>默认情况下，Hexo 生成的超链接都是绝对地址。例如，如果您的网站域名为 example.com,您有一篇文章名为 hello，那么绝对链接可能像这样：<code>http://example.com/hello.html</code>，它是绝对于域名的。相对链接像这样：&#x2F;hello.html，也就是说，无论用什么域名访问该站点，都没有关系，这在进行反向代理时可能用到。通常情况下，建议使用绝对地址。</p>
@@ -320,7 +320,7 @@
 <li>打开浏览器开发者工具，查看 search.xml 状态，文件存在</li>
 <li>浏览器访问域名+search.xml，提示报错信息</li>
 </ul>
-<img data-src="https://img.econow.cn/medivh/1610790341444.png"  />
+<img src="https://img.econow.cn/medivh/1610790341444.png"  />
 
 <ul>
 <li>根据报错提示，在控制台定位具体文章标题</li>
@@ -329,7 +329,7 @@
 <h4 id="优化方案"><a href="#优化方案" class="headerlink" title="优化方案"></a>优化方案</h4><p>在使用过程中，search.xml文件报错的机率越来越高，有没有个好的方法一劳永逸呢？是的，使用JSON。更改文件后缀为JSON即可。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 修改_config.yml</span></span><br><span class="line">search:</span><br><span class="line">  path: search.json</span><br><span class="line">  field: post</span><br><span class="line">  format: html</span><br><span class="line">  <span class="built_in">limit</span>: 10000</span><br><span class="line">  content: <span class="literal">true</span></span><br></pre></td></tr></table></figure>
 
-<h3 id="valine-js加载慢"><a href="#valine-js加载慢" class="headerlink" title="valine.js加载慢"></a>valine.js加载慢</h3><p>获取最新的 Valine.min.js 获取地址：<a href="%5Bhttps://www.jsdelivr.com/package/npm/valine">https://www.jsdelivr.com/package/npm/valine</a><br><img data-src="https://img.econow.cn/medivh/1659346848336.png" alt="1659346848336.png"><br>拿到URL之后修改文件，替换链接即可：</p>
+<h3 id="valine-js加载慢"><a href="#valine-js加载慢" class="headerlink" title="valine.js加载慢"></a>valine.js加载慢</h3><p>获取最新的 Valine.min.js 获取地址：<a href="%5Bhttps://www.jsdelivr.com/package/npm/valine">https://www.jsdelivr.com/package/npm/valine</a><br><img src="https://img.econow.cn/medivh/1659346848336.png" alt="1659346848336.png"><br>拿到URL之后修改文件，替换链接即可：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">vim themes/next/layout/_third-party/comments/valine.swig</span><br><span class="line"><span class="comment"># 更改为</span></span><br><span class="line">&#123;% <span class="built_in">set</span> valine_uri = <span class="string">&#x27;//cdn.jsdelivr.net/npm/valine@1.5.1/dist/Valine.min.js&#x27;</span> %&#125;</span><br></pre></td></tr></table></figure>
 
     </div>

@@ -276,10 +276,10 @@
 <li>cluster.local为Cluster Domain</li>
 </ul>
 <p>图解</p>
-<p><img data-src="https://img.econow.cn/medivh/1649399502095.png" alt="1649399502095.png"></p>
-<h4 id="扩容"><a href="#扩容" class="headerlink" title="扩容"></a>扩容</h4><p><img data-src="https://img.econow.cn/medivh/1649399564902.png" alt="1649399564902.png"></p>
-<h4 id="收缩"><a href="#收缩" class="headerlink" title="收缩"></a>收缩</h4><p><img data-src="https://img.econow.cn/medivh/1649399581462.png" alt="1649399581462.png"></p>
-<h4 id="持久卷的创建和删除"><a href="#持久卷的创建和删除" class="headerlink" title="持久卷的创建和删除"></a>持久卷的创建和删除</h4><p><img data-src="https://img.econow.cn/medivh/1649399652857.png" alt="1649399652857.png"></p>
+<p><img src="https://img.econow.cn/medivh/1649399502095.png" alt="1649399502095.png"></p>
+<h4 id="扩容"><a href="#扩容" class="headerlink" title="扩容"></a>扩容</h4><p><img src="https://img.econow.cn/medivh/1649399564902.png" alt="1649399564902.png"></p>
+<h4 id="收缩"><a href="#收缩" class="headerlink" title="收缩"></a>收缩</h4><p><img src="https://img.econow.cn/medivh/1649399581462.png" alt="1649399581462.png"></p>
+<h4 id="持久卷的创建和删除"><a href="#持久卷的创建和删除" class="headerlink" title="持久卷的创建和删除"></a>持久卷的创建和删除</h4><p><img src="https://img.econow.cn/medivh/1649399652857.png" alt="1649399652857.png"></p>
 <ol>
 <li>增加副本时，会创建对应的pvc；</li>
 <li>减少副本时，从高索引值的Pod名开始删除Pod，但是PVC不会被删除，需要手动释放；</li>
@@ -341,7 +341,7 @@
 <p>创建完成后会出现三个带序号的Pod和statfulSet，这个时候请求<code>eureka.default.svc.cluster.local</code>就可以使用服务了。但是如果想在集群外访问，可以使用nodeport的方式暴露。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">apiVersion: v1</span><br><span class="line">kind: Service</span><br><span class="line">metadata:</span><br><span class="line">  name: eureka-node-port</span><br><span class="line">spec:</span><br><span class="line">  <span class="built_in">type</span>: NodePort</span><br><span class="line">  ports:</span><br><span class="line">  - port: 31331</span><br><span class="line">    targetPort: 8761</span><br><span class="line">    nodePort: 31331</span><br><span class="line">  selector:</span><br><span class="line">    app: eureka-pod</span><br></pre></td></tr></table></figure>
 
-<p><img data-src="https://img.econow.cn/medivh/1649398888400.png" alt="1649398888400.png"></p>
+<p><img src="https://img.econow.cn/medivh/1649398888400.png" alt="1649398888400.png"></p>
 <h2 id="案例分析"><a href="#案例分析" class="headerlink" title="案例分析"></a>案例分析</h2><h3 id="headless-service和普通service的区别"><a href="#headless-service和普通service的区别" class="headerlink" title="headless service和普通service的区别"></a>headless service和普通service的区别</h3><ul>
 <li>headless 不分配clusterIP，配置<code>clusterIP: None</code></li>
 <li>headless service可以通过解析service的DNS，返回所有Pod的地址和DNS</li>

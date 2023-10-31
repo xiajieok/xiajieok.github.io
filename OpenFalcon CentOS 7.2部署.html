@@ -264,7 +264,7 @@
     
     
     <div class="post-body" itemprop="articleBody"><h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>OpenFalcon是一款企业级、高可用、可扩展的开源监控解决方案。</p>
-<img data-src="https://img.econow.cn/2018/1539584391262.png" width="1013"/>
+<img src="https://img.econow.cn/2018/1539584391262.png" width="1013"/>
 
 <h2 id="环境准备"><a href="#环境准备" class="headerlink" title="环境准备"></a>环境准备</h2><p>当前平台相关组件部署在OAM主机，其余主机均部署agent.</p>
 <h3 id="redis"><a href="#redis" class="headerlink" title="redis"></a>redis</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install -y redis</span><br></pre></td></tr></table></figure>
@@ -289,27 +289,27 @@
 <blockquote>
 <p>小提示：注册账号能够被任何打开dashboard页面的人注册，所以当给相关的人注册完账号后，需要去关闭注册账号功能。只需要去修改api组件的配置文件cfg.json，将signup_disable配置项修改为true，重启api即可。当需要给人开账号的时候，再将配置选项改回去，用完再关掉即可。</p>
 </blockquote>
-<h2 id="初次使用"><a href="#初次使用" class="headerlink" title="初次使用"></a>初次使用</h2><h3 id="注册管理员账号"><a href="#注册管理员账号" class="headerlink" title="注册管理员账号"></a>注册管理员账号</h3><p>访问dashboard主机8081端口，点击”sign up”<br><img data-src="https://img.econow.cn/2018/1539585168733.png" width="1229"/></p>
+<h2 id="初次使用"><a href="#初次使用" class="headerlink" title="初次使用"></a>初次使用</h2><h3 id="注册管理员账号"><a href="#注册管理员账号" class="headerlink" title="注册管理员账号"></a>注册管理员账号</h3><p>访问dashboard主机8081端口，点击”sign up”<br><img src="https://img.econow.cn/2018/1539585168733.png" width="1229"/></p>
 <p>用户名必须为root</p>
-<img data-src="https://img.econow.cn/2018/1539585230624.png" width="397"/>
+<img src="https://img.econow.cn/2018/1539585230624.png" width="397"/>
 
-<h3 id="个人信息维护"><a href="#个人信息维护" class="headerlink" title="个人信息维护"></a>个人信息维护</h3><p>注意填写邮箱地址和IM信息，IM部分可以写微信号，这些信息为以后的报警通知使用。<br><img data-src="https://img.econow.cn/2018/1539585311738.png" width="1232"/></p>
+<h3 id="个人信息维护"><a href="#个人信息维护" class="headerlink" title="个人信息维护"></a>个人信息维护</h3><p>注意填写邮箱地址和IM信息，IM部分可以写微信号，这些信息为以后的报警通知使用。<br><img src="https://img.econow.cn/2018/1539585311738.png" width="1232"/></p>
 <h3 id="Dashboard-使用介绍"><a href="#Dashboard-使用介绍" class="headerlink" title="Dashboard 使用介绍"></a>Dashboard 使用介绍</h3><ul>
 <li>左边的侧边栏会显示所有加入的agent主机，或者自定义的endpoint。</li>
 <li>右中间位置limit50表示显示50行内容，可以自行选择。</li>
 <li>右下方是endpiont的监控项目，选中后点击看图即可画图。</li>
 </ul>
-<img data-src="https://img.econow.cn/2018/1539585454798.png" width="1229"/>
+<img src="https://img.econow.cn/2018/1539585454798.png" width="1229"/>
 ### 画图示例
 1、选中监控项，点击选择看图视角
-<img data-src="https://img.econow.cn/2018/1539585659674.png" width="794"/>
+<img src="https://img.econow.cn/2018/1539585659674.png" width="794"/>
 2、这样图就出来啦
-<img data-src="https://img.econow.cn/2018/1539585675701.png" width="1226"/>
+<img src="https://img.econow.cn/2018/1539585675701.png" width="1226"/>
 
 <p>另外还可以自定义screen，此处不再具体介绍</p>
 <h2 id="hostgroup"><a href="#hostgroup" class="headerlink" title="hostgroup"></a>hostgroup</h2><p>简单说就是主机组，然后绑定模板<br>hostgroup-》Add host</p>
 <h2 id="template"><a href="#template" class="headerlink" title="template"></a>template</h2><p>Like this.</p>
-<img data-src="https://img.econow.cn/2018/1539589162286.png" width="1222"/>
+<img src="https://img.econow.cn/2018/1539589162286.png" width="1222"/>
 
 <h2 id="监控使用"><a href="#监控使用" class="headerlink" title="监控使用"></a>监控使用</h2><p>参考  <a target="_blank" rel="noopener" href="http://book.open-falcon.org/zh_0_2/usage/getting-started.html">http://book.open-falcon.org/zh_0_2&#x2F;usage&#x2F;getting-started.html</a></p>
 <h2 id="报警组件"><a href="#报警组件" class="headerlink" title="报警组件"></a>报警组件</h2><p>报警部分分为邮件和微信报警，其中微信报警。启动邮件报警部分有点特殊，因为阿里云机器默认是不允许开发25端口的，因此只能使用ssl的456端口。但是问题又来了，官方的组件不支持ssl。因此对于这个问题只能是重新编译。</p>
@@ -326,12 +326,12 @@
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl http://$ip:4000/sender/mail -d &quot;tos=a@a.com&amp;subject=xx&amp;content=yy&quot;</span><br></pre></td></tr></table></figure>
 <h3 id="微信"><a href="#微信" class="headerlink" title="微信"></a>微信</h3><p><a target="_blank" rel="noopener" href="https://github.com/Yanjunhui/chat.git">https://github.com/Yanjunhui/chat.git</a></p>
 <h4 id="一-申请企业号"><a href="#一-申请企业号" class="headerlink" title="一.申请企业号"></a>一.申请企业号</h4><p>以个人邮箱申请就可以, 不通过企业认证的话,有200人的限制,一般足够用了</p>
-<h4 id="二-获取对接权限"><a href="#二-获取对接权限" class="headerlink" title="二.获取对接权限"></a>二.获取对接权限</h4><h5 id="1、获取corpid"><a href="#1、获取corpid" class="headerlink" title="1、获取corpid"></a>1、获取corpid</h5><p>登录后,我的企业 —-&gt; 企业信息 –&gt; CorpID<br><img data-src="https://img.econow.cn/2018/1539593796324.png" width="901"/><br>将 CorpID 配置到配置文件 config.conf 内 的 CorpID</p>
-<h5 id="2、开启回调模式获取key"><a href="#2、开启回调模式获取key" class="headerlink" title="2、开启回调模式获取key"></a>2、开启回调模式获取key</h5><p>登录后,顶部菜单[企业应用] —-&gt; 添加应用<br>进入新添加的应用<br>拿到 AgentId 和 Secret<br><img data-src="https://img.econow.cn/2018/1539593870748.png" width="536"/></p>
-<h5 id="3、关注微信公众号"><a href="#3、关注微信公众号" class="headerlink" title="3、关注微信公众号"></a>3、关注微信公众号</h5><p>使用微信关注企业号才可以从微信收到信息,否则只能从微信企业号 APP 中收到信息<br><img data-src="https://img.econow.cn/2018/1539594107364.png" width="845"/></p>
+<h4 id="二-获取对接权限"><a href="#二-获取对接权限" class="headerlink" title="二.获取对接权限"></a>二.获取对接权限</h4><h5 id="1、获取corpid"><a href="#1、获取corpid" class="headerlink" title="1、获取corpid"></a>1、获取corpid</h5><p>登录后,我的企业 —-&gt; 企业信息 –&gt; CorpID<br><img src="https://img.econow.cn/2018/1539593796324.png" width="901"/><br>将 CorpID 配置到配置文件 config.conf 内 的 CorpID</p>
+<h5 id="2、开启回调模式获取key"><a href="#2、开启回调模式获取key" class="headerlink" title="2、开启回调模式获取key"></a>2、开启回调模式获取key</h5><p>登录后,顶部菜单[企业应用] —-&gt; 添加应用<br>进入新添加的应用<br>拿到 AgentId 和 Secret<br><img src="https://img.econow.cn/2018/1539593870748.png" width="536"/></p>
+<h5 id="3、关注微信公众号"><a href="#3、关注微信公众号" class="headerlink" title="3、关注微信公众号"></a>3、关注微信公众号</h5><p>使用微信关注企业号才可以从微信收到信息,否则只能从微信企业号 APP 中收到信息<br><img src="https://img.econow.cn/2018/1539594107364.png" width="845"/></p>
 <h4 id="三、使用"><a href="#三、使用" class="headerlink" title="三、使用"></a>三、使用</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone https://www.github.com/yanjunhui/chat.git</span><br></pre></td></tr></table></figure>
 
-<h4 id="修改chat配置文件"><a href="#修改chat配置文件" class="headerlink" title="修改chat配置文件"></a>修改chat配置文件</h4><img data-src="https://img.econow.cn/2018/1539594319320.png" width="479"/>
+<h4 id="修改chat配置文件"><a href="#修改chat配置文件" class="headerlink" title="修改chat配置文件"></a>修改chat配置文件</h4><img src="https://img.econow.cn/2018/1539594319320.png" width="479"/>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">#http 服务端口</span><br><span class="line">[http]</span><br><span class="line">port = 4567</span><br><span class="line"></span><br><span class="line">#微信接口信息</span><br><span class="line">[weixin]</span><br><span class="line">CorpID = xxxxxx</span><br><span class="line">#ID 应用ID</span><br><span class="line">AgentId = 1   </span><br><span class="line"># Secret</span><br><span class="line">Secret = xxxxxxx</span><br><span class="line">#最后一个无所谓</span><br><span class="line">EncodingAESKey = wodH5dMSQtlfySHED5dkk6dF7saukFpPxlwhWRsVeEn</span><br></pre></td></tr></table></figure>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">打开目录 cd chat</span><br><span class="line">启动 ./control.sh start</span><br><span class="line">停止 ./control.sh stop</span><br><span class="line">重启 ./control.sh restart</span><br><span class="line">状态 ./control.sh status</span><br></pre></td></tr></table></figure>
 

@@ -262,12 +262,12 @@
 <p>加入集群</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -d swarm join -addr=192.168.1.228:2379  token://a253407f93a759e7b1d69a49cf669732</span><br></pre></td></tr></table></figure>
 <h4 id="方法二"><a href="#方法二" class="headerlink" title="方法二"></a>方法二</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker swarm init --advertise-addr 192.168.1.228</span><br></pre></td></tr></table></figure>
-<img data-src="https://img.econow.cn/medivh/1546500467791.png" />
+<img src="https://img.econow.cn/medivh/1546500467791.png" />
 使用下面一段，在其它节点上执行加入集群
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker swarm join --token SWMTKN-1-1g17yyrfepskeffufewmgfiewffqemcc8kjsy9x1zbjucqu4ms-dcp6ub8tjc2yq6bh7qbhs926e 192.168.1.228:2377</span><br></pre></td></tr></table></figure>
 ### 检查
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker node ls</span><br></pre></td></tr></table></figure>
-<img data-src="https://img.econow.cn/medivh/1546500808458.png" />
+<img src="https://img.econow.cn/medivh/1546500808458.png" />
 
 <h2 id="集群管理"><a href="#集群管理" class="headerlink" title="集群管理"></a>集群管理</h2><p>离开集群</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker swarm leave</span><br></pre></td></tr></table></figure>
@@ -275,15 +275,15 @@
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">docker stack deploy -c ws.yml  sys01</span><br><span class="line"></span><br><span class="line">-c 指定yaml文件</span><br><span class="line">name stack 名称</span><br></pre></td></tr></table></figure>
 <p>检查</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker stack ls</span><br></pre></td></tr></table></figure>
-<img data-src="https://img.econow.cn/medivh/1546933824902.png" />
+<img src="https://img.econow.cn/medivh/1546933824902.png" />
 
 <p>stack 详细信息</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker stack ps sys01</span><br></pre></td></tr></table></figure>
-<img data-src="https://img.econow.cn/medivh/1546933878894.png" />
+<img src="https://img.econow.cn/medivh/1546933878894.png" />
 
 <p>检查service</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker service ls</span><br></pre></td></tr></table></figure>
-<img data-src="https://img.econow.cn/medivh/1546933935686.png" />
+<img src="https://img.econow.cn/medivh/1546933935686.png" />
 
 <p>删除</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker stack rm sys01</span><br><span class="line">docker service rm xxxx</span><br></pre></td></tr></table></figure>

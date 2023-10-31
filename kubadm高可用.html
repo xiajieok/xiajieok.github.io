@@ -289,7 +289,7 @@
 <blockquote>
 <p>该命令指定了初始化时需要使用的配置文件，其中添加–upload-certs参数可以在后续执行加入节点时自动分发证书文件。<br>低版本注意使用–experimental-upload-certs。</p>
 </blockquote>
-<p><img data-src="evernotecid://2D277EDE-88BA-4DB6-AE12-A2B952C4D28E/appyinxiangcom/3119051/ENResource/p3036" alt="c6e534cbec32dfef14cfc2bb8f027c9e.png"></p>
+<p><img src="evernotecid://2D277EDE-88BA-4DB6-AE12-A2B952C4D28E/appyinxiangcom/3119051/ENResource/p3036" alt="c6e534cbec32dfef14cfc2bb8f027c9e.png"></p>
 <p>kubeadm init主要执行了以下操作：</p>
 <ol>
 <li>[init]：指定版本进行初始化操作</li>
@@ -346,7 +346,7 @@
 <p>k8s版本 &gt;&#x3D; v1.11<br>使用ipvs需要安装相应的工具来处理”yum install ipset ipvsadm -y“<br>确保 ipvs已经加载内核模块， ip_vs、ip_vs_rr、ip_vs_wrr、ip_vs_sh、<br>nf_conntrack_ipv4。如果这些内核模块不加载，当kube-proxy启动后，会退回到iptables模式。</p>
 <p>先前基于iptables规则表的DNAT-&gt;SNAT方式来处理外部客户端到k8s集群pod内的流量<br>和集群内部流量(cluster-ip到pod ip)，无需在宿主机上管理cluster-ip都由iptables来进行<br>管理。</p>
 <p>使用IPVS后是需要对vs(虚拟服务也就是vip)进行管理，由于IPVS的DNAT钩子挂在<br>INPUT链上，因此必须要让内核识别 VIP(cluster-ip) 是本机的 IP。k8s 通过设置将<br>service cluster ip 绑定到虚拟网卡kube-ipvs0，其中下面的10.96.x.x都是VIP，也就<br>是cluster-ip。</p>
-<p><img data-src="evernotecid://2D277EDE-88BA-4DB6-AE12-A2B952C4D28E/appyinxiangcom/3119051/ENResource/p3037" alt="9b5302edcad44e440bbb8dbb5ccb128e.png"></p>
+<p><img src="evernotecid://2D277EDE-88BA-4DB6-AE12-A2B952C4D28E/appyinxiangcom/3119051/ENResource/p3037" alt="9b5302edcad44e440bbb8dbb5ccb128e.png"></p>
 <p>kube-proxy 开启 ipvs</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install ipset ipvsadm -y</span><br></pre></td></tr></table></figure>
 

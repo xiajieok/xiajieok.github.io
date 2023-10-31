@@ -256,7 +256,7 @@
     <div class="post-body" itemprop="articleBody"><blockquote>
 <p>今天遇到了点小问题，想重构一个项目，顺便创建一个干净的数据库，但是连接失败！</p>
 </blockquote>
-<h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><p><img data-src="https://img.econow.cn/medivh/1638526336673.png" alt="1638526336673.png"></p>
+<h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><p><img src="https://img.econow.cn/medivh/1638526336673.png" alt="1638526336673.png"></p>
 <p>事实上我在终端上测试后确定账号和密码是没有问题的，因此重点查看软件和MySQL。终于仔细检查后发现是认证失败的问题。这个问题就很纳闷，咋会遇到这种问题，只好看看大家有没有遇到过。难道是Sequel Pro的问题？不应该吧，这就是一个普通的开源软件。</p>
 <h2 id="解决"><a href="#解决" class="headerlink" title="解决"></a>解决</h2><p>终于找到一篇靠谱的文章，描述了异常的原因，而不是直接说怎么解决。<br>主要原因是8.x版本的MySQL的验证机制变成了caching_sha2_password，并不是原来的mysql_native_password。问题说简单也简单，说复杂也复杂，升级个版本还有这样的问题，怪不得没有太多人愿意随便升版本。</p>
 <h3 id="方案"><a href="#方案" class="headerlink" title="方案"></a>方案</h3><p>低版本的MySQL，比如5.6，使用的时候是这样的</p>
@@ -266,7 +266,7 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ALTER USER <span class="string">&#x27;root&#x27;</span>@<span class="string">&#x27;%&#x27;</span> IDENTIFIED WITH mysql_native_password BY <span class="string">&#x27;123456&#x27;</span>;</span><br></pre></td></tr></table></figure>
 
 <p>完事,再用Sequel Pro 连接就成功了,其他工具navicat也是这么操作,一样可以连接了。</p>
-<p><img data-src="https://img.econow.cn/medivh/1638526875427.png" alt="1638526875427.png"></p>
+<p><img src="https://img.econow.cn/medivh/1638526875427.png" alt="1638526875427.png"></p>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>其实其他版本的MySQL也会有其他的问题，和低版本相比而言，之后再整理一下。<br>很快就要休假了，反而又热爱上了工作，可笑。。。<br>但愿假期一切安好吧！</p>
 
     </div>

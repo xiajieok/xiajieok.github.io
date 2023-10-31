@@ -263,7 +263,7 @@
 <blockquote>
 <p>对go语言不够熟悉，暂时无法达到阅读代码的能力，以下信息均来源于网络总结和自己的思考。</p>
 </blockquote>
-<h2 id="创建过程"><a href="#创建过程" class="headerlink" title="创建过程"></a>创建过程</h2><p><img data-src="https://img.econow.cn/medivh/1660112505748.png" alt="1660112505748.png"></p>
+<h2 id="创建过程"><a href="#创建过程" class="headerlink" title="创建过程"></a>创建过程</h2><p><img src="https://img.econow.cn/medivh/1660112505748.png" alt="1660112505748.png"></p>
 <ol>
 <li>kubectl 将创建Pod的yaml文件提交给APIServer；</li>
 <li>APIServer 收到指令通知给controller-manager创建一个资源对象；</li>

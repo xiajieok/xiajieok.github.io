@@ -310,13 +310,13 @@
 <h5 id="紧凑型主板M-ATX-24-4x-22-6cm"><a href="#紧凑型主板M-ATX-24-4x-22-6cm" class="headerlink" title="紧凑型主板M-ATX 24.4x 22.6cm"></a>紧凑型主板M-ATX 24.4x 22.6cm</h5><p>M-ATX主板，俗称紧凑型主板，也叫小板，其结构为方形，尺寸大约24.4x 22.6cm，适合小机型用户推荐。紧凑型主板正如其名，接口紧凑、物件够用。</p>
 <h5 id="迷你型主板MINI-ITX-17-0×17-0cm"><a href="#迷你型主板MINI-ITX-17-0×17-0cm" class="headerlink" title="迷你型主板MINI-ITX 17.0×17.0cm"></a>迷你型主板MINI-ITX 17.0×17.0cm</h5><p>体积迷你且设计难度大，因此骨架虽小的mini主板，价格往往比很多大号主板还贵，mini型主板并非主流装机之选。</p>
 <p>下图是一张包含大部分规格的示意图：</p>
-<p><img data-src="https://img.econow.cn/medivh/1669255122079.png" alt="1669255122079.png"></p>
+<p><img src="https://img.econow.cn/medivh/1669255122079.png" alt="1669255122079.png"></p>
 <p>而我已经拥有的主板种，其中华擎的这块属于M-ATX，但比一般的该标准的主板略小一点点。</p>
 <h4 id="主板接口"><a href="#主板接口" class="headerlink" title="主板接口"></a>主板接口</h4><p>下面是一块常规主板的展示图片。</p>
-<p><img data-src="https://img.econow.cn/medivh/1669213876000.png" alt="1669213876000.png"></p>
+<p><img src="https://img.econow.cn/medivh/1669213876000.png" alt="1669213876000.png"></p>
 <p>其中cpu插槽和cpu是一一对应的，英特尔和amd的cpu不能共用同一张主板，所以刚才介绍H310的时候注明了Intel。</p>
 <p>sata接口都是扁L形状的，装3.5寸的sata硬盘需要用两根线，分别是电源线和数据线。但是2.5寸硬盘或固态硬盘就不需要供电了，至于为什么，以后再聊。</p>
-<p><img data-src="https://img.econow.cn/medivh/1669214072351.png" alt="1669214072351.png"></p>
+<p><img src="https://img.econow.cn/medivh/1669214072351.png" alt="1669214072351.png"></p>
 <p>重要的接口就这几种，其余的也没啥可聊的，或者遇到了再说吧。</p>
 <h4 id="机箱电源"><a href="#机箱电源" class="headerlink" title="机箱电源"></a>机箱电源</h4><p>ATX电源，目前市面上销售的家用电脑电源，一般都遵循 ATX 规范。标准尺寸为 150x140x86mm。</p>
 <p>SFX电源，100×125×63.5mm。</p>
@@ -326,24 +326,24 @@
 <ul>
 <li>机械硬盘 HDD 传统硬盘，成本相对较低，读写速度较慢</li>
 </ul>
-<p><img data-src="https://img.econow.cn/medivh/1669252647401.png" alt="1669252647401.png"></p>
+<p><img src="https://img.econow.cn/medivh/1669252647401.png" alt="1669252647401.png"></p>
 <ul>
 <li>固态硬盘 SDD 相对机械硬盘，读取速度更快，寻道时间更小，可加快操作系统启动速度和软件启动速度</li>
 </ul>
-<p><img data-src="https://img.econow.cn/medivh/1669252659142.png" alt="1669252659142.png"></p>
+<p><img src="https://img.econow.cn/medivh/1669252659142.png" alt="1669252659142.png"></p>
 <ul>
 <li>混合硬盘 SSHD 机械硬盘与固态硬盘的结合体，采用容量较小的闪存颗粒用来存储常用常用文件，而磁盘才是最重要的存储介质，闪存仅起到了缓冲作用，将更多的常用文件保存到闪存内减小寻道时间，从而提升效率</li>
 </ul>
-<p><img data-src="https://img.econow.cn/medivh/1669252671070.png" alt="1669252671070.png"></p>
+<p><img src="https://img.econow.cn/medivh/1669252671070.png" alt="1669252671070.png"></p>
 <p>按接口分类：</p>
 <ul>
 <li>IDE 并口，以前的服务器用的较多，现在的使用范围极少</li>
 </ul>
-<p><img data-src="https://img.econow.cn/medivh/1669253256765.png" alt="1669253256765.png"></p>
+<p><img src="https://img.econow.cn/medivh/1669253256765.png" alt="1669253256765.png"></p>
 <ul>
 <li>SATA 串口，主流硬盘，传输速度大约是并口的30倍，PC和服务器使用场景较多</li>
 </ul>
-<p><img data-src="https://img.econow.cn/medivh/1669253265935.png" alt="1669253265935.png"></p>
+<p><img src="https://img.econow.cn/medivh/1669253265935.png" alt="1669253265935.png"></p>
 <ul>
 <li>SAS 是并行SCSI接口之后开发出的全新接口。此接口的设计是为了改善存储系统的效能、可用性和扩充性，并且提供与SATA硬盘的兼容性，主要应用场景在服务器。</li>
 </ul>
@@ -400,7 +400,7 @@
 </li>
 </ul>
 <h4 id="J1900"><a href="#J1900" class="headerlink" title="J1900"></a>J1900</h4><p>这是一台多年前年少无知高价买的小主机，很久没用过了。</p>
-<p><img data-src="https://img.econow.cn/medivh/1669194302147.png" alt="1669194302147.png"></p>
+<p><img src="https://img.econow.cn/medivh/1669194302147.png" alt="1669194302147.png"></p>
 <p>该主机功耗很小，大约只有10W。但是这个机箱实在太小了，只适合安装2~3块2.5寸硬盘或者固态硬盘，并且只有一个内存插槽。这样就导致扩展能力很弱，虽然还有一个msata接口，但是整体来说磁盘和内存扩容的成本很高。所以，这台小主机就有点鸡肋了，索性就放在一边需要的时候再拆零件吧。</p>
 <h4 id="华擎-H310CM-HDV"><a href="#华擎-H310CM-HDV" class="headerlink" title="华擎 H310CM-HDV"></a>华擎 H310CM-HDV</h4><p>这块主板不错，对于组装NAS来说，提供的接口：</p>
 <ul>
@@ -452,23 +452,23 @@
 </tbody></table>
 <p>特别漂亮的一款机箱，乔伯斯N1支持1+5盘位，就是价格有点不美丽，得6百多左右。</p>
 <p>其实对于机箱来说只要主板放的下，硬盘的摆放位置并不局限于机箱的硬盘位，完全可以使用硬盘支架等方式来灵活摆放。</p>
-<p><img data-src="https://img.econow.cn/medivh/1669259101960.png" alt="1669259101960.png"></p>
+<p><img src="https://img.econow.cn/medivh/1669259101960.png" alt="1669259101960.png"></p>
 <p>最终选择的是金河田N1一番魔改后，装上6~8块盘不成问题。小黄鱼上虽然价格低，但基本都得自提，快递不合适。PDD上的价格还行，到手100出头。</p>
-<p><img data-src="https://img.econow.cn/medivh/1669259440233.png" alt="1669259440233.png"></p>
-<p><img data-src="https://img.econow.cn/medivh/1669259453509.png" alt="1669259453509.png"></p>
-<p><img data-src="https://img.econow.cn/medivh/1669259478218.png" alt="1669259478218.png"></p>
-<h2 id="装机"><a href="#装机" class="headerlink" title="装机"></a>装机</h2><p><img data-src="https://img.econow.cn/medivh/1669259885359.png" alt="1669259885359.png"></p>
+<p><img src="https://img.econow.cn/medivh/1669259440233.png" alt="1669259440233.png"></p>
+<p><img src="https://img.econow.cn/medivh/1669259453509.png" alt="1669259453509.png"></p>
+<p><img src="https://img.econow.cn/medivh/1669259478218.png" alt="1669259478218.png"></p>
+<h2 id="装机"><a href="#装机" class="headerlink" title="装机"></a>装机</h2><p><img src="https://img.econow.cn/medivh/1669259885359.png" alt="1669259885359.png"></p>
 <p>电源的规格其实不太适合手头上有的这个STX电源，没办法，只能找东西在下面撑住。</p>
-<p><img data-src="https://img.econow.cn/medivh/1669259893408.png" alt="1669259893408.png"></p>
+<p><img src="https://img.econow.cn/medivh/1669259893408.png" alt="1669259893408.png"></p>
 <p>手里暂时只有一块硬盘，之后有了新的再装上。</p>
-<p><img data-src="https://img.econow.cn/medivh/1669259903256.png" alt="1669259903256.png"></p>
+<p><img src="https://img.econow.cn/medivh/1669259903256.png" alt="1669259903256.png"></p>
 <p>走线有点凌乱，但是先点亮再说吧。</p>
 <p>安装完成的背板。</p>
-<p><img data-src="https://img.econow.cn/medivh/1669259910747.png" alt="1669259910747.png"></p>
+<p><img src="https://img.econow.cn/medivh/1669259910747.png" alt="1669259910747.png"></p>
 <p>接线的时候大部分接口都没啥问题，但是机箱的电源线就有点复杂了，可以参考说明书。好在主板上会有说明：</p>
-<p><img data-src="https://img.econow.cn/medivh/1669260754443.png" alt="1669260754443.png"></p>
+<p><img src="https://img.econow.cn/medivh/1669260754443.png" alt="1669260754443.png"></p>
 <p>对照着上下两张图接线即可，如果一次失败就检查一下是哪部分的问题。</p>
-<p><img data-src="https://img.econow.cn/medivh/1669260764163.png" alt="1669260764163.png"></p>
+<p><img src="https://img.econow.cn/medivh/1669260764163.png" alt="1669260764163.png"></p>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>从开始到点亮用了挺长一段时间，大部分时间用来查找资料，小部分时间用来等快递了。纠结了挺长一段时间的机箱选型，最终才决定了金河田N1.</p>
 <p>下一篇具体记录一下系统的安装和配置，以及避坑操作。</p>
 <h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>

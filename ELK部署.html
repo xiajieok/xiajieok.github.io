@@ -265,7 +265,7 @@
 <li>Logstash 去插入数据到elasticsearch;</li>
 <li>Kibana 作为展示平台。</li>
 </ul>
-<h3 id="基本架构"><a href="#基本架构" class="headerlink" title="基本架构"></a>基本架构</h3><img data-src="https://img.econow.cn/2018/1539223733259.png" width="870"/>
+<h3 id="基本架构"><a href="#基本架构" class="headerlink" title="基本架构"></a>基本架构</h3><img src="https://img.econow.cn/2018/1539223733259.png" width="870"/>
 
 <p>其中filebeat是作为轻量级的logstash来工作。每台机器上只需要部署filebeat,然后向1台logstash传输即可。</p>
 <h3 id="实际相关"><a href="#实际相关" class="headerlink" title="实际相关"></a>实际相关</h3><p>服务器</p>
@@ -287,13 +287,13 @@
 <h4 id="启动"><a href="#启动" class="headerlink" title="启动"></a>启动</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/usr/local/elk/elasticsearch/./bin/elasticsearch -d</span><br></pre></td></tr></table></figure>
 <h4 id="检查"><a href="#检查" class="headerlink" title="检查"></a>检查</h4><p>访问9200端口或者浏览器也可以。出现下面信息表示运行正常。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">curl http://127.0.0.1:9200</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<img data-src="https://img.econow.cn/2018/1539164622896.png" width="387"/>
+<img src="https://img.econow.cn/2018/1539164622896.png" width="387"/>
 
 <h3 id="kibana"><a href="#kibana" class="headerlink" title="kibana"></a>kibana</h3><h4 id="配置文件-1"><a href="#配置文件-1" class="headerlink" title="配置文件"></a>配置文件</h4><p>基本没有什么需要配置的</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">#vim /usr/local/elk/kibana/config/kibana.yml</span><br><span class="line"></span><br><span class="line">server.host: &quot;10.110.1.18&quot;</span><br><span class="line">#切换地图高德，最后加上这一段</span><br><span class="line">tilemap.url: &#x27;http://webrd02.is.autonavi.com/appmaptile?lang=zh_cn&amp;size=1&amp;scale=1&amp;style=7&amp;x=&#123;x&#125;&amp;y=&#123;y&#125;&amp;z=&#123;z&#125;&#x27;</span><br><span class="line">tilemap.options.minZoom: &quot;1&quot;</span><br><span class="line">tilemap.options.maxZoom: &quot;10&quot;</span><br></pre></td></tr></table></figure>
 <h4 id="启动-1"><a href="#启动-1" class="headerlink" title="启动"></a>启动</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nohup ./bin/kibana &amp;</span><br></pre></td></tr></table></figure>
 <p>访问默认5601端口</p>
-<img data-src="https://img.econow.cn/2018/1539167701059.png" width="317"/>
+<img src="https://img.econow.cn/2018/1539167701059.png" width="317"/>
 
 
 
@@ -314,18 +314,18 @@
 
 
 <h2 id="kibana画图"><a href="#kibana画图" class="headerlink" title="kibana画图"></a>kibana画图</h2><p>visualize-&gt;Maps-&gt;Coordinate Map</p>
-<img data-src="https://img.econow.cn/2018/1539169330458.png" width="346"/>
+<img src="https://img.econow.cn/2018/1539169330458.png" width="346"/>
 
-<img data-src="https://img.econow.cn/2018/1539169363305.png" width="192"/>
+<img src="https://img.econow.cn/2018/1539169363305.png" width="192"/>
 
-<h2 id="问题整理"><a href="#问题整理" class="headerlink" title="问题整理"></a>问题整理</h2><h3 id="1、创建地图时找不到字段"><a href="#1、创建地图时找不到字段" class="headerlink" title="1、创建地图时找不到字段"></a>1、创建地图时找不到字段</h3><img data-src="https://img.econow.cn/2018/1539222082965.png" width="348"/>
+<h2 id="问题整理"><a href="#问题整理" class="headerlink" title="问题整理"></a>问题整理</h2><h3 id="1、创建地图时找不到字段"><a href="#1、创建地图时找不到字段" class="headerlink" title="1、创建地图时找不到字段"></a>1、创建地图时找不到字段</h3><img src="https://img.econow.cn/2018/1539222082965.png" width="348"/>
 
 <p>**问题分析：  **</p>
 <blockquote>
 <p>索引格式为[nginx-xxx-]YYYY-MM的日志文件由logstash输出到Elasticsearch；在 elasticsearch 中，所有的数据都有一个类型，什么样的类型，就可以在其上做一些对应类型的特殊操作。geo信息中的location字段是经纬度，我们需要使用经纬度来定位地理位置；在 elasticsearch 中，对于经纬度来说，要想使用 elasticsearch 提供的地理位置查询相关的功能，就需要构造一个结构，并且将其类型属性设置为geo_point，此错误明显是由于我们的geo的location字段类型不是geo_point。</p>
 </blockquote>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GET nginx_joy_app-2018.10.11/_mapping</span><br></pre></td></tr></table></figure>
-<img data-src="https://img.econow.cn/2018/1539222419814.png" width="579"/>
+<img src="https://img.econow.cn/2018/1539222419814.png" width="579"/>
 说明创建的index中location字段类型和要求的geo_point不一致。
 
 <p><strong>解决方案:</strong></p>
@@ -333,7 +333,7 @@
 <li>修改ES模板</li>
 <li>logstash配置文件中的output,命名设置为logstash-xxx的index</li>
 </ul>
-<img data-src="https://img.econow.cn/2018/1539222688909.png" width="422"/>
+<img src="https://img.econow.cn/2018/1539222688909.png" width="422"/>
 
 
 <p>如果以上方式还是不能解决geo_point的问题，那就碰上事了。 </p>
@@ -408,13 +408,13 @@
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/Docker%E6%A0%87%E5%87%86%E9%95%9C%E5%83%8F%E5%88%B6%E4%BD%9C.html" rel="prev" title="Docker标准镜像制作">
-                  <i class="fa fa-angle-left"></i> Docker标准镜像制作
+                <a href="/Elastalert%E5%AE%89%E8%A3%85%E5%8F%8A%E4%BD%BF%E7%94%A8.html" rel="prev" title="Elastalert安装及使用">
+                  <i class="fa fa-angle-left"></i> Elastalert安装及使用
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/Elastalert%E5%AE%89%E8%A3%85%E5%8F%8A%E4%BD%BF%E7%94%A8.html" rel="next" title="Elastalert安装及使用">
-                  Elastalert安装及使用 <i class="fa fa-angle-right"></i>
+                <a href="/Gitlab%E4%BD%BF%E7%94%A8%E6%9C%AC%E5%9C%B0Nginx.html" rel="next" title="Gitlab使用本地Nginx">
+                  Gitlab使用本地Nginx <i class="fa fa-angle-right"></i>
                 </a>
             </div>
           </div>

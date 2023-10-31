@@ -256,9 +256,9 @@
     
     <div class="post-body" itemprop="articleBody"><h2 id="关于版本"><a href="#关于版本" class="headerlink" title="关于版本"></a>关于版本</h2><h3 id="版本概述"><a href="#版本概述" class="headerlink" title="版本概述"></a>版本概述</h3><p>Docker从1.13版本之后采用时间线的方式作为版本号，分为社区版CE和企业版EE。而在此之前CentOS官方自带的版本是这样的：</p>
 <p>社区版是免费提供给个人开发者和小型团体使用的，企业版会提供额外的收费服务，比如经过官方测试认证过的基础设施、容器、插件等。社区版按照stable和edge两种方式发布，每个季度更新stable版本，如17.06，17.09；每个月份更新edge版本，如17.09，17.10。  </p>
-<img data-src="https://img.econow.cn/2018/1545117093997.png" />
+<img src="https://img.econow.cn/2018/1545117093997.png" />
 
-<h3 id="版本比较"><a href="#版本比较" class="headerlink" title="版本比较"></a>版本比较</h3><img data-src="https://img.econow.cn/2018/1545117979095.png" />
+<h3 id="版本比较"><a href="#版本比较" class="headerlink" title="版本比较"></a>版本比较</h3><img src="https://img.econow.cn/2018/1545117979095.png" />
 ### 防火墙
 关闭firewall
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">systemctl stop firewalld.service</span><br><span class="line">systemctl disable firewalld.service</span><br></pre></td></tr></table></figure>
@@ -277,7 +277,7 @@
 </ul>
 <h3 id="配置仓库"><a href="#配置仓库" class="headerlink" title="配置仓库"></a>配置仓库</h3><p>18.03</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/systemd/system/multi-user.target.wants/docker.service</span><br><span class="line">#加入</span><br><span class="line">ExecStart=/usr/bin/dockerd -H unix:// --registry-mirror=http://192.168.1.232:5000</span><br></pre></td></tr></table></figure>
-<img data-src="https://img.econow.cn/medivh/1546486336192.png" />
+<img src="https://img.econow.cn/medivh/1546486336192.png" />
 
 <p>19.03</p>
 <p>修改daemon.json</p>

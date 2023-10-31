@@ -391,9 +391,9 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">docker-compose stop</span><br><span class="line">./prepare</span><br><span class="line">docker-compose up -d</span><br></pre></td></tr></table></figure>
 
 <p>验证登录正常，OK！！！</p>
-<img data-src="https://img.econow.cn/medivh/1555837828882.png"  />
+<img src="https://img.econow.cn/medivh/1555837828882.png"  />
 
-<h2 id="三、推送镜像"><a href="#三、推送镜像" class="headerlink" title="三、推送镜像"></a>三、推送镜像</h2><p>1、检查是否包含镜像地址，如果不包含则执行第2步<br><img data-src="https://img.econow.cn/medivh/1555838409977.png"  /></p>
+<h2 id="三、推送镜像"><a href="#三、推送镜像" class="headerlink" title="三、推送镜像"></a>三、推送镜像</h2><p>1、检查是否包含镜像地址，如果不包含则执行第2步<br><img src="https://img.econow.cn/medivh/1555838409977.png"  /></p>
 <p>2、增加仓库地址</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">vim /usr/lib/systemd/system/docker.service</span><br><span class="line"></span><br><span class="line">ExecStart=/usr/bin/dockerd -H fd:// --containerd=/run/containerd/containerd.sock --insecure-registry x.x.x.x:5000</span><br><span class="line">ExecReload=/bin/kill -s HUP <span class="variable">$MAINPID</span></span><br><span class="line">TimeoutSec=0</span><br><span class="line">RestartSec=2</span><br><span class="line">Restart=always</span><br></pre></td></tr></table></figure>
 

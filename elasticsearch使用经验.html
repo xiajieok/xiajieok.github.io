@@ -266,20 +266,20 @@
 
 <h3 id="配置logstash文件"><a href="#配置logstash文件" class="headerlink" title="配置logstash文件"></a>配置logstash文件</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">output &#123;</span><br><span class="line">  if [fields][service] == &quot;nginx_joy_app&quot;&#123;</span><br><span class="line">    elasticsearch &#123;</span><br><span class="line">        hosts =&gt; [&quot;10.110.1.19:9200&quot;]</span><br><span class="line">        index =&gt; &quot;logstash-nginx_joy_app-%&#123;+YYYY.MM.dd.HH&#125;&quot;</span><br><span class="line">        document_type =&gt; &quot;logstash-nginx_joy_app&quot;</span><br><span class="line">		manage_template =&gt; true</span><br><span class="line">		template_overwrite =&gt; true</span><br><span class="line">		template_name =&gt; &quot;logstash-nginx_joy_app*&quot;</span><br><span class="line">		template =&gt; &quot;/usr/local/elk/logstash/config/es_nginx.json&quot;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
 
-<p>这样就按照模板规则来生成对应索引了。<br><img data-src="https://img.econow.cn/medivh/1562138906913.png"  /></p>
+<p>这样就按照模板规则来生成对应索引了。<br><img src="https://img.econow.cn/medivh/1562138906913.png"  /></p>
 <h2 id="日常语法"><a href="#日常语法" class="headerlink" title="日常语法"></a>日常语法</h2><h3 id="按照字段搜索"><a href="#按照字段搜索" class="headerlink" title="按照字段搜索"></a>按照字段搜索</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">字段名: 值</span><br></pre></td></tr></table></figure>
-<img data-src="https://img.econow.cn/medivh/1562139077948.png"  />
+<img src="https://img.econow.cn/medivh/1562139077948.png"  />
 
 <h3 id="字符串查询"><a href="#字符串查询" class="headerlink" title="字符串查询"></a>字符串查询</h3><p>查询一个或者多个的短语</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&quot;短语&quot;</span><br></pre></td></tr></table></figure>
-<img data-src="https://img.econow.cn/medivh/1562139426035.png"  />
+<img src="https://img.econow.cn/medivh/1562139426035.png"  />
 
 <h3 id="正则查询"><a href="#正则查询" class="headerlink" title="正则查询"></a>正则查询</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">status: 50*</span><br></pre></td></tr></table></figure>
-<img data-src="https://img.econow.cn/medivh/1562139875229.png"  />
+<img src="https://img.econow.cn/medivh/1562139875229.png"  />
 
 <h3 id="范围查询"><a href="#范围查询" class="headerlink" title="范围查询"></a>范围查询</h3><p>允许一个字段值在某个区间。[] 包含该值，{}不包含。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">status: &#123;200 TO *&#125;</span><br></pre></td></tr></table></figure>
-<img data-src="https://img.econow.cn/medivh/1562140194294.png"  />
+<img src="https://img.econow.cn/medivh/1562140194294.png"  />
 
 <h3 id="布尔查询"><a href="#布尔查询" class="headerlink" title="布尔查询"></a>布尔查询</h3><p>布尔运算符（AND，OR，NOT）允许通过逻辑运算符组合多个子查询。</p>
 <p>运算符AND&#x2F;OR&#x2F;NOT必须大写。</p>
@@ -362,8 +362,8 @@
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/Redis%E9%9B%86%E7%BE%A4%E6%8A%80%E6%9C%AF%E6%BC%94%E5%8F%98.html" rel="prev" title="Redis集群技术演变">
-                  <i class="fa fa-angle-left"></i> Redis集群技术演变
+                <a href="/SpringBoot%E6%97%A5%E5%BF%97%E6%94%B6%E9%9B%86%E8%BE%93%E5%87%BA%E5%88%B0ELK.html" rel="prev" title="SpringBoot日志收集输出到ELK">
+                  <i class="fa fa-angle-left"></i> SpringBoot日志收集输出到ELK
                 </a>
             </div>
             <div class="post-nav-item">
