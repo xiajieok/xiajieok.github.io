@@ -243,6 +243,13 @@
     </span>
 
   
+    <span id="/%E6%89%B9%E9%87%8F%E6%8A%93%E5%8F%96%E6%96%B0%E5%8F%91%E5%9C%B0%E8%8F%9C%E4%BB%B7" class="post-meta-item leancloud_visitors" data-flag-title="批量抓取新发地菜价" title="阅读次数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span class="leancloud-visitors-count"></span>
+    </span>
     <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
       <span class="post-meta-item-icon">
         <i class="far fa-eye"></i>
@@ -417,6 +424,8 @@
   <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 
 
+  <script class="next-config" data-name="leancloud_visitors" type="application/json">{"enable":true,"app_id":"g1GwilqmVAUne2tDEDncEChG-gzGzoHsz","app_key":"YB2e5dSKMmMYYCtaSzxp9fdS","server_url":"https://api.econow.cn","security":true}</script>
+  <script src="/js/third-party/statistics/lean-analytics.js"></script>
 
 
 

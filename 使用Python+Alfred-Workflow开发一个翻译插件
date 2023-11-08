@@ -248,6 +248,13 @@
     </span>
 
   
+    <span id="/%E4%BD%BF%E7%94%A8Python+Alfred-Workflow%E5%BC%80%E5%8F%91%E4%B8%80%E4%B8%AA%E7%BF%BB%E8%AF%91%E6%8F%92%E4%BB%B6" class="post-meta-item leancloud_visitors" data-flag-title="使用Python+Alfred-Workflow开发一个翻译插件" title="阅读次数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span class="leancloud-visitors-count"></span>
+    </span>
     <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
       <span class="post-meta-item-icon">
         <i class="far fa-eye"></i>
@@ -468,6 +475,8 @@
   <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 
 
+  <script class="next-config" data-name="leancloud_visitors" type="application/json">{"enable":true,"app_id":"g1GwilqmVAUne2tDEDncEChG-gzGzoHsz","app_key":"YB2e5dSKMmMYYCtaSzxp9fdS","server_url":"https://api.econow.cn","security":true}</script>
+  <script src="/js/third-party/statistics/lean-analytics.js"></script>
 
 
 

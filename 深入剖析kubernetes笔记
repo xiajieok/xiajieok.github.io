@@ -247,6 +247,13 @@
     </span>
 
   
+    <span id="/%E6%B7%B1%E5%85%A5%E5%89%96%E6%9E%90kubernetes%E7%AC%94%E8%AE%B0" class="post-meta-item leancloud_visitors" data-flag-title="深入剖析kubernetes笔记" title="阅读次数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span class="leancloud-visitors-count"></span>
+    </span>
     <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
       <span class="post-meta-item-icon">
         <i class="far fa-eye"></i>
@@ -479,6 +486,8 @@
   <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 
 
+  <script class="next-config" data-name="leancloud_visitors" type="application/json">{"enable":true,"app_id":"g1GwilqmVAUne2tDEDncEChG-gzGzoHsz","app_key":"YB2e5dSKMmMYYCtaSzxp9fdS","server_url":"https://api.econow.cn","security":true}</script>
+  <script src="/js/third-party/statistics/lean-analytics.js"></script>
 
 
 
