@@ -247,12 +247,12 @@
     </span>
 
   
-    <span id="/Python%E4%B8%AD%E4%BD%BF%E7%94%A8list%E7%9A%84%E4%B8%80%E4%BA%9B%E4%B8%8D%E5%B8%B8%E8%A7%81%E7%9A%84%E6%93%8D%E4%BD%9C" class="post-meta-item leancloud_visitors" data-flag-title="Python中使用list的一些不常见的操作" title="阅读次数">
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
       <span class="post-meta-item-icon">
         <i class="far fa-eye"></i>
       </span>
       <span class="post-meta-item-text">阅读次数：</span>
-      <span class="leancloud-visitors-count"></span>
+      <span id="busuanzi_value_page_pv"></span>
     </span>
 </div>
 
@@ -313,7 +313,7 @@
 
 <h2 id="深浅拷贝"><a href="#深浅拷贝" class="headerlink" title="深浅拷贝"></a>深浅拷贝</h2><p>这里来讲述一下深拷贝和浅拷贝。</p>
 <p><strong>变量</strong>存储在栈内存，<strong>对象</strong>存储在堆内存。</p>
-<p><img src="https://img.econow.cn/medivh/1660127290005.png" alt="1660127290005.png"></p>
+<p><img data-src="https://img.econow.cn/medivh/1660127290005.png" alt="1660127290005.png"></p>
 <p>浅拷贝只对源对象的引用进行拷贝，对象的内容不进行操作。实现原理：</p>
 <ol>
 <li>对于源对象是可变数据类型，在堆内存中创建新空间；</li>
@@ -333,11 +333,11 @@
 <li>会连子对象的内存全部拷贝一份，对子对象的修改不会影响资源对象</li>
 <li>可以使用内置函数<code>deeocopy()</code></li>
 </ol>
-<p><img src="https://img.econow.cn/medivh/1660127456935.png" alt="1660127456935.png"></p>
+<p><img data-src="https://img.econow.cn/medivh/1660127456935.png" alt="1660127456935.png"></p>
 <p>源对象是不可变数据类型</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 单层浅拷贝-源对象是不可变数据类型</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> copy</span><br><span class="line">a = <span class="number">1</span></span><br><span class="line">b = (<span class="number">1</span>, <span class="number">2</span>)</span><br><span class="line">c = copy.copy(a)</span><br><span class="line">d = copy.copy(b)</span><br><span class="line"> </span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">id</span>(a),<span class="built_in">id</span>(c)) <span class="comment"># 地址相同</span></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">id</span>(b),<span class="built_in">id</span>(d)) <span class="comment"># 地址相同</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 输出</span></span><br><span class="line"><span class="number">4474448176</span> <span class="number">4474448176</span></span><br><span class="line"><span class="number">4541979776</span> <span class="number">4541979776</span></span><br></pre></td></tr></table></figure>
 
-<p><img src="https://img.econow.cn/medivh/1660188093129.png" alt="1660188093129.png"></p>
+<p><img data-src="https://img.econow.cn/medivh/1660188093129.png" alt="1660188093129.png"></p>
 <h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>深浅拷贝都是对源对象的复制。</p>
 <h2 id="冒泡排序"><a href="#冒泡排序" class="headerlink" title="冒泡排序"></a>冒泡排序</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">num_list = [<span class="number">23</span>, <span class="number">54</span>, <span class="number">56</span>, <span class="number">7</span>, <span class="number">12</span>, <span class="number">354</span>, <span class="number">56</span>, <span class="number">77</span>, <span class="number">12</span>, <span class="number">4</span>, <span class="number">2</span>]</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(num_list)):  <span class="comment"># 从第0个元素开始循环</span></span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(num_list) - i - <span class="number">1</span>):  <span class="comment"># range范围为 总长度-1-当前元素，因为元素下标从0开始</span></span><br><span class="line">        <span class="keyword">if</span> num_list[j] &lt; num_list[j + <span class="number">1</span>]:  <span class="comment"># 如果该元素小于 下一个元素</span></span><br><span class="line">            <span class="built_in">print</span>(num_list[j], num_list[j + <span class="number">1</span>])</span><br><span class="line">            num_list[j], num_list[j + <span class="number">1</span>] = num_list[j + <span class="number">1</span>], num_list[j]  <span class="comment"># 那么当前排序就为 该元素的位置就和下一个元素调换</span></span><br><span class="line">        <span class="built_in">print</span>(num_list)</span><br><span class="line"><span class="built_in">print</span>(num_list)</span><br></pre></td></tr></table></figure>
 
@@ -462,6 +462,24 @@
     </span>
     <span class="author" itemprop="copyrightHolder">medivh</span>
   </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
 
     </div>
   </footer>
@@ -494,10 +512,9 @@
 
 
   
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 
 
-  <script class="next-config" data-name="leancloud_visitors" type="application/json">{"enable":true,"app_id":"g1GwilqmVAUne2tDEDncEChG-gzGzoHsz","app_key":"YB2e5dSKMmMYYCtaSzxp9fdS","server_url":null,"security":true}</script>
-  <script src="/js/third-party/statistics/lean-analytics.js"></script>
 
 
 

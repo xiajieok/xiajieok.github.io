@@ -245,12 +245,12 @@
     </span>
 
   
-    <span id="/%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AE%BE%E8%AE%A1.html" class="post-meta-item leancloud_visitors" data-flag-title="数据库设计" title="阅读次数">
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
       <span class="post-meta-item-icon">
         <i class="far fa-eye"></i>
       </span>
       <span class="post-meta-item-text">阅读次数：</span>
-      <span class="leancloud-visitors-count"></span>
+      <span id="busuanzi_value_page_pv"></span>
     </span>
 </div>
 
@@ -304,10 +304,10 @@
 <li>联系：用菱形表示，菱形框内写明联系名，并用连线分别与有关实体连接起来，同时在连线旁标上联系的类型。</li>
 </ul>
 <p>连线：实体和属性之间、实体与联系之间、联系与属性之间用直线连接，并在直线上标注联系的类型。（注意：对于 1：1 的联系，要在两个实体连线方向各写 1，1：n 关系的，要在一的方向写 1，多的方向写 N；对于 N:M 关系的，则要在两个实体连线方向各写 N,M）</p>
-<h3 id="关系"><a href="#关系" class="headerlink" title="关系"></a>关系</h3><h4 id="一对一"><a href="#一对一" class="headerlink" title="一对一"></a>一对一</h4><img src="https://img.econow.cn/medivh/1610874775979.png"  />
+<h3 id="关系"><a href="#关系" class="headerlink" title="关系"></a>关系</h3><h4 id="一对一"><a href="#一对一" class="headerlink" title="一对一"></a>一对一</h4><img data-src="https://img.econow.cn/medivh/1610874775979.png"  />
 
 <p>可以将人表的主键放在身份证表里面，也可以将身份证表的主键放置于人表里面。</p>
-<h4 id="一对多"><a href="#一对多" class="headerlink" title="一对多"></a>一对多</h4><p>比如一个班级有多个学生，班级是 1 端，学生是多端。多端有 1 端的属性，也就是说多端里面应该放置 1 端的主键，那么学生表里面应该放置班级表里面的主键。<br><img src="https://img.econow.cn/medivh/1610874874871.png"  /></p>
+<h4 id="一对多"><a href="#一对多" class="headerlink" title="一对多"></a>一对多</h4><p>比如一个班级有多个学生，班级是 1 端，学生是多端。多端有 1 端的属性，也就是说多端里面应该放置 1 端的主键，那么学生表里面应该放置班级表里面的主键。<br><img data-src="https://img.econow.cn/medivh/1610874874871.png"  /></p>
 <h4 id="多对多"><a href="#多对多" class="headerlink" title="多对多"></a>多对多</h4><p>例如学生和选修课之间的关系，一个学生可以选择多门课程，而每个选修课又可以被多名学生选择。数据库中的多对多关联关系一般需采用中间表的方式处理，将多对多转化为两个一对多。</p>
 <h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p>[1] 吴爱华.数据库应用系统开发过程、技术及案例详解.中国人民大学出版社</p>
 
@@ -396,6 +396,24 @@
     </span>
     <span class="author" itemprop="copyrightHolder">medivh</span>
   </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
 
     </div>
   </footer>
@@ -428,10 +446,9 @@
 
 
   
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 
 
-  <script class="next-config" data-name="leancloud_visitors" type="application/json">{"enable":true,"app_id":"g1GwilqmVAUne2tDEDncEChG-gzGzoHsz","app_key":"YB2e5dSKMmMYYCtaSzxp9fdS","server_url":null,"security":true}</script>
-  <script src="/js/third-party/statistics/lean-analytics.js"></script>
 
 
 

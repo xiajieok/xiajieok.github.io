@@ -248,12 +248,12 @@
     </span>
 
   
-    <span id="/%E4%BD%BF%E7%94%A8Python+Alfred-Workflow%E5%BC%80%E5%8F%91%E4%B8%80%E4%B8%AA%E7%BF%BB%E8%AF%91%E6%8F%92%E4%BB%B6" class="post-meta-item leancloud_visitors" data-flag-title="使用Python+Alfred-Workflow开发一个翻译插件" title="阅读次数">
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
       <span class="post-meta-item-icon">
         <i class="far fa-eye"></i>
       </span>
       <span class="post-meta-item-text">阅读次数：</span>
-      <span class="leancloud-visitors-count"></span>
+      <span id="busuanzi_value_page_pv"></span>
     </span>
 </div>
 
@@ -295,14 +295,14 @@
 </ul>
 <p>其实后来又看到很多其他家的产品，QPS都较高，免费额度也不错，比如腾讯云、阿里云等等。总之有一个能用就行了，就算将来再换也看文档改一下就行了。</p>
 <h3 id="软件配置"><a href="#软件配置" class="headerlink" title="软件配置"></a>软件配置</h3><p>首先点击加号新建，使用hotkey的方式</p>
-<p><img src="https://img.econow.cn/blog/1689923285674.png" alt="创建"></p>
+<p><img data-src="https://img.econow.cn/blog/1689923285674.png" alt="创建"></p>
 <p>然后配置hotkey</p>
-<p><img src="https://img.econow.cn/blog/1689923447818.png" alt="配置"></p>
+<p><img data-src="https://img.econow.cn/blog/1689923447818.png" alt="配置"></p>
 <blockquote>
 <p>注意箭头标识的部分不要写错，prefix的值也是唯一的，不然就冲突了。</p>
 </blockquote>
 <p>之后配置脚本部分</p>
-<p><img src="https://img.econow.cn/blog/1689923544329.png" alt="配置脚本"></p>
+<p><img data-src="https://img.econow.cn/blog/1689923544329.png" alt="配置脚本"></p>
 <p>这里的语言选择了bash，但是脚本是单独存放的，点击下面的目录可以看到当前的workflow的存放位置，将开发脚本放在那个目录下，别忘了还有最开始下载的Alfred-Workflow。</p>
 <h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><p>首先调试翻译的代码，从官网上下载稍微修改了一下：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -*- coding: UTF-8 -*-</span></span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">import</span> random</span><br><span class="line"><span class="keyword">from</span> hashlib <span class="keyword">import</span> md5</span><br><span class="line"></span><br><span class="line">appid = <span class="string">&#x27;xxxxxxxxx&#x27;</span></span><br><span class="line">appkey = <span class="string">&#x27;xxxxxxxx&#x27;</span></span><br><span class="line"></span><br><span class="line">endpoint = <span class="string">&#x27;http://api.fanyi.baidu.com/api/trans/vip/translate&#x27;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">translate_text</span>(<span class="params">query</span>):</span><br><span class="line">    salt = random.randint(<span class="number">32768</span>, <span class="number">65536</span>)</span><br><span class="line">    sign = md5((appid + query + <span class="built_in">str</span>(salt) + appkey).encode(<span class="string">&#x27;utf-8&#x27;</span>)).hexdigest()</span><br><span class="line">    payload = &#123;<span class="string">&#x27;appid&#x27;</span>: appid, <span class="string">&#x27;q&#x27;</span>: query, <span class="string">&#x27;from&#x27;</span>: <span class="string">&#x27;auto&#x27;</span>, <span class="string">&#x27;to&#x27;</span>: <span class="string">&#x27;auto&#x27;</span>, <span class="string">&#x27;salt&#x27;</span>: salt, <span class="string">&#x27;sign&#x27;</span>: sign&#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        r = requests.post(endpoint, params=payload)</span><br><span class="line">        r.raise_for_status()  <span class="comment"># Raise an error if the request was unsuccessful</span></span><br><span class="line">        res = r.json().get(<span class="string">&#x27;trans_result&#x27;</span>, [&#123;<span class="string">&#x27;dst&#x27;</span>: r.json()&#125;])[<span class="number">0</span>][<span class="string">&#x27;dst&#x27;</span>]</span><br><span class="line">        <span class="keyword">return</span> res</span><br><span class="line">    <span class="keyword">except</span> requests.exceptions.RequestException <span class="keyword">as</span> e:</span><br><span class="line">        <span class="keyword">return</span> &#123;<span class="string">&#x27;error&#x27;</span>: <span class="string">&#x27;Network error: &#123;&#125;&#x27;</span>.<span class="built_in">format</span>(e)&#125;</span><br><span class="line">    <span class="keyword">except</span> ValueError <span class="keyword">as</span> e:</span><br><span class="line">        <span class="keyword">return</span> &#123;<span class="string">&#x27;error&#x27;</span>: <span class="string">&#x27;JSON parsing error: &#123;&#125;&#x27;</span>.<span class="built_in">format</span>(e)&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    query = <span class="string">&#x27; &#x27;</span>.join(sys.argv[<span class="number">1</span>:])</span><br><span class="line">    result = translate_text(query)</span><br><span class="line">    <span class="built_in">print</span>(result)</span><br></pre></td></tr></table></figure>
@@ -318,7 +318,7 @@
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/python</span></span><br><span class="line"><span class="comment"># -*- coding: UTF-8 -*-</span></span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">import</span> subprocess</span><br><span class="line"><span class="keyword">from</span> workflow <span class="keyword">import</span> Workflow3</span><br><span class="line"></span><br><span class="line">API_KEY = <span class="string">&#x27;your-pinboard-api-key&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">main</span>(<span class="params">wf</span>):</span><br><span class="line">    args = wf.args</span><br><span class="line">    <span class="comment"># 使用 subprocess.check_output() 捕获被调用脚本的输出结果</span></span><br><span class="line">    result = subprocess.check_output([<span class="string">&#x27;python3&#x27;</span>, <span class="string">&#x27;Baidu_Text_transAPI.py&#x27;</span>] + args, universal_newlines=<span class="literal">True</span>).decode(</span><br><span class="line">        <span class="string">&#x27;utf-8&#x27;</span>)</span><br><span class="line">    wf.logger.info(<span class="string">u&quot;翻译结果：%s&quot;</span>, result)</span><br><span class="line">    wf.add_item(</span><br><span class="line">        title=args[<span class="number">0</span>],</span><br><span class="line">        subtitle=<span class="string">u&quot;翻译结果: &quot;</span> + result,</span><br><span class="line">        valid=<span class="literal">True</span>,</span><br><span class="line">        uid=<span class="string">&quot;url here&quot;</span>,</span><br><span class="line">        arg=result</span><br><span class="line">    )</span><br><span class="line">    wf.send_feedback()</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">u&quot;__main__&quot;</span>:</span><br><span class="line">    wf = Workflow3()</span><br><span class="line">    sys.exit(wf.run(main))</span><br></pre></td></tr></table></figure>
 
 <p>调试过程中很痛苦，主要是必须顾虑到Python2的写法，在中文编码和ASCII上折腾了很久，还是Python3用着爽，可惜deanise大神没这打算。</p>
-<h3 id="结果"><a href="#结果" class="headerlink" title="结果"></a>结果</h3><p><img src="https://img.econow.cn/blog/1689924104970.png" alt="翻译结果"></p>
+<h3 id="结果"><a href="#结果" class="headerlink" title="结果"></a>结果</h3><p><img data-src="https://img.econow.cn/blog/1689924104970.png" alt="翻译结果"></p>
 <blockquote>
 <p>调试的时候可以点开右上角的蜘蛛，会展示debug信息。</p>
 </blockquote>
@@ -415,6 +415,24 @@
     </span>
     <span class="author" itemprop="copyrightHolder">medivh</span>
   </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
 
     </div>
   </footer>
@@ -447,10 +465,9 @@
 
 
   
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 
 
-  <script class="next-config" data-name="leancloud_visitors" type="application/json">{"enable":true,"app_id":"g1GwilqmVAUne2tDEDncEChG-gzGzoHsz","app_key":"YB2e5dSKMmMYYCtaSzxp9fdS","server_url":null,"security":true}</script>
-  <script src="/js/third-party/statistics/lean-analytics.js"></script>
 
 
 

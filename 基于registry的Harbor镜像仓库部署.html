@@ -238,12 +238,12 @@
     </span>
 
   
-    <span id="/%E5%9F%BA%E4%BA%8Eregistry%E7%9A%84Harbor%E9%95%9C%E5%83%8F%E4%BB%93%E5%BA%93%E9%83%A8%E7%BD%B2.html" class="post-meta-item leancloud_visitors" data-flag-title="基于registry的Harbor镜像仓库部署" title="阅读次数">
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
       <span class="post-meta-item-icon">
         <i class="far fa-eye"></i>
       </span>
       <span class="post-meta-item-text">阅读次数：</span>
-      <span class="leancloud-visitors-count"></span>
+      <span id="busuanzi_value_page_pv"></span>
     </span>
 </div>
 
@@ -391,9 +391,9 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">docker-compose stop</span><br><span class="line">./prepare</span><br><span class="line">docker-compose up -d</span><br></pre></td></tr></table></figure>
 
 <p>验证登录正常，OK！！！</p>
-<img src="https://img.econow.cn/medivh/1555837828882.png"  />
+<img data-src="https://img.econow.cn/medivh/1555837828882.png"  />
 
-<h2 id="三、推送镜像"><a href="#三、推送镜像" class="headerlink" title="三、推送镜像"></a>三、推送镜像</h2><p>1、检查是否包含镜像地址，如果不包含则执行第2步<br><img src="https://img.econow.cn/medivh/1555838409977.png"  /></p>
+<h2 id="三、推送镜像"><a href="#三、推送镜像" class="headerlink" title="三、推送镜像"></a>三、推送镜像</h2><p>1、检查是否包含镜像地址，如果不包含则执行第2步<br><img data-src="https://img.econow.cn/medivh/1555838409977.png"  /></p>
 <p>2、增加仓库地址</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">vim /usr/lib/systemd/system/docker.service</span><br><span class="line"></span><br><span class="line">ExecStart=/usr/bin/dockerd -H fd:// --containerd=/run/containerd/containerd.sock --insecure-registry x.x.x.x:5000</span><br><span class="line">ExecReload=/bin/kill -s HUP <span class="variable">$MAINPID</span></span><br><span class="line">TimeoutSec=0</span><br><span class="line">RestartSec=2</span><br><span class="line">Restart=always</span><br></pre></td></tr></table></figure>
 
@@ -491,6 +491,24 @@
     </span>
     <span class="author" itemprop="copyrightHolder">medivh</span>
   </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
 
     </div>
   </footer>
@@ -523,10 +541,9 @@
 
 
   
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 
 
-  <script class="next-config" data-name="leancloud_visitors" type="application/json">{"enable":true,"app_id":"g1GwilqmVAUne2tDEDncEChG-gzGzoHsz","app_key":"YB2e5dSKMmMYYCtaSzxp9fdS","server_url":null,"security":true}</script>
-  <script src="/js/third-party/statistics/lean-analytics.js"></script>
 
 
 

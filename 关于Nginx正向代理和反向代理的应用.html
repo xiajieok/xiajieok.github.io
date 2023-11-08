@@ -241,12 +241,12 @@
     </span>
 
   
-    <span id="/%E5%85%B3%E4%BA%8ENginx%E6%AD%A3%E5%90%91%E4%BB%A3%E7%90%86%E5%92%8C%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86%E7%9A%84%E5%BA%94%E7%94%A8.html" class="post-meta-item leancloud_visitors" data-flag-title="关于Ngin正向代理和反向代理的应用" title="阅读次数">
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
       <span class="post-meta-item-icon">
         <i class="far fa-eye"></i>
       </span>
       <span class="post-meta-item-text">阅读次数：</span>
-      <span class="leancloud-visitors-count"></span>
+      <span id="busuanzi_value_page_pv"></span>
     </span>
 </div>
 
@@ -257,10 +257,10 @@
     
     
     <div class="post-body" itemprop="articleBody"><h3 id="代理"><a href="#代理" class="headerlink" title="代理"></a>代理</h3><p>代理（Proxy）也称网络代理，是一种特殊的网络服务，允许一个（一般为客户端）通过这个服务与另一个网络终端（一般为服务器）进行非直接的连接。一些网关、路由器等网络设备具备网络代理功能。一般认为代理服务有利于保障网络终端的隐私或安全，防止攻击。代理也可以称为正向代理。<br>所谓代理服务器就是位于发起请求的客户端与原始服务器端之间的一台跳板服务器，正向代理可以隐藏客户端，反向代理可以隐藏原始服务器。<br>提供代理服务的电脑系统或其它类型的网络终端称为代理服务器（英文：Proxy Server）。一个完整的代理请求过程为：客户端首先与代理服务器创建连接，接着根据代理服务器所使用的代理协议，请求对目标服务器创建连接、或者获得目标服务器的指定资源（如：文件）。在后一种情况中，代理服务器可能对目标服务器的资源下载至本地缓存，如果客户端所要获取的资源在代理服务器的缓存之中，则代理服务器并不会向目标服务器发送请求，而是直接传回已缓存的资源。一些代理协议允许代理服务器改变客户端的原始请求、目标服务器的原始响应，以满足代理协议的需要。代理服务器的选项和设置在计算机程序中，通常包括一个“防火墙”，允许用户输入代理地址，它会遮盖他们的网络活动，可以允许绕过互联网过滤实现网络访问。</p>
-<img src="https://img.econow.cn/medivh/1630550846470.png"  />
+<img data-src="https://img.econow.cn/medivh/1630550846470.png"  />
 
 <p>代理服务器的基本行为就是接收客户端发送的请求后转发给其他服务器。代理不改变请求URI，并不会直接发送给前方持有资源的目标服务器。<br>持有资源实体的服务器被称为源服务器。从源服务器返回的响应经过代理服务器后再传给客户端。</p>
-<img src="https://img.econow.cn/medivh/1630550861682.png"  />
+<img data-src="https://img.econow.cn/medivh/1630550861682.png"  />
 
 <h3 id="协议"><a href="#协议" class="headerlink" title="协议"></a>协议</h3><h4 id="HTTP"><a href="#HTTP" class="headerlink" title="HTTP"></a>HTTP</h4><ul>
 <li>HTTP</li>
@@ -283,7 +283,7 @@
 <li>打通内网和云环境的部分接口；</li>
 <li>代理MongoDB给QMS。<br>主要用的的软件是Nginx，可以代理若干协议：</li>
 </ul>
-<img src="https://img.econow.cn/medivh/1630550965945.png"  />
+<img data-src="https://img.econow.cn/medivh/1630550965945.png"  />
 
 <p>需要注意的是Nginx默认支持http代理，但是如果使用https代理需要增加模块：ngx_http_proxy_connect_module<br>需要注意的是安装patch命令，服务器默认是没有这个命令的。<br>安装</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">$ wget http://nginx.org/download/nginx-1.9.2.tar.gz</span><br><span class="line">$ tar -xzvf nginx-1.9.2.tar.gz</span><br><span class="line">$ <span class="built_in">cd</span> nginx-1.9.2/</span><br><span class="line">$ patch -p1 &lt; /path/to/ngx_http_proxy_connect_module/patch/proxy_connect.patch</span><br><span class="line">$ ./configure \</span><br><span class="line">--user=nginx \</span><br><span class="line">--group=nginx \</span><br><span class="line">--prefix=/usr/local/nginx \</span><br><span class="line">--with-http_ssl_module \</span><br><span class="line">--with-http_stub_status_module \</span><br><span class="line">--with-http_realip_module \</span><br><span class="line">--with-threads \</span><br><span class="line">--add-module=/root/ngx_http_proxy_connect_module</span><br><span class="line">$ make &amp;&amp; make install</span><br></pre></td></tr></table></figure>
@@ -299,9 +299,9 @@
 <li>resolver 必须配置，建议和服务器一致</li>
 </ul>
 <h2 id="反向代理"><a href="#反向代理" class="headerlink" title="反向代理"></a>反向代理</h2><h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><p>反向代理在电脑网络中是代理服务器的一种。服务器根据客户端的请求，从其关系的一组或多组后端服务器（如Web服务器）上获取资源，然后再将这些资源返回给客户端，客户端只会得知反向代理的IP地址，而不知道在代理服务器后面的服务器集群的存在[1]。<br>与正向代理不同，正向代理作为客户端的代理，将从互联网上获取的资源返回给一个或多个的客户端，服务端（如Web服务器）只知道代理的IP地址而不知道客户端的IP地址；而反向代理是作为服务器端（如Web服务器）的代理使用，而不是客户端。客户端借由前向代理可以间接访问很多不同互联网服务器（集群）的资源，而反向代理是供很多客户端都通过它间接访问不同后端服务器上的资源，而不需要知道这些后端服务器的存在，而以为所有资源都来自于这个反向代理服务器。</p>
-<img src="https://img.econow.cn/medivh/1630551013440.png"  />
+<img data-src="https://img.econow.cn/medivh/1630551013440.png"  />
 
-<p>反向代理在现时的互联网中并不少见，而另一些例子，像是CDN、SNI代理等，是反向代理结合DNS的一类延伸应用。<br><img src="https://img.econow.cn/medivh/1630551027126.png"  /></p>
+<p>反向代理在现时的互联网中并不少见，而另一些例子，像是CDN、SNI代理等，是反向代理结合DNS的一类延伸应用。<br><img data-src="https://img.econow.cn/medivh/1630551027126.png"  /></p>
 <h3 id="作用"><a href="#作用" class="headerlink" title="作用"></a>作用</h3><ul>
 <li>对客户端隐藏服务器（集群）的IP地址</li>
 <li>安全：作为应用层防火墙，为网站提供对基于Web的攻击行为（例如DoS&#x2F;DDoS）的防护，更容易排查恶意软件等</li>
@@ -404,6 +404,24 @@
     </span>
     <span class="author" itemprop="copyrightHolder">medivh</span>
   </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
 
     </div>
   </footer>
@@ -436,10 +454,9 @@
 
 
   
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 
 
-  <script class="next-config" data-name="leancloud_visitors" type="application/json">{"enable":true,"app_id":"g1GwilqmVAUne2tDEDncEChG-gzGzoHsz","app_key":"YB2e5dSKMmMYYCtaSzxp9fdS","server_url":null,"security":true}</script>
-  <script src="/js/third-party/statistics/lean-analytics.js"></script>
 
 
 

@@ -239,12 +239,12 @@
     </span>
 
   
-    <span id="/request_time%E5%92%8Cupstream_response_time%E7%9A%84%E5%8C%BA%E5%88%AB.html" class="post-meta-item leancloud_visitors" data-flag-title="request_time和upstream_response_time的区别" title="阅读次数">
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
       <span class="post-meta-item-icon">
         <i class="far fa-eye"></i>
       </span>
       <span class="post-meta-item-text">阅读次数：</span>
-      <span class="leancloud-visitors-count"></span>
+      <span id="busuanzi_value_page_pv"></span>
     </span>
 </div>
 
@@ -269,8 +269,8 @@
 <p>如果要从access_log中查看较慢的接口的话，可以在<code>log_format</code>中加入<code>$upstream_response_time</code>。</p>
 <h3 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h3><p>从网上看到下列一组图片，感觉画的很形象。</p>
 <ul>
-<li><code>request_time</code>是从接收到客户端的第一个字节开始，到把所有的响应数据都发送完为止。<br><img src="https://img.econow.cn/medivh/1637907742862.png" alt="1637907742862.png"></li>
-<li><code>upstream_response_time</code>是从与后端建立TCP连接开始到接收完响应数据并关闭连接为止。<br><img src="https://img.econow.cn/medivh/1637907762851.png" alt="1637907762851.png"></li>
+<li><code>request_time</code>是从接收到客户端的第一个字节开始，到把所有的响应数据都发送完为止。<br><img data-src="https://img.econow.cn/medivh/1637907742862.png" alt="1637907742862.png"></li>
+<li><code>upstream_response_time</code>是从与后端建立TCP连接开始到接收完响应数据并关闭连接为止。<br><img data-src="https://img.econow.cn/medivh/1637907762851.png" alt="1637907762851.png"></li>
 </ul>
 <p>所以，<code>request_time</code>会大于等于<code>upstream_response_time</code>。</p>
 <h3 id="性能优化"><a href="#性能优化" class="headerlink" title="性能优化"></a>性能优化</h3><p>对于较高的request—_time很可能是由于连接速度较慢的客户端造成的，对此无能为力，但是较高的request_time并不代表服务器或者程序的性能不够。总体来说，没必要在request_time上花费较多时间，而是应该重点关注upstream_response_time。</p>
@@ -278,7 +278,7 @@
 
 <h2 id="NGINX的文件传输"><a href="#NGINX的文件传输" class="headerlink" title="NGINX的文件传输"></a>NGINX的文件传输</h2><h3 id="sendile"><a href="#sendile" class="headerlink" title="sendile"></a>sendile</h3><p>参数sendfile on 用于开启文件高效传输模式，同时配合tcp_nopush on 和tcp_nodelay on 两个指令，可防止网络及磁盘I&#x2F;O阻塞，提升Nginx工作效率。但需要注意的是，linux内核版本2.5.9以后的版本中两者是可以兼容的。</p>
 <p>三个指令都开启的好处是，sendfile可以开启高效的文件传输模式，tcp_nopush开启可以确保在发送到客户端之前数据包已经充分“填满”， 这大大减少了网络开销，并加快了文件发送的速度。 然后，当它到达最后一个可能因为没有“填满”而暂停的数据包时，Nginx会忽略tcp_nopush参数， 然后，tcp_nodelay强制套接字发送数据。</p>
-<p><img src="https://img.econow.cn/medivh/1637918539854.png" alt="1637918539854.png"></p>
+<p><img data-src="https://img.econow.cn/medivh/1637918539854.png" alt="1637918539854.png"></p>
 <h3 id="tcp-nopush"><a href="#tcp-nopush" class="headerlink" title="tcp_nopush"></a>tcp_nopush</h3><p>当有数据时，先别着急发送, 确保数据包已经装满数据, 避免了网络拥塞。需要我们等到数据量达到最大时才通过网络一次发送全部数据，这种数据传输方式有益于大量数据的通信性能，典型的应用就是文件服务器。<br>对于nginx配置文件中的tcp_nopush，默认就是tcp_nopush,不需要特别指定，这个选项对于www，ftp等大文件很有帮助。</p>
 <h3 id="tcp-nodelay"><a href="#tcp-nodelay" class="headerlink" title="tcp_nodelay"></a>tcp_nodelay</h3><p>有时要抓紧发货, 确保数据尽快发送, 提高可数据传输效率。</p>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>平时对request_time和upstream_response_time这两个参数没什么研究，关注的不多，主要关注request_time。但是最近阿里云的日志服务统计数据出现了异常，request_time和upstream_response_time的值完全违反了字段定义的原则。理论上request_time无论如何也会大于upstream_response_time的，但是客服死活不承认。无奈之下，好好研究一番，通过阿里云官网文档截图和历史正常数据已经现在的异常数据，客服最终承认存在问题，表示整改。<br>事实证明，阿里云的客服技术水平也是良莠不齐。</p>
@@ -373,6 +373,24 @@
     </span>
     <span class="author" itemprop="copyrightHolder">medivh</span>
   </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
 
     </div>
   </footer>
@@ -405,10 +423,9 @@
 
 
   
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 
 
-  <script class="next-config" data-name="leancloud_visitors" type="application/json">{"enable":true,"app_id":"g1GwilqmVAUne2tDEDncEChG-gzGzoHsz","app_key":"YB2e5dSKMmMYYCtaSzxp9fdS","server_url":null,"security":true}</script>
-  <script src="/js/third-party/statistics/lean-analytics.js"></script>
 
 
 

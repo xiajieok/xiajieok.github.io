@@ -249,12 +249,12 @@
     </span>
 
   
-    <span id="/%E6%89%B9%E9%87%8F%E6%8A%93%E5%8F%96%E4%BC%98%E7%BE%8E%E5%9B%BE%E5%BA%93" class="post-meta-item leancloud_visitors" data-flag-title="批量抓取优美图库" title="阅读次数">
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
       <span class="post-meta-item-icon">
         <i class="far fa-eye"></i>
       </span>
       <span class="post-meta-item-text">阅读次数：</span>
-      <span class="leancloud-visitors-count"></span>
+      <span id="busuanzi_value_page_pv"></span>
     </span>
 </div>
 
@@ -268,7 +268,7 @@
 <p>以前尝试过一些多线程的方式进行爬虫，现在体验一下协程的方式。</p>
 </blockquote>
 <h2 id="技术点"><a href="#技术点" class="headerlink" title="技术点"></a>技术点</h2><h3 id="协程的概念"><a href="#协程的概念" class="headerlink" title="协程的概念"></a>协程的概念</h3><p>协程，Coroutine，又称微线程，是一种用户态的轻量级线程。协程拥有自己的寄存器上下文和栈。协程调度切换时，将寄存器上下文和栈保存到其他地方，在切回来的时候，恢复之前保存的寄存器上下文和栈。因此协程能保留上一次调用时的状态，即局部状态的一个特定组合，每次过程重入时，就相当于进入上一次调用的状态。协程本质上是个单线程，相对于多进程来说，无需线程的上下文切换的开销，无需原子操作锁定及同步的开销。可以使用的场景，比如在网络爬虫的场景，发出一个请求之后，需要等待一定的实际才能得到响应。但是在等待过程中，程序可以做一些其他的事情，等到响应后再切回来继续处理，这样可以充分利用CPU和其他资源，也就是协程的优势所在。</p>
-<p><img src="https://img.econow.cn/medivh/1664418664734.png" alt="1664418664734.png"></p>
+<p><img data-src="https://img.econow.cn/medivh/1664418664734.png" alt="1664418664734.png"></p>
 <h3 id="协程的用法"><a href="#协程的用法" class="headerlink" title="协程的用法"></a>协程的用法</h3><p>协程相关的概念:</p>
 <ul>
 <li>event_loop 事件循环，相当于一个无限循环，可以把一些函数注册到这个事件循环上，当满足条件时，就会调用对应的处理方法。</li>
@@ -358,13 +358,13 @@
 <li>获取每页上所有图片所属页面的链接</li>
 <li>根据图片的链接进行下载和存储</li>
 </ol>
-<h3 id="获取专栏所有页面链接"><a href="#获取专栏所有页面链接" class="headerlink" title="获取专栏所有页面链接"></a>获取专栏所有页面链接</h3><p><img src="https://img.econow.cn/medivh/1664419499404.png" alt="1664419499404.png"></p>
+<h3 id="获取专栏所有页面链接"><a href="#获取专栏所有页面链接" class="headerlink" title="获取专栏所有页面链接"></a>获取专栏所有页面链接</h3><p><img data-src="https://img.econow.cn/medivh/1664419499404.png" alt="1664419499404.png"></p>
 <p>本次示例目标是电脑壁纸专栏。</p>
-<p>根据页面按钮获取第一页和最后一页的URL。其中第一页需要单独处理，之后的任意页都是递增的逻辑。而尾页直接提示767，直接使用即可，也可以复杂点使用xpath提取。<br><img src="https://img.econow.cn/medivh/1664419554458.png" alt="1664419554458.png"></p>
+<p>根据页面按钮获取第一页和最后一页的URL。其中第一页需要单独处理，之后的任意页都是递增的逻辑。而尾页直接提示767，直接使用即可，也可以复杂点使用xpath提取。<br><img data-src="https://img.econow.cn/medivh/1664419554458.png" alt="1664419554458.png"></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">page_urls = []</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">get_page_urls1</span>(<span class="params">page_num</span>):</span><br><span class="line">    <span class="keyword">if</span> page_num == <span class="number">1</span>:</span><br><span class="line">        url = <span class="string">&#x27;https://www.umei.cc/bizhitupian/diannaobizhi&#x27;</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        url = <span class="string">&#x27;https://www.umei.cc/bizhitupian/diannaobizhi/index_&#123;&#125;.htm&#x27;</span>.<span class="built_in">format</span>(page_num)</span><br><span class="line">    resp = requests.get(url)</span><br><span class="line">    html = etree.HTML(resp.text)</span><br><span class="line">    table = html.xpath(<span class="string">&#x27;//div[contains(@class,&quot;item masonry_brick&quot;)]&#x27;</span>)</span><br><span class="line">    <span class="keyword">if</span> table:</span><br><span class="line">        url_list = table[<span class="number">0</span>].xpath(<span class="string">&#x27;//div[contains(@class,&quot;img&quot;)]/a/@href&#x27;</span>)</span><br><span class="line">        page_urls.extend(url_list)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">get_page_urls</span>():</span><br><span class="line">    <span class="keyword">with</span> ThreadPoolExecutor(<span class="number">100</span>) <span class="keyword">as</span> t:</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, <span class="number">6</span>): <span class="comment"># 此处的6为最大页面数，可以自行决定修改，最大值为767</span></span><br><span class="line">            args = [i]</span><br><span class="line">            t.submit(<span class="keyword">lambda</span> p: get_page_urls1(*p), args)</span><br></pre></td></tr></table></figure>
 
 <p>最终获取到了所有页面的链接。</p>
-<h3 id="获取每页上所有图片所属页面的链接"><a href="#获取每页上所有图片所属页面的链接" class="headerlink" title="获取每页上所有图片所属页面的链接"></a>获取每页上所有图片所属页面的链接</h3><p><img src="https://img.econow.cn/medivh/1664419837995.png" alt="1664419837995.png"><br>根据源代码获取了图片的链接。</p>
+<h3 id="获取每页上所有图片所属页面的链接"><a href="#获取每页上所有图片所属页面的链接" class="headerlink" title="获取每页上所有图片所属页面的链接"></a>获取每页上所有图片所属页面的链接</h3><p><img data-src="https://img.econow.cn/medivh/1664419837995.png" alt="1664419837995.png"><br>根据源代码获取了图片的链接。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">clean_urls = <span class="built_in">list</span>()</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">get_pic_url1</span>(<span class="params">url</span>):</span><br><span class="line">    url = <span class="string">&#x27;https://www.umei.cc&#123;&#125;&#x27;</span>.<span class="built_in">format</span>(url)</span><br><span class="line">    resp = requests.get(url)</span><br><span class="line">    html = etree.HTML(resp.text)</span><br><span class="line">    pic_link = html.xpath(<span class="string">&#x27;//div[contains(@class,&quot;big-pic&quot;)]/a/img/@src&#x27;</span>)[<span class="number">0</span>]</span><br><span class="line">    clean_urls.append(pic_link)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">get_pic_url</span>():</span><br><span class="line">    <span class="keyword">with</span> ThreadPoolExecutor(<span class="number">100</span>) <span class="keyword">as</span> t:</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> page_urls:</span><br><span class="line">            args = [i]</span><br><span class="line">            t.submit(<span class="keyword">lambda</span> p: get_pic_url1(*p), args)</span><br></pre></td></tr></table></figure>
 
 <p>最终获取了所有图片的URL。</p>
@@ -376,7 +376,7 @@
 <blockquote>
 <p>user-agent 可以自定义<br>Semaphore 数值可以根据实际情况来决定，比如带宽</p>
 </blockquote>
-<p>最终下载了5页图片，149张。<br><img src="https://img.econow.cn/medivh/1664420426755.png" alt="1664420426755.png"></p>
+<p>最终下载了5页图片，149张。<br><img data-src="https://img.econow.cn/medivh/1664420426755.png" alt="1664420426755.png"></p>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>参考：</p>
 <ul>
 <li><a target="_blank" rel="noopener" href="https://www.51cto.com/article/675758.html">https://www.51cto.com/article/675758.html</a></li>
@@ -468,6 +468,24 @@
     </span>
     <span class="author" itemprop="copyrightHolder">medivh</span>
   </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
 
     </div>
   </footer>
@@ -500,10 +518,9 @@
 
 
   
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 
 
-  <script class="next-config" data-name="leancloud_visitors" type="application/json">{"enable":true,"app_id":"g1GwilqmVAUne2tDEDncEChG-gzGzoHsz","app_key":"YB2e5dSKMmMYYCtaSzxp9fdS","server_url":null,"security":true}</script>
-  <script src="/js/third-party/statistics/lean-analytics.js"></script>
 
 
 

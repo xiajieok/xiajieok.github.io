@@ -34,8 +34,8 @@
 <meta property="article:published_time" content="2022-09-29T09:36:12.000Z">
 <meta property="article:modified_time" content="2023-10-31T02:15:08.715Z">
 <meta property="article:author" content="medivh">
-<meta property="article:tag" content="爬虫">
 <meta property="article:tag" content="python">
+<meta property="article:tag" content="爬虫">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://img.econow.cn/medivh/1664444705074.png">
 
@@ -249,12 +249,12 @@
     </span>
 
   
-    <span id="/%E6%89%B9%E9%87%8F%E6%8A%93%E5%8F%96%E5%85%8D%E8%B4%B9%E5%B0%8F%E8%AF%B4" class="post-meta-item leancloud_visitors" data-flag-title="批量抓取免费小说" title="阅读次数">
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
       <span class="post-meta-item-icon">
         <i class="far fa-eye"></i>
       </span>
       <span class="post-meta-item-text">阅读次数：</span>
-      <span class="leancloud-visitors-count"></span>
+      <span id="busuanzi_value_page_pv"></span>
     </span>
 </div>
 
@@ -276,12 +276,12 @@
 </ul>
 <p>所使用的技术点基本和之前的文章差不多，此处不再过多介绍。</p>
 <h2 id="逻辑"><a href="#逻辑" class="headerlink" title="逻辑"></a>逻辑</h2><p>起初是想抓取一本小说，后来决定就选择整个专栏吧，其实技术难度也没增加多少。下面先从一本小说开始分析。</p>
-<p>首先要获取章节目录的URL。<br><img src="https://img.econow.cn/medivh/1664444705074.png" alt="1664444705074.png"></p>
-<p>根据源代码获取章节的URL<br><img src="https://img.econow.cn/medivh/1664444768654.png" alt="1664444768654.png"></p>
+<p>首先要获取章节目录的URL。<br><img data-src="https://img.econow.cn/medivh/1664444705074.png" alt="1664444705074.png"></p>
+<p>根据源代码获取章节的URL<br><img data-src="https://img.econow.cn/medivh/1664444768654.png" alt="1664444768654.png"></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">get_page_urls</span>(<span class="params">url, sem</span>):</span><br><span class="line">    <span class="keyword">async</span> <span class="keyword">with</span> sem:</span><br><span class="line">        <span class="keyword">async</span> <span class="keyword">with</span> aiohttp.ClientSession() <span class="keyword">as</span> session:  <span class="comment"># requests</span></span><br><span class="line">            <span class="keyword">async</span> <span class="keyword">with</span> session.get(url, headers=headers) <span class="keyword">as</span> resp:</span><br><span class="line">                html = etree.HTML(<span class="keyword">await</span> resp.content.read())</span><br><span class="line">                urls = []</span><br><span class="line">                title_of_book = html.xpath(<span class="string">&#x27;//div[@class=&quot;Main List&quot;]/h1/text()&#x27;</span>)[<span class="number">0</span>]</span><br><span class="line">                <span class="built_in">print</span>(title_of_book)</span><br><span class="line">                td_html = html.xpath(<span class="string">&#x27;//div[@class=&quot;Main List&quot;]/dl[1]/dd[1]/a/@href&#x27;</span>)</span><br><span class="line">                <span class="keyword">for</span> i <span class="keyword">in</span> td_html:</span><br><span class="line">                    url = <span class="string">&#x27;https://www.17k.com&#123;&#125;&#x27;</span>.<span class="built_in">format</span>(i)</span><br><span class="line">                    urls.append(url)</span><br><span class="line">                <span class="built_in">print</span>(<span class="string">&#x27;共获取 &#123;&#125; 章节&#x27;</span>.<span class="built_in">format</span>(<span class="built_in">len</span>(urls)))</span><br><span class="line">                book_info = &#123;</span><br><span class="line">                    <span class="string">&#x27;title&#x27;</span>: title_of_book,</span><br><span class="line">                    <span class="string">&#x27;urls&#x27;</span>: urls</span><br><span class="line">                &#125;</span><br><span class="line">                all_book_list.append(book_info)</span><br></pre></td></tr></table></figure>
 
 <p>代码中将书籍信息设置为dict()，方便之后调用。</p>
-<p>然后根据章节URL进行下载小说内容。<br><img src="https://img.econow.cn/medivh/1664444937905.png" alt="1664444937905.png"></p>
+<p>然后根据章节URL进行下载小说内容。<br><img data-src="https://img.econow.cn/medivh/1664444937905.png" alt="1664444937905.png"></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">download_target</span>(<span class="params">url, i, book_title, sem</span>):</span><br><span class="line">    <span class="keyword">async</span> <span class="keyword">with</span> sem:</span><br><span class="line">        <span class="keyword">async</span> <span class="keyword">with</span> aiohttp.ClientSession() <span class="keyword">as</span> session:  <span class="comment"># requests</span></span><br><span class="line">            <span class="keyword">async</span> <span class="keyword">with</span> session.get(url, headers=headers) <span class="keyword">as</span> resp:  <span class="comment"># requests.get()</span></span><br><span class="line">                html = etree.HTML(<span class="keyword">await</span> resp.content.read())</span><br><span class="line">                <span class="keyword">try</span>:</span><br><span class="line">                    body_html = html.xpath(<span class="string">&#x27;//div[@class=&quot;readAreaBox content&quot;]&#x27;</span>)[<span class="number">0</span>]</span><br><span class="line">                <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">                    <span class="built_in">print</span>(<span class="string">&#x27;body获取失败&#x27;</span>, e, url)</span><br><span class="line">                title = body_html.xpath(<span class="string">&#x27;./h1/text()&#x27;</span>)[<span class="number">0</span>]</span><br><span class="line">                <span class="keyword">if</span> i &lt; <span class="number">10</span>:</span><br><span class="line">                    num = <span class="string">&#x27;000&#x27;</span> + <span class="built_in">str</span>(i)</span><br><span class="line">                <span class="keyword">elif</span> i &lt; <span class="number">100</span>:</span><br><span class="line">                    num = <span class="string">&#x27;00&#x27;</span> + <span class="built_in">str</span>(i)</span><br><span class="line">                <span class="keyword">elif</span> i &lt; <span class="number">1000</span>:</span><br><span class="line">                    num = <span class="string">&#x27;0&#x27;</span> + <span class="built_in">str</span>(i)</span><br><span class="line">                file_name = <span class="string">&#x27;./novel/&#123;&#125;/&#123;&#125;.txt&#x27;</span>.<span class="built_in">format</span>(book_title, num)</span><br><span class="line">                content_html = body_html.xpath(<span class="string">&#x27;./div[@class=&quot;p&quot;]/p&#x27;</span>)</span><br><span class="line">                content = [i.xpath(<span class="string">&#x27;./text()&#x27;</span>)[<span class="number">0</span>] <span class="keyword">for</span> i <span class="keyword">in</span> content_html <span class="keyword">if</span> i.xpath(<span class="string">&#x27;./text()&#x27;</span>)]</span><br><span class="line">                <span class="keyword">try</span>:</span><br><span class="line">                    content.remove(content[-<span class="number">1</span>])</span><br><span class="line">                    <span class="comment"># 大部分情况是因为该章节被锁定，暂时无法查看，忽略即可</span></span><br><span class="line">                <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">                    <span class="built_in">print</span>(e, url)</span><br><span class="line">                content.insert(<span class="number">0</span>, title)</span><br><span class="line">                content.append(<span class="string">&#x27;该章节存在问题，已经被锁定，暂时无法查看&#x27;</span>) <span class="keyword">if</span> <span class="built_in">len</span>(content) == <span class="number">1</span> <span class="keyword">else</span> content.append(<span class="string">&#x27; &#x27;</span>)</span><br><span class="line">                <span class="keyword">async</span> <span class="keyword">with</span> aiofiles.<span class="built_in">open</span>(file_name, <span class="string">&#x27;a+&#x27;</span>) <span class="keyword">as</span> f:</span><br><span class="line">                    <span class="keyword">await</span> f.write(<span class="string">&quot;\n&quot;</span>.join(content))  <span class="comment"># 读写内容异步需要挂起</span></span><br></pre></td></tr></table></figure>
 
 <p>下面的代码是为了合并文件排序的目的：</p>
@@ -289,8 +289,8 @@
 
 <p>经过以上步骤就可以实现抓取一本小说并保存为文件了。</p>
 <p>下面聊一下抓取整个专栏的小说的流程。首先获取专栏的所有链接，并且可以从页面可以获取最大页数。</p>
-<p><img src="https://img.econow.cn/medivh/1664445213703.png" alt="1664445213703.png"></p>
-<p>然后从页面获取每一部书籍的章节入口的URL<br><img src="https://img.econow.cn/medivh/1664445432003.png" alt="1664445432003.png"></p>
+<p><img data-src="https://img.econow.cn/medivh/1664445213703.png" alt="1664445213703.png"></p>
+<p>然后从页面获取每一部书籍的章节入口的URL<br><img data-src="https://img.econow.cn/medivh/1664445432003.png" alt="1664445432003.png"></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment"># 获取所有书籍的URL</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, <span class="number">35</span>):</span><br><span class="line">    url = <span class="string">&#x27;https://www.17k.com/all/book/3_0_0__3__1__&#123;&#125;.html&#x27;</span>.<span class="built_in">format</span>(i)</span><br><span class="line">    task = asyncio.create_task(get_book_url(url, sem))</span><br><span class="line">    tasks.append(task)</span><br><span class="line"><span class="keyword">await</span> asyncio.wait(tasks)</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">len</span>(all_book_url))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">get_book_url</span>(<span class="params">url, sem</span>):</span><br><span class="line">    <span class="keyword">async</span> <span class="keyword">with</span> sem:</span><br><span class="line">        <span class="keyword">async</span> <span class="keyword">with</span> aiohttp.ClientSession() <span class="keyword">as</span> session:  <span class="comment"># requests</span></span><br><span class="line">            <span class="keyword">async</span> <span class="keyword">with</span> session.get(url, headers=headers) <span class="keyword">as</span> resp:  <span class="comment"># requests.get()</span></span><br><span class="line">                html = etree.HTML(<span class="keyword">await</span> resp.content.read())</span><br><span class="line">                <span class="keyword">try</span>:</span><br><span class="line">                    table_html = html.xpath(<span class="string">&#x27;//tbody/tr[position()&gt;2]&#x27;</span>)</span><br><span class="line">                    <span class="keyword">for</span> i <span class="keyword">in</span> table_html:</span><br><span class="line">                        url = i.xpath(<span class="string">&#x27;./td[3]/span/a/@href&#x27;</span>)[<span class="number">0</span>].replace(<span class="string">&#x27;book&#x27;</span>, <span class="string">&#x27;list&#x27;</span>)  <span class="comment"># 处理为书籍的章节页面链接</span></span><br><span class="line">                        url = <span class="string">&#x27;https:&#x27;</span> + url</span><br><span class="line">                        all_book_url.append(url)</span><br><span class="line">                <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">                    <span class="built_in">print</span>(<span class="string">&#x27;body获取失败&#x27;</span>, e, url)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 获取书籍的所有目录的URL</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> all_book_url:</span><br><span class="line">    task = asyncio.create_task(get_page_urls(i, sem))</span><br><span class="line">    tasks.append(task)</span><br><span class="line"><span class="keyword">await</span> asyncio.wait(tasks)</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">len</span>(all_book_list))</span><br></pre></td></tr></table></figure>
 
 <p>到此为止，我们已经拿到了专栏里所有的书籍的章节URL，然后调用之前的内容下载函数就可以了。</p>
@@ -345,8 +345,8 @@
 </div>
 
           <div class="post-tags">
-              <a href="/tags/%E7%88%AC%E8%99%AB/" rel="tag"><i class="fa fa-tag"></i> 爬虫</a>
               <a href="/tags/python/" rel="tag"><i class="fa fa-tag"></i> python</a>
+              <a href="/tags/%E7%88%AC%E8%99%AB/" rel="tag"><i class="fa fa-tag"></i> 爬虫</a>
           </div>
 
         
@@ -388,6 +388,24 @@
     </span>
     <span class="author" itemprop="copyrightHolder">medivh</span>
   </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
 
     </div>
   </footer>
@@ -420,10 +438,9 @@
 
 
   
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 
 
-  <script class="next-config" data-name="leancloud_visitors" type="application/json">{"enable":true,"app_id":"g1GwilqmVAUne2tDEDncEChG-gzGzoHsz","app_key":"YB2e5dSKMmMYYCtaSzxp9fdS","server_url":null,"security":true}</script>
-  <script src="/js/third-party/statistics/lean-analytics.js"></script>
 
 
 

@@ -240,12 +240,12 @@
     </span>
 
   
-    <span id="/OpenVpn%20%E6%9C%80%E6%96%B0%E7%89%88%E9%83%A8%E7%BD%B2.html" class="post-meta-item leancloud_visitors" data-flag-title="OpenVpn 最新版部署" title="阅读次数">
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
       <span class="post-meta-item-icon">
         <i class="far fa-eye"></i>
       </span>
       <span class="post-meta-item-text">阅读次数：</span>
-      <span class="leancloud-visitors-count"></span>
+      <span id="busuanzi_value_page_pv"></span>
     </span>
 </div>
 
@@ -274,7 +274,7 @@
 <h4 id="开启转发"><a href="#开启转发" class="headerlink" title="开启转发"></a>开启转发</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo &#x27;net.ipv4.ip_forward = 1&#x27; &gt;&gt; /etc/sysctl.conf</span><br></pre></td></tr></table></figure>
 <p>验证</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sysctl -p</span><br></pre></td></tr></table></figure>
-<img src="https://img.econow.cn/2018/1544336390853.png" width="262"/> 
+<img data-src="https://img.econow.cn/2018/1544336390853.png" width="262"/> 
 
 <h4 id="iptables"><a href="#iptables" class="headerlink" title="iptables"></a>iptables</h4><p>清空防火墙</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">iptables -F</span><br><span class="line">iptables -X</span><br><span class="line">ipatbles -Z</span><br></pre></td></tr></table></figure>
@@ -296,8 +296,8 @@
 </ul>
 <p>综上所述，简单理解就是从服务器网卡获取当前IP来做SNAT。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">iptables -A FORWARD -s 172.16.0.0/24 -j ACCEPT  </span><br><span class="line">iptables -A FORWARD -m state --state RELATED,ESTABLISHED -j ACCEPT  </span><br><span class="line"></span><br><span class="line">#检查</span><br><span class="line">iptables  -t  nat  -nL</span><br><span class="line"></span><br><span class="line">#转发</span><br><span class="line">iptables -t nat -A POSTROUTING -s 172.16.0.0/24  -j MASQUERADE</span><br><span class="line">  or</span><br><span class="line">iptables -t nat -A POSTROUTING -s 172.16.0.0/24 -o eth0 -j MASQUERADE</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>检查FORWARD<br><img src="https://img.econow.cn/2018/1544336486389.png" width="716"/></p>
-<p>检查MASQUERADE<br><img src="https://img.econow.cn/2018/1544336462517.png" width="480"/>  </p>
+<p>检查FORWARD<br><img data-src="https://img.econow.cn/2018/1544336486389.png" width="716"/></p>
+<p>检查MASQUERADE<br><img data-src="https://img.econow.cn/2018/1544336462517.png" width="480"/>  </p>
 <h3 id="配置文件"><a href="#配置文件" class="headerlink" title="配置文件"></a>配置文件</h3><h4 id="server端"><a href="#server端" class="headerlink" title="server端"></a>server端</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">port 1194</span><br><span class="line">proto udp</span><br><span class="line">dev tun</span><br><span class="line">ca ca.crt</span><br><span class="line">cert server.crt</span><br><span class="line">key server.key</span><br><span class="line">dh dh.pem</span><br><span class="line">server 172.16.0.0 255.255.255.0</span><br><span class="line">ifconfig-pool-persist ipp.txt</span><br><span class="line">client-config-dir ccd</span><br><span class="line">push &quot;redirect-gateway def1 bypass-dhcp&quot;</span><br><span class="line">push &quot;dhcp-option DNS 208.67.222.222&quot;</span><br><span class="line">push &quot;dhcp-option DNS 208.67.220.220&quot;</span><br><span class="line">client-to-client</span><br><span class="line">duplicate-cn</span><br><span class="line">keepalive 10 120</span><br><span class="line"></span><br><span class="line">;cipher BF-CBC</span><br><span class="line">;cipher AES-128-CBC</span><br><span class="line">;cipher DES-EDE3-CBC</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">comp-lzo</span><br><span class="line">;max-clients 100</span><br><span class="line">log         openvpn.log</span><br><span class="line">status openvpn-status.log</span><br><span class="line">verb 3</span><br><span class="line">mute 20</span><br></pre></td></tr></table></figure>
 <blockquote>
 <p>“redirect-gateway def1 bypass-dhcp”的目的是在所有客戶端的默认网络都重定向到服务器,它的目的就是客户端在使用不同的私有地址时可以确保能连上OpenVPN服务器。<br>但是如果有时候客户端无法正常上网，那么就得换种方式。<code>push &quot;route 10.110.1.0 255.255.255.0&quot;</code>就像这样推送服务器的路由。  </p>
@@ -310,10 +310,10 @@
 <h4 id="client端"><a href="#client端" class="headerlink" title="client端"></a>client端</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">client</span><br><span class="line">dev tun</span><br><span class="line">proto udp</span><br><span class="line">remote 服务器外网IP</span><br><span class="line">resolv-retry infinite</span><br><span class="line">nobind</span><br><span class="line">user nobody</span><br><span class="line">group nobody</span><br><span class="line">persist-key</span><br><span class="line">persist-tun</span><br><span class="line">ca ca.crt</span><br><span class="line">cert xiajie.crt</span><br><span class="line">key xiajie.key</span><br><span class="line">comp-lzo</span><br><span class="line">verb 3</span><br><span class="line">redirect-gateway def1</span><br></pre></td></tr></table></figure>
 
 <h3 id="启动"><a href="#启动" class="headerlink" title="启动"></a>启动</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">systemctl -f enable openvpn@server</span><br><span class="line">systemctl start openvpn@server</span><br></pre></td></tr></table></figure>
-<h2 id="服务检查"><a href="#服务检查" class="headerlink" title="服务检查"></a>服务检查</h2><h3 id="服务器端"><a href="#服务器端" class="headerlink" title="服务器端"></a>服务器端</h3><img src="https://img.econow.cn/2018/1544337135904.png" width="668"/>
+<h2 id="服务检查"><a href="#服务检查" class="headerlink" title="服务检查"></a>服务检查</h2><h3 id="服务器端"><a href="#服务器端" class="headerlink" title="服务器端"></a>服务器端</h3><img data-src="https://img.econow.cn/2018/1544337135904.png" width="668"/>
 ### 客户端（Windows）
 
-<img src="https://img.econow.cn/2018/1544337254592.png" width="642"/>
+<img data-src="https://img.econow.cn/2018/1544337254592.png" width="642"/>
 
 
 <h2 id="疑难杂症"><a href="#疑难杂症" class="headerlink" title="疑难杂症"></a>疑难杂症</h2><ul>
@@ -404,6 +404,24 @@
     </span>
     <span class="author" itemprop="copyrightHolder">medivh</span>
   </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
 
     </div>
   </footer>
@@ -436,10 +454,9 @@
 
 
   
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 
 
-  <script class="next-config" data-name="leancloud_visitors" type="application/json">{"enable":true,"app_id":"g1GwilqmVAUne2tDEDncEChG-gzGzoHsz","app_key":"YB2e5dSKMmMYYCtaSzxp9fdS","server_url":null,"security":true}</script>
-  <script src="/js/third-party/statistics/lean-analytics.js"></script>
 
 
 

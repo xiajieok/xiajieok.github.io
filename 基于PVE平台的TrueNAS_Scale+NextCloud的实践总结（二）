@@ -267,12 +267,12 @@
     </span>
 
   
-    <span id="/%E5%9F%BA%E4%BA%8EPVE%E5%B9%B3%E5%8F%B0%E7%9A%84TrueNAS_Scale+NextCloud%E7%9A%84%E5%AE%9E%E8%B7%B5%E6%80%BB%E7%BB%93%EF%BC%88%E4%BA%8C%EF%BC%89" class="post-meta-item leancloud_visitors" data-flag-title="基于PVE平台的TrueNAS_Scale+NextCloud的实践总结（二）" title="阅读次数">
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
       <span class="post-meta-item-icon">
         <i class="far fa-eye"></i>
       </span>
       <span class="post-meta-item-text">阅读次数：</span>
-      <span class="leancloud-visitors-count"></span>
+      <span id="busuanzi_value_page_pv"></span>
     </span>
 </div>
 
@@ -291,7 +291,7 @@
 <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>上一篇文章中记录了软件和硬件的选型，这篇记录虚拟化系统安装和使用的坎坷。</p>
 <h3 id="PVE简介"><a href="#PVE简介" class="headerlink" title="PVE简介"></a>PVE简介</h3><p>Proxmox VE is a complete, open-source server management platform for enterprise virtualization. It tightly integrates the KVM hypervisor and Linux Containers (LXC), software-defined storage and networking functionality, on a single platform. With the integrated web-based user interface you can manage VMs and containers, high availability for clusters, or the integrated disaster recovery tools with ease.</p>
 <p>啥意思呢？就是说PVE是一个成型和开源的虚拟化管理平台。它将KVM管理程序和Linux容器（LXC）、软件定义的存储和网络功能紧密集成在一个平台上。使用集成的基于web的用户界面，您可以轻松管理VM和容器、群集的高可用性或集成的灾难恢复工具。</p>
-<p><img src="https://img.econow.cn/medivh/1669274054326.png" alt="1669274054326.png"></p>
+<p><img data-src="https://img.econow.cn/medivh/1669274054326.png" alt="1669274054326.png"></p>
 <h3 id="特性"><a href="#特性" class="headerlink" title="特性"></a>特性</h3><ul>
 <li>KVM&amp;Container<ul>
 <li>PVE 基于Debian系统</li>
@@ -337,7 +337,7 @@
 <li>防火墙</li>
 </ul>
 <h3 id="下载"><a href="#下载" class="headerlink" title="下载"></a>下载</h3><p>访问官网<a target="_blank" rel="noopener" href="https://www.proxmox.com/en/downloads">下载链接</a>，注意选择的是Proxmox VE，不要选择成Proxmox Backup Server。</p>
-<p><img src="https://img.econow.cn/medivh/1669272337063.png" alt="1669272337063.png"></p>
+<p><img data-src="https://img.econow.cn/medivh/1669272337063.png" alt="1669272337063.png"></p>
 <p>网盘目录里存放了从官网下载的系统镜像，可以直接下载<a target="_blank" rel="noopener" href="https://pan.baidu.com/s/1apBdslCrIvDhZ8ii5hGAlQ?pwd=1gtj">百度网盘</a> 提取码: 1gtj 。</p>
 <h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>安装最小需求：</p>
 <ul>
@@ -347,27 +347,27 @@
 <li>Hard drive</li>
 <li>One network card (NIC)</li>
 </ul>
-<h3 id="镜像刻录"><a href="#镜像刻录" class="headerlink" title="镜像刻录"></a>镜像刻录</h3><p>推荐使用balenaEtcher，真的很好用，极简模式。<br><img src="https://img.econow.cn/medivh/1669273791797.png" alt="1669273791797.png"></p>
+<h3 id="镜像刻录"><a href="#镜像刻录" class="headerlink" title="镜像刻录"></a>镜像刻录</h3><p>推荐使用balenaEtcher，真的很好用，极简模式。<br><img data-src="https://img.econow.cn/medivh/1669273791797.png" alt="1669273791797.png"></p>
 <h3 id="安装系统"><a href="#安装系统" class="headerlink" title="安装系统"></a>安装系统</h3><blockquote>
 <p>截图是从官网来的，配置信息仅供参考</p>
 </blockquote>
 <p>选择install</p>
-<p><img src="https://img.econow.cn/medivh/1669274996097.png" alt="1669274996097.png"></p>
+<p><img data-src="https://img.econow.cn/medivh/1669274996097.png" alt="1669274996097.png"></p>
 <p>选择时区</p>
-<p><img src="https://img.econow.cn/medivh/1669275081131.png" alt="1669275081131.png"></p>
+<p><img data-src="https://img.econow.cn/medivh/1669275081131.png" alt="1669275081131.png"></p>
 <p>输入密码和邮箱</p>
-<p><img src="https://img.econow.cn/medivh/1669275107625.png" alt="1669275107625.png"></p>
+<p><img data-src="https://img.econow.cn/medivh/1669275107625.png" alt="1669275107625.png"></p>
 <p>配置网络</p>
-<p><img src="https://img.econow.cn/medivh/1669275182405.png" alt="1669275182405.png"></p>
+<p><img data-src="https://img.econow.cn/medivh/1669275182405.png" alt="1669275182405.png"></p>
 <p>继续安装</p>
-<p><img src="https://img.econow.cn/medivh/1669275132232.png" alt="1669275132232.png"></p>
+<p><img data-src="https://img.econow.cn/medivh/1669275132232.png" alt="1669275132232.png"></p>
 <p>确认信息</p>
-<p><img src="https://img.econow.cn/medivh/1669275233980.png" alt="1669275233980.png"></p>
+<p><img data-src="https://img.econow.cn/medivh/1669275233980.png" alt="1669275233980.png"></p>
 <p>安装完成后重启即可，访问地址为<a target="_blank" rel="noopener" href="https://ip:8006/">https://IP:8006</a></p>
-<p><img src="https://img.econow.cn/medivh/1669275401416.png" alt="1669275401416.png"></p>
+<p><img data-src="https://img.econow.cn/medivh/1669275401416.png" alt="1669275401416.png"></p>
 <p>上面是我已经运行了一段时间的截图。</p>
 <h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><p>首先在登录界面可以先把语言设置成简体中文，输入用户名和密码登录，用户名为root，密码就是安装时设置的密码。</p>
-<p><img src="https://img.econow.cn/medivh/1669278628372.png" alt="1669278628372.png"></p>
+<p><img data-src="https://img.econow.cn/medivh/1669278628372.png" alt="1669278628372.png"></p>
 <h3 id="CPU"><a href="#CPU" class="headerlink" title="CPU"></a>CPU</h3><h4 id="cpu模式"><a href="#cpu模式" class="headerlink" title="cpu模式"></a>cpu模式</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">apt-get install cpufrequtils  <span class="comment">#安装驱动</span></span><br><span class="line"></span><br><span class="line">ondemand：系统默认的超频模式，按需调节，内核提供的功能，不是很强大，但有效实现了动态频率调节，平时以低速方式运行，当系统负载提高时候自动提高频率。以这种模式运行不会因为降频造成性能降低，同时也能节约电能和降低温度。一般官方内核默认的方式都是ondemand。</span><br><span class="line"> </span><br><span class="line">interactive：交互模式，直接上最高频率，然后看CPU负荷慢慢降低，比较耗电。Interactive 是以 CPU 排程数量而调整频率，从而实现省电。InteractiveX 是以 CPU 负载来调整 CPU 频率，不会过度把频率调低。所以比 Interactive 反应好些，但是省电的效果一般。</span><br><span class="line"> </span><br><span class="line">conservative：保守模式，类似于ondemand，但调整相对较缓，想省电就用他吧。Google官方内核，kang内核默认模式。</span><br><span class="line"> </span><br><span class="line">smartass：聪明模式，是I和C模式的升级，该模式在比interactive 模式不差的响应的前提下会做到了更加省电。</span><br><span class="line"> </span><br><span class="line">performance：性能模式！只有最高频率，从来不考虑消耗的电量，性能没得说，但是耗电量。</span><br><span class="line"> </span><br><span class="line">powersave 省电模式，通常以最低频率运行。</span><br><span class="line"> </span><br><span class="line">userspace：用户自定义模式，系统将变频策略的决策权交给了用户态应用程序，并提供了相应的接口供用户态应用程序调节CPU 运行频率使用。也就是长期以来都在用的那个模式。可以通过手动编辑配置文件进行配置</span><br><span class="line"> </span><br><span class="line">Hotplug：类似于ondemand, 但是cpu会在关屏下尝试关掉一个cpu，并且带有deep <span class="built_in">sleep</span>，比较省电。</span><br></pre></td></tr></table></figure>
 
 <h4 id="查看"><a href="#查看" class="headerlink" title="查看"></a>查看</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cpufreq-info <span class="comment"># 查看信息</span></span><br></pre></td></tr></table></figure>
@@ -376,33 +376,33 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">nano /etc/init.d/cpufrequtils</span><br><span class="line">.</span><br><span class="line">.</span><br><span class="line">.</span><br><span class="line">ENABLE=<span class="string">&quot;true&quot;</span>   </span><br><span class="line">GOVERNOR=<span class="string">&quot;conservative&quot;</span>  <span class="comment">#运行模式,依照需求调整</span></span><br><span class="line">MAX_SPEED=<span class="string">&quot;2800&quot;</span>         <span class="comment">#上限</span></span><br><span class="line">MIN_SPEED=<span class="string">&quot;1200&quot;</span>         <span class="comment">#下限</span></span><br><span class="line"> </span><br><span class="line">.</span><br><span class="line">.</span><br><span class="line">.</span><br></pre></td></tr></table></figure>
 
 <h3 id="解除弹窗"><a href="#解除弹窗" class="headerlink" title="解除弹窗"></a>解除弹窗</h3><p>登陆后会弹出一个恼人的提示，不会有什么影响但是每次登录都弹窗也是很烦的，还有在概要里面看不到CPU的温度也很不方便，接下来用大佬的一个脚本来解决这两个问题。</p>
-<p><img src="https://img.econow.cn/medivh/1669278673588.png" alt="1669278673588.png"></p>
+<p><img data-src="https://img.econow.cn/medivh/1669278673588.png" alt="1669278673588.png"></p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 修改 JS 源码</span></span><br><span class="line">sed -Ezi.bak <span class="string">&quot;s/(Ext.Msg.show\(\&#123;\s+title: gettext\(&#x27;No valid sub)/void\(\&#123; \/\/\1/g&quot;</span> /usr/share/javascript/proxmox-widget-toolkit/proxmoxlib.js</span><br><span class="line"></span><br><span class="line"><span class="comment"># 重启 PVE 服务</span></span><br><span class="line">systemctl restart pveproxy.service</span><br></pre></td></tr></table></figure>
 
 <h3 id="换源"><a href="#换源" class="headerlink" title="换源"></a>换源</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 注释企业源</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;#deb https://enterprise.proxmox.com/debian/pve bullseye pve-enterprise&quot;</span> &gt; /etc/apt/sources.list.d/pve-enterprise.list</span><br><span class="line"></span><br><span class="line"><span class="comment"># PVE 软件源更换</span></span><br><span class="line">wget https://mirrors.ustc.edu.cn/proxmox/debian/proxmox-release-bullseye.gpg -O /etc/apt/trusted.gpg.d/proxmox-release-bullseye.gpg</span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;deb https://mirrors.ustc.edu.cn/proxmox/debian/pve bullseye pve-no-subscription&quot;</span> &gt; /etc/apt/sources.list.d/pve-no-subscription.list</span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;deb https://mirrors.ustc.edu.cn/proxmox/debian/ceph-pacific bullseye main&quot;</span> &gt; /etc/apt/sources.list.d/ceph.list</span><br><span class="line"></span><br><span class="line">sed -i.bak <span class="string">&quot;s#http://download.proxmox.com/debian#https://mirrors.ustc.edu.cn/proxmox/debian#g&quot;</span> /usr/share/perl5/PVE/CLI/pveceph.pm</span><br><span class="line"></span><br><span class="line"><span class="comment"># Debian 系统源更换</span></span><br><span class="line">sed -i.bak <span class="string">&quot;s#ftp.debian.org/debian#mirrors.aliyun.com/debian#g&quot;</span> /etc/apt/sources.list</span><br><span class="line">sed -i <span class="string">&quot;s#security.debian.org#mirrors.aliyun.com/debian-security#g&quot;</span> /etc/apt/sources.list</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;deb http://download.proxmox.com/debian/pve bullseye pve-no-subscription&quot;</span> &gt;&gt;  /etc/apt/sources.list</span><br><span class="line"></span><br><span class="line"><span class="comment"># 更新测试一下</span></span><br><span class="line">apt update</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
-<h3 id="创建虚拟机"><a href="#创建虚拟机" class="headerlink" title="创建虚拟机"></a>创建虚拟机</h3><p>首先需要系统镜像，可以上传，也可以从URL下载：<br><img src="https://img.econow.cn/medivh/1669275824568.png" alt="1669275824568.png"></p>
+<h3 id="创建虚拟机"><a href="#创建虚拟机" class="headerlink" title="创建虚拟机"></a>创建虚拟机</h3><p>首先需要系统镜像，可以上传，也可以从URL下载：<br><img data-src="https://img.econow.cn/medivh/1669275824568.png" alt="1669275824568.png"></p>
 <p>名称是必填的，VM ID 是按照从100开始按照顺序来的，如果创建后删除再创建，那么ID还是100.开机启动，自己来决定是否需要。</p>
-<p><img src="https://img.econow.cn/medivh/1669276037929.png" alt="1669276037929.png"></p>
+<p><img data-src="https://img.econow.cn/medivh/1669276037929.png" alt="1669276037929.png"></p>
 <p>点击下拉选择镜像，如果是Linux 系统的话，默认即可。但是如果是Windows系统，则需要注意选择正确的系统版本，否则会报无法引导的错误。</p>
-<p><img src="https://img.econow.cn/medivh/1669276255434.png" alt="1669276255434.png"></p>
+<p><img data-src="https://img.econow.cn/medivh/1669276255434.png" alt="1669276255434.png"></p>
 <p>磁盘可以填写合适的大小。</p>
-<p><img src="https://img.econow.cn/medivh/1669276343155.png" alt="1669276343155.png"></p>
+<p><img data-src="https://img.econow.cn/medivh/1669276343155.png" alt="1669276343155.png"></p>
 <p>下一步选择CPU类别，注意选择host，以及核心数。</p>
-<p><img src="https://img.econow.cn/medivh/1669277576600.png" alt="1669277576600.png"></p>
+<p><img data-src="https://img.econow.cn/medivh/1669277576600.png" alt="1669277576600.png"></p>
 <p>内存就正常写就可以了。</p>
-<p><img src="https://img.econow.cn/medivh/1669277606801.png" alt="1669277606801.png"></p>
+<p><img data-src="https://img.econow.cn/medivh/1669277606801.png" alt="1669277606801.png"></p>
 <p>网络模式默认即可。</p>
-<p><img src="https://img.econow.cn/medivh/1669277629216.png" alt="1669277629216.png"></p>
+<p><img data-src="https://img.econow.cn/medivh/1669277629216.png" alt="1669277629216.png"></p>
 <p>最后确认启动就可以了。</p>
-<p><img src="https://img.econow.cn/medivh/1669277652385.png" alt="1669277652385.png"></p>
+<p><img data-src="https://img.econow.cn/medivh/1669277652385.png" alt="1669277652385.png"></p>
 <h3 id="虚拟机的使用"><a href="#虚拟机的使用" class="headerlink" title="虚拟机的使用"></a>虚拟机的使用</h3><p>以105这台机器举例：</p>
 <ul>
 <li>概要 展示虚拟机的监控，比如CPU、内存、网络和磁盘</li>
 <li>控制台</li>
 <li>硬件  展示硬件的详情</li>
 </ul>
-<p><img src="https://img.econow.cn/medivh/1669277751784.png" alt="1669277751784.png"></p>
+<p><img data-src="https://img.econow.cn/medivh/1669277751784.png" alt="1669277751784.png"></p>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>到此为止，成功的创建了虚拟机，为后续的NAS系统安装打下了基础。</p>
 <h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
 <li><a target="_blank" rel="noopener" href="https://pve.proxmox.com/pve-docs/pve-admin-guide.html">https://pve.proxmox.com/pve-docs/pve-admin-guide.html</a></li>
@@ -497,6 +497,24 @@
     </span>
     <span class="author" itemprop="copyrightHolder">medivh</span>
   </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
 
     </div>
   </footer>
@@ -529,10 +547,9 @@
 
 
   
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 
 
-  <script class="next-config" data-name="leancloud_visitors" type="application/json">{"enable":true,"app_id":"g1GwilqmVAUne2tDEDncEChG-gzGzoHsz","app_key":"YB2e5dSKMmMYYCtaSzxp9fdS","server_url":null,"security":true}</script>
-  <script src="/js/third-party/statistics/lean-analytics.js"></script>
 
 
 

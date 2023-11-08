@@ -245,12 +245,12 @@
     </span>
 
   
-    <span id="/%E6%A0%91%E8%8E%93%E6%B4%BE%E7%BC%96%E8%AF%91%E5%AE%89%E8%A3%85Python3-5.html" class="post-meta-item leancloud_visitors" data-flag-title="树莓派编译安装Python3.5" title="阅读次数">
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
       <span class="post-meta-item-icon">
         <i class="far fa-eye"></i>
       </span>
       <span class="post-meta-item-text">阅读次数：</span>
-      <span class="leancloud-visitors-count"></span>
+      <span id="busuanzi_value_page_pv"></span>
     </span>
 </div>
 
@@ -262,10 +262,10 @@
     
     <div class="post-body" itemprop="articleBody"><p>刚写了一个天气预报的脚本，想部署在服务器上，但是运行的时候报错，说找不到requests库，奇怪的是装上了也报错。后来发现树莓派自带的是3.2，版本有点老可能会有点不兼容吧。<br>那就装个Python3.5吧！</p>
 <h4 id="环境依赖"><a href="#环境依赖" class="headerlink" title="环境依赖"></a>环境依赖</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install libssl-dev</span><br><span class="line">sudo apt-get install openssl</span><br><span class="line"></span><br><span class="line">sudo wget https://www.python.org/ftp/python/3.5.3/Python-3.5.3.tar.xz</span><br><span class="line">tar -xvf Python-3.5.3.tar.xz</span><br><span class="line">cd Python-3.5.3</span><br><span class="line">./configure --prefix=/usr/local/python3.5</span><br><span class="line">make</span><br><span class="line">make altinstall</span><br></pre></td></tr></table></figure>
-<p>进入&#x2F;usr&#x2F;local&#x2F;python3.5 检查是否完整<br><img src='http://7xp3xc.com1.z0.glb.clouddn.com/2016/1493107147483.png' width=873></p>
+<p>进入&#x2F;usr&#x2F;local&#x2F;python3.5 检查是否完整<br><img data-src='http://7xp3xc.com1.z0.glb.clouddn.com/2016/1493107147483.png' width=873></p>
 <h4 id="建立软链"><a href="#建立软链" class="headerlink" title="建立软链"></a>建立软链</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo ln -s /usr/local/python3.5/bin/python3.5 /usr/bin/python3</span><br><span class="line">sudo ln -s /usr/local/python3.5/bin/pip3 /usr/bin/pip3</span><br></pre></td></tr></table></figure>
 <p>检查版本。<br>安装完成！！！</p>
-<h3 id="错误整理"><a href="#错误整理" class="headerlink" title="错误整理"></a>错误整理</h3><p>1、 提示Ignoring ensurepip failure: pip 8.1.1 requires SSL&#x2F;TLS<br><img src='http://7xp3xc.com1.z0.glb.clouddn.com/2016/1493103640349.png' width=873><br>错误:<br>    没有安装openssl-devel<br>解决：</p>
+<h3 id="错误整理"><a href="#错误整理" class="headerlink" title="错误整理"></a>错误整理</h3><p>1、 提示Ignoring ensurepip failure: pip 8.1.1 requires SSL&#x2F;TLS<br><img data-src='http://7xp3xc.com1.z0.glb.clouddn.com/2016/1493103640349.png' width=873><br>错误:<br>    没有安装openssl-devel<br>解决：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install libssl-dev</span><br><span class="line">sudo apt-get install openss</span><br></pre></td></tr></table></figure>
 <p>2、libssl-dev无法安装</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">The following packages have unmet dependencies:</span><br><span class="line"> libssl-dev : Depends: libssl1.0.0 (= 1.0.1-4ubuntu5) but 1.0.1-4ubuntu5.3 is to be installed</span><br><span class="line">              Recommends: libssl-doc but it is not going to be installed</span><br><span class="line">E: Unable to correct problems, you have held broken packages.</span><br></pre></td></tr></table></figure>
@@ -356,6 +356,24 @@
     </span>
     <span class="author" itemprop="copyrightHolder">medivh</span>
   </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
 
     </div>
   </footer>
@@ -388,10 +406,9 @@
 
 
   
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 
 
-  <script class="next-config" data-name="leancloud_visitors" type="application/json">{"enable":true,"app_id":"g1GwilqmVAUne2tDEDncEChG-gzGzoHsz","app_key":"YB2e5dSKMmMYYCtaSzxp9fdS","server_url":null,"security":true}</script>
-  <script src="/js/third-party/statistics/lean-analytics.js"></script>
 
 
 

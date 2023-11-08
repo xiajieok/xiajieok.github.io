@@ -244,12 +244,12 @@
     </span>
 
   
-    <span id="/Python%E7%9F%A5%E8%AF%86%E7%82%B9%E6%80%BB%E7%BB%93" class="post-meta-item leancloud_visitors" data-flag-title="Python知识点总结" title="阅读次数">
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
       <span class="post-meta-item-icon">
         <i class="far fa-eye"></i>
       </span>
       <span class="post-meta-item-text">阅读次数：</span>
-      <span class="leancloud-visitors-count"></span>
+      <span id="busuanzi_value_page_pv"></span>
     </span>
 </div>
 
@@ -294,7 +294,7 @@
 
 <h3 id="GIL"><a href="#GIL" class="headerlink" title="GIL"></a>GIL</h3><p>GIL，解释器中一种线程同步的方式。</p>
 <p>每个解释器都有一个GIL，直接作用是限制单个解释器进程中多线程的并行执行，使即使在多核处理器上对于单个解释器来说，同一时刻运行的线程仅限一个。同时造成的问题就是：在一个解释器进程中通过多线程的方式无法利用多核处理器来实现真正的并行。因此，Python的多线程是伪多线程，无法利用多核资源，同一时刻只能一个线程在真正的运行。</p>
-<h3 id="迭代器和生成器"><a href="#迭代器和生成器" class="headerlink" title="迭代器和生成器"></a>迭代器和生成器</h3><h4 id="迭代器"><a href="#迭代器" class="headerlink" title="迭代器"></a>迭代器</h4><p><img src="https://img.econow.cn/medivh/1660724977831.png" alt="1660724977831.png"></p>
+<h3 id="迭代器和生成器"><a href="#迭代器和生成器" class="headerlink" title="迭代器和生成器"></a>迭代器和生成器</h3><h4 id="迭代器"><a href="#迭代器" class="headerlink" title="迭代器"></a>迭代器</h4><p><img data-src="https://img.econow.cn/medivh/1660724977831.png" alt="1660724977831.png"></p>
 <p>迭代器是一种对象，该对象包含值的可计数数字，意味着可以遍历所有值。list、tuple、dict、set都是可迭代的对象。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">mytuple = (<span class="string">&quot;apple&quot;</span>, <span class="string">&quot;banana&quot;</span>, <span class="string">&quot;cherry&quot;</span>)</span><br><span class="line">myit = <span class="built_in">iter</span>(mytuple)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">next</span>(myit))</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">next</span>(myit))</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">next</span>(myit))</span><br><span class="line"></span><br><span class="line">apple</span><br><span class="line">banana</span><br><span class="line">cherry</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
@@ -478,6 +478,24 @@
     </span>
     <span class="author" itemprop="copyrightHolder">medivh</span>
   </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
 
     </div>
   </footer>
@@ -510,10 +528,9 @@
 
 
   
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 
 
-  <script class="next-config" data-name="leancloud_visitors" type="application/json">{"enable":true,"app_id":"g1GwilqmVAUne2tDEDncEChG-gzGzoHsz","app_key":"YB2e5dSKMmMYYCtaSzxp9fdS","server_url":null,"security":true}</script>
-  <script src="/js/third-party/statistics/lean-analytics.js"></script>
 
 
 

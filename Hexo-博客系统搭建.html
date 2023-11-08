@@ -244,12 +244,12 @@
     </span>
 
   
-    <span id="/Hexo-%E5%8D%9A%E5%AE%A2%E7%B3%BB%E7%BB%9F%E6%90%AD%E5%BB%BA.html" class="post-meta-item leancloud_visitors" data-flag-title="Hexo 博客系统搭建" title="阅读次数">
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
       <span class="post-meta-item-icon">
         <i class="far fa-eye"></i>
       </span>
       <span class="post-meta-item-text">阅读次数：</span>
-      <span class="leancloud-visitors-count"></span>
+      <span id="busuanzi_value_page_pv"></span>
     </span>
 </div>
 
@@ -269,7 +269,7 @@
 
 <h4 id="Hexo初始化"><a href="#Hexo初始化" class="headerlink" title="Hexo初始化"></a>Hexo初始化</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">hexo init hexo  </span><br><span class="line">#执行init命令初始化到你指定的hexo目录</span><br><span class="line">初始化后目录结构</span><br><span class="line">-rw-r--r--    1 jack  staff  1483  4 21 10:19 _config.yml</span><br><span class="line">drwxr-xr-x  288 jack  staff  9792  4 21 10:24 node_modules/</span><br><span class="line">-rw-r--r--    1 jack  staff   443  4 21 10:19 package.json</span><br><span class="line">drwxr-xr-x    5 jack  staff   170  4 21 10:19 scaffolds/</span><br><span class="line">drwxr-xr-x    3 jack  staff   102  4 21 10:19 source/</span><br><span class="line">drwxr-xr-x    3 jack  staff   102  4 21 10:19 themes/</span><br><span class="line"></span><br><span class="line">npm install    #install before start blogging</span><br><span class="line">hexo generate       #自动根据当前目录下文件,生成静态网页</span><br><span class="line">hexo server         #运行本地服务</span><br></pre></td></tr></table></figure>
 <p>浏览器输入<a target="_blank" rel="noopener" href="http://localhost:4000/">http://localhost:4000</a>就可以看到效果。</p>
-<h3 id="配置github"><a href="#配置github" class="headerlink" title="配置github"></a>配置github</h3><img src='http://7xp3xc.com1.z0.glb.clouddn.com/2016/1492755503227.png' width=873>
+<h3 id="配置github"><a href="#配置github" class="headerlink" title="配置github"></a>配置github</h3><img data-src='http://7xp3xc.com1.z0.glb.clouddn.com/2016/1492755503227.png' width=873>
 ### 配置域名
 repo->settings-> 检查是否和配置文件一致
 
@@ -364,6 +364,24 @@ repo->settings-> 检查是否和配置文件一致
     </span>
     <span class="author" itemprop="copyrightHolder">medivh</span>
   </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
 
     </div>
   </footer>
@@ -396,10 +414,9 @@ repo->settings-> 检查是否和配置文件一致
 
 
   
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 
 
-  <script class="next-config" data-name="leancloud_visitors" type="application/json">{"enable":true,"app_id":"g1GwilqmVAUne2tDEDncEChG-gzGzoHsz","app_key":"YB2e5dSKMmMYYCtaSzxp9fdS","server_url":null,"security":true}</script>
-  <script src="/js/third-party/statistics/lean-analytics.js"></script>
 
 
 

@@ -269,12 +269,12 @@
     </span>
 
   
-    <span id="/%E5%9F%BA%E4%BA%8EPVE%E5%B9%B3%E5%8F%B0%E7%9A%84TrueNAS_Scale+NextCloud%E7%9A%84%E5%AE%9E%E8%B7%B5%E6%80%BB%E7%BB%93%EF%BC%88%E4%B8%89%EF%BC%89" class="post-meta-item leancloud_visitors" data-flag-title="基于PVE平台的TrueNAS_Scale+NextCloud的实践总结（三）" title="阅读次数">
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
       <span class="post-meta-item-icon">
         <i class="far fa-eye"></i>
       </span>
       <span class="post-meta-item-text">阅读次数：</span>
-      <span class="leancloud-visitors-count"></span>
+      <span id="busuanzi_value_page_pv"></span>
     </span>
 </div>
 
@@ -291,34 +291,34 @@
 <li><a href="https://econow.cn/%E5%9F%BA%E4%BA%8EPVE%E5%B9%B3%E5%8F%B0%E7%9A%84TrueNAS_Scale+NextCloud%E7%9A%84%E5%AE%9E%E8%B7%B5%E6%80%BB%E7%BB%93%EF%BC%88%E4%B8%89%EF%BC%89.html#more">基于PVE平台的TrueNAS_Scale+NextCloud的实践总结（三）</a></li>
 </ul>
 <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>虚拟化平台搭建好了，现在开始创建一台trues的虚拟机。TruesNAS 是之前选择的系统，其中Enterprise 是付费版，Scale是要使用的系统。</p>
-<p><img src="https://img.econow.cn/medivh/1669279439301.png" alt="1669279439301.png"></p>
+<p><img data-src="https://img.econow.cn/medivh/1669279439301.png" alt="1669279439301.png"></p>
 <p>功能概览：</p>
-<p><img src="https://img.econow.cn/medivh/1669280893833.png" alt="1669280893833.png"></p>
+<p><img data-src="https://img.econow.cn/medivh/1669280893833.png" alt="1669280893833.png"></p>
 <p>路线图</p>
-<p><img src="https://img.econow.cn/medivh/1669280910986.png" alt="1669280910986.png"></p>
+<p><img data-src="https://img.econow.cn/medivh/1669280910986.png" alt="1669280910986.png"></p>
 <p>下载</p>
-<p><img src="https://img.econow.cn/medivh/1669281008839.png" alt="1669281008839.png"></p>
+<p><img data-src="https://img.econow.cn/medivh/1669281008839.png" alt="1669281008839.png"></p>
 <p><a target="_blank" rel="noopener" href="https://download.truenas.com/TrueNAS-SCALE-Angelfish/22.02.4/TrueNAS-SCALE-22.02.4.iso">下载链接</a></p>
 <p>网盘目录里存放了从官网下载的系统镜像，可以直接下载<a target="_blank" rel="noopener" href="https://pan.baidu.com/s/1apBdslCrIvDhZ8ii5hGAlQ?pwd=1gtj">百度网盘</a> 提取码: 1gtj 。</p>
 <h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>该部分很简单，在PVE创建虚拟机的时候选择镜像，基本按照默认选择安装即可。</p>
 <h3 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h3><p>访问登录地址<a target="_blank" rel="noopener" href="http://ip/">http://ip</a></p>
-<p><img src="https://img.econow.cn/medivh/1669281872868.png" alt="1669281872868.png"></p>
+<p><img data-src="https://img.econow.cn/medivh/1669281872868.png" alt="1669281872868.png"></p>
 <p>登录后就会看到Dashboard</p>
-<p><img src="https://img.econow.cn/medivh/1669281972621.png" alt="1669281972621.png"></p>
+<p><img data-src="https://img.econow.cn/medivh/1669281972621.png" alt="1669281972621.png"></p>
 <p>本地化设置在 系统设置-》常规-》本地化—》选择语言和时区</p>
 <h4 id="网络设置"><a href="#网络设置" class="headerlink" title="网络设置"></a>网络设置</h4><p>网络-》接口，点击</p>
-<p><img src="https://img.econow.cn/medivh/1669282030229.png" alt="1669282030229.png"></p>
+<p><img data-src="https://img.econow.cn/medivh/1669282030229.png" alt="1669282030229.png"></p>
 <p>取消勾选DHCP，添加新的IP，然后应用</p>
-<p><img src="https://img.econow.cn/medivh/1669282087934.png" alt="1669282087934.png"></p>
+<p><img data-src="https://img.econow.cn/medivh/1669282087934.png" alt="1669282087934.png"></p>
 <p>注意点击应用后要点击测试更改，然后在60s内使用新的IP访问，否则修改无效。</p>
-<p><img src="https://img.econow.cn/medivh/1669282158314.png" alt="1669282158314.png"></p>
+<p><img data-src="https://img.econow.cn/medivh/1669282158314.png" alt="1669282158314.png"></p>
 <p>根据自己需要填写DNS和网关。需要注意的是NetBIOS-NS需要勾选，否则部分设备无法发现，比如小米摄像头。</p>
-<p><img src="https://img.econow.cn/medivh/1669282252379.png" alt="1669282252379.png"></p>
+<p><img data-src="https://img.econow.cn/medivh/1669282252379.png" alt="1669282252379.png"></p>
 <h4 id="Docker源"><a href="#Docker源" class="headerlink" title="Docker源"></a>Docker源</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&#123;<span class="string">&quot;data-root&quot;</span>: <span class="string">&quot;/mnt/free/ix-applications/docker&quot;</span>, <span class="string">&quot;exec-opts&quot;</span>: [<span class="string">&quot;native.cgroupdriver=cgroupfs&quot;</span>], <span class="string">&quot;iptables&quot;</span>: <span class="literal">false</span>, <span class="string">&quot;bridge&quot;</span>: <span class="string">&quot;none&quot;</span>&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 增加</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="string">&quot;registry-mirrors&quot;</span>: [</span><br><span class="line">        <span class="string">&quot;http://hub-mirror.c.163.com&quot;</span>,</span><br><span class="line">        <span class="string">&quot;https://docker.mirrors.ustc.edu.cn&quot;</span>,</span><br><span class="line">        <span class="string">&quot;https://registry.docker-cn.com&quot;</span></span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <h4 id="存储设置"><a href="#存储设置" class="headerlink" title="存储设置"></a>存储设置</h4><p>TrueNAS存储顺序为内存-&gt;缓存存储池-&gt;数据存储池。</p>
 <p>一个存储池可以由多个Vdev组成，而Vdev可以有多种类型。</p>
-<p><img src="https://img.econow.cn/medivh/1669604121682.png" alt="1669604121682.png"></p>
+<p><img data-src="https://img.econow.cn/medivh/1669604121682.png" alt="1669604121682.png"></p>
 <h5 id="Vdev类型"><a href="#Vdev类型" class="headerlink" title="Vdev类型"></a>Vdev类型</h5><p>Vdev有以下六种类型：<br>参考：Creating Pools | (truenas.com)</p>
 <h6 id="1、Data"><a href="#1、Data" class="headerlink" title="1、Data"></a>1、Data</h6><p>基础Vdev，用于存储数据，一个存储池至少有一个Data Vdev。</p>
 <p>可以在一个池里添加多个Data Vdev，多个Data Vdev可以组成相关阵列，而一个Data Vdev又可以由多块硬盘组成的阵列构成。</p>
@@ -335,30 +335,30 @@
 <p>根据特定的池用例，添加到vdev中的磁盘以不同的布局排列。不支持将多个具有不同布局的vdev添加到池中。当需要不同的vdev布局时，创建一个新的池。例如，pool1中有一个镜像布局的数据vdev，新创建一个poo2，将raid-z布局的vdev添加到pool2中。</p>
 <h5 id="RAID介绍"><a href="#RAID介绍" class="headerlink" title="RAID介绍"></a>RAID介绍</h5><p>条带：与RAID0类似，不过可以不同大小的硬盘组<br>镜像：与RAID1类似，磁盘镜像，至少需要两个磁盘。<br>RAIDZ1：与RAID5类似，一重奇偶校验，至少需要三块磁盘；可以坏一块硬盘不丢数据。容量和速度为N-1(N为硬盘数量)<br>RAIDZ2：与RAID6类似，双重奇偶校验，至少需要四个磁盘；可以坏2块硬盘不丢数据。容量和速度为N-2(N为硬盘数量)<br>RAIDZ3：ZFS特有的，三重奇偶校验，至少需要5个磁盘；可以坏3块盘不丢数据。容量和速度为N-3(N为硬盘数量)</p>
 <p>创建新的池，选择磁盘，此处磁盘已经使用，所以显示为空。</p>
-<p><img src="https://img.econow.cn/medivh/1669282473343.png" alt="1669282473343.png"></p>
+<p><img data-src="https://img.econow.cn/medivh/1669282473343.png" alt="1669282473343.png"></p>
 <p>下面是使用了一段时间后的情况</p>
-<p><img src="https://img.econow.cn/medivh/1669282672229.png" alt="1669282672229.png"></p>
+<p><img data-src="https://img.econow.cn/medivh/1669282672229.png" alt="1669282672229.png"></p>
 <h4 id="SMB服务"><a href="#SMB服务" class="headerlink" title="SMB服务"></a>SMB服务</h4><p>首先需要创建用户，我这里是给摄像头使用的</p>
-<p><img src="https://img.econow.cn/medivh/1669282731973.png" alt="1669282731973.png"></p>
+<p><img data-src="https://img.econow.cn/medivh/1669282731973.png" alt="1669282731973.png"></p>
 <p>该部分需要注意主目录的位置，可以输入后自动创建并使用，其他保持默认即可。</p>
-<p><img src="https://img.econow.cn/medivh/1669282798780.png" alt="1669282798780.png"></p>
+<p><img data-src="https://img.econow.cn/medivh/1669282798780.png" alt="1669282798780.png"></p>
 <p>下一步需要启动服务</p>
-<p><img src="https://img.econow.cn/medivh/1669282892634.png" alt="1669282892634.png"></p>
+<p><img data-src="https://img.econow.cn/medivh/1669282892634.png" alt="1669282892634.png"></p>
 <p>对于小米摄像头来说需要启动SMB1。</p>
-<p><img src="https://img.econow.cn/medivh/1669282926386.png" alt="1669282926386.png"></p>
+<p><img data-src="https://img.econow.cn/medivh/1669282926386.png" alt="1669282926386.png"></p>
 <p>输入账号密码，很完美。</p>
-<p><img src="https://img.econow.cn/medivh/1669283126821.png" alt="1669283126821.png"></p>
+<p><img data-src="https://img.econow.cn/medivh/1669283126821.png" alt="1669283126821.png"></p>
 <h3 id="NextCloud"><a href="#NextCloud" class="headerlink" title="NextCloud"></a>NextCloud</h3><p>选择应用-》nextcloud</p>
-<p><img src="https://img.econow.cn/medivh/1669284054845.png" alt="1669284054845.png"></p>
+<p><img data-src="https://img.econow.cn/medivh/1669284054845.png" alt="1669284054845.png"></p>
 <p>账号密码和IP都可以自定义，也可以不修改</p>
-<p><img src="https://img.econow.cn/medivh/1669284154262.png" alt="1669284154262.png"></p>
+<p><img data-src="https://img.econow.cn/medivh/1669284154262.png" alt="1669284154262.png"></p>
 <p>添加两个环境变量<code>PHP_UPLOAD_LIMIT</code>和<code>PHP_MEMORY_LIMIT</code>，为了之后上传大文件</p>
-<p><img src="https://img.econow.cn/medivh/1669284183021.png" alt="1669284183021.png"></p>
+<p><img data-src="https://img.econow.cn/medivh/1669284183021.png" alt="1669284183021.png"></p>
 <p>存储这块建议使用host模式，自定义存储路径</p>
-<p><img src="https://img.econow.cn/medivh/1669284272303.png" alt="1669284272303.png"></p>
+<p><img data-src="https://img.econow.cn/medivh/1669284272303.png" alt="1669284272303.png"></p>
 <p>其余项目使用默认设置即可，保存后系统会自动部署。</p>
 <p>当此处展示为ACTIVE，点击Web Portal即可</p>
-<p><img src="https://img.econow.cn/medivh/1669284354369.png" alt="1669284354369.png"></p>
+<p><img data-src="https://img.econow.cn/medivh/1669284354369.png" alt="1669284354369.png"></p>
 <h4 id="添加缓存"><a href="#添加缓存" class="headerlink" title="添加缓存"></a>添加缓存</h4><p>修改config.php文件</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&#x27;memcache.distributed&#x27;</span> =&gt; <span class="string">&#x27;\OC\Memcache\Redis&#x27;</span>,</span><br><span class="line"><span class="string">&#x27;redis&#x27;</span> =&gt; array(</span><br><span class="line"><span class="string">&#x27;host&#x27;</span> =&gt; 192.168.31.82,</span><br><span class="line"><span class="string">&#x27;port&#x27;</span> =&gt; 6379,</span><br></pre></td></tr></table></figure>
 
@@ -482,6 +482,24 @@
     </span>
     <span class="author" itemprop="copyrightHolder">medivh</span>
   </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
 
     </div>
   </footer>
@@ -514,10 +532,9 @@
 
 
   
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 
 
-  <script class="next-config" data-name="leancloud_visitors" type="application/json">{"enable":true,"app_id":"g1GwilqmVAUne2tDEDncEChG-gzGzoHsz","app_key":"YB2e5dSKMmMYYCtaSzxp9fdS","server_url":null,"security":true}</script>
-  <script src="/js/third-party/statistics/lean-analytics.js"></script>
 
 
 

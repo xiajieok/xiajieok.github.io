@@ -240,12 +240,12 @@
     </span>
 
   
-    <span id="/Mongodb%20%E6%8E%A2%E7%B4%A2.html" class="post-meta-item leancloud_visitors" data-flag-title="Mongodb 探索" title="阅读次数">
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
       <span class="post-meta-item-icon">
         <i class="far fa-eye"></i>
       </span>
       <span class="post-meta-item-text">阅读次数：</span>
-      <span class="leancloud-visitors-count"></span>
+      <span id="busuanzi_value_page_pv"></span>
     </span>
 </div>
 
@@ -313,13 +313,13 @@
 <li>在客户端进去，使用db.shutdownServer()</li>
 </ul>
 <h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><h3 id="查"><a href="#查" class="headerlink" title="查"></a>查</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">show dbs;</span><br><span class="line">#查看数据库</span><br></pre></td></tr></table></figure>
-<img src="https://img.econow.cn/medivh/1546668277063.png" />
+<img data-src="https://img.econow.cn/medivh/1546668277063.png" />
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">use wesure;</span><br><span class="line">#切换或者创建（如果没有该库的话）</span><br></pre></td></tr></table></figure>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">db.getName();</span><br><span class="line">#db; db和getName方法是一样的效果，都可以查询当前使用的数据库</span><br></pre></td></tr></table></figure>
-<img src="https://img.econow.cn/medivh/1546668518239.png" />
+<img data-src="https://img.econow.cn/medivh/1546668518239.png" />
 
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">db.stats();</span><br><span class="line">#查看数据库状态</span><br></pre></td></tr></table></figure>
-<img src="https://img.econow.cn/medivh/1546668460378.png" />
+<img data-src="https://img.econow.cn/medivh/1546668460378.png" />
 
 <h3 id="用户相关"><a href="#用户相关" class="headerlink" title="用户相关"></a>用户相关</h3><p>1、添加一个用户</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">db.addUser(&quot;name&quot;);</span><br><span class="line"></span><br><span class="line">db.addUser(&quot;userName&quot;, &quot;pwd123&quot;, true); 添加用户、设置密码、是否只读</span><br></pre></td></tr></table></figure>
@@ -337,7 +337,7 @@
 <h3 id="克隆"><a href="#克隆" class="headerlink" title="克隆"></a>克隆</h3><p>使用copyDatabase命令实现数据库复制，可以在几秒内创建数据库副本。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.copyDatabase(fromdb, todb, fromhost, username, password, mechanism)¶</span><br></pre></td></tr></table></figure>
 
-<img src="https://img.econow.cn/medivh/1630924290229.png"  />
+<img data-src="https://img.econow.cn/medivh/1630924290229.png"  />
 
 
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[root@gz-tencent mongo]# mongo localhost:27018</span><br><span class="line">&gt; db.copyDatabase(&quot;backup&quot;,&quot;backup&quot;,&quot;xxx.x.x.x:27017&quot;);</span><br><span class="line">WARNING: db.copyDatabase is deprecated. See http://dochub.mongodb.org/core/copydb-clone-deprecation</span><br><span class="line">&#123;</span><br><span class="line">    &quot;note&quot; : &quot;Support for the copydb command has been deprecated. See http://dochub.mongodb.org/core/copydb-clone-deprecation&quot;,</span><br><span class="line">    &quot;ok&quot; : 1</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -459,6 +459,24 @@
     </span>
     <span class="author" itemprop="copyrightHolder">medivh</span>
   </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
 
     </div>
   </footer>
@@ -491,10 +509,9 @@
 
 
   
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 
 
-  <script class="next-config" data-name="leancloud_visitors" type="application/json">{"enable":true,"app_id":"g1GwilqmVAUne2tDEDncEChG-gzGzoHsz","app_key":"YB2e5dSKMmMYYCtaSzxp9fdS","server_url":null,"security":true}</script>
-  <script src="/js/third-party/statistics/lean-analytics.js"></script>
 
 
 

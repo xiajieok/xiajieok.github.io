@@ -237,12 +237,12 @@
     </span>
 
   
-    <span id="/Gitlab%E4%BD%BF%E7%94%A8%E6%9C%AC%E5%9C%B0Nginx.html" class="post-meta-item leancloud_visitors" data-flag-title="Gitlab使用本地Nginx" title="阅读次数">
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
       <span class="post-meta-item-icon">
         <i class="far fa-eye"></i>
       </span>
       <span class="post-meta-item-text">阅读次数：</span>
-      <span class="leancloud-visitors-count"></span>
+      <span id="busuanzi_value_page_pv"></span>
     </span>
 </div>
 
@@ -261,7 +261,7 @@
 <li><code>gitlab_workhorse[&#39;listen_addr&#39;] = &quot;127.0.0.1:8181&quot;</code></li>
 </ul>
 <p>我们重载配置文件,执行命令：<code>gitlab-ctl reconfigure</code>等待完成。<code>gitlab-ctl start/stop</code>分别是启动和停止命令</p>
-<h3 id="nginx配置文件"><a href="#nginx配置文件" class="headerlink" title="nginx配置文件"></a>nginx配置文件</h3><p>增加一个站点即可，注意监听的是之前配置的8181端口。<br><img src="https://img.econow.cn/medivh/1547453735621.png" /></p>
+<h3 id="nginx配置文件"><a href="#nginx配置文件" class="headerlink" title="nginx配置文件"></a>nginx配置文件</h3><p>增加一个站点即可，注意监听的是之前配置的8181端口。<br><img data-src="https://img.econow.cn/medivh/1547453735621.png" /></p>
 
     </div>
 
@@ -348,6 +348,24 @@
     </span>
     <span class="author" itemprop="copyrightHolder">medivh</span>
   </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
 
     </div>
   </footer>
@@ -380,10 +398,9 @@
 
 
   
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 
 
-  <script class="next-config" data-name="leancloud_visitors" type="application/json">{"enable":true,"app_id":"g1GwilqmVAUne2tDEDncEChG-gzGzoHsz","app_key":"YB2e5dSKMmMYYCtaSzxp9fdS","server_url":null,"security":true}</script>
-  <script src="/js/third-party/statistics/lean-analytics.js"></script>
 
 
 

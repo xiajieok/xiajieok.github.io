@@ -238,12 +238,12 @@
     </span>
 
   
-    <span id="/%E5%85%B3%E4%BA%8E%E6%B7%B7%E5%90%88%E9%83%A8%E7%BD%B2%E6%96%B9%E6%A1%88%E7%9A%84%E8%AE%BE%E6%83%B3.html" class="post-meta-item leancloud_visitors" data-flag-title="关于混合部署方案的设想" title="阅读次数">
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
       <span class="post-meta-item-icon">
         <i class="far fa-eye"></i>
       </span>
       <span class="post-meta-item-text">阅读次数：</span>
-      <span class="leancloud-visitors-count"></span>
+      <span id="busuanzi_value_page_pv"></span>
     </span>
 </div>
 
@@ -255,8 +255,8 @@
     
     <div class="post-body" itemprop="articleBody"><h2 id="理论依据"><a href="#理论依据" class="headerlink" title="理论依据"></a>理论依据</h2><p>在时效性上来区分任务，常规的任务一般分为在线任务和离线任务。其中在线任务消耗的资源相对较少，但是要求相应时间较短，比如web服务；而离线任务则对时效性要求不高，但是任务量大，需要的资源更多。因此把两种项目混合部署在一起就叫做混合部署。</p>
 <p>大多数进程可以分为I&#x2F;O密集型和CPU密集型。I&#x2F;O密集型程序将大多数时间都花在了I&#x2F;O操作而不是运算上，而CPU密集型程序正好相反，将大多数时间花在了运算上，而很少产生I&#x2F;O操作。选出一个I&#x2F;O密集型和CPU密集型程序的良好组合，对于长期调度器是非常重要的。否则，假如所有的程序都是CPU密集型的，那么I&#x2F;O队列将会几乎永远都是空的，这样就会导致一些设备从来没被使用过，系统资源分配就是不均衡的。显然，性能极佳的系统必然是CPU密集型和I&#x2F;O密集型程序的组合。在现代操作系统中，这被用来保证实时进程能获得足够的CPU时间来完成任务。但我们的当前绝大部分项目并不能做到资源的和谐组合——cpu使用率远低于内存使用率。这样的特点也方便混合部署的时候只需要考虑内存的瓶颈即可。</p>
-<h2 id="资源使用率现状"><a href="#资源使用率现状" class="headerlink" title="资源使用率现状"></a>资源使用率现状</h2><p>通俗来讲，我们希望使用提高资源使用率的同时降低成本。任务类型的分类是提高资源利用率的理论依据，只不过迫于现实，实践过程中会有些偏差。<br>当前的现状，大部分CPU平均使用率长期在30%以内徘徊，极大的浪费资源。<br><img src="https://img.econow.cn/medivh/1630553329133.png"  /></p>
-<p>而对于内存调整的空间较为有限，个别实例有操作空间。<br><img src="https://img.econow.cn/medivh/1630553335430.png"  /></p>
+<h2 id="资源使用率现状"><a href="#资源使用率现状" class="headerlink" title="资源使用率现状"></a>资源使用率现状</h2><p>通俗来讲，我们希望使用提高资源使用率的同时降低成本。任务类型的分类是提高资源利用率的理论依据，只不过迫于现实，实践过程中会有些偏差。<br>当前的现状，大部分CPU平均使用率长期在30%以内徘徊，极大的浪费资源。<br><img data-src="https://img.econow.cn/medivh/1630553329133.png"  /></p>
+<p>而对于内存调整的空间较为有限，个别实例有操作空间。<br><img data-src="https://img.econow.cn/medivh/1630553335430.png"  /></p>
 <p>当前的实例用途类型基本分为三类：</p>
 <ul>
 <li>大数据集群<ul>
@@ -387,6 +387,24 @@
     </span>
     <span class="author" itemprop="copyrightHolder">medivh</span>
   </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
 
     </div>
   </footer>
@@ -419,10 +437,9 @@
 
 
   
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 
 
-  <script class="next-config" data-name="leancloud_visitors" type="application/json">{"enable":true,"app_id":"g1GwilqmVAUne2tDEDncEChG-gzGzoHsz","app_key":"YB2e5dSKMmMYYCtaSzxp9fdS","server_url":null,"security":true}</script>
-  <script src="/js/third-party/statistics/lean-analytics.js"></script>
 
 
 

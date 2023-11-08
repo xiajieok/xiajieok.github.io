@@ -239,12 +239,12 @@
     </span>
 
   
-    <span id="/Mac-%E5%88%9D%E8%AF%95%E5%8C%96%E7%9A%84%E8%AE%B0%E5%BF%86.html" class="post-meta-item leancloud_visitors" data-flag-title="Mac 初试化的记忆" title="阅读次数">
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
       <span class="post-meta-item-icon">
         <i class="far fa-eye"></i>
       </span>
       <span class="post-meta-item-text">阅读次数：</span>
-      <span class="leancloud-visitors-count"></span>
+      <span id="busuanzi_value_page_pv"></span>
     </span>
 </div>
 
@@ -284,7 +284,7 @@
 <p>键入命令后：</p>
 <p>按下 Return 键以输入这个命令。<br>出现提示时，请键入您的管理员密码，然后再次按下 Return 键。在您键入密码时，“终端”不会显示任何字符。<br>出现提示时，请键入 Y 以确认您要抹掉宗卷，然后按下 Return 键。在抹掉宗卷的过程中，“终端”会显示进度。<br>宗卷被抹掉后，您可能会看到一条提醒，提示“终端”要访问可移除宗卷上的文件。点按“好”以允许继续拷贝。<br>当“终端”显示操作已完成时，相应宗卷将拥有与您下载的安装器相同的名称，例如“安装 macOS Big Sur”。您现在可以退出“终端”并弹出宗卷。</p>
 <p>写入的时间有点长，主要取决于U盘的写入速度。</p>
-<img src="https://img.econow.cn/medivh/1614578974150.png"  />
+<img data-src="https://img.econow.cn/medivh/1614578974150.png"  />
 
 
 <h3 id="如果新的SSD系统不识别"><a href="#如果新的SSD系统不识别" class="headerlink" title="如果新的SSD系统不识别"></a>如果新的SSD系统不识别</h3><p>将 Mac 开机，然后立即按住 Command (⌘) 和 R 这两个按键，直至看到 Apple 标志或其他图像。从 macOS 恢复功能的实用工具窗口中，选择“磁盘工具”并点按“继续”。</p>
@@ -343,17 +343,17 @@
 
 <p>4.设置Iterm2的Tirgger特性，profiles-&gt;default-&gt;editProfiles-&gt;Advanced中的Tirgger</p>
 <p>添加两条trigger，分别设置 Regular expression，Action，Parameters，Instant如下：</p>
-<img src="https://img.econow.cn/medivh/1614522207826.png"  />
+<img data-src="https://img.econow.cn/medivh/1614522207826.png"  />
 
-<img src="https://img.econow.cn/medivh/1614522222576.png"  />
+<img data-src="https://img.econow.cn/medivh/1614522222576.png"  />
 
 
 
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">1.第一条</span><br><span class="line">        Regular expression: rz waiting to receive.\*\*B0100</span><br><span class="line">        Action: Run Silent Coprocess</span><br><span class="line">        Parameters: /usr/local/bin/iterm2-send-zmodem.sh</span><br><span class="line">        Instant: checked</span><br><span class="line">2.第二条</span><br><span class="line">        Regular expression: \*\*B00000000000000</span><br><span class="line">        Action: Run Silent Coprocess</span><br><span class="line">        Parameters: /usr/local/bin/iterm2-recv-zmodem.sh</span><br><span class="line">        Instant: checked</span><br></pre></td></tr></table></figure>
 
 <h3 id="iStat-Menus"><a href="#iStat-Menus" class="headerlink" title="iStat Menus"></a>iStat Menus</h3><p>激活码见163邮箱</p>
-<h3 id="Mac-外设键盘乱位"><a href="#Mac-外设键盘乱位" class="headerlink" title="Mac 外设键盘乱位"></a>Mac 外设键盘乱位</h3><p>修改 修饰键<br><img src="https://img.econow.cn/medivh/1614566892484.png"  /></p>
-<p>更改键位如下<br><img src="https://img.econow.cn/medivh/1614566905551.png"  /></p>
+<h3 id="Mac-外设键盘乱位"><a href="#Mac-外设键盘乱位" class="headerlink" title="Mac 外设键盘乱位"></a>Mac 外设键盘乱位</h3><p>修改 修饰键<br><img data-src="https://img.econow.cn/medivh/1614566892484.png"  /></p>
+<p>更改键位如下<br><img data-src="https://img.econow.cn/medivh/1614566905551.png"  /></p>
 <p>图片中是我自己的习惯，因人而异。</p>
 
     </div>
@@ -441,6 +441,24 @@
     </span>
     <span class="author" itemprop="copyrightHolder">medivh</span>
   </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
 
     </div>
   </footer>
@@ -473,10 +491,9 @@
 
 
   
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 
 
-  <script class="next-config" data-name="leancloud_visitors" type="application/json">{"enable":true,"app_id":"g1GwilqmVAUne2tDEDncEChG-gzGzoHsz","app_key":"YB2e5dSKMmMYYCtaSzxp9fdS","server_url":null,"security":true}</script>
-  <script src="/js/third-party/statistics/lean-analytics.js"></script>
 
 
 
