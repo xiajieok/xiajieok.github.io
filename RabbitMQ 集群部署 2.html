@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://img.econow.cn/2018/1545104669394.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://img.econow.cn/2018/1545104669394.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha256-CTSx/A06dm1B063156EVh15m6Y67pAjZZaQc89LLSrU=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"econow.cn","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.18.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":true,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="简介安装">
+<meta property="og:type" content="article">
+<meta property="og:title" content="RabbitMQ 集群部署">
+<meta property="og:url" content="https://econow.cn/RabbitMQ%20%E9%9B%86%E7%BE%A4%E9%83%A8%E7%BD%B2.html">
+<meta property="og:site_name" content="Medivh&#39;s castle">
+<meta property="og:description" content="简介安装">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img.econow.cn/medivh/1553065925609.png">
+<meta property="og:image" content="https://img.econow.cn/medivh/1553065954361.png">
+<meta property="og:image" content="https://img.econow.cn/medivh/1553069420891.png">
+<meta property="og:image" content="https://img.econow.cn/medivh/1553066819130.png">
+<meta property="og:image" content="https://img.econow.cn/medivh/1553134452790.png">
+<meta property="og:image" content="https://img.econow.cn/medivh/1553135352884.png">
+<meta property="og:image" content="https://img.econow.cn/medivh/1553075635396.png">
+<meta property="article:published_time" content="2023-10-31T02:15:08.692Z">
+<meta property="article:modified_time" content="2023-10-31T02:15:08.692Z">
+<meta property="article:author" content="medivh">
+<meta property="article:tag" content="RabbitMQ">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img.econow.cn/medivh/1553065925609.png">
+
+
+<link rel="canonical" href="https://econow.cn/RabbitMQ%20%E9%9B%86%E7%BE%A4%E9%83%A8%E7%BD%B2.html">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://econow.cn/RabbitMQ%20%E9%9B%86%E7%BE%A4%E9%83%A8%E7%BD%B2.html","path":"RabbitMQ 集群部署.html","title":"RabbitMQ 集群部署"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>RabbitMQ 集群部署 | Medivh's castle</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?21ded952ca9fc25e2b0630494a17ec7f"></script>
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Medivh's castle</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">数据蜘蛛工作室</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%80%E4%BB%8B"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85"><span class="nav-number">2.</span> <span class="nav-text">安装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%8E%AF%E5%A2%83%E4%BE%9D%E8%B5%96"><span class="nav-number">2.1.</span> <span class="nav-text">环境依赖</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E6%9C%8D%E5%8A%A1"><span class="nav-number">2.2.</span> <span class="nav-text">安装服务</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%90%AF%E5%8A%A8%E6%B5%8B%E8%AF%95"><span class="nav-number">2.3.</span> <span class="nav-text">启动测试</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E7%AE%A1%E7%90%86"><span class="nav-number">3.</span> <span class="nav-text">配置管理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A2%9E%E5%8A%A0%E8%B4%A6%E5%8F%B7"><span class="nav-number">3.1.</span> <span class="nav-text">增加账号</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#vhost"><span class="nav-number">3.2.</span> <span class="nav-text">vhost</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%A1%E7%90%86%E7%95%8C%E9%9D%A2"><span class="nav-number">3.3.</span> <span class="nav-text">管理界面</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9B%86%E7%BE%A4%E9%83%A8%E7%BD%B2"><span class="nav-number">4.</span> <span class="nav-text">集群部署</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9B%86%E7%BE%A4%E6%A8%A1%E5%BC%8F"><span class="nav-number">4.1.</span> <span class="nav-text">集群模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%8A%82%E7%82%B9%E7%B1%BB%E5%9E%8B"><span class="nav-number">4.2.</span> <span class="nav-text">节点类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%A4%E8%AF%81%E6%96%B9%E5%BC%8F"><span class="nav-number">4.3.</span> <span class="nav-text">认证方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9B%86%E7%BE%A4%E7%BB%84%E5%BB%BA"><span class="nav-number">4.4.</span> <span class="nav-text">集群组建</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%81%9C%E6%AD%A2%E6%9C%8D%E5%8A%A1"><span class="nav-number">4.4.1.</span> <span class="nav-text">停止服务</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%9B%86%E7%BE%A4%E5%90%AF%E5%8A%A8"><span class="nav-number">4.4.2.</span> <span class="nav-text">集群启动</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%AA%8C%E8%AF%81%E9%9B%86%E7%BE%A4"><span class="nav-number">4.4.3.</span> <span class="nav-text">验证集群</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E6%95%B4%E7%90%86"><span class="nav-number">4.4.4.</span> <span class="nav-text">问题整理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%9B%86%E7%BE%A4%E8%8A%82%E7%82%B9%E6%93%8D%E4%BD%9C"><span class="nav-number">4.4.5.</span> <span class="nav-text">集群节点操作</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%95%9C%E5%83%8F%E9%98%9F%E5%88%97"><span class="nav-number">4.5.</span> <span class="nav-text">镜像队列</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E5%8F%82%E6%95%B0"><span class="nav-number">4.5.1.</span> <span class="nav-text">配置参数</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1"><span class="nav-number">5.</span> <span class="nav-text">负载均衡</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">medivh</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">96</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">48</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://econow.cn/RabbitMQ%20%E9%9B%86%E7%BE%A4%E9%83%A8%E7%BD%B2.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="medivh">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Medivh's castle">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="RabbitMQ 集群部署 | Medivh's castle">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          RabbitMQ 集群部署
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-10-31 10:15:08" itemprop="dateCreated datePublished" datetime="2023-10-31T10:15:08+08:00">2023-10-31</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+        </span>
+    </span>
+
+  
+    <span id="/RabbitMQ%20%E9%9B%86%E7%BE%A4%E9%83%A8%E7%BD%B2.html" class="post-meta-item leancloud_visitors" data-flag-title="RabbitMQ 集群部署" title="阅读次数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span class="leancloud-visitors-count"></span>
+    </span>
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><h3 id="环境依赖"><a href="#环境依赖" class="headerlink" title="环境依赖"></a>环境依赖</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install erlang -y</span><br></pre></td></tr></table></figure>
+<h3 id="安装服务"><a href="#安装服务" class="headerlink" title="安装服务"></a>安装服务</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">cd /usr/src/</span><br><span class="line">wget http://www.rabbitmq.com/releases/rabbitmq-server/v3.6.4/rabbitmq-server-3.6.4-1.noarch.rpm</span><br><span class="line"></span><br><span class="line">yum install rabbitmq-server-3.6.4-1.noarch.rpm -y</span><br></pre></td></tr></table></figure>
+
+<h3 id="启动测试"><a href="#启动测试" class="headerlink" title="启动测试"></a>启动测试</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#启动服务</span><br><span class="line">service rabbitmq-server start</span><br><span class="line">#查看服务状态</span><br><span class="line">service rabbitmq-server status</span><br></pre></td></tr></table></figure>
+
+<h2 id="配置管理"><a href="#配置管理" class="headerlink" title="配置管理"></a>配置管理</h2><h3 id="增加账号"><a href="#增加账号" class="headerlink" title="增加账号"></a>增加账号</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#增加</span><br><span class="line">rabbitmqctl  add_user  admin  &#x27;admin&#x27;</span><br><span class="line">#角色分配</span><br><span class="line">rabbitmqctl  set_user_tags admin administrator</span><br></pre></td></tr></table></figure>
+<h3 id="vhost"><a href="#vhost" class="headerlink" title="vhost"></a>vhost</h3><p>运行多个vhost，以便于适用不同的业务需要，这样做既可以满足权限配置的要求，避免不同业务之间队列、交换机的命名冲突问题，</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">#vhost </span><br><span class="line">rabbitmqctl add_vhost personas</span><br><span class="line">rabbitmqctl set_permissions -p personas joy &#x27;.*&#x27; &#x27;.*&#x27; &#x27;.*&#x27;</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="管理界面"><a href="#管理界面" class="headerlink" title="管理界面"></a>管理界面</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rabbitmq-plugins enable rabbitmq_management</span><br></pre></td></tr></table></figure>
+
+<h2 id="集群部署"><a href="#集群部署" class="headerlink" title="集群部署"></a>集群部署</h2><h3 id="集群模式"><a href="#集群模式" class="headerlink" title="集群模式"></a>集群模式</h3><p>RabbitMQ 的 Cluster 集群模式一般分为两种，普通模式和镜像模式。</p>
+<p>普通模式：默认的集群模式，以两个节点（rabbit01、rabbit02）为例来进行说明。对于 Queue 来说，消息实体只存在于其中一个节点 rabbit01（或者 rabbit02），rabbit01 和 rabbit02 两个节点仅有相同的元数据，即队列的结构。当消息进入 rabbit01 节点的 Queue 后，consumer 从 rabbit02 节点消费时，RabbitMQ 会临时在 rabbit01、rabbit02 间进行消息传输，把 A 中的消息实体取出并经过 B 发送给 consumer。所以 consumer 应尽量连接每一个节点，从中取消息。即对于同一个逻辑队列，要在多个节点建立物理 Queue。否则无论 consumer 连 rabbit01 或 rabbit02，出口总在 rabbit01，会产生瓶颈。当 rabbit01 节点故障后，rabbit02 节点无法取到 rabbit01 节点中还未消费的消息实体。如果做了消息持久化，那么得等 rabbit01 节点恢复，然后才可被消费；如果没有持久化的话，就会产生消息丢失的现象。<br>镜像模式：将需要消费的队列变为镜像队列，存在于多个节点，这样就可以实现 RabbitMQ 的 HA 高可用性。作用就是消息实体会主动在镜像节点之间实现同步，而不是像普通模式那样，在 consumer 消费数据时临时读取。缺点就是，集群内部的同步通讯会占用大量的网络带宽。</p>
+<h3 id="节点类型"><a href="#节点类型" class="headerlink" title="节点类型"></a>节点类型</h3><ul>
+<li>RAM node：内存节点将所有的队列、交换机、绑定、用户、权限和 vhost 的元数据定义存储在内存中，好处是可以使得像交换机和队列声明等操作更加的快速。</li>
+<li>Disk node：将元数据存储在磁盘中，单节点系统只允许磁盘类型的节点，防止重启 RabbitMQ 的时候，丢失系统的配置信息。<blockquote>
+<p>RabbitMQ 要求在集群中至少有一个磁盘节点，所有其他节点可以是内存节点，当节点加入或者离开集群时，必须要将该变更通知到至少一个磁盘节点。如果集群中唯一的一个磁盘节点崩溃的话，集群仍然可以保持运行，但是无法进行其他操作（增删改查），直到节点恢复。<br>解决方案：设置两个磁盘节点，至少有一个是可用的，可以保存元数据的更改。</p>
+</blockquote>
+</li>
+</ul>
+<h3 id="认证方式"><a href="#认证方式" class="headerlink" title="认证方式"></a>认证方式</h3><p>通过Erlang Cookie，相当于共享秘钥的概念，长度任意，只要所有节点都一致即可。rabbitmq server在启动的时候，erlang VM会自动创建一个随机的cookie文件。cookie文件的位置： &#x2F;var&#x2F;lib&#x2F;rabbitmq&#x2F;.erlang.cookie 或者&#x2F;root&#x2F;.erlang.cookie。我们的为保证cookie的完全一致，采用从一个节点copy的方式，实现各个节点的cookie文件一致。</p>
+<p>注意该文件默认是400权限，修改后需要还原回去400。</p>
+<h3 id="集群组建"><a href="#集群组建" class="headerlink" title="集群组建"></a>集群组建</h3><p>首先保证所有节点都可以正常启动服务。</p>
+<h4 id="停止服务"><a href="#停止服务" class="headerlink" title="停止服务"></a>停止服务</h4><p>在所有节点执行以下操作，停止服务</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">service rabbitmq-server stop</span><br></pre></td></tr></table></figure>
+<h4 id="集群启动"><a href="#集群启动" class="headerlink" title="集群启动"></a>集群启动</h4><p>1、所有节点执行以下操作，启动集群</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rabbitmq-server -detached</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>-detached<br>Start the server process in the background. Note that this will cause the pid not to be written to the pid file.</p>
+</blockquote>
+<blockquote>
+<p>For example, runs RabbitMQ AMQP server in the background:<br>rabbitmq-server -detached</p>
+</blockquote>
+<p>该参数简单说就是后台启动，始终没理解和<code>service rabbitmq-server sart</code>的区别</p>
+<p>2、修改统一hosts文件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">192.168.1.233 r0</span><br><span class="line">192.168.1.234 r1</span><br><span class="line">192.168.1.232 r2</span><br><span class="line">192.168.1.229 r3</span><br></pre></td></tr></table></figure>
+
+<p>3、同步.erlang.cookie文件<br>所有节点从r0机器分发 <code>/var/lib/rabbitmq/.erlang.cookie </code>。</p>
+<p>4、在其他节点服务器操作加入集群</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">//默认是磁盘节点，如果是内存节点的话，需要加--ram参数</span><br><span class="line"></span><br><span class="line">rabbitmqctl stop_app</span><br><span class="line">rabbitmqctl join_cluster --ram rabbit@r0</span><br><span class="line">rabbitmqctl start_app</span><br><span class="line">rabbitmqctl stop_app</span><br><span class="line">rabbitmqctl join_cluster rabbit@r0</span><br><span class="line">rabbitmqctl start_app</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h4 id="验证集群"><a href="#验证集群" class="headerlink" title="验证集群"></a>验证集群</h4><p>1、节点加入集群，此处使用的主机名意义和hosts中一个意义。<br><img data-src="https://img.econow.cn/medivh/1553065925609.png" /></p>
+<p>2、加入集群后，检查集群状态<br><img data-src="https://img.econow.cn/medivh/1553065954361.png" /></p>
+<img data-src="https://img.econow.cn/medivh/1553069420891.png" />
+
+<h4 id="问题整理"><a href="#问题整理" class="headerlink" title="问题整理"></a>问题整理</h4><ul>
+<li><p>之前加入集群的时候总提示错误<code>rror: unable to connect to node rabbit@test_229: nodedown</code></p>
+<img data-src="https://img.econow.cn/medivh/1553066819130.png" />
+原因：在集群的所有机器都需要先执行`rabbitmq-server -detached`
+</li>
+<li><p>unable to connect to epmd (port 4369) on base_233: nxdomain (non-existing domain)</p>
+</li>
+</ul>
+<p>原因：未启用管理插件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rabbitmq-plugins enable rabbitmq_management</span><br></pre></td></tr></table></figure>
+
+<h4 id="集群节点操作"><a href="#集群节点操作" class="headerlink" title="集群节点操作"></a>集群节点操作</h4><p>节点恢复过程中把数据删掉很重要，恢复一单结点，再清数据<br>节点增加：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">1. rabbitmq-server -detached   --- .erlang.cooike的权限，400 属主rabbitmq</span><br><span class="line">2. rabbitmqctl stop_app</span><br><span class="line">3. rabbitmqctl join_cluster --ram rabbit@rabbitmq1</span><br><span class="line">4. rabbitmqctl start_app</span><br><span class="line">5. rabbitmqctl  cluster_status</span><br></pre></td></tr></table></figure>
+<p>节点删除</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">1.  rabbitmq-server -detached</span><br><span class="line">以上为基础，正常运行的mq节点直接进行2、3两步；4可省略或更改为rabbitmqctl stop</span><br><span class="line">2. rabbitmqctl stop_app</span><br><span class="line">3. rabbitmqctl reset </span><br><span class="line">4. rabbitmqctl start_app</span><br></pre></td></tr></table></figure>
+<p>硬删除：<br>直接删掉集群中的某个节点：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rabbitmqctl forget_cluster_node   node_name</span><br></pre></td></tr></table></figure>
+<p>由disc–&gt;ram</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">1.节点删除     rabbitmq-server -detached ---rabbitctl stop_app----    rabbitmqctl reset  （（--2.清除原数据（暂时备份到其他地方）--rabbitmqctl join_cluster --ram rabbit@rabbitmq1 ------------    rabbitmqctl start_app））</span><br><span class="line">2.清除原数据（暂时备份到其他地方）</span><br><span class="line">3.节点增加</span><br></pre></td></tr></table></figure>
+<p>由disc–&gt;ram<br>先恢复到单结点，重启，清数据<br>加集群 </p>
+<h3 id="镜像队列"><a href="#镜像队列" class="headerlink" title="镜像队列"></a>镜像队列</h3><h4 id="配置参数"><a href="#配置参数" class="headerlink" title="配置参数"></a>配置参数</h4><p>1、在管理界面配置<br><img data-src="https://img.econow.cn/medivh/1553134452790.png" /></p>
+<ul>
+<li><p>Virtual host： 可选参数，针对指定vhost下的queue进行设置</p>
+</li>
+<li><p>Name: policy的名称</p>
+</li>
+<li><p>Pattern: queue的匹配模式(正则表达式)</p>
+</li>
+<li><p>Definition：镜像定义，包括三个部分ha-mode, ha-params, ha-sync-mode</p>
+<ul>
+<li>ha-mode:指明镜像队列的模式，有效值为 all&#x2F;exactly&#x2F;nodes<ul>
+<li>all：表示在集群中所有的节点上进行镜像</li>
+<li>exactly：表示在指定个数的节点上进行镜像，节点的个数由ha-params指定</li>
+<li>nodes：表示在指定的节点上进行镜像，节点名称通过ha-params指定</li>
+</ul>
+</li>
+<li>ha-params：ha-mode模式需要用到的参数</li>
+<li>ha-sync-mode：进行队列中消息的同步方式，有效值为automatic和manual</li>
+</ul>
+</li>
+<li><p>priority：可选参数，policy的优先级</p>
+</li>
+</ul>
+<p>2、任意节点命令行配置</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">rabbitmqctl set_policy ha-all &quot;^&quot; &#x27;&#123;&quot;ha-mode&quot;:&quot;all&quot;&#125;&#x27;</span><br><span class="line">1</span><br><span class="line"></span><br><span class="line">// 命令行方式添加策略</span><br><span class="line">// 策略名称为ha-allqueue,策略模式为 all 即复制到所有节点，包含新增节点，策略正则表达式为 “^” 表示所有匹配所有队列名称。</span><br><span class="line">rabbitmqctl set_policy -p &lt;vhost&gt; ha-allqueue&quot;^&quot; &#x27;&#123;&quot;ha-mode&quot;:&quot;all&quot;&#125;&#x27;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>这时候就变成多个节点了。<br><img data-src="https://img.econow.cn/medivh/1553135352884.png" /></p>
+<h2 id="负载均衡"><a href="#负载均衡" class="headerlink" title="负载均衡"></a>负载均衡</h2><p>AProxy 是一个免费的负载均衡软件，可以运行于大部分主流的 Linux 操作系统上。</p>
+<p>HAProxy 提供了 L4(TCP) 和 L7(HTTP) 两种负载均衡能力，具备丰富的功能。HAProxy 的社区非常活跃，版本更新快速（最新稳定版 1.7.2 于 2017&#x2F;01&#x2F;13 推出）。最关键的是，HAProxy 具备媲美商用负载均衡器的性能和稳定性。它当前不仅仅是免费负载均衡软件的首选，更几乎成为了唯一选择。</p>
+<p>因为 RabbitMQ 本身不提供负载均衡，下面我们就搭建 HAProxy，用作 RabbitMQ 集群的负载均衡。    </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">yum -y install haproxy</span><br><span class="line">cp /etc/haproxy/haproxy.cfg /etc/haproxy/haproxy.cfg.bak</span><br><span class="line">vim /etc/haproxy/haproxy.cfg</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>haproxy配置文件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">global</span><br><span class="line">    log     127.0.0.1  local0 info</span><br><span class="line">    log     127.0.0.1  local1 notice</span><br><span class="line">    daemon</span><br><span class="line">    maxconn 4096</span><br><span class="line"></span><br><span class="line">defaults</span><br><span class="line">    log     global</span><br><span class="line">    mode    tcp</span><br><span class="line">    option  tcplog</span><br><span class="line">    option  dontlognull</span><br><span class="line">    retries 3</span><br><span class="line">    option  abortonclose</span><br><span class="line">    maxconn 4096</span><br><span class="line">    timeout connect  5000ms</span><br><span class="line">    timeout client  3000ms</span><br><span class="line">    timeout server  3000ms</span><br><span class="line">    balance roundrobin</span><br><span class="line"></span><br><span class="line">listen private_monitoring</span><br><span class="line">    bind    0.0.0.0:8100</span><br><span class="line">    mode    http</span><br><span class="line">    option  httplog</span><br><span class="line">    stats   refresh  5s</span><br><span class="line">    stats   uri  /stats</span><br><span class="line">    stats   realm   Haproxy</span><br><span class="line">    stats   auth  admin:admin</span><br><span class="line"></span><br><span class="line">listen rabbitmq_admin</span><br><span class="line">    bind    0.0.0.0:8102</span><br><span class="line">    server  r0 r0:15672</span><br><span class="line">    server  r3 r3:15672</span><br><span class="line"></span><br><span class="line">listen rabbitmq_cluster</span><br><span class="line">    bind    0.0.0.0:8101</span><br><span class="line">    mode    tcp</span><br><span class="line">    option  tcplog</span><br><span class="line">    balance roundrobin</span><br><span class="line">    timeout client  3h</span><br><span class="line">    timeout server  3h</span><br><span class="line">    server  r0  r0:5672  check  inter  5000  rise  2  fall  3</span><br><span class="line">    server  r3  r3:5672  check  inter  5000  rise  2  fall  3</span><br></pre></td></tr></table></figure>
+
+<p>启动 haproxy</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">haproxy -f /etc/haproxy/haproxy.cfg</span><br></pre></td></tr></table></figure>
+<p>HAProxy 配置了三个地址：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="http://r0:8100/stats%EF%BC%9AHAProxy">http://r0:8100/stats：HAProxy</a> 负载均衡信息地址，账号密码：admin&#x2F;admin。</li>
+<li><a href="http://r0:8101：RabbitMQ">http://r0:8101：RabbitMQ</a> Server Web 管理界面（基于负载均衡）。</li>
+<li><a href="http://r0:8102：RabbitMQ">http://r0:8102：RabbitMQ</a> Server 服务地址（基于负载均衡）。<br>通过访问<a target="_blank" rel="noopener" href="http://r0:8100/stats%EF%BC%8C%E6%9F%A5%E7%9C%8B">http://r0:8100/stats，查看</a> HAProxy 负载均衡信息：</li>
+</ul>
+<p>实际程序访问的端口为8101</p>
+<p>这样，haproxy就可以使用啦。<br><img data-src="https://img.econow.cn/medivh/1553075635396.png" /></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>喜欢就点个赞吧！</div>
+  <button>
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/wechatpay.jpg" alt="medivh 微信">
+        <span>微信</span>
+      </div>
+      <div>
+        <img src="/images/alipay.jpg" alt="medivh 支付宝">
+        <span>支付宝</span>
+      </div>
+
+  </div>
+</div>
+
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>medivh
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://econow.cn/RabbitMQ%20%E9%9B%86%E7%BE%A4%E9%83%A8%E7%BD%B2.html" title="RabbitMQ 集群部署">https://econow.cn/RabbitMQ 集群部署.html</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/RabbitMQ/" rel="tag"><i class="fa fa-tag"></i> RabbitMQ</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/Python%E6%89%B9%E9%87%8F%E8%BD%AC%E6%8D%A2HTML%E4%B8%BAPDF.html" rel="prev" title="Python批量转换HTML为PDF">
+                  <i class="fa fa-angle-left"></i> Python批量转换HTML为PDF
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/SpringBoot%E6%97%A5%E5%BF%97%E6%94%B6%E9%9B%86%E8%BE%93%E5%87%BA%E5%88%B0ELK.html" rel="next" title="SpringBoot日志收集输出到ELK">
+                  SpringBoot日志收集输出到ELK <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">京ICP备17063827号-2 </a>
+  </div>
+  <div class="copyright">
+    &copy; 2017 – 
+    <span itemprop="copyrightYear">2023</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">medivh</span>
+  </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pangu/4.0.7/pangu.min.js" integrity="sha256-j+yj56cdEY2CwkVtGyz18fNybFGpMGJ8JxG3GSyO2+I=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+  <script class="next-config" data-name="leancloud_visitors" type="application/json">{"enable":true,"app_id":"g1GwilqmVAUne2tDEDncEChG-gzGzoHsz","app_key":"YB2e5dSKMmMYYCtaSzxp9fdS","server_url":"https://api.econow.cn","security":false}</script>
+  <script src="/js/third-party/statistics/lean-analytics.js"></script>
+
+
+
+</body>
+</html>

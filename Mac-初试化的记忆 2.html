@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://img.econow.cn/2018/1545104669394.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://img.econow.cn/2018/1545104669394.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha256-CTSx/A06dm1B063156EVh15m6Y67pAjZZaQc89LLSrU=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"econow.cn","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.18.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":true,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="每重装一次系统感觉就要减少一个月的寿命。人生如此短暂，还是少些忧愁吧。  重装系统后基本的配置路线：终端-&gt;开发-&gt;浏览器。浏览器最主要的配置就是同步标签和数据，关于Chrome浏览器的同步就自行解决吧。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Mac 初试化的记忆">
+<meta property="og:url" content="https://econow.cn/Mac-%E5%88%9D%E8%AF%95%E5%8C%96%E7%9A%84%E8%AE%B0%E5%BF%86.html">
+<meta property="og:site_name" content="Medivh&#39;s castle">
+<meta property="og:description" content="每重装一次系统感觉就要减少一个月的寿命。人生如此短暂，还是少些忧愁吧。  重装系统后基本的配置路线：终端-&gt;开发-&gt;浏览器。浏览器最主要的配置就是同步标签和数据，关于Chrome浏览器的同步就自行解决吧。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img.econow.cn/medivh/1614578974150.png">
+<meta property="og:image" content="https://img.econow.cn/medivh/1614522207826.png">
+<meta property="og:image" content="https://img.econow.cn/medivh/1614522222576.png">
+<meta property="og:image" content="https://img.econow.cn/medivh/1614566892484.png">
+<meta property="og:image" content="https://img.econow.cn/medivh/1614566905551.png">
+<meta property="article:published_time" content="2021-02-28T14:03:52.000Z">
+<meta property="article:modified_time" content="2023-10-31T02:15:08.685Z">
+<meta property="article:author" content="medivh">
+<meta property="article:tag" content="Mac">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img.econow.cn/medivh/1614578974150.png">
+
+
+<link rel="canonical" href="https://econow.cn/Mac-%E5%88%9D%E8%AF%95%E5%8C%96%E7%9A%84%E8%AE%B0%E5%BF%86.html">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://econow.cn/Mac-%E5%88%9D%E8%AF%95%E5%8C%96%E7%9A%84%E8%AE%B0%E5%BF%86.html","path":"Mac-初试化的记忆.html","title":"Mac 初试化的记忆"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Mac 初试化的记忆 | Medivh's castle</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?21ded952ca9fc25e2b0630494a17ec7f"></script>
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Medivh's castle</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">数据蜘蛛工作室</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Mac-%E9%87%8D%E8%A3%85"><span class="nav-number">1.</span> <span class="nav-text">Mac 重装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%87%8D%E8%A3%85%E9%80%89%E9%A1%B9"><span class="nav-number">1.1.</span> <span class="nav-text">重装选项</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9B%B4%E6%8D%A2%E7%A1%AC%E7%9B%98"><span class="nav-number">2.</span> <span class="nav-text">更换硬盘</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A1%AC%E4%BB%B6%E5%87%86%E5%A4%87"><span class="nav-number">2.1.</span> <span class="nav-text">硬件准备</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BD%AF%E4%BB%B6%E5%87%86%E5%A4%87"><span class="nav-number">2.2.</span> <span class="nav-text">软件准备</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B3%BB%E7%BB%9FU%E7%9B%98%E5%88%B6%E4%BD%9C"><span class="nav-number">2.3.</span> <span class="nav-text">系统U盘制作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A6%82%E6%9E%9C%E6%96%B0%E7%9A%84SSD%E7%B3%BB%E7%BB%9F%E4%B8%8D%E8%AF%86%E5%88%AB"><span class="nav-number">2.4.</span> <span class="nav-text">如果新的SSD系统不识别</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%8B%E8%BD%BD%E7%B3%BB%E7%BB%9F"><span class="nav-number">2.4.1.</span> <span class="nav-text">下载系统</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A3%85%E7%B3%BB%E7%BB%9F"><span class="nav-number">2.5.</span> <span class="nav-text">装系统</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">2.6.</span> <span class="nav-text">总结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E5%B7%A5%E5%85%B7"><span class="nav-number">3.</span> <span class="nav-text">基本工具</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#iterm2"><span class="nav-number">3.1.</span> <span class="nav-text">iterm2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#brew"><span class="nav-number">3.2.</span> <span class="nav-text">brew</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#zsh"><span class="nav-number">3.3.</span> <span class="nav-text">zsh</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#oh-my-zsh"><span class="nav-number">3.4.</span> <span class="nav-text">oh-my-zsh</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7"><span class="nav-number">4.</span> <span class="nav-text">开发工具</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Python"><span class="nav-number">4.1.</span> <span class="nav-text">Python</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#pip"><span class="nav-number">4.2.</span> <span class="nav-text">pip</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#virtualenv"><span class="nav-number">4.3.</span> <span class="nav-text">virtualenv</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B7%A5%E5%85%B7"><span class="nav-number">5.</span> <span class="nav-text">工具</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9B%BE%E5%BA%8A"><span class="nav-number">5.1.</span> <span class="nav-text">图床</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#iterm2-%E6%96%87%E4%BB%B6%E4%BC%A0%E8%BE%93"><span class="nav-number">5.2.</span> <span class="nav-text">iterm2 文件传输</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#iStat-Menus"><span class="nav-number">5.3.</span> <span class="nav-text">iStat Menus</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Mac-%E5%A4%96%E8%AE%BE%E9%94%AE%E7%9B%98%E4%B9%B1%E4%BD%8D"><span class="nav-number">5.4.</span> <span class="nav-text">Mac 外设键盘乱位</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">medivh</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">96</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">48</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://econow.cn/Mac-%E5%88%9D%E8%AF%95%E5%8C%96%E7%9A%84%E8%AE%B0%E5%BF%86.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="medivh">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Medivh's castle">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Mac 初试化的记忆 | Medivh's castle">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Mac 初试化的记忆
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-02-28 22:03:52" itemprop="dateCreated datePublished" datetime="2021-02-28T22:03:52+08:00">2021-02-28</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-10-31 10:15:08" itemprop="dateModified" datetime="2023-10-31T10:15:08+08:00">2023-10-31</time>
+    </span>
+
+  
+    <span id="/Mac-%E5%88%9D%E8%AF%95%E5%8C%96%E7%9A%84%E8%AE%B0%E5%BF%86.html" class="post-meta-item leancloud_visitors" data-flag-title="Mac 初试化的记忆" title="阅读次数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span class="leancloud-visitors-count"></span>
+    </span>
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><blockquote>
+<p>每重装一次系统感觉就要减少一个月的寿命。人生如此短暂，还是少些忧愁吧。</p>
+</blockquote>
+<p>重装系统后基本的配置路线：终端-&gt;开发-&gt;浏览器。浏览器最主要的配置就是同步标签和数据，关于Chrome浏览器的同步就自行解决吧。</p>
+<h2 id="Mac-重装"><a href="#Mac-重装" class="headerlink" title="Mac 重装"></a>Mac 重装</h2><p>如果遇到问题先进行一下设备的检测。<br>关掉mac，完全断电，按住D不松开，然后开机。进入诊断系统看一下结果，是否提示硬盘或者固定存储装置报告异常。</p>
+<h3 id="重装选项"><a href="#重装选项" class="headerlink" title="重装选项"></a>重装选项</h3><p>Command（⌘）+ R：安装Mac之前安装的最新macOS，而不升级到更高的版本。<br>Option + Command + R：升级到与Mac兼容的最新macOS。<br>Shift + Option + Command + R：安装Mac原本出厂搭载的macOS，或是最接近且依然可用的版本。</p>
+<h2 id="更换硬盘"><a href="#更换硬盘" class="headerlink" title="更换硬盘"></a>更换硬盘</h2><h3 id="硬件准备"><a href="#硬件准备" class="headerlink" title="硬件准备"></a>硬件准备</h3><ul>
+<li>ssd 西数 sn750</li>
+<li>m.2 转接卡 </li>
+<li>系统U盘（至少8G）</li>
+<li>螺丝刀 （螺丝刀没讲究，只要口能对上就行，千万别用对不上的硬拧，滑丝了就只能暴力钻了）</li>
+</ul>
+<h3 id="软件准备"><a href="#软件准备" class="headerlink" title="软件准备"></a>软件准备</h3><ul>
+<li>TimeMachine 如果，那么就最好，否则就是完全的重装</li>
+<li>系统U盘，为了以防万一，TimeMachine无法使用的情况，有备无患</li>
+<li>系统，一定要升级到High Sierra及以后的版本，要不然识别不到新的SSD，macOS 10.13.1之前可能不兼容NVMe协议（笔记本本来就是10.14的，也没有遇到其他情况）</li>
+</ul>
+<h3 id="系统U盘制作"><a href="#系统U盘制作" class="headerlink" title="系统U盘制作"></a>系统U盘制作</h3><p>连接要用于保存可引导安装器的 USB 闪存驱动器或其他宗卷。<br>打开“应用程序”文件夹内“实用工具”文件夹中的“终端”。<br>在“终端”中键入或粘贴以下命令之一。这些命令假设安装器位于您的“应用程序”文件夹中，并且“MyVolume”是您所使用的 USB 闪存驱动器或其他宗卷的名称。如果不是这个名称，请将这些命令中的 MyVolume 替换为您的宗卷名称。</p>
+<p>Big Sur*：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo /Applications/Install\ macOS\ Big\ Sur.app/Contents/Resources/createinstallmedia --volume /Volumes/MyVolume</span><br></pre></td></tr></table></figure>
+
+<p>Catalina*：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo /Applications/Install\ macOS\ Catalina.app/Contents/Resources/createinstallmedia --volume /Volumes/MyVolume</span><br></pre></td></tr></table></figure>
+
+<p>Mojave*：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo /Applications/Install\ macOS\ Mojave.app/Contents/Resources/createinstallmedia --volume /Volumes/MyVolume</span><br></pre></td></tr></table></figure>
+<p>在使用上述命令的时候，遇到了找不到命令的情况，删除重新下载也不行，最后重启了一下笔记本，才可以。</p>
+<p>键入命令后：</p>
+<p>按下 Return 键以输入这个命令。<br>出现提示时，请键入您的管理员密码，然后再次按下 Return 键。在您键入密码时，“终端”不会显示任何字符。<br>出现提示时，请键入 Y 以确认您要抹掉宗卷，然后按下 Return 键。在抹掉宗卷的过程中，“终端”会显示进度。<br>宗卷被抹掉后，您可能会看到一条提醒，提示“终端”要访问可移除宗卷上的文件。点按“好”以允许继续拷贝。<br>当“终端”显示操作已完成时，相应宗卷将拥有与您下载的安装器相同的名称，例如“安装 macOS Big Sur”。您现在可以退出“终端”并弹出宗卷。</p>
+<p>写入的时间有点长，主要取决于U盘的写入速度。</p>
+<img data-src="https://img.econow.cn/medivh/1614578974150.png"  />
+
+
+<h3 id="如果新的SSD系统不识别"><a href="#如果新的SSD系统不识别" class="headerlink" title="如果新的SSD系统不识别"></a>如果新的SSD系统不识别</h3><p>将 Mac 开机，然后立即按住 Command (⌘) 和 R 这两个按键，直至看到 Apple 标志或其他图像。从 macOS 恢复功能的实用工具窗口中，选择“磁盘工具”并点按“继续”。</p>
+<h4 id="下载系统"><a href="#下载系统" class="headerlink" title="下载系统"></a>下载系统</h4><p>去Apple Store搜索 mojave 点击下载即可，Install macOS Mojave10.14下载好后，打开安装（即将软件直接调入程序文件夹里面）。</p>
+<h3 id="装系统"><a href="#装系统" class="headerlink" title="装系统"></a>装系统</h3><p>开机还是按着option键，出现制作系统U盘最后一步的那个启动盘，打开。<br>不要慌着装系统，先打开最后一项磁盘工具，看看能不能识别到INTEL，识别到了就格式化为APFS（网上普遍先搞Mac日志，出问题了再换APFS，这里推荐直接APFS），方案选择GUID分区图。要是没有识别到，回到拆机，拔掉重插。<br>装系统，这个很简单，按操作走就是了。</p>
+<ul>
+<li>将可引导安装器插入已连接到互联网且与您要安装的 macOS 版本兼容的 Mac。</li>
+<li>将 Mac 开机或重新启动后，立即按住 Option (Alt) ⌥ 键。</li>
+<li>当您看到显示可引导宗卷的黑屏时，松开 Option 键。</li>
+<li>选择包含可引导安装器的宗卷。然后点按向上箭头或按下 Return 键。 </li>
+<li>如果您无法从可引导安装器启动，请确保“启动安全性实用工具”中的“外部启动”设置已设为允许从外部介质启动。<br>根据提示选取您的语言。</li>
+<li>从“实用工具”窗口中选择“安装 macOS”（或“安装 OS X”），然后点按“继续”，并按照屏幕上的说明进行操作。</li>
+</ul>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><ul>
+<li>最简单的方式就是直接从时光机里恢复，但是不能保证一定能恢复成功，比如我这次恢复了60~70，提示失败，但是系统能进去了，看样子恢复了不少。</li>
+<li>ssd 一定要配合 m.2的转接卡使用</li>
+</ul>
+<h2 id="基本工具"><a href="#基本工具" class="headerlink" title="基本工具"></a>基本工具</h2><h3 id="iterm2"><a href="#iterm2" class="headerlink" title="iterm2"></a>iterm2</h3><p>官网 <a target="_blank" rel="noopener" href="https://iterm2.com/downloads/stable/latest">https://iterm2.com/downloads/stable/latest</a></p>
+<h3 id="brew"><a href="#brew" class="headerlink" title="brew"></a>brew</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">/usr/bin/ruby -e &quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)&quot;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="zsh"><a href="#zsh" class="headerlink" title="zsh"></a>zsh</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sh -c &quot;$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)&quot;</span><br><span class="line"># zsh/bash切换</span><br><span class="line">chsh -s /bin/zsh</span><br></pre></td></tr></table></figure>
+
+<h3 id="oh-my-zsh"><a href="#oh-my-zsh" class="headerlink" title="oh-my-zsh"></a>oh-my-zsh</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">wget https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh -O - | sh</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>插件目录</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">/Users/medivh/.oh-my-zsh/plugins</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="开发工具"><a href="#开发工具" class="headerlink" title="开发工具"></a>开发工具</h2><h3 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h3><p>python3.5的版本已经放弃了，尽量选一些长期支持的版本，比如3.8、3.9。简单的方式就直接brew安装，麻烦点就去官网下载，再麻烦点就下载软件包进行编译。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew install python3</span><br></pre></td></tr></table></figure>
+
+<h3 id="pip"><a href="#pip" class="headerlink" title="pip"></a>pip</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo easy_install pip</span><br><span class="line">sudo pip install requests</span><br></pre></td></tr></table></figure>
+
+<p>pip源</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">豆瓣 https://pypi.douban.com/simple</span><br><span class="line">阿里云 https://mirrors.aliyun.com/pypi/simple</span><br><span class="line">清华大学 https://pypi.tuna.tsinghua.edu.cn/simple</span><br><span class="line">中国科学技术大学 https://pypi.mirrors.ustc.edu.cn/simple</span><br><span class="line">中国科技大学 https://pypi.mirrors.ustc.edu.cn/simple</span><br><span class="line">官方 https://pypi.python.org/simple/</span><br></pre></td></tr></table></figure>
+
+<p>pip加速</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[global]</span><br><span class="line">index-url = https://pypi.tuna.tsinghua.edu.cn/simple</span><br><span class="line">format = columns</span><br></pre></td></tr></table></figure>
+
+<h3 id="virtualenv"><a href="#virtualenv" class="headerlink" title="virtualenv"></a>virtualenv</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">pip install virtualenv</span><br><span class="line"># 不安装任何第三方包</span><br><span class="line">virtualenv --no-site-packages venv </span><br><span class="line"></span><br><span class="line"># 指定版本</span><br><span class="line">virtualenv -p /usr/bin/python2.7 venv</span><br><span class="line"></span><br><span class="line">#激活虚拟环境</span><br><span class="line">source venv/bin/activate</span><br><span class="line"></span><br><span class="line">#推出虚拟环境</span><br><span class="line">deactivate</span><br></pre></td></tr></table></figure>
+
+<h2 id="工具"><a href="#工具" class="headerlink" title="工具"></a>工具</h2><h3 id="图床"><a href="#图床" class="headerlink" title="图床"></a>图床</h3><p>参考 <a href="http://econow.cn/markdown%20%E5%9B%BE%E5%BA%8A%E7%94%9F%E6%88%90.html">http://econow.cn/markdown%20%E5%9B%BE%E5%BA%8A%E7%94%9F%E6%88%90.html</a></p>
+<h3 id="iterm2-文件传输"><a href="#iterm2-文件传输" class="headerlink" title="iterm2 文件传输"></a>iterm2 文件传输</h3><p>在 mac 下，实现与服务器进行便捷的文件上传和下载操作。</p>
+<ul>
+<li>安装支持rz和sz命令的lrzsz：<code>brew install lrzsz</code></li>
+<li>在本地&#x2F;usr&#x2F;local&#x2F;bin&#x2F;目录下保存iterm2-send-zmodem.sh 和iterm2-recv-zmodem.sh两个脚本</li>
+</ul>
+<p>iterm2-recv-zmodem.sh</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line"></span><br><span class="line">osascript -e &#x27;tell application &quot;iTerm2&quot; to version&#x27; &gt; /dev/null 2&gt;&amp;1 &amp;&amp; NAME=iTerm2 || NAME=iTerm</span><br><span class="line">if [[ $NAME = &quot;iTerm&quot; ]]; then</span><br><span class="line">	FILE=$(osascript -e &#x27;tell application &quot;iTerm&quot; to activate&#x27; -e &#x27;tell application &quot;iTerm&quot; to set thefile to choose folder with prompt &quot;Choose a folder to place received files in&quot;&#x27; -e &quot;do shell script (\&quot;echo \&quot;&amp;(quoted form of POSIX path of thefile as Unicode text)&amp;\&quot;\&quot;)&quot;)</span><br><span class="line">else</span><br><span class="line">	FILE=$(osascript -e &#x27;tell application &quot;iTerm2&quot; to activate&#x27; -e &#x27;tell application &quot;iTerm2&quot; to set thefile to choose folder with prompt &quot;Choose a folder to place received files in&quot;&#x27; -e &quot;do shell script (\&quot;echo \&quot;&amp;(quoted form of POSIX path of thefile as Unicode text)&amp;\&quot;\&quot;)&quot;)</span><br><span class="line">fi</span><br><span class="line"></span><br><span class="line">if [[ $FILE = &quot;&quot; ]]; then</span><br><span class="line">	echo Cancelled.</span><br><span class="line">	# Send ZModem cancel</span><br><span class="line">	echo -e \\x18\\x18\\x18\\x18\\x18</span><br><span class="line">	sleep 1</span><br><span class="line">	echo</span><br><span class="line">	echo \# Cancelled transfer</span><br><span class="line">else</span><br><span class="line">	cd &quot;$FILE&quot;</span><br><span class="line">	/usr/local/bin/rz -E -e -b --bufsize 4096</span><br><span class="line">	sleep 1</span><br><span class="line">	echo</span><br><span class="line">	echo</span><br><span class="line">	echo \# Sent \-\&gt; $FILE</span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
+
+<p>iterm2-send-zmodem.sh</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line"></span><br><span class="line">osascript -e &#x27;tell application &quot;iTerm2&quot; to version&#x27; &gt; /dev/null 2&gt;&amp;1 &amp;&amp; NAME=iTerm2 || NAME=iTerm</span><br><span class="line">if [[ $NAME = &quot;iTerm&quot; ]]; then</span><br><span class="line">	FILE=`osascript -e &#x27;tell application &quot;iTerm&quot; to activate&#x27; -e &#x27;tell application &quot;iTerm&quot; to set thefile to choose file with prompt &quot;Choose a file to send&quot;&#x27; -e &quot;do shell script (\&quot;echo \&quot;&amp;(quoted form of POSIX path of thefile as Unicode text)&amp;\&quot;\&quot;)&quot;`</span><br><span class="line">else</span><br><span class="line">	FILE=`osascript -e &#x27;tell application &quot;iTerm2&quot; to activate&#x27; -e &#x27;tell application &quot;iTerm2&quot; to set thefile to choose file with prompt &quot;Choose a file to send&quot;&#x27; -e &quot;do shell script (\&quot;echo \&quot;&amp;(quoted form of POSIX path of thefile as Unicode text)&amp;\&quot;\&quot;)&quot;`</span><br><span class="line">fi</span><br><span class="line">if [[ $FILE = &quot;&quot; ]]; then</span><br><span class="line">	echo Cancelled.</span><br><span class="line">	# Send ZModem cancel</span><br><span class="line">	echo -e \\x18\\x18\\x18\\x18\\x18</span><br><span class="line">	sleep 1</span><br><span class="line">	echo</span><br><span class="line">	echo \# Cancelled transfer</span><br><span class="line">else</span><br><span class="line">	/usr/local/bin/sz &quot;$FILE&quot; --escape --binary --bufsize 4096</span><br><span class="line">	sleep 1</span><br><span class="line">	echo</span><br><span class="line">	echo \# Received $FILE</span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>设置脚本权限</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chmod 777 /usr/local/bin/iterm2-*</span><br></pre></td></tr></table></figure>
+
+<p>4.设置Iterm2的Tirgger特性，profiles-&gt;default-&gt;editProfiles-&gt;Advanced中的Tirgger</p>
+<p>添加两条trigger，分别设置 Regular expression，Action，Parameters，Instant如下：</p>
+<img data-src="https://img.econow.cn/medivh/1614522207826.png"  />
+
+<img data-src="https://img.econow.cn/medivh/1614522222576.png"  />
+
+
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">1.第一条</span><br><span class="line">        Regular expression: rz waiting to receive.\*\*B0100</span><br><span class="line">        Action: Run Silent Coprocess</span><br><span class="line">        Parameters: /usr/local/bin/iterm2-send-zmodem.sh</span><br><span class="line">        Instant: checked</span><br><span class="line">2.第二条</span><br><span class="line">        Regular expression: \*\*B00000000000000</span><br><span class="line">        Action: Run Silent Coprocess</span><br><span class="line">        Parameters: /usr/local/bin/iterm2-recv-zmodem.sh</span><br><span class="line">        Instant: checked</span><br></pre></td></tr></table></figure>
+
+<h3 id="iStat-Menus"><a href="#iStat-Menus" class="headerlink" title="iStat Menus"></a>iStat Menus</h3><p>激活码见163邮箱</p>
+<h3 id="Mac-外设键盘乱位"><a href="#Mac-外设键盘乱位" class="headerlink" title="Mac 外设键盘乱位"></a>Mac 外设键盘乱位</h3><p>修改 修饰键<br><img data-src="https://img.econow.cn/medivh/1614566892484.png"  /></p>
+<p>更改键位如下<br><img data-src="https://img.econow.cn/medivh/1614566905551.png"  /></p>
+<p>图片中是我自己的习惯，因人而异。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>喜欢就点个赞吧！</div>
+  <button>
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/wechatpay.jpg" alt="medivh 微信">
+        <span>微信</span>
+      </div>
+      <div>
+        <img src="/images/alipay.jpg" alt="medivh 支付宝">
+        <span>支付宝</span>
+      </div>
+
+  </div>
+</div>
+
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>medivh
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://econow.cn/Mac-%E5%88%9D%E8%AF%95%E5%8C%96%E7%9A%84%E8%AE%B0%E5%BF%86.html" title="Mac 初试化的记忆">https://econow.cn/Mac-初试化的记忆.html</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/Mac/" rel="tag"><i class="fa fa-tag"></i> Mac</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/Element-UI%E7%9A%84%E4%BD%BF%E7%94%A8%E6%80%BB%E7%BB%93.html" rel="prev" title="Element-UI的使用总结">
+                  <i class="fa fa-angle-left"></i> Element-UI的使用总结
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/CDN%E7%9A%84%E4%B8%80%E4%BA%9B%E6%80%9D%E8%80%83.html" rel="next" title="CDN的一些思考">
+                  CDN的一些思考 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">京ICP备17063827号-2 </a>
+  </div>
+  <div class="copyright">
+    &copy; 2017 – 
+    <span itemprop="copyrightYear">2023</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">medivh</span>
+  </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pangu/4.0.7/pangu.min.js" integrity="sha256-j+yj56cdEY2CwkVtGyz18fNybFGpMGJ8JxG3GSyO2+I=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+  <script class="next-config" data-name="leancloud_visitors" type="application/json">{"enable":true,"app_id":"g1GwilqmVAUne2tDEDncEChG-gzGzoHsz","app_key":"YB2e5dSKMmMYYCtaSzxp9fdS","server_url":"https://api.econow.cn","security":false}</script>
+  <script src="/js/third-party/statistics/lean-analytics.js"></script>
+
+
+
+</body>
+</html>

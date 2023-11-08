@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://img.econow.cn/2018/1545104669394.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://img.econow.cn/2018/1545104669394.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha256-CTSx/A06dm1B063156EVh15m6Y67pAjZZaQc89LLSrU=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"econow.cn","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.18.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":true,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="CentOS Caution: This guide was originally written for Kubernetes 1.1.0 and is deprecated and is replaced by kubeadm.Prerequisites">
+<meta property="og:type" content="article">
+<meta property="og:title" content="kubernetes最新部署文档">
+<meta property="og:url" content="https://econow.cn/kubernetes%E6%9C%80%E6%96%B0%E9%83%A8%E7%BD%B2%E6%96%87%E6%A1%A3.html">
+<meta property="og:site_name" content="Medivh&#39;s castle">
+<meta property="og:description" content="CentOS Caution: This guide was originally written for Kubernetes 1.1.0 and is deprecated and is replaced by kubeadm.Prerequisites">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-10-31T02:15:08.698Z">
+<meta property="article:modified_time" content="2023-10-31T02:15:08.698Z">
+<meta property="article:author" content="medivh">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://econow.cn/kubernetes%E6%9C%80%E6%96%B0%E9%83%A8%E7%BD%B2%E6%96%87%E6%A1%A3.html">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://econow.cn/kubernetes%E6%9C%80%E6%96%B0%E9%83%A8%E7%BD%B2%E6%96%87%E6%A1%A3.html","path":"kubernetes最新部署文档.html","title":"kubernetes最新部署文档"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>kubernetes最新部署文档 | Medivh's castle</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?21ded952ca9fc25e2b0630494a17ec7f"></script>
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Medivh's castle</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">数据蜘蛛工作室</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#logging-to-stderr-means-we-get-it-in-the-systemd-journal"><span class="nav-number">1.</span> <span class="nav-text">logging to stderr means we get it in the systemd journal</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#journal-message-level-0-is-debug"><span class="nav-number">2.</span> <span class="nav-text">journal message level, 0 is debug</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Should-this-cluster-be-allowed-to-run-privileged-docker-containers"><span class="nav-number">3.</span> <span class="nav-text">Should this cluster be allowed to run privileged docker containers</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#How-the-replication-controller-and-scheduler-find-the-kube-apiserver"><span class="nav-number">4.</span> <span class="nav-text">How the replication controller and scheduler find the kube-apiserver</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#member"><span class="nav-number">5.</span> <span class="nav-text">[member]</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#The-address-on-the-local-server-to-listen-to"><span class="nav-number">6.</span> <span class="nav-text">The address on the local server to listen to.</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#The-port-on-the-local-server-to-listen-on"><span class="nav-number">7.</span> <span class="nav-text">The port on the local server to listen on.</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Port-kubelets-listen-on"><span class="nav-number">8.</span> <span class="nav-text">Port kubelets listen on</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Comma-separated-list-of-nodes-in-the-etcd-cluster"><span class="nav-number">9.</span> <span class="nav-text">Comma separated list of nodes in the etcd cluster</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Address-range-to-use-for-services"><span class="nav-number">10.</span> <span class="nav-text">Address range to use for services</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Add-your-own"><span class="nav-number">11.</span> <span class="nav-text">Add your own!</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E5%A4%84%E7%90%86"><span class="nav-number">11.0.1.</span> <span class="nav-text">问题处理</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">medivh</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">96</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">48</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://econow.cn/kubernetes%E6%9C%80%E6%96%B0%E9%83%A8%E7%BD%B2%E6%96%87%E6%A1%A3.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="medivh">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Medivh's castle">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="kubernetes最新部署文档 | Medivh's castle">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          kubernetes最新部署文档
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-10-31 10:15:08" itemprop="dateCreated datePublished" datetime="2023-10-31T10:15:08+08:00">2023-10-31</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E4%BA%91%E5%8E%9F%E7%94%9F/" itemprop="url" rel="index"><span itemprop="name">云原生</span></a>
+        </span>
+    </span>
+
+  
+    <span id="/kubernetes%E6%9C%80%E6%96%B0%E9%83%A8%E7%BD%B2%E6%96%87%E6%A1%A3.html" class="post-meta-item leancloud_visitors" data-flag-title="kubernetes最新部署文档" title="阅读次数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span class="leancloud-visitors-count"></span>
+    </span>
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>CentOS</p>
+<p>Caution: This guide was originally written for Kubernetes 1.1.0 and is deprecated and is replaced by kubeadm.<br>Prerequisites</p>
+<p>To configure Kubernetes with CentOS, you’ll need a machine to act as a master, and one or more CentOS 7 hosts to act as cluster nodes.<br>Starting a clusteru</p>
+<p>This is a getting started guide for CentOS. It is a manual configuration so you understand all the underlying packages &#x2F; services &#x2F; ports, etc…<br>The Kubernetes package provides a few services: kube-apiserver, kube-scheduler, kube-controller-manager, kubelet, kube-proxy. These services are managed by systemd and the configuration resides in a central location: &#x2F;etc&#x2F;kubernetes. We will break the services up between the hosts. The first host, centos-master, will be the Kubernetes master. This host will run the kube-apiserver, kube-controller-manager and kube-scheduler. In addition, the master will also run etcd. The remaining hosts, centos-minion-n will be the nodes and run kubelet, proxy, cadvisor and docker.<br>All of them run flanneld as networking overlay.<br>System Information:<br>Hosts:<br>Please replace host IP with your environment.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">centos-master = 192.168.121.9</span><br><span class="line">centos-minion-1 = 192.168.121.65</span><br><span class="line">centos-minion-2 = 192.168.121.66</span><br><span class="line">centos-minion-3 = 192.168.121.67</span><br></pre></td></tr></table></figure>
+<p>Prepare the hosts:</p>
+<ul>
+<li>Create a &#x2F;etc&#x2F;yum.repos.d&#x2F;virt7-docker-common-release.repo on all hosts - centos-{master,minion-n} with following information.<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[virt7-docker-common-release]</span><br><span class="line">name=virt7-docker-common-release</span><br><span class="line">baseurl=http://cbs.centos.org/repos/virt7-docker-common-release/x86_64/os/</span><br><span class="line">gpgcheck=0</span><br></pre></td></tr></table></figure></li>
+<li>Install Kubernetes, etcd and flannel on all hosts - centos-{master,minion-n}. This will also pull in docker and cadvisor.<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum -y install --enablerepo=virt7-docker-common-release kubernetes etcd flannel</span><br></pre></td></tr></table></figure></li>
+<li>Add master and node to &#x2F;etc&#x2F;hosts on all machines (not needed if hostnames already in DNS)<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">echo &quot;192.168.121.9    centos-master</span><br><span class="line">192.168.121.65    centos-minion-1</span><br><span class="line">192.168.121.66  centos-minion-2</span><br><span class="line">192.168.121.67  centos-minion-3&quot; &gt;&gt; /etc/hosts</span><br><span class="line">```  </span><br><span class="line">* Edit /etc/kubernetes/config which will be the same on all hosts to contain:</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h1 id="logging-to-stderr-means-we-get-it-in-the-systemd-journal"><a href="#logging-to-stderr-means-we-get-it-in-the-systemd-journal" class="headerlink" title="logging to stderr means we get it in the systemd journal"></a>logging to stderr means we get it in the systemd journal</h1><p>KUBE_LOGTOSTDERR&#x3D;”–logtostderr&#x3D;true”</p>
+<h1 id="journal-message-level-0-is-debug"><a href="#journal-message-level-0-is-debug" class="headerlink" title="journal message level, 0 is debug"></a>journal message level, 0 is debug</h1><p>KUBE_LOG_LEVEL&#x3D;”–v&#x3D;0”</p>
+<h1 id="Should-this-cluster-be-allowed-to-run-privileged-docker-containers"><a href="#Should-this-cluster-be-allowed-to-run-privileged-docker-containers" class="headerlink" title="Should this cluster be allowed to run privileged docker containers"></a>Should this cluster be allowed to run privileged docker containers</h1><p>KUBE_ALLOW_PRIV&#x3D;”–allow-privileged&#x3D;false”</p>
+<h1 id="How-the-replication-controller-and-scheduler-find-the-kube-apiserver"><a href="#How-the-replication-controller-and-scheduler-find-the-kube-apiserver" class="headerlink" title="How the replication controller and scheduler find the kube-apiserver"></a>How the replication controller and scheduler find the kube-apiserver</h1><p>KUBE_MASTER&#x3D;”–master&#x3D;<a target="_blank" rel="noopener" href="http://centos-master:8080/">http://centos-master:8080</a>“</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">* Disable the firewall on the master and all the nodes, as docker does not play well with other firewall rule managers. CentOS won’t let you disable the firewall as long as SELinux is enforcing, so that needs to be disabled first.</span><br><span class="line">* If you disable SELinux, make sure you reboot your machine before continuing to more steps.</span><br></pre></td></tr></table></figure>
+<p>setenforce 0<br>systemctl disable iptables-services firewalld<br>systemctl stop iptables-services firewalld</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Configure the Kubernetes services on the master.</span><br><span class="line">* Edit /etc/etcd/etcd.conf to appear as such:</span><br></pre></td></tr></table></figure>
+<h1 id="member"><a href="#member" class="headerlink" title="[member]"></a>[member]</h1><p>ETCD_NAME&#x3D;default<br>ETCD_DATA_DIR&#x3D;”&#x2F;var&#x2F;lib&#x2F;etcd&#x2F;default.etcd”<br>ETCD_LISTEN_CLIENT_URLS&#x3D;”<a target="_blank" rel="noopener" href="http://0.0.0.0:2379/">http://0.0.0.0:2379</a>“</p>
+<p>#[cluster]<br>ETCD_ADVERTISE_CLIENT_URLS&#x3D;”<a target="_blank" rel="noopener" href="http://0.0.0.0:2379/">http://0.0.0.0:2379</a>“</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">* Edit /etc/kubernetes/apiserver to appear as such:</span><br></pre></td></tr></table></figure>
+<h1 id="The-address-on-the-local-server-to-listen-to"><a href="#The-address-on-the-local-server-to-listen-to" class="headerlink" title="The address on the local server to listen to."></a>The address on the local server to listen to.</h1><p>KUBE_API_ADDRESS&#x3D;”–address&#x3D;0.0.0.0”</p>
+<h1 id="The-port-on-the-local-server-to-listen-on"><a href="#The-port-on-the-local-server-to-listen-on" class="headerlink" title="The port on the local server to listen on."></a>The port on the local server to listen on.</h1><p>KUBE_API_PORT&#x3D;”–port&#x3D;8080”</p>
+<h1 id="Port-kubelets-listen-on"><a href="#Port-kubelets-listen-on" class="headerlink" title="Port kubelets listen on"></a>Port kubelets listen on</h1><p>KUBELET_PORT&#x3D;”–kubelet-port&#x3D;10250”</p>
+<h1 id="Comma-separated-list-of-nodes-in-the-etcd-cluster"><a href="#Comma-separated-list-of-nodes-in-the-etcd-cluster" class="headerlink" title="Comma separated list of nodes in the etcd cluster"></a>Comma separated list of nodes in the etcd cluster</h1><p>KUBE_ETCD_SERVERS&#x3D;”–etcd-servers&#x3D;<a target="_blank" rel="noopener" href="http://centos-master:2379/">http://centos-master:2379</a>“</p>
+<h1 id="Address-range-to-use-for-services"><a href="#Address-range-to-use-for-services" class="headerlink" title="Address range to use for services"></a>Address range to use for services</h1><p>KUBE_SERVICE_ADDRESSES&#x3D;”–service-cluster-ip-range&#x3D;10.254.0.0&#x2F;16”</p>
+<h1 id="Add-your-own"><a href="#Add-your-own" class="headerlink" title="Add your own!"></a>Add your own!</h1><p>KUBE_API_ARGS&#x3D;””</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">* Start ETCD and configure it to hold the network overlay configuration on master: Warning This network must be unused in your network infrastructure! 172.30.0.0/16 is free in our network.</span><br></pre></td></tr></table></figure>
+<p>systemctl start etcd<br>etcdctl mkdir &#x2F;kube-centos&#x2F;network<br>etcdctl mk &#x2F;kube-centos&#x2F;network&#x2F;config “{ &quot;Network&quot;: &quot;10.1.0.0&#x2F;16&quot;, &quot;SubnetLen&quot;: 24, &quot;Backend&quot;: { &quot;Type&quot;: &quot;vxlan&quot; } }”</p>
+<ul>
+<li>Configure flannel to overlay Docker network in &#x2F;etc&#x2F;sysconfig&#x2F;flanneld on the master (also in the nodes as we’ll see):<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">```</span><br><span class="line"># Flanneld configuration options</span><br><span class="line"></span><br><span class="line"># etcd url location.  Point this to the server where etcd runs</span><br><span class="line">FLANNEL_ETCD_ENDPOINTS=&quot;http://centos-master:2379&quot;</span><br><span class="line"></span><br><span class="line"># etcd config key.  This is the configuration key that flannel queries</span><br><span class="line"># For address range assignment</span><br><span class="line">FLANNEL_ETCD_PREFIX=&quot;/kube-centos/network&quot;</span><br><span class="line"></span><br><span class="line"># Any additional options that you want to pass</span><br><span class="line">#FLANNEL_OPTIONS=&quot;&quot;</span><br></pre></td></tr></table></figure></li>
+<li>Start the appropriate services on master:<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">for SERVICES in etcd kube-apiserver kube-controller-manager kube-scheduler flanneld; do</span><br><span class="line">    systemctl restart $SERVICES</span><br><span class="line">    systemctl enable $SERVICES</span><br><span class="line">    systemctl status $SERVICES</span><br><span class="line">done</span><br></pre></td></tr></table></figure>
+Configure the Kubernetes services on the nodes.<br>We need to configure the kubelet and start the kubelet and proxy</li>
+<li>Edit &#x2F;etc&#x2F;kubernetes&#x2F;kubelet to appear as such:<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"># The address for the info server to serve on</span><br><span class="line">KUBELET_ADDRESS=&quot;--address=0.0.0.0&quot;</span><br><span class="line"></span><br><span class="line"># The port for the info server to serve on</span><br><span class="line">KUBELET_PORT=&quot;--port=10250&quot;</span><br><span class="line"></span><br><span class="line"># You may leave this blank to use the actual hostname</span><br><span class="line"># Check the node number!</span><br><span class="line">KUBELET_HOSTNAME=&quot;--hostname-override=centos-minion-n&quot;</span><br><span class="line"></span><br><span class="line"># Location of the api-server</span><br><span class="line">KUBELET_API_SERVER=&quot;--api-servers=http://centos-master:8080&quot;</span><br><span class="line"></span><br><span class="line"># Add your own!</span><br><span class="line">KUBELET_ARGS=&quot;&quot;</span><br></pre></td></tr></table></figure></li>
+<li>Configure flannel to overlay Docker network in &#x2F;etc&#x2F;sysconfig&#x2F;flanneld (in all the nodes)<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"># Flanneld configuration options</span><br><span class="line"></span><br><span class="line"># etcd url location.  Point this to the server where etcd runs</span><br><span class="line">FLANNEL_ETCD_ENDPOINTS=&quot;http://centos-master:2379&quot;</span><br><span class="line"></span><br><span class="line"># etcd config key.  This is the configuration key that flannel queries</span><br><span class="line"># For address range assignment</span><br><span class="line">FLANNEL_ETCD_PREFIX=&quot;/kube-centos/network&quot;</span><br><span class="line"></span><br><span class="line"># Any additional options that you want to pass</span><br><span class="line">#FLANNEL_OPTIONS=&quot;&quot;</span><br></pre></td></tr></table></figure></li>
+<li>Start the appropriate services on node (centos-minion-n).<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">for SERVICES in kube-proxy kubelet flanneld docker; do</span><br><span class="line">    systemctl restart $SERVICES</span><br><span class="line">    systemctl enable $SERVICES</span><br><span class="line">    systemctl status $SERVICES</span><br><span class="line">done</span><br></pre></td></tr></table></figure></li>
+<li>Configure kubectl<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">kubectl config set-cluster default-cluster --server=http://centos-master:8080</span><br><span class="line">kubectl config set-context default-context --cluster=default-cluster --user=default-admin</span><br><span class="line">kubectl config use-context default-context</span><br></pre></td></tr></table></figure>
+You should be finished!</li>
+<li>Check to make sure the cluster can see the node (on centos-master)<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl get nodes</span><br><span class="line">NAME                   STATUS     AGE     VERSION</span><br><span class="line">centos-minion-1        Ready      3d      v1.6.0+fff5156</span><br><span class="line">centos-minion-2        Ready      3d      v1.6.0+fff5156</span><br><span class="line">centos-minion-3        Ready      3d      v1.6.0+fff5156</span><br></pre></td></tr></table></figure>
+The cluster should be running! Launch a test pod.<br>Support Level</li>
+</ul>
+<p>IaaS Provider	Config. Mgmt	OS	Networking	Docs	Conforms	Support Level<br>Bare-metal	custom	CentOS	flannel	docs	 	Community (@coolsvap)<br>For support level information on all solutions, see the Table of solutions chart.<br>Create an Issue Edit this Page</p>
+<h3 id="问题处理"><a href="#问题处理" class="headerlink" title="问题处理"></a>问题处理</h3><p>跨节点无法通信</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">iptables -P INPUT ACCEPT</span><br><span class="line">iptables -P FORWARD ACCEPT</span><br><span class="line">iptables -F</span><br><span class="line">iptables -L -n</span><br></pre></td></tr></table></figure>
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>喜欢就点个赞吧！</div>
+  <button>
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/wechatpay.jpg" alt="medivh 微信">
+        <span>微信</span>
+      </div>
+      <div>
+        <img src="/images/alipay.jpg" alt="medivh 支付宝">
+        <span>支付宝</span>
+      </div>
+
+  </div>
+</div>
+
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>medivh
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://econow.cn/kubernetes%E6%9C%80%E6%96%B0%E9%83%A8%E7%BD%B2%E6%96%87%E6%A1%A3.html" title="kubernetes最新部署文档">https://econow.cn/kubernetes最新部署文档.html</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/markdown%20%E5%9B%BE%E5%BA%8A%E7%94%9F%E6%88%90.html" rel="prev" title="Markdown 图床设置">
+                  <i class="fa fa-angle-left"></i> Markdown 图床设置
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/pptp%20vpn%20%E9%83%A8%E7%BD%B2%E8%84%9A%E6%9C%AC.html" rel="next" title="pptp vpn 部署脚本">
+                  pptp vpn 部署脚本 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">京ICP备17063827号-2 </a>
+  </div>
+  <div class="copyright">
+    &copy; 2017 – 
+    <span itemprop="copyrightYear">2023</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">medivh</span>
+  </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pangu/4.0.7/pangu.min.js" integrity="sha256-j+yj56cdEY2CwkVtGyz18fNybFGpMGJ8JxG3GSyO2+I=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+  <script class="next-config" data-name="leancloud_visitors" type="application/json">{"enable":true,"app_id":"g1GwilqmVAUne2tDEDncEChG-gzGzoHsz","app_key":"YB2e5dSKMmMYYCtaSzxp9fdS","server_url":"https://api.econow.cn","security":false}</script>
+  <script src="/js/third-party/statistics/lean-analytics.js"></script>
+
+
+
+</body>
+</html>
