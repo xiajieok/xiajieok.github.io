@@ -2,7 +2,7 @@
 <search>
   <entry>
     <title>Linux磁盘 LVM</title>
-    <url>/%20Linux%E7%A3%81%E7%9B%98%20LVM.html</url>
+    <url>/2023/10/31/%20Linux%E7%A3%81%E7%9B%98%20LVM/</url>
     <content><![CDATA[<h2 id="GPT分区"><a href="#GPT分区" class="headerlink" title="GPT分区"></a>GPT分区</h2><h3 id="前提条件"><a href="#前提条件" class="headerlink" title="前提条件"></a>前提条件</h3><p>您的Linux实例上已经安装了parted工具和e2fsprogs工具。</p>
 <h3 id="流程"><a href="#流程" class="headerlink" title="流程"></a>流程</h3><p>运行命令parted &#x2F;dev&#x2F;vdd开始分区。<br>运行命令mklabel gpt，将默认的MBR分区格式转为GPT分区格式。<br>运行命令mkpart primary 1 100%，划分一个主分区，并设置分区的开始位置和结束位置。<br>运行命令align-check optimal 1检查分区是否对齐。</p>
 <h3 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[root@ecshost~ ]# yum install -y parted</span><br><span class="line">[root@ecshost~ ]# yum install -y e2fsprogs</span><br></pre></td></tr></table></figure>
@@ -49,7 +49,7 @@
   </entry>
   <entry>
     <title>CDN的一些思考</title>
-    <url>/CDN%E7%9A%84%E4%B8%80%E4%BA%9B%E6%80%9D%E8%80%83.html</url>
+    <url>/2021/03/02/CDN%E7%9A%84%E4%B8%80%E4%BA%9B%E6%80%9D%E8%80%83/</url>
     <content><![CDATA[<p>配置了一个CDN，却遇到很多问题，先是301，后来又是微服务的401。作为一个普通的网站怎么好意思出这么多问题呢？<br>先来好好了解CDN使用的一些逻辑。</p>
 <h2 id="CDN"><a href="#CDN" class="headerlink" title="CDN"></a>CDN</h2><p>先了解一下CDN所用到的几个基本概念：</p>
 <ul>
@@ -85,7 +85,7 @@
   </entry>
   <entry>
     <title>Docker 实践总结（一）</title>
-    <url>/Docker%20%E5%AE%9E%E8%B7%B5%E6%80%BB%E7%BB%93%EF%BC%88%E4%B8%80%EF%BC%89.html</url>
+    <url>/2023/10/31/Docker%20%E5%AE%9E%E8%B7%B5%E6%80%BB%E7%BB%93%EF%BC%88%E4%B8%80%EF%BC%89/</url>
     <content><![CDATA[<h2 id="关于版本"><a href="#关于版本" class="headerlink" title="关于版本"></a>关于版本</h2><h3 id="版本概述"><a href="#版本概述" class="headerlink" title="版本概述"></a>版本概述</h3><p>Docker从1.13版本之后采用时间线的方式作为版本号，分为社区版CE和企业版EE。而在此之前CentOS官方自带的版本是这样的：</p>
 <p>社区版是免费提供给个人开发者和小型团体使用的，企业版会提供额外的收费服务，比如经过官方测试认证过的基础设施、容器、插件等。社区版按照stable和edge两种方式发布，每个季度更新stable版本，如17.06，17.09；每个月份更新edge版本，如17.09，17.10。  </p>
 <img data-src="https://img.econow.cn/2018/1545117093997.png" />
@@ -173,7 +173,7 @@
   </entry>
   <entry>
     <title>Docker 实践总结（二）</title>
-    <url>/Docker%20%E5%AE%9E%E8%B7%B5%E6%80%BB%E7%BB%93%EF%BC%88%E4%BA%8C%EF%BC%89.html</url>
+    <url>/2023/10/31/Docker%20%E5%AE%9E%E8%B7%B5%E6%80%BB%E7%BB%93%EF%BC%88%E4%BA%8C%EF%BC%89/</url>
     <content><![CDATA[<h2 id="集群简介"><a href="#集群简介" class="headerlink" title="集群简介"></a>集群简介</h2><h2 id="Swarm"><a href="#Swarm" class="headerlink" title="Swarm"></a>Swarm</h2><h3 id="初始化swarm"><a href="#初始化swarm" class="headerlink" title="初始化swarm"></a>初始化swarm</h3><h4 id="方法一"><a href="#方法一" class="headerlink" title="方法一"></a>方法一</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker pull swarm</span><br></pre></td></tr></table></figure>
 <p>创建集群token，获取全球唯一的 token，作为集群唯一标识</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker run --rm swarm create</span><br><span class="line">a253407f93a759e7b1d69a49cf669732</span><br></pre></td></tr></table></figure>
@@ -239,7 +239,7 @@
   </entry>
   <entry>
     <title>Docker标准镜像制作</title>
-    <url>/Docker%E6%A0%87%E5%87%86%E9%95%9C%E5%83%8F%E5%88%B6%E4%BD%9C.html</url>
+    <url>/2023/10/31/Docker%E6%A0%87%E5%87%86%E9%95%9C%E5%83%8F%E5%88%B6%E4%BD%9C/</url>
     <content><![CDATA[<blockquote>
 <ul>
 <li>由于hub.docker.com上提供的官方镜像为open-jdk，因此和程序运行时多少会有点小问题；</li>
@@ -278,7 +278,7 @@
   </entry>
   <entry>
     <title>ELK 部署</title>
-    <url>/ELK%E9%83%A8%E7%BD%B2.html</url>
+    <url>/2023/10/31/ELK%E9%83%A8%E7%BD%B2/</url>
     <content><![CDATA[<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><h3 id="基本组件"><a href="#基本组件" class="headerlink" title="基本组件"></a>基本组件</h3><ul>
 <li>Elasticsearch 作为存储和索引这些数据;</li>
 <li>Filebeat 日志文件托运,传送给Logstash;</li>
@@ -387,7 +387,7 @@
   </entry>
   <entry>
     <title>Elastalert安装及使用</title>
-    <url>/Elastalert%E5%AE%89%E8%A3%85%E5%8F%8A%E4%BD%BF%E7%94%A8.html</url>
+    <url>/2023/10/31/Elastalert%E5%AE%89%E8%A3%85%E5%8F%8A%E4%BD%BF%E7%94%A8/</url>
     <content><![CDATA[<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><h3 id="报警方式"><a href="#报警方式" class="headerlink" title="报警方式"></a>报警方式</h3><ul>
 <li>Email</li>
 <li>JIRA</li>
@@ -428,7 +428,7 @@
   </entry>
   <entry>
     <title>Element-UI的使用总结</title>
-    <url>/Element-UI%E7%9A%84%E4%BD%BF%E7%94%A8%E6%80%BB%E7%BB%93.html</url>
+    <url>/2021/01/17/Element-UI%E7%9A%84%E4%BD%BF%E7%94%A8%E6%80%BB%E7%BB%93/</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><h2 id="基本使用"><a href="#基本使用" class="headerlink" title="基本使用"></a>基本使用</h2><h2 id="整理总结"><a href="#整理总结" class="headerlink" title="整理总结"></a>整理总结</h2><h3 id="el-table-column-中-boolean-类型的使用"><a href="#el-table-column-中-boolean-类型的使用" class="headerlink" title="el-table-column 中 boolean 类型的使用"></a>el-table-column 中 boolean 类型的使用</h3><h4 id="场景"><a href="#场景" class="headerlink" title="场景"></a>场景</h4><p>某些字段是 Boolean 类型，数据库中存储的是 1 和 0，怎么将其格式化为是和否？</p>
 <h4 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;el-table-column label=&quot;是否跨天&quot; align=&quot;center&quot; prop=&quot;sfkt&quot; :formatter=&quot;sfktFormate&quot; /&gt;</span><br></pre></td></tr></table></figure>
 
@@ -446,7 +446,7 @@
   </entry>
   <entry>
     <title>Grok Debugger本地化安装</title>
-    <url>/Grok%20Debugger%20%E6%9C%AC%E5%9C%B0%E5%8C%96%E5%AE%89%E8%A3%85.html</url>
+    <url>/2023/10/31/Grok%20Debugger%20%E6%9C%AC%E5%9C%B0%E5%8C%96%E5%AE%89%E8%A3%85/</url>
     <content><![CDATA[<blockquote>
 <p>由于使用ELK对日志进行集中管理，grok表达式无法验证是否正确，所以使用Grok Debugger进行调试，但是由于国外网站上不去（<a href="http://grokdebug.herokuapp.com/%EF%BC%89%EF%BC%8C%E4%BB%8A%E5%A4%A9%E5%8E%BB%E7%94%A8%E5%9B%BD%E5%86%85%E7%9A%84%E4%B8%80%E4%B8%AA%E7%BD%91%E7%AB%99%E5%8F%91%E7%8E%B0%E4%B9%9F%E8%BF%9B%E4%B8%8D%E5%8E%BB%E4%BA%86%EF%BC%88http://grok.qiexun.net/%EF%BC%89%EF%BC%8C%E5%A5%BD%E6%97%A0%E5%A5%88%E5%8F%AA%E8%83%BD%E8%87%AA%E5%B7%B1%E5%8A%A8%E6%89%8B%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AA">http://grokdebug.herokuapp.com/），今天去用国内的一个网站发现也进不去了（http://grok.qiexun.net/），好无奈只能自己动手搭建一个</a>.</p>
 </blockquote>
@@ -463,7 +463,7 @@
   </entry>
   <entry>
     <title>Gitlab使用本地Nginx</title>
-    <url>/Gitlab%E4%BD%BF%E7%94%A8%E6%9C%AC%E5%9C%B0Nginx.html</url>
+    <url>/2023/10/31/Gitlab%E4%BD%BF%E7%94%A8%E6%9C%AC%E5%9C%B0Nginx/</url>
     <content><![CDATA[<h3 id="配置文件编辑"><a href="#配置文件编辑" class="headerlink" title="配置文件编辑"></a>配置文件编辑</h3><p>vi &#x2F;etc&#x2F;gitlab&#x2F;gitlab.rb </p>
 <ul>
 <li>添加：<code>nginx[&#39;enable&#39;] = false</code></li>
@@ -484,7 +484,7 @@
   </entry>
   <entry>
     <title>H3C wap712c Fit to Fat</title>
-    <url>/H3C%20wap712c%20Fit%20to%20Fat.html</url>
+    <url>/2023/10/31/H3C%20wap712c%20Fit%20to%20Fat/</url>
     <content><![CDATA[<blockquote>
 <p>fat转fit简单，直接在web界面操作即可。但是fit转fat就困难多了。</p>
 </blockquote>
@@ -534,7 +534,7 @@
   </entry>
   <entry>
     <title>Hexo Next 主题配置</title>
-    <url>/Hexo-Next-%E4%B8%BB%E9%A2%98%E9%85%8D%E7%BD%AE.html</url>
+    <url>/2017/05/03/Hexo-Next-%E4%B8%BB%E9%A2%98%E9%85%8D%E7%BD%AE/</url>
     <content><![CDATA[<h3 id="自定义域名"><a href="#自定义域名" class="headerlink" title="自定义域名"></a>自定义域名</h3><h4 id="购买域名"><a href="#购买域名" class="headerlink" title="购买域名"></a>购买域名</h4><p>阿里云省事，但是要记得不是所有域名都可以备案的，尤其是那些便宜的！！！</p>
 <h4 id="域名解析"><a href="#域名解析" class="headerlink" title="域名解析"></a>域名解析</h4><p>有了域名后，xxx.github.io 增加cname<br><img data-src="http://img.econow.cn/2016/1493360584432.png" width="873"/><br>说明：192.30.252.154和192.30.252.153是github服务器对应的ip地址，这步一定要设置，否则访问不了</p>
 <h4 id="添加CNAME"><a href="#添加CNAME" class="headerlink" title="添加CNAME"></a>添加CNAME</h4><p>然后回到博客项目根目录，在source&#x2F;下新建一个名为CNAME的文件，里面的内容写入xxxx.com即可。</p>
@@ -576,7 +576,7 @@
   </entry>
   <entry>
     <title>Hexo 博客系统搭建</title>
-    <url>/Hexo-%E5%8D%9A%E5%AE%A2%E7%B3%BB%E7%BB%9F%E6%90%AD%E5%BB%BA.html</url>
+    <url>/2017/05/03/Hexo-%E5%8D%9A%E5%AE%A2%E7%B3%BB%E7%BB%9F%E6%90%AD%E5%BB%BA/</url>
     <content><![CDATA[<h3 id="初识Hexo"><a href="#初识Hexo" class="headerlink" title="初识Hexo"></a>初识Hexo</h3><p>Hexo是一个快速的、简单的、功能强大的博客框架。你可以通过Markdown语言写文章，然后hexo帮你生成一个带有漂亮主题的静态页面。<br>最近入手了一个树莓派，所以有事没事就想着折腾它，后来无意中看到了hexo的博客，真漂亮！就试着在派上部署一下环境试试。</p>
 <h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><h4 id="依赖环境"><a href="#依赖环境" class="headerlink" title="依赖环境"></a>依赖环境</h4><p>hexo依赖于nodejs，因此记得先装一下nodejs。有些平台上就编译一下吧，比如在树莓派上就得好几个小时，那就在那编译着吧。。。<br>编译安装nodejs</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">wget https://nodejs.org/dist/v10.15.3/node-v10.15.3.tar.gz</span><br><span class="line">tar -zxvf node-v10.15.3.tar.gz   </span><br><span class="line">cd node-v10.15.3   </span><br><span class="line">./configure   </span><br><span class="line">make   </span><br><span class="line">make install   </span><br><span class="line">node -v</span><br></pre></td></tr></table></figure>
@@ -606,7 +606,7 @@ repo->settings-> 检查是否和配置文件一致
   </entry>
   <entry>
     <title>Hexo框架的回顾总结</title>
-    <url>/Hexo%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98%E6%80%BB%E7%BB%93.html</url>
+    <url>/2021/01/16/Hexo%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98%E6%80%BB%E7%BB%93/</url>
     <content><![CDATA[<blockquote>
 <p>将近一年多的时间没怎么整理过文档，更多的时候放在笔记里。但是笔记里的记录总是太随意。回过头来看，还是记录在网络上更为安全和踏实。</p>
 </blockquote>
@@ -683,7 +683,7 @@ repo->settings-> 检查是否和配置文件一致
   </entry>
   <entry>
     <title>Jenkins 2.121 部署</title>
-    <url>/Jenkins%202.121%20%E9%83%A8%E7%BD%B2.html</url>
+    <url>/2023/10/31/Jenkins%202.121%20%E9%83%A8%E7%BD%B2/</url>
     <content><![CDATA[<h2 id="版本"><a href="#版本" class="headerlink" title="版本"></a>版本</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">JDK     1.8.0_91</span><br><span class="line">Tomecat apache-tomcat-8.0.45</span><br><span class="line">Jenkins 1.121.3</span><br></pre></td></tr></table></figure>
 <h2 id="环境依赖"><a href="#环境依赖" class="headerlink" title="环境依赖"></a>环境依赖</h2><h3 id="JDK"><a href="#JDK" class="headerlink" title="JDK"></a>JDK</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cd /usr/src/ &amp;&amp; tar -zxvf ./jdk1.8.0_91.tar.gz -C /usr/local</span><br><span class="line">ln -s /usr/local/jdk1.8.0_91 /usr/local/java</span><br><span class="line">echo &#x27;</span><br><span class="line">#JDK</span><br><span class="line">############################################################</span><br><span class="line">export JAVA_HOME=/usr/local/java</span><br><span class="line">export PATH=$JAVA_HOME/bin:$PATH</span><br><span class="line">############################################################</span><br><span class="line">&#x27; &gt;&gt; /etc/profile</span><br><span class="line">source /etc/profile</span><br></pre></td></tr></table></figure>
 <h3 id="maven"><a href="#maven" class="headerlink" title="maven"></a>maven</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cd /usr/src/</span><br><span class="line">wget http://mirrors.cnnic.cn/apache/maven/maven-3/3.0.5/binaries/apache-maven-3.0.5-bin.tar.gz</span><br><span class="line">tar -zxvf apache-maven-3.0.5-bin.tar.gz  -C /usr/local</span><br><span class="line">cd /usr/local</span><br><span class="line">ln -s apache-maven-3.0.5 maven</span><br><span class="line"></span><br><span class="line">echo &#x27;</span><br><span class="line">#maven</span><br><span class="line">############################################################</span><br><span class="line">export MAVEN_HOME=/usr/local/maven</span><br><span class="line">export PATH=$&#123;MAVEN_HOME&#125;/bin:$&#123;PATH&#125;</span><br><span class="line">############################################################</span><br><span class="line">&#x27; &gt;&gt; /etc/profile</span><br><span class="line">source /etc/profile</span><br></pre></td></tr></table></figure>
@@ -714,7 +714,7 @@ repo->settings-> 检查是否和配置文件一致
   </entry>
   <entry>
     <title>Kubernetes job的深入理解</title>
-    <url>/Kubernetes%20job%E7%9A%84%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3.html</url>
+    <url>/2023/10/31/Kubernetes%20job%E7%9A%84%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3/</url>
     <content><![CDATA[<p>Deployment、StatefulSet以及DeamonSet这三种编排概念都有一些共同点，实际上编排的对象都是在线业务。一般的在线业务是一种长时间的作业，比如NGINX、Tomcat，这些应用一旦运行起来，除非出错或者停止，否则容器进程会一直保持在Running状态。</p>
 <p>还有一类是离线业务，或者叫做Batch Job。这种业务在计算完成后就直接退出了。</p>
 ]]></content>
@@ -1029,7 +1029,7 @@ repo->settings-> 检查是否和配置文件一致
   </entry>
   <entry>
     <title>Kubernetes的调度</title>
-    <url>/Kubernetes%E7%9A%84%E8%B0%83%E5%BA%A6.html</url>
+    <url>/2023/10/31/Kubernetes%E7%9A%84%E8%B0%83%E5%BA%A6/</url>
     <content><![CDATA[<h2 id="调度"><a href="#调度" class="headerlink" title="调度"></a>调度</h2><h3 id="基本概述"><a href="#基本概述" class="headerlink" title="基本概述"></a>基本概述</h3><p>kube-scheduler 是kubernetes 集群的默认调度器，该调度器将Pod绑定在对应的node上，之后对应的node上的kubelet才能够创建和运行Pod。<br>对每个新建的Pod或者未被调度的Pod，kube-scheduler 会选择一个最优的node去运行这个Pod。Pod内的每个容器以及自身都有不通的资源需求。因此，Pod在被调度之前，会根据特定的资源调度需求，对集群中的Node进行一次过滤。<br>调度器会在集群中过滤后的可调度节点，根据一些列函数进行打分，最终选择出得分最高的node。之后，调度器将这个调度通知给kube-apiserver，进行绑定。</p>
 <h2 id="亲和性"><a href="#亲和性" class="headerlink" title="亲和性"></a>亲和性</h2><p>原则</p>
 <ul>
@@ -1112,7 +1112,7 @@ repo->settings-> 检查是否和配置文件一致
   </entry>
   <entry>
     <title>Linux 日常整理</title>
-    <url>/Linux%20%E6%97%A5%E5%B8%B8%E6%95%B4%E7%90%86.html</url>
+    <url>/2023/10/31/Linux%20%E6%97%A5%E5%B8%B8%E6%95%B4%E7%90%86/</url>
     <content><![CDATA[<h3 id="时间同步"><a href="#时间同步" class="headerlink" title="时间同步"></a>时间同步</h3><h4 id="the-NTP-socket-is-in-use-exiting问题"><a href="#the-NTP-socket-is-in-use-exiting问题" class="headerlink" title="the NTP socket is in use, exiting问题"></a>the NTP socket is in use, exiting问题</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[root@esx4 ~]# ntpdate ntp.api.bz</span><br><span class="line">21 Sep 14:39:09 ntpdate[24744]: the NTP socket is in use, exiting</span><br><span class="line"></span><br><span class="line">[root@esx4 ~]# service ntpd stop</span><br><span class="line">Shutting down ntpd:                                        [  OK  ]</span><br><span class="line"></span><br><span class="line">[root@esx4 ~]# ntpdate 0.debian.pool.ntp.org</span><br><span class="line">21 Sep 15:22:43 ntpdate[25723]: step time server 114.80.81.1 offset 2312.159684 sec</span><br></pre></td></tr></table></figure>
 <h4 id="同步crontab"><a href="#同步crontab" class="headerlink" title="同步crontab"></a>同步crontab</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">echo &quot;59 23 * * * /usr/sbin/ntpdate 0.debian.pool.ntp.org &gt;&gt; /var/log/time.log &amp;&amp; hwclock --systohc 2&gt;&amp;1&quot; &gt;&gt; /etc/crontab</span><br></pre></td></tr></table></figure>
 <h3 id="磁盘"><a href="#磁盘" class="headerlink" title="磁盘"></a>磁盘</h3><h4 id="大于2T的分区"><a href="#大于2T的分区" class="headerlink" title="大于2T的分区"></a>大于2T的分区</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">parted  /dev/sdb</span><br><span class="line">mklabel gpt --建立gpt标签</span><br><span class="line">mkpart primary 0% 100%  （开始和终止位置）</span><br><span class="line">print   查看结果</span><br><span class="line">quit 退出</span><br><span class="line"></span><br><span class="line">mkfs.ext4 /dev/sdb</span><br><span class="line"></span><br><span class="line">mkdir /data</span><br><span class="line">mount  /dev/sdb /data</span><br></pre></td></tr></table></figure>
@@ -1167,7 +1167,7 @@ repo->settings-> 检查是否和配置文件一致
   </entry>
   <entry>
     <title>Linux 磁盘经常出现一些的问题的总结</title>
-    <url>/Linux-%E7%A3%81%E7%9B%98%E7%BB%8F%E5%B8%B8%E5%87%BA%E7%8E%B0%E4%B8%80%E4%BA%9B%E7%9A%84%E9%97%AE%E9%A2%98%E7%9A%84%E6%80%BB%E7%BB%93.html</url>
+    <url>/2021/01/16/Linux-%E7%A3%81%E7%9B%98%E7%BB%8F%E5%B8%B8%E5%87%BA%E7%8E%B0%E4%B8%80%E4%BA%9B%E7%9A%84%E9%97%AE%E9%A2%98%E7%9A%84%E6%80%BB%E7%BB%93/</url>
     <content><![CDATA[<blockquote>
 <p>Linux磁盘空间经常会出现一些或多或少的问题。比如磁盘空间不足。但是有些时候是真的磁盘空间不足吗？</p>
 </blockquote>
@@ -1210,7 +1210,7 @@ repo->settings-> 检查是否和配置文件一致
   </entry>
   <entry>
     <title>Logstash 输出到 hdfs</title>
-    <url>/Logstash%20%E8%BE%93%E5%87%BA%E5%88%B0%20hdfs.html</url>
+    <url>/2023/10/31/Logstash%20%E8%BE%93%E5%87%BA%E5%88%B0%20hdfs/</url>
     <content><![CDATA[<blockquote>
 <p>由于ES集群价格较为昂贵，相对来讲还是Hadoop平台便宜，耐用。</p>
 </blockquote>
@@ -1239,7 +1239,7 @@ repo->settings-> 检查是否和配置文件一致
   </entry>
   <entry>
     <title>Mac 初始化环境</title>
-    <url>/Mac%20%E5%88%9D%E5%A7%8B%E5%8C%96%E7%8E%AF%E5%A2%83.html</url>
+    <url>/2023/10/31/Mac%20%E5%88%9D%E5%A7%8B%E5%8C%96%E7%8E%AF%E5%A2%83/</url>
     <content><![CDATA[<blockquote>
 <p>很多时候，没有人愿意重装系统，除非万不得已。<br>在拥有一台刚初始化操作系统后的笔记本后，停下来想一想自己要做什么。</p>
 </blockquote>
@@ -1329,7 +1329,7 @@ repo->settings-> 检查是否和配置文件一致
   </entry>
   <entry>
     <title>Mac 初试化的记忆</title>
-    <url>/Mac-%E5%88%9D%E8%AF%95%E5%8C%96%E7%9A%84%E8%AE%B0%E5%BF%86.html</url>
+    <url>/2021/02/28/Mac-%E5%88%9D%E8%AF%95%E5%8C%96%E7%9A%84%E8%AE%B0%E5%BF%86/</url>
     <content><![CDATA[<blockquote>
 <p>每重装一次系统感觉就要减少一个月的寿命。人生如此短暂，还是少些忧愁吧。</p>
 </blockquote>
@@ -1438,7 +1438,7 @@ repo->settings-> 检查是否和配置文件一致
   </entry>
   <entry>
     <title>MacBook Pro m1迁移记录</title>
-    <url>/MacBook%20Pro%20m1%E8%BF%81%E7%A7%BB%E8%AE%B0%E5%BD%95.html</url>
+    <url>/2023/10/31/MacBook%20Pro%20m1%E8%BF%81%E7%A7%BB%E8%AE%B0%E5%BD%95/</url>
     <content><![CDATA[<h2 id="迁移"><a href="#迁移" class="headerlink" title="迁移"></a>迁移</h2><p>从旧的笔记本迁移到新笔记本上一般有两种方式：</p>
 <ul>
 <li>第一种是最简单的迁移助理APP；</li>
@@ -1521,7 +1521,7 @@ repo->settings-> 检查是否和配置文件一致
   </entry>
   <entry>
     <title>Mac 技巧</title>
-    <url>/Mac%E9%83%A8%E5%88%86%E6%8A%80%E5%B7%A7%E6%80%BB%E7%BB%93.html</url>
+    <url>/2023/10/31/Mac%E9%83%A8%E5%88%86%E6%8A%80%E5%B7%A7%E6%80%BB%E7%BB%93/</url>
     <content><![CDATA[<h3 id="查看中文字体"><a href="#查看中文字体" class="headerlink" title="查看中文字体"></a>查看中文字体</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">brew  install fontconfig</span><br><span class="line">fc-list :lang=zh</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 ]]></content>
       <tags>
@@ -1718,7 +1718,7 @@ repo->settings-> 检查是否和配置文件一致
   </entry>
   <entry>
     <title>Mongodb 探索</title>
-    <url>/Mongodb%20%E6%8E%A2%E7%B4%A2.html</url>
+    <url>/2023/10/31/Mongodb%20%E6%8E%A2%E7%B4%A2/</url>
     <content><![CDATA[<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>MongoDB是一个跨平台，面向文档的数据库，提供高性能，高可用性和易于扩展。MongoDB是工作在集合和文档上一种概念。</p>
 <h3 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h3><ul>
 <li>支持特别查询在MongoDB中，可以通过字段，范围查询进行搜索，并且还支持正则表达式搜索。</li>
@@ -1867,7 +1867,7 @@ repo->settings-> 检查是否和配置文件一致
   </entry>
   <entry>
     <title>OpenFalcon CentOS 7.2部署</title>
-    <url>/OpenFalcon%20CentOS%207.2%E9%83%A8%E7%BD%B2.html</url>
+    <url>/2023/10/31/OpenFalcon%20CentOS%207.2%E9%83%A8%E7%BD%B2/</url>
     <content><![CDATA[<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>OpenFalcon是一款企业级、高可用、可扩展的开源监控解决方案。</p>
 <img data-src="https://img.econow.cn/2018/1539584391262.png" width="1013"/>
 
@@ -1957,7 +1957,7 @@ repo->settings-> 检查是否和配置文件一致
   </entry>
   <entry>
     <title>OpenVpn 最新版部署</title>
-    <url>/OpenVpn%20%E6%9C%80%E6%96%B0%E7%89%88%E9%83%A8%E7%BD%B2.html</url>
+    <url>/2023/10/31/OpenVpn%20%E6%9C%80%E6%96%B0%E7%89%88%E9%83%A8%E7%BD%B2/</url>
     <content><![CDATA[<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><h3 id="1、yum方式（推荐）"><a href="#1、yum方式（推荐）" class="headerlink" title="1、yum方式（推荐）"></a>1、yum方式（推荐）</h3><p>推荐使用yum方式安装，因为之前曾经发生过莫名其妙服务自己停止的情况。</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">yum install openvpn open-ssl -y</span><br><span class="line">yum install easy-rsa openssl  -y</span><br></pre></td></tr></table></figure>
 <h3 id="2、编译安装"><a href="#2、编译安装" class="headerlink" title="2、编译安装"></a>2、编译安装</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">yum install pam-devel open-ssl -y</span><br><span class="line"></span><br><span class="line">cd /usr/src</span><br><span class="line">wget http://www.oberhumer.com/opensource/lzo/download/lzo-2.06.tar.gz</span><br><span class="line">tar zxvf lzo-2.06.tar.gz</span><br><span class="line">cd lzo-2.06</span><br><span class="line">./configure --prefix=/usr/local/</span><br><span class="line">make &amp;&amp; make install</span><br><span class="line"></span><br><span class="line">cd /usr/src</span><br><span class="line">tar -zxvf openvpn-2.4.6.tar.gz</span><br><span class="line"> cd openvpn-2.4.6</span><br><span class="line">./configure --prefix=/usr/local/openvpn --with-lzo-lib=/usr/local/lzo/lib --with-lzo-headers=/usr/local/lzo/include/</span><br></pre></td></tr></table></figure>
@@ -2031,7 +2031,7 @@ repo->settings-> 检查是否和配置文件一致
   </entry>
   <entry>
     <title>远程办公工具配置</title>
-    <url>/PPTP-VPN%20%E4%BD%BF%E7%94%A8.html</url>
+    <url>/2023/10/31/PPTP-VPN%20%E4%BD%BF%E7%94%A8/</url>
     <content><![CDATA[<blockquote>
 <p>公司内网环境VPN有两种连接方式，PPTP和L2TP。其中PPTP连接较为简单，L2TP作为备用方式（OS X 系统只支持L2TP）</p>
 </blockquote>
@@ -2076,7 +2076,7 @@ repo->settings-> 检查是否和配置文件一致
   </entry>
   <entry>
     <title>Python 文件/目录操作</title>
-    <url>/Python%20%E6%96%87%E4%BB%B6:%E7%9B%AE%E5%BD%95%E6%93%8D%E4%BD%9C.html</url>
+    <url>/2023/10/31/Python%20%E6%96%87%E4%BB%B6:%E7%9B%AE%E5%BD%95%E6%93%8D%E4%BD%9C/</url>
     <content><![CDATA[<h2 id="OS模块"><a href="#OS模块" class="headerlink" title="OS模块"></a>OS模块</h2><h2 id="sqlite-日期"><a href="#sqlite-日期" class="headerlink" title="sqlite 日期"></a>sqlite 日期</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">----昨天</span><br><span class="line">select * from 表 where Time&gt;=datetime(&#x27;now&#x27;,&#x27;start of day&#x27;,&#x27;-1 day&#x27;) and Time&lt;datetime(&#x27;now&#x27;,&#x27;start of day&#x27;,&#x27;+0 day&#x27;)</span><br><span class="line"></span><br><span class="line">----当天</span><br><span class="line">select * from 表 where Time&gt;=datetime(&#x27;now&#x27;,&#x27;start of day&#x27;,&#x27;+0 day&#x27;) and Time&lt;datetime(&#x27;now&#x27;,&#x27;start of day&#x27;,&#x27;+1 day&#x27;)</span><br><span class="line"></span><br><span class="line">----当周</span><br><span class="line">select  * from 表 where Time&gt;=datetime(&#x27;now&#x27;,&#x27;start of day&#x27;,&#x27;-7 day&#x27;,&#x27;weekday 1&#x27;) AND Time&lt;datetime(&#x27;now&#x27;,&#x27;start of day&#x27;,&#x27;+0 day&#x27;,&#x27;weekday 1&#x27;)</span><br><span class="line"></span><br><span class="line">----当月</span><br><span class="line">select * from 表 where Time&gt;=datetime(&#x27;now&#x27;,&#x27;start of month&#x27;,&#x27;+0 month&#x27;,&#x27;-0 day&#x27;) AND Time &lt; datetime(&#x27;now&#x27;,&#x27;start of month&#x27;,&#x27;+1 month&#x27;,&#x27;0 day&#x27;)</span><br><span class="line"></span><br><span class="line">----上月</span><br><span class="line">select * from 表 where Time&gt;=datetime(&#x27;now&#x27;,&#x27;start of month&#x27;,&#x27;-1 month&#x27;,&#x27;-0 day&#x27;) AND Time &lt;datetime(&#x27;now&#x27;,&#x27;start of month&#x27;,&#x27;+0 month&#x27;,&#x27;-1 day&#x27;)</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>]]></content>
       <categories>
         <category>Python</category>
@@ -2087,7 +2087,7 @@ repo->settings-> 检查是否和配置文件一致
   </entry>
   <entry>
     <title>Python+pycurl监控网站</title>
-    <url>/Python-pycurl%E7%9B%91%E6%8E%A7%E7%BD%91%E7%AB%99.html</url>
+    <url>/2017/05/03/Python-pycurl%E7%9B%91%E6%8E%A7%E7%BD%91%E7%AB%99/</url>
     <content><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>打算写个监控网站状态的小脚本，用到pycurl，但是提示找不到curl-config，那就手动安装吧。<br>Pycurl包是一个libcurl的Python接口，它是由C语言编写的。与urllib相比，pycurl的速度要快很多。</p>
 <p>Libcurl 是一个支持FTP，FTPS，HTTP，HTTPS，GOPHER，TELNET，DICT，FILE 和 LDAP的客户端URL传输库。libcurl也支持HTTPS认证，HTTP、POST、HTTP PUT、FTP上传，代理，Cookies，基本身份验证，FTP文件断点继传，HTTP代理通道等等。</p>
 <h4 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cd src</span><br><span class="line">sudo wget http://curl.haxx.se/download/curl-7.24.0.tar.gz</span><br><span class="line">tar -zxvf curl-7.24.0.tar.gz</span><br><span class="line">cd curl-7.24.0</span><br><span class="line">./configure</span><br><span class="line">make </span><br><span class="line">make install</span><br></pre></td></tr></table></figure>
@@ -2231,7 +2231,7 @@ repo->settings-> 检查是否和配置文件一致
   </entry>
   <entry>
     <title>Python常用整理</title>
-    <url>/Python%E5%B8%B8%E7%94%A8%E6%95%B4%E7%90%86.html</url>
+    <url>/2023/10/31/Python%E5%B8%B8%E7%94%A8%E6%95%B4%E7%90%86/</url>
     <content><![CDATA[<h3 id="logging-日志模块写入中文编码错误解决方法"><a href="#logging-日志模块写入中文编码错误解决方法" class="headerlink" title="logging 日志模块写入中文编码错误解决方法"></a>logging 日志模块写入中文编码错误解决方法</h3><p>在logging.FileHandler(path) 中添加指定编码方式 encoding&#x3D;’utf-8’ 即可，logging.FileHandler(path, encoding&#x3D;’utf-8’) 。</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#!/usr/bin/env python</span><br><span class="line"># -*- coding: utf-8 -*-</span><br><span class="line"># @Time    : 18/8/16 10:40</span><br><span class="line"># @Author  : Medivh</span><br><span class="line"></span><br><span class="line">import functools</span><br><span class="line">import logging</span><br><span class="line">import logging.handlers</span><br><span class="line">import os</span><br><span class="line"></span><br><span class="line">LOG_FILE = os.path.join(os.path.dirname(os.path.realpath(__file__)), &#x27;logs&#x27;, &#x27;logger.log&#x27;)</span><br><span class="line">handler = logging.handlers.RotatingFileHandler(LOG_FILE, maxBytes=1024 * 1024, backupCount=10, encoding=&#x27;utf-8&#x27;)</span><br><span class="line">fmt = &#x27;[%(levelname)s]: %(asctime)s - %(filename)s - %(funcName)s - %(threadName)s - %(message)s&#x27;</span><br><span class="line"></span><br><span class="line">formatter = logging.Formatter(fmt)</span><br><span class="line">handler.setFormatter(formatter)</span><br><span class="line"></span><br><span class="line">logger = logging.getLogger(&#x27;logger&#x27;)</span><br><span class="line">logger.addHandler(handler)</span><br><span class="line">logger.setLevel(logging.INFO)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def log(func):</span><br><span class="line">    @functools.wraps(func)</span><br><span class="line">    def wrapper(*args, **kw):</span><br><span class="line">        logging.info(&#x27;call %s():&#x27; % func.__name__)</span><br><span class="line">        return func(*args, **kw)</span><br><span class="line"></span><br><span class="line">    return wrapper</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 ]]></content>
@@ -2244,7 +2244,7 @@ repo->settings-> 检查是否和配置文件一致
   </entry>
   <entry>
     <title>Python批量转换HTML为PDF</title>
-    <url>/Python%E6%89%B9%E9%87%8F%E8%BD%AC%E6%8D%A2HTML%E4%B8%BAPDF.html</url>
+    <url>/2023/10/31/Python%E6%89%B9%E9%87%8F%E8%BD%AC%E6%8D%A2HTML%E4%B8%BAPDF/</url>
     <content><![CDATA[<h2 id="wkhtmltopdf"><a href="#wkhtmltopdf" class="headerlink" title="wkhtmltopdf"></a>wkhtmltopdf</h2><h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><blockquote>
 <p>wkhtmltopdf and wkhtmltoimage are open source (LGPLv3) command line tools to render HTML into PDF and various image formats using the Qt WebKit rendering engine. These run entirely “headless” and do not require a display or display service.  </p>
 </blockquote>
@@ -2440,7 +2440,7 @@ repo->settings-> 检查是否和配置文件一致
   </entry>
   <entry>
     <title>RabbitMQ 集群部署</title>
-    <url>/RabbitMQ%20%E9%9B%86%E7%BE%A4%E9%83%A8%E7%BD%B2.html</url>
+    <url>/2023/10/31/RabbitMQ%20%E9%9B%86%E7%BE%A4%E9%83%A8%E7%BD%B2/</url>
     <content><![CDATA[<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><h3 id="环境依赖"><a href="#环境依赖" class="headerlink" title="环境依赖"></a>环境依赖</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">yum install erlang -y</span><br></pre></td></tr></table></figure>
 <h3 id="安装服务"><a href="#安装服务" class="headerlink" title="安装服务"></a>安装服务</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cd /usr/src/</span><br><span class="line">wget http://www.rabbitmq.com/releases/rabbitmq-server/v3.6.4/rabbitmq-server-3.6.4-1.noarch.rpm</span><br><span class="line"></span><br><span class="line">yum install rabbitmq-server-3.6.4-1.noarch.rpm -y</span><br></pre></td></tr></table></figure>
 
@@ -2560,7 +2560,7 @@ repo->settings-> 检查是否和配置文件一致
   </entry>
   <entry>
     <title>Redis集群技术演变</title>
-    <url>/Redis%E9%9B%86%E7%BE%A4%E6%8A%80%E6%9C%AF%E6%BC%94%E5%8F%98.html</url>
+    <url>/2023/10/31/Redis%E9%9B%86%E7%BE%A4%E6%8A%80%E6%9C%AF%E6%BC%94%E5%8F%98/</url>
     <content><![CDATA[<p>按照需求来分，将实例区分为单机和集群两种类型。</p>
 <ul>
 <li>单机适合容量和性能要求不高的小型存储</li>
@@ -2768,7 +2768,7 @@ repo->settings-> 检查是否和配置文件一致
   </entry>
   <entry>
     <title>Rsync+Inotify 实时同步</title>
-    <url>/Rsync+Inotify%20%E5%AE%9E%E6%97%B6%E5%90%8C%E6%AD%A5.html</url>
+    <url>/2023/10/31/Rsync+Inotify%20%E5%AE%9E%E6%97%B6%E5%90%8C%E6%AD%A5/</url>
     <content><![CDATA[<blockquote>
 <p>需求：实时同步A机器文件到B机器</p>
 </blockquote>
@@ -2808,7 +2808,7 @@ repo->settings-> 检查是否和配置文件一致
   </entry>
   <entry>
     <title>SpringBoot日志收集输出到ELK</title>
-    <url>/SpringBoot%E6%97%A5%E5%BF%97%E6%94%B6%E9%9B%86%E8%BE%93%E5%87%BA%E5%88%B0ELK.html</url>
+    <url>/2023/10/31/SpringBoot%E6%97%A5%E5%BF%97%E6%94%B6%E9%9B%86%E8%BE%93%E5%87%BA%E5%88%B0ELK/</url>
     <content><![CDATA[<blockquote>
 <p>注意logstash启动的时候有个坑，如果启动指定目录，那么必须保证该目录下都是配置文件，否则就会误以为都是配置文件。</p>
 </blockquote>
@@ -2826,7 +2826,7 @@ repo->settings-> 检查是否和配置文件一致
   </entry>
   <entry>
     <title>Zookeeper 实践</title>
-    <url>/Zookeeper%20%E5%AE%9E%E8%B7%B5.html</url>
+    <url>/2023/10/31/Zookeeper%20%E5%AE%9E%E8%B7%B5/</url>
     <content><![CDATA[<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><blockquote>
 <p> ZooKeeper 是一个开源的分布式协调服务，由雅虎创建，是 Google Chubby 的开源实现。<br>分布式应用程序可以基于 ZooKeeper 实现诸如数据发布&#x2F;订阅、负载均衡、命名服务、分布式协<br>调&#x2F;通知、集群管理、Master 选举、配置维护，名字服务、分布式同步、分布式锁和分布式队列<br>等功能。</p>
 </blockquote>
@@ -2868,7 +2868,7 @@ repo->settings-> 检查是否和配置文件一致
   </entry>
   <entry>
     <title>elasticsearch-dump 迁移es数据 （elasticdump）</title>
-    <url>/elasticsearch-dump%20%E8%BF%81%E7%A7%BBes%E6%95%B0%E6%8D%AE%20%EF%BC%88elasticdump%EF%BC%89.html</url>
+    <url>/2023/10/31/elasticsearch-dump%20%E8%BF%81%E7%A7%BBes%E6%95%B0%E6%8D%AE%20%EF%BC%88elasticdump%EF%BC%89/</url>
     <content><![CDATA[<h3 id="elasticsearch-部分查询语句"><a href="#elasticsearch-部分查询语句" class="headerlink" title="elasticsearch 部分查询语句"></a>elasticsearch 部分查询语句</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 获取集群的节点列表：</span><br><span class="line">curl &#x27;localhost:9200/_cat/nodes?v&#x27;</span><br><span class="line"></span><br><span class="line"># 列出所有索引：</span><br><span class="line">curl &#x27;localhost:9200/_cat/indices?v&#x27;</span><br><span class="line"></span><br><span class="line">创建一个名为“customer”的索引，然后再查看所有的索引：</span><br><span class="line">curl -X PUT &#x27;localhost:9200/customer?pretty&#x27;</span><br><span class="line">curl &#x27;localhost:9200/_cat/indices?v&#x27;</span><br></pre></td></tr></table></figure>
 
 <h3 id="elasticsearch-dump"><a href="#elasticsearch-dump" class="headerlink" title="elasticsearch-dump"></a>elasticsearch-dump</h3><p><a href="https://github.com/taskrabbit/elasticsearch-dump">https://github.com/taskrabbit/elasticsearch-dump</a></p>
@@ -2887,7 +2887,7 @@ repo->settings-> 检查是否和配置文件一致
   </entry>
   <entry>
     <title>elasticsearch使用经验</title>
-    <url>/elasticsearch%E4%BD%BF%E7%94%A8%E7%BB%8F%E9%AA%8C.html</url>
+    <url>/2023/10/31/elasticsearch%E4%BD%BF%E7%94%A8%E7%BB%8F%E9%AA%8C/</url>
     <content><![CDATA[<h2 id="设定副本和切片数量"><a href="#设定副本和切片数量" class="headerlink" title="设定副本和切片数量"></a>设定副本和切片数量</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">number_of_replicas 是数据备份数，如果只有一台机器，设置为0</span><br><span class="line">number_of_shards  是数据分片数，默认为5，有时候设置为3</span><br></pre></td></tr></table></figure>
 <p>默认情况下每个索引都会生成5个切片，当然会占用大量磁盘空间。如果是对于安全性要求一般的情况下可以通过设置模板来改变数量。</p>
 <h3 id="配置模板文件"><a href="#配置模板文件" class="headerlink" title="配置模板文件"></a>配置模板文件</h3><ul>
@@ -2953,7 +2953,7 @@ repo->settings-> 检查是否和配置文件一致
   </entry>
   <entry>
     <title>freeswitch部署文档</title>
-    <url>/freeswitch%E9%83%A8%E7%BD%B2%E6%96%87%E6%A1%A3.html</url>
+    <url>/2023/10/31/freeswitch%E9%83%A8%E7%BD%B2%E6%96%87%E6%A1%A3/</url>
     <content><![CDATA[<h3 id="一、freeswitch"><a href="#一、freeswitch" class="headerlink" title="一、freeswitch"></a>一、freeswitch</h3><p>注意区分CentOS 6&#x2F;7，不同版本编译的时候会有些差别。比如6上不会提示opus-devel，但是7必须安装。</p>
 <h3 id="二、Libshout"><a href="#二、Libshout" class="headerlink" title="二、Libshout"></a>二、Libshout</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">yum install -y http://mirror.centos.org/centos/7/os/x86_64/Packages/libshout-2.2.2-11.el7.x86_64.rpm</span><br></pre></td></tr></table></figure>
 <h3 id="三、执行命令："><a href="#三、执行命令：" class="headerlink" title="三、执行命令："></a>三、执行命令：</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">yum install -y http://files.freeswitch.org/freeswitch-release-1-6.noarch.rpm</span><br></pre></td></tr></table></figure>
@@ -2976,7 +2976,7 @@ repo->settings-> 检查是否和配置文件一致
   </entry>
   <entry>
     <title>Hello World</title>
-    <url>/hello-world.html</url>
+    <url>/2023/10/31/hello-world/</url>
     <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
 <h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
 
@@ -2994,7 +2994,7 @@ repo->settings-> 检查是否和配置文件一致
   </entry>
   <entry>
     <title>influxdb基本使用</title>
-    <url>/influxdb%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8.html</url>
+    <url>/2023/10/31/influxdb%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8/</url>
     <content><![CDATA[<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">brew install influxdb</span><br><span class="line"></span><br><span class="line">ln -sfv /usr/local/opt/influxdb/*.plist ~/Library/LaunchAgents</span><br><span class="line"></span><br><span class="line"># 配置文件在/etc/influxdb/influxdb.conf ，如果没有就将/usr/local/etc/influxdb.conf 拷一个过去</span><br><span class="line"></span><br><span class="line">配置缓存：cache-max-memory-size</span><br><span class="line"></span><br><span class="line">#启动服务</span><br><span class="line"></span><br><span class="line">launchctl load ~/Library/LaunchAgents/homebrew.mxcl.influxdb.plist</span><br><span class="line"></span><br><span class="line">#停止服务</span><br><span class="line"></span><br><span class="line">launchctl unload ~/Library/LaunchAgents/homebrew.mxcl.influxdb.plist</span><br><span class="line"></span><br><span class="line">#前台启动</span><br><span class="line"></span><br><span class="line">influxd -config /usr/local/etc/influxdb.conf</span><br><span class="line"></span><br><span class="line">查看influxdb运行配置</span><br><span class="line"></span><br><span class="line">influxd config</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">启动客户端</span><br><span class="line"></span><br><span class="line">influx -precision rfc3339</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 <h2 id="操作"><a href="#操作" class="headerlink" title="操作"></a>操作</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">1、创建数据库</span><br><span class="line"></span><br><span class="line">create database mydb</span><br><span class="line"></span><br><span class="line">2、删除数据库</span><br><span class="line"></span><br><span class="line">drop database mydb</span><br><span class="line"></span><br><span class="line">3、使用数据库</span><br><span class="line"></span><br><span class="line">use mydb</span><br><span class="line"></span><br><span class="line">4、插入数据库</span><br><span class="line"></span><br><span class="line">insert mt,type=item,sensor=sensor01 value=3,is_delete=0</span><br><span class="line"></span><br><span class="line">注意：第一次插入数据会确定数据类型，之后的插入不能换数据类型。</span><br><span class="line"></span><br><span class="line">插入同一时间的数据会覆盖旧的，时间是主键。可以乱序插入。</span><br><span class="line"></span><br><span class="line">5、查询</span><br><span class="line"></span><br><span class="line">select * from mt</span><br><span class="line"></span><br><span class="line">where 中对字符串的过滤必须用单引号，tag默认为字符串类型</span><br><span class="line"></span><br></pre></td></tr></table></figure>]]></content>
@@ -3007,7 +3007,7 @@ repo->settings-> 检查是否和配置文件一致
   </entry>
   <entry>
     <title>kibana权限管理——SearchGuard</title>
-    <url>/kibana%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86%E2%80%94%E2%80%94SearchGuard.html</url>
+    <url>/2023/10/31/kibana%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86%E2%80%94%E2%80%94SearchGuard/</url>
     <content><![CDATA[<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>首先根据es版本来选择search-guard,当前环境为5.4.1，因此选择对应版本。其他5.x参考 <a href="https://docs.search-guard.com/v5/search-guard-versions">https://docs.search-guard.com/v5/search-guard-versions</a></p>
 <p><a href="https://docs.search-guard.com/v5/search-guard-installation">https://docs.search-guard.com/v5/search-guard-installation</a></p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[joy@es_a2_1_19 elasticsearch]$ bin/elasticsearch-plugin install -b  com.floragunn:search-guard-5:5.4.1-15</span><br><span class="line">-&gt; Downloading com.floragunn:search-guard-5:5.4.1-15 from maven central</span><br><span class="line">[=================================================] 100%</span><br><span class="line">@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@</span><br><span class="line">@     WARNING: plugin requires additional permissions     @</span><br><span class="line">@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@</span><br><span class="line">* java.io.FilePermission /proc/sys/net/core/somaxconn read</span><br><span class="line">* java.lang.RuntimePermission accessClassInPackage.sun.misc</span><br><span class="line">* java.lang.RuntimePermission accessClassInPackage.sun.nio.ch</span><br><span class="line">* java.lang.RuntimePermission accessClassInPackage.sun.security.x509</span><br><span class="line">* java.lang.RuntimePermission accessDeclaredMembers</span><br><span class="line">* java.lang.RuntimePermission getClassLoader</span><br><span class="line">* java.lang.RuntimePermission loadLibrary.*</span><br><span class="line">* java.lang.RuntimePermission setContextClassLoader</span><br><span class="line">* java.lang.RuntimePermission shutdownHooks</span><br><span class="line">* java.lang.reflect.ReflectPermission suppressAccessChecks</span><br><span class="line">* java.security.SecurityPermission getProperty.ssl.KeyManagerFactory.algorithm</span><br><span class="line">* java.security.SecurityPermission setProperty.ocsp.enable</span><br><span class="line">* java.util.PropertyPermission com.sun.security.enableCRLDP write</span><br><span class="line">* java.util.PropertyPermission es.set.netty.runtime.available.processors write</span><br><span class="line">* java.util.PropertyPermission java.security.debug write</span><br><span class="line">* java.util.PropertyPermission java.security.krb5.conf write</span><br><span class="line">* java.util.PropertyPermission javax.security.auth.useSubjectCredsOnly write</span><br><span class="line">* java.util.PropertyPermission sun.nio.ch.bugLevel write</span><br><span class="line">* java.util.PropertyPermission sun.security.krb5.debug write</span><br><span class="line">* java.util.PropertyPermission sun.security.spnego.debug write</span><br><span class="line">* javax.security.auth.AuthPermission doAs</span><br><span class="line">* javax.security.auth.AuthPermission modifyPrivateCredentials</span><br><span class="line">* javax.security.auth.kerberos.ServicePermission * accept</span><br><span class="line">See http://docs.oracle.com/javase/8/docs/technotes/guides/security/permissions.html</span><br><span class="line">for descriptions of what these permissions allow and the associated risks.</span><br><span class="line">-&gt; Installed search-guard-5</span><br></pre></td></tr></table></figure>
@@ -3029,7 +3029,7 @@ repo->settings-> 检查是否和配置文件一致
   </entry>
   <entry>
     <title>kubadm 高可用</title>
-    <url>/kubadm%E9%AB%98%E5%8F%AF%E7%94%A8.html</url>
+    <url>/2023/10/31/kubadm%E9%AB%98%E5%8F%AF%E7%94%A8/</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>使用kubeadm搭建一套kubernetes集群很简单，但是一个单节点的master并不能满足我们在生产环境的需求。因此必须得解决单点的问题后才能考虑在生产环境大面积推广应用。</p>
 <p>实践目标</p>
 <ol>
@@ -3152,7 +3152,7 @@ repo->settings-> 检查是否和配置文件一致
   </entry>
   <entry>
     <title>kubernetes 常见问题的探讨</title>
-    <url>/kubernetes%20%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98%E7%9A%84%E6%8E%A2%E8%AE%A8.html</url>
+    <url>/2023/10/31/kubernetes%20%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98%E7%9A%84%E6%8E%A2%E8%AE%A8/</url>
     <content><![CDATA[<p>关于kubernetes 部署复杂是其特点之一，而网络问题则是最为常见的类型之一。</p>
 <h3 id="场景-a-b-c-node上的pod互通，但是对d-node无法访问"><a href="#场景-a-b-c-node上的pod互通，但是对d-node无法访问" class="headerlink" title="场景 a&#x2F;b&#x2F;c node上的pod互通，但是对d node无法访问"></a>场景 a&#x2F;b&#x2F;c node上的pod互通，但是对d node无法访问</h3><blockquote>
 <ul>
@@ -3296,7 +3296,7 @@ repo->settings-> 检查是否和配置文件一致
   </entry>
   <entry>
     <title>kubernetes最新部署文档</title>
-    <url>/kubernetes%E6%9C%80%E6%96%B0%E9%83%A8%E7%BD%B2%E6%96%87%E6%A1%A3.html</url>
+    <url>/2023/10/31/kubernetes%E6%9C%80%E6%96%B0%E9%83%A8%E7%BD%B2%E6%96%87%E6%A1%A3/</url>
     <content><![CDATA[<p>CentOS</p>
 <p>Caution: This guide was originally written for Kubernetes 1.1.0 and is deprecated and is replaced by kubeadm.<br>Prerequisites</p>
 <p>To configure Kubernetes with CentOS, you’ll need a machine to act as a master, and one or more CentOS 7 hosts to act as cluster nodes.<br>Starting a clusteru</p>
@@ -3347,7 +3347,7 @@ The cluster should be running! Launch a test pod.<br>Support Level</li>
   </entry>
   <entry>
     <title>Markdown 图床设置</title>
-    <url>/markdown%20%E5%9B%BE%E5%BA%8A%E7%94%9F%E6%88%90.html</url>
+    <url>/2023/10/31/markdown%20%E5%9B%BE%E5%BA%8A%E7%94%9F%E6%88%90/</url>
     <content><![CDATA[<h2 id="七牛云"><a href="#七牛云" class="headerlink" title="七牛云"></a>七牛云</h2><p>安装requests库</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">pip install requests</span><br></pre></td></tr></table></figure>
 <h4 id="获取图床信息"><a href="#获取图床信息" class="headerlink" title="获取图床信息"></a>获取图床信息</h4><p>选择新建存储空间，记住这个空间的名字。</p>
@@ -3384,7 +3384,7 @@ The cluster should be running! Launch a test pod.<br>Support Level</li>
   </entry>
   <entry>
     <title>matplotlib 学习</title>
-    <url>/matplotlib%20%E5%AD%A6%E4%B9%A0.html</url>
+    <url>/2023/10/31/matplotlib%20%E5%AD%A6%E4%B9%A0/</url>
     <content><![CDATA[<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><h3 id="matplotlib-有乱码"><a href="#matplotlib-有乱码" class="headerlink" title="matplotlib 有乱码"></a>matplotlib 有乱码</h3><p>1、下载中文字体（黑体，看准系统版本）<br>2、找到matplotlib字体文件夹，例如：matplotlib&#x2F;mpl-data&#x2F;fonts&#x2F;ttf，将SimHei.ttf拷贝到ttf文件夹下面<br>3、修改matplotlib配置文件：</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo vim /usr/local/lib/python3.5/dist-packages/matplotlib/mpl-data/matplotlibrc</span><br><span class="line"># 删除font.family和font.sans-serif两行前的#，并在font.sans-serif后添加中文字体Microsoft YaHei, ...(其余不变)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
@@ -3409,7 +3409,7 @@ The cluster should be running! Launch a test pod.<br>Support Level</li>
   </entry>
   <entry>
     <title>mysql基本操作</title>
-    <url>/mysql%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C.html</url>
+    <url>/2023/10/31/mysql%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/</url>
     <content><![CDATA[<h2 id="Yum-安装"><a href="#Yum-安装" class="headerlink" title="Yum 安装"></a>Yum 安装</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">rpm -Uvh  http://repo.mysql.com/mysql-community-release-el7-5.noarch.rpm</span><br><span class="line">yum install mysql-server</span><br></pre></td></tr></table></figure>
 <h2 id="主从同步-读写分离"><a href="#主从同步-读写分离" class="headerlink" title="主从同步&#x2F;读写分离"></a>主从同步&#x2F;读写分离</h2><h3 id="master"><a href="#master" class="headerlink" title="master"></a>master</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">server-id = 1  #(标识为master库)</span><br><span class="line">log-bin=mysql-bin</span><br><span class="line">binlog_format=mixed </span><br><span class="line">binlog-ignore-db=mysql</span><br><span class="line">replicate-ignore-db=mysql</span><br><span class="line">binlog_cache_size = 1M</span><br><span class="line">binlog_format=mixed</span><br><span class="line">expire_logs_days=3</span><br></pre></td></tr></table></figure>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#1.创建账号并授权</span><br><span class="line">GRANT REPLICATION SLAVE ON *.* TO backup@&#x27;%&#x27; IDENTIFIED BY &#x27;backup&#x27;;</span><br><span class="line">flush privileges;</span><br><span class="line">#2.锁表</span><br><span class="line">FLUSH TABLES WITH READ LOCK;</span><br><span class="line">#3.查看当前状态</span><br><span class="line">show master status;</span><br></pre></td></tr></table></figure>
@@ -3452,7 +3452,7 @@ The cluster should be running! Launch a test pod.<br>Support Level</li>
   </entry>
   <entry>
     <title>pptp vpn 部署脚本</title>
-    <url>/pptp%20vpn%20%E9%83%A8%E7%BD%B2%E8%84%9A%E6%9C%AC.html</url>
+    <url>/2023/10/31/pptp%20vpn%20%E9%83%A8%E7%BD%B2%E8%84%9A%E6%9C%AC/</url>
     <content><![CDATA[<p>时间久远，不建议直接使用，仅供参考。</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line"># Interactive pptp vpn  install script for an OpenVZ VPS</span><br><span class="line"># surport  : Cenost ,Fedora  6.x </span><br><span class="line"># Augest 24, 2014 v1.00</span><br><span class="line">#url ：   http://www.dabu.info/?p=2178</span><br><span class="line"></span><br><span class="line">echo &quot;######################################################&quot;</span><br><span class="line">echo &quot;Interactive PoPToP Install Script for an OpenVZ VPS&quot;</span><br><span class="line">echo</span><br><span class="line">echo &quot;Make sure to contact your provider and have them enable&quot;</span><br><span class="line">echo &quot;IPtables and ppp modules prior to setting up PoPToP.&quot;</span><br><span class="line">echo &quot;PPP can also be enabled from SolusVM.&quot;</span><br><span class="line">echo</span><br><span class="line">echo &quot;You need to set up the server before creating more users.&quot;</span><br><span class="line">echo &quot;A separate user is required per connection or machine.&quot;</span><br><span class="line">echo &quot;######################################################&quot;</span><br><span class="line">echo</span><br><span class="line">echo</span><br><span class="line">echo &quot;######################################################&quot;</span><br><span class="line">echo &quot;Select on option:&quot;</span><br><span class="line">echo &quot;1) Set up new PoPToP server AND create one user&quot;</span><br><span class="line">echo &quot;2) Create additional users&quot;</span><br><span class="line">echo &quot;######################################################&quot;</span><br><span class="line">read x</span><br><span class="line">if test $x -eq 1; then</span><br><span class="line">echo &quot;Enter username that you want to create (eg. client1 or john):&quot;</span><br><span class="line">read u</span><br><span class="line">echo &quot;Specify password that you want the server to use:&quot;</span><br><span class="line">read p</span><br><span class="line"></span><br><span class="line">## get the VPS IP</span><br><span class="line">#ip=`ifconfig venet0:0 | grep &#x27;inet addr&#x27; | awk &#123;&#x27;print $2&#x27;&#125; | sed s/.*://`</span><br><span class="line"></span><br><span class="line">echo</span><br><span class="line">echo &quot;######################################################&quot;</span><br><span class="line">echo &quot;Downloading and Installing ppp  and   pptpd  &quot;</span><br><span class="line">echo &quot;######################################################&quot;</span><br><span class="line">yum   install  ppp   -y</span><br><span class="line">rpm -q|grep epel || rpm -Uvh http://poptop.sourceforge.net/yum/stable/rhel6/pptp-release-current.noarch.rpm</span><br><span class="line">yum    install  pptpd  -y</span><br><span class="line"></span><br><span class="line">echo</span><br><span class="line">echo &quot;######################################################&quot;</span><br><span class="line">echo &quot;Creating Server Config&quot;</span><br><span class="line">echo &quot;######################################################&quot;</span><br><span class="line">cp /etc/ppp/options.pptpd /etc/ppp/options.pptpd.bak</span><br><span class="line">sed -i &#x27;70a ms-dns 10.202.72.116&#x27;    /etc/ppp/options.pptpd</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># setting up pptpd.conf</span><br><span class="line">sed -i &#x27;101a localip 192.168.9.1&#x27;    /etc/pptpd.conf</span><br><span class="line">sed -i &#x27;102a  remoteip 192.168.9.11-30&#x27;    /etc/pptpd.conf</span><br><span class="line"></span><br><span class="line"># adding new user</span><br><span class="line">echo &quot;$u * $p *&quot; &gt;&gt; /etc/ppp/chap-secrets</span><br><span class="line"></span><br><span class="line">echo</span><br><span class="line">echo &quot;######################################################&quot;</span><br><span class="line">echo &quot;Forwarding IPv4 and Enabling it on boot&quot;</span><br><span class="line">echo &quot;######################################################&quot;</span><br><span class="line">cat &gt;&gt; /etc/sysctl.conf &lt;&lt;END</span><br><span class="line">net.ipv4.ip_forward=1</span><br><span class="line">END</span><br><span class="line">sysctl -p</span><br><span class="line"></span><br><span class="line">echo</span><br><span class="line">echo &quot;######################################################&quot;</span><br><span class="line">echo &quot;Updating IPtables Routing and Enabling it on boot&quot;</span><br><span class="line">echo &quot;######################################################&quot;</span><br><span class="line">iptables -t nat -A POSTROUTING -o eth1 -j  MASQUERADE</span><br><span class="line"># saves iptables routing rules and enables them on-boot</span><br><span class="line">iptables-save &gt; /etc/sysconfig/iptables</span><br><span class="line"></span><br><span class="line">cat &gt; /etc/network/if-pre-up.d/iptables &lt;&lt;END</span><br><span class="line">#!/bin/sh</span><br><span class="line">iptables-restore &lt; /etc/sysconfig/iptables</span><br><span class="line">END</span><br><span class="line"></span><br><span class="line">chmod +x /etc/network/if-pre-up.d/iptables</span><br><span class="line">cat &gt;&gt; /etc/ppp/ip-up &lt;&lt;END</span><br><span class="line">ifconfig ppp0 mtu 1400</span><br><span class="line">END</span><br><span class="line"></span><br><span class="line">echo</span><br><span class="line">echo &quot;######################################################&quot;</span><br><span class="line">echo &quot;Restarting PoPToP&quot;</span><br><span class="line">echo &quot;######################################################&quot;</span><br><span class="line">sleep 5</span><br><span class="line">/etc/init.d/pptpd restart</span><br><span class="line"></span><br><span class="line">echo</span><br><span class="line">echo &quot;######################################################&quot;</span><br><span class="line">echo &quot;Server setup complete!&quot;</span><br><span class="line">echo &quot;Connect to your VPS at $ip with these credentials:&quot;</span><br><span class="line">echo &quot;Username:$u ##### Password: $p&quot;</span><br><span class="line">echo &quot;######################################################&quot;</span><br><span class="line"></span><br><span class="line"># runs this if option 2 is selected</span><br><span class="line">elif test $x -eq 2; then</span><br><span class="line">echo &quot;Enter username that you want to create (eg. client1 or john):&quot;</span><br><span class="line">read u</span><br><span class="line">echo &quot;Specify password that you want the server to use:&quot;</span><br><span class="line">read p</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># adding new user</span><br><span class="line">echo &quot;$u * $p *&quot; &gt;&gt; /etc/ppp/chap-secrets</span><br><span class="line"></span><br><span class="line">echo</span><br><span class="line">echo &quot;######################################################&quot;</span><br><span class="line">echo &quot;Addtional user added!&quot;</span><br><span class="line">echo &quot;Connect to your VPS at $ip with these credentials:&quot;</span><br><span class="line">echo &quot;Username:$u ##### Password: $p&quot;</span><br><span class="line">echo &quot;######################################################&quot;</span><br><span class="line"></span><br><span class="line">else</span><br><span class="line">echo &quot;Invalid selection, quitting.&quot;</span><br><span class="line">exit</span><br><span class="line">fi</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 ]]></content>
@@ -3462,7 +3462,7 @@ The cluster should be running! Launch a test pod.<br>Support Level</li>
   </entry>
   <entry>
     <title>request_time和upstream_response_time的区别</title>
-    <url>/request_time%E5%92%8Cupstream_response_time%E7%9A%84%E5%8C%BA%E5%88%AB.html</url>
+    <url>/2023/10/31/request_time%E5%92%8Cupstream_response_time%E7%9A%84%E5%8C%BA%E5%88%AB/</url>
     <content><![CDATA[<h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><p>一个正常的请求过程如下：</p>
 <ol>
 <li>用户发出请求</li>
@@ -3506,7 +3506,7 @@ The cluster should be running! Launch a test pod.<br>Support Level</li>
   </entry>
   <entry>
     <title>一个Flask项目经验总结</title>
-    <url>/%E4%B8%80%E4%B8%AAFlask%E9%A1%B9%E7%9B%AE%E7%BB%8F%E9%AA%8C%E6%80%BB%E7%BB%93.html</url>
+    <url>/2023/10/31/%E4%B8%80%E4%B8%AAFlask%E9%A1%B9%E7%9B%AE%E7%BB%8F%E9%AA%8C%E6%80%BB%E7%BB%93/</url>
     <content><![CDATA[<h2 id="问题整理"><a href="#问题整理" class="headerlink" title="问题整理"></a>问题整理</h2><h3 id="Error-While-importing-‘run-app-dev’-an-ImportError-was-raised"><a href="#Error-While-importing-‘run-app-dev’-an-ImportError-was-raised" class="headerlink" title="Error: While importing ‘run_app_dev’, an ImportError was raised"></a>Error: While importing ‘run_app_dev’, an ImportError was raised</h3><p>网上说是循环调用的问题，但这个项目在我笔记本上是可以运行的，怀疑是不是flask的版本问题，因为我直接安装了最新的flask&#x3D;&#x3D;2.0.2，把最新的flask卸载后，安装1.1.2的flask 此问题解决。</p>
 <h3 id="当flask-migrate没有MigrateCommand时"><a href="#当flask-migrate没有MigrateCommand时" class="headerlink" title="当flask_migrate没有MigrateCommand时"></a>当flask_migrate没有MigrateCommand时</h3><p>出现这个情况的原因是最新的flask_migrate，已经去除了MigrateCommand，可以直接在命令行中使用,如果需要使用MigrateCommand的话:</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">可用 pip install flask_migrate==xx 命令</span><br><span class="line">把flask_migrate降低一个版本</span><br><span class="line">这里用的2.7.0版本的把问题解决了</span><br></pre></td></tr></table></figure>
@@ -3558,7 +3558,7 @@ The cluster should be running! Launch a test pod.<br>Support Level</li>
   </entry>
   <entry>
     <title>一个伤心的事</title>
-    <url>/%E4%B8%80%E4%B8%AA%E4%BC%A4%E5%BF%83%E7%9A%84%E4%BA%8B.html</url>
+    <url>/2017/05/03/%E4%B8%80%E4%B8%AA%E4%BC%A4%E5%BF%83%E7%9A%84%E4%BA%8B/</url>
     <content><![CDATA[<p>昨天发生了一件不太美好的事，我把自己的md文件都给删除啦。本来思考着要不要恢复它，但是一想，就给自己留个教训吧。<br>不是所有的事情都可以后悔！！！</p>
 ]]></content>
       <tags>
@@ -3567,7 +3567,7 @@ The cluster should be running! Launch a test pod.<br>Support Level</li>
   </entry>
   <entry>
     <title>使用Cloudera部署和管理hadoop集群</title>
-    <url>/%E4%BD%BF%E7%94%A8Cloudera%E9%83%A8%E7%BD%B2%E5%92%8C%E7%AE%A1%E7%90%86hadoop%E9%9B%86%E7%BE%A4.html</url>
+    <url>/2023/10/31/%E4%BD%BF%E7%94%A8Cloudera%E9%83%A8%E7%BD%B2%E5%92%8C%E7%AE%A1%E7%90%86hadoop%E9%9B%86%E7%BE%A4/</url>
     <content><![CDATA[<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>Cloude Manager 概述：</p>
 <p>CDH 是 Cloudera 公司对整体 hadoop 集群环境进行监控与管理的企业级大数据管理平台。</p>
 <p>Cloudera Manager 分为：</p>
@@ -3720,7 +3720,7 @@ The cluster should be running! Launch a test pod.<br>Support Level</li>
   </entry>
   <entry>
     <title>使用Python smtplib 发送邮件</title>
-    <url>/%E4%BD%BF%E7%94%A8Python%20smtplib%20%E5%8F%91%E9%80%81%E9%82%AE%E4%BB%B6.html</url>
+    <url>/2023/10/31/%E4%BD%BF%E7%94%A8Python%20smtplib%20%E5%8F%91%E9%80%81%E9%82%AE%E4%BB%B6/</url>
     <content><![CDATA[<h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><p>SMTP是发送邮件的协议，Python内置对SMTP的支持，可以发送纯文本邮件、HTML邮件以及带附件的邮件。<br>Python对SMTP支持有smtplib和email两个模块，email负责构造邮件，smtplib负责发送邮件。</p>
 <h3 id="sample-1-发送文本邮件"><a href="#sample-1-发送文本邮件" class="headerlink" title="sample 1.发送文本邮件"></a>sample 1.发送文本邮件</h3><h4 id="构造MIMEText"><a href="#构造MIMEText" class="headerlink" title="构造MIMEText"></a>构造MIMEText</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">from email.mime.text import MIMEText</span><br><span class="line">msg = MIMEText(&#x27;hello, send by Python...&#x27;, &#x27;plain&#x27;, &#x27;utf-8&#x27;)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
@@ -3856,7 +3856,7 @@ The cluster should be running! Launch a test pod.<br>Support Level</li>
   </entry>
   <entry>
     <title>使用Python刷某博客平台的阅读量</title>
-    <url>/%E4%BD%BF%E7%94%A8Python%E5%88%B7%E6%9F%90%E5%8D%9A%E5%AE%A2%E5%B9%B3%E5%8F%B0%E7%9A%84%E9%98%85%E8%AF%BB%E9%87%8F.html</url>
+    <url>/2023/11/07/%E4%BD%BF%E7%94%A8Python%E5%88%B7%E6%9F%90%E5%8D%9A%E5%AE%A2%E5%B9%B3%E5%8F%B0%E7%9A%84%E9%98%85%E8%AF%BB%E9%87%8F/</url>
     <content><![CDATA[<blockquote>
 <p>近期重新拾起来了久违的爬虫，有时候就想练练手，正好想起来了某个博客平台，虽然这个平台的评价不高，但是也是有一定存在意义的。那就用Python的方式的方式刷一下阅读量吧。</p>
 </blockquote>
@@ -3917,7 +3917,7 @@ The cluster should be running! Launch a test pod.<br>Support Level</li>
   </entry>
   <entry>
     <title>使用nmap来进行一些探索</title>
-    <url>/%E4%BD%BF%E7%94%A8nmap%E6%9D%A5%E8%BF%9B%E8%A1%8C%E4%B8%80%E4%BA%9B%E6%8E%A2%E7%B4%A2.html</url>
+    <url>/2023/10/31/%E4%BD%BF%E7%94%A8nmap%E6%9D%A5%E8%BF%9B%E8%A1%8C%E4%B8%80%E4%BA%9B%E6%8E%A2%E7%B4%A2/</url>
     <content><![CDATA[<blockquote>
 <p>很多时候需要探测局域网中存在哪些主机，或者开放了哪些端口，有一个特别好用的命令——nmap.</p>
 </blockquote>
@@ -4003,7 +4003,7 @@ The cluster should be running! Launch a test pod.<br>Support Level</li>
   </entry>
   <entry>
     <title>全自动部署Hexo 到github</title>
-    <url>/%E5%85%A8%E8%87%AA%E5%8A%A8%E9%83%A8%E7%BD%B2Hexo-%E5%88%B0github.html</url>
+    <url>/2017/05/03/%E5%85%A8%E8%87%AA%E5%8A%A8%E9%83%A8%E7%BD%B2Hexo-%E5%88%B0github/</url>
     <content><![CDATA[<p>有一天把hexo配置好了，但是每次更新后还有手动部署太麻烦。正好有个pm2的工具，完全可以代替我们做这些事。</p>
 <h4 id="安装-pm2"><a href="#安装-pm2" class="headerlink" title="安装 pm2"></a>安装 pm2</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm install -g pm2</span><br></pre></td></tr></table></figure>
 
@@ -4030,7 +4030,7 @@ The cluster should be running! Launch a test pod.<br>Support Level</li>
   </entry>
   <entry>
     <title>关于DDOS的防护措施的一些探索方案</title>
-    <url>/%E5%85%B3%E4%BA%8EDDOS%E7%9A%84%E9%98%B2%E6%8A%A4%E6%8E%AA%E6%96%BD%E7%9A%84%E4%B8%80%E4%BA%9B%E6%8E%A2%E7%B4%A2%E6%96%B9%E6%A1%88.html</url>
+    <url>/2021/03/02/%E5%85%B3%E4%BA%8EDDOS%E7%9A%84%E9%98%B2%E6%8A%A4%E6%8E%AA%E6%96%BD%E7%9A%84%E4%B8%80%E4%BA%9B%E6%8E%A2%E7%B4%A2%E6%96%B9%E6%A1%88/</url>
     <content><![CDATA[<h2 id="10-23"><a href="#10-23" class="headerlink" title="10:23"></a>10:23</h2><ul>
 <li>收到阿里云的邮件通知，DDOS攻击开始，自动清洗启动</li>
 <li>流量超出阈值，进入黑洞</li>
@@ -4063,7 +4063,7 @@ The cluster should be running! Launch a test pod.<br>Support Level</li>
   </entry>
   <entry>
     <title>关于Mac上MySQL认证失败的问题</title>
-    <url>/%E5%85%B3%E4%BA%8EMac%E4%B8%8AMySQL%E8%AE%A4%E8%AF%81%E5%A4%B1%E8%B4%A5%E7%9A%84%E9%97%AE%E9%A2%98.html</url>
+    <url>/2023/10/31/%E5%85%B3%E4%BA%8EMac%E4%B8%8AMySQL%E8%AE%A4%E8%AF%81%E5%A4%B1%E8%B4%A5%E7%9A%84%E9%97%AE%E9%A2%98/</url>
     <content><![CDATA[<blockquote>
 <p>今天遇到了点小问题，想重构一个项目，顺便创建一个干净的数据库，但是连接失败！</p>
 </blockquote>
@@ -4089,7 +4089,7 @@ The cluster should be running! Launch a test pod.<br>Support Level</li>
   </entry>
   <entry>
     <title>关于Nginx在日常工作中的一些经验</title>
-    <url>/%E5%85%B3%E4%BA%8ENginx%E5%9C%A8%E6%97%A5%E5%B8%B8%E5%B7%A5%E4%BD%9C%E4%B8%AD%E7%9A%84%E4%B8%80%E4%BA%9B%E7%BB%8F%E9%AA%8C.html</url>
+    <url>/2023/10/31/%E5%85%B3%E4%BA%8ENginx%E5%9C%A8%E6%97%A5%E5%B8%B8%E5%B7%A5%E4%BD%9C%E4%B8%AD%E7%9A%84%E4%B8%80%E4%BA%9B%E7%BB%8F%E9%AA%8C/</url>
     <content><![CDATA[<h3 id="负载均衡参数"><a href="#负载均衡参数" class="headerlink" title="负载均衡参数"></a>负载均衡参数</h3><p>在Nginx的负载均衡检查模块中，对于负载均衡的节点可以配置如下可选参数参数：</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">max_fails=1fail_timeout=10s</span><br></pre></td></tr></table></figure>
 
@@ -4112,7 +4112,7 @@ The cluster should be running! Launch a test pod.<br>Support Level</li>
   </entry>
   <entry>
     <title>关于Ngin正向代理和反向代理的应用</title>
-    <url>/%E5%85%B3%E4%BA%8ENginx%E6%AD%A3%E5%90%91%E4%BB%A3%E7%90%86%E5%92%8C%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86%E7%9A%84%E5%BA%94%E7%94%A8.html</url>
+    <url>/2023/10/31/%E5%85%B3%E4%BA%8ENginx%E6%AD%A3%E5%90%91%E4%BB%A3%E7%90%86%E5%92%8C%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86%E7%9A%84%E5%BA%94%E7%94%A8/</url>
     <content><![CDATA[<h3 id="代理"><a href="#代理" class="headerlink" title="代理"></a>代理</h3><p>代理（Proxy）也称网络代理，是一种特殊的网络服务，允许一个（一般为客户端）通过这个服务与另一个网络终端（一般为服务器）进行非直接的连接。一些网关、路由器等网络设备具备网络代理功能。一般认为代理服务有利于保障网络终端的隐私或安全，防止攻击。代理也可以称为正向代理。<br>所谓代理服务器就是位于发起请求的客户端与原始服务器端之间的一台跳板服务器，正向代理可以隐藏客户端，反向代理可以隐藏原始服务器。<br>提供代理服务的电脑系统或其它类型的网络终端称为代理服务器（英文：Proxy Server）。一个完整的代理请求过程为：客户端首先与代理服务器创建连接，接着根据代理服务器所使用的代理协议，请求对目标服务器创建连接、或者获得目标服务器的指定资源（如：文件）。在后一种情况中，代理服务器可能对目标服务器的资源下载至本地缓存，如果客户端所要获取的资源在代理服务器的缓存之中，则代理服务器并不会向目标服务器发送请求，而是直接传回已缓存的资源。一些代理协议允许代理服务器改变客户端的原始请求、目标服务器的原始响应，以满足代理协议的需要。代理服务器的选项和设置在计算机程序中，通常包括一个“防火墙”，允许用户输入代理地址，它会遮盖他们的网络活动，可以允许绕过互联网过滤实现网络访问。</p>
 <img data-src="https://img.econow.cn/medivh/1630550846470.png"  />
 
@@ -4185,7 +4185,7 @@ The cluster should be running! Launch a test pod.<br>Support Level</li>
   </entry>
   <entry>
     <title>关于协程的认知</title>
-    <url>/%E5%85%B3%E4%BA%8E%E5%8D%8F%E7%A8%8B%E7%9A%84%E8%AE%A4%E7%9F%A5.html</url>
+    <url>/2023/10/31/%E5%85%B3%E4%BA%8E%E5%8D%8F%E7%A8%8B%E7%9A%84%E8%AE%A4%E7%9F%A5/</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>在执行IO密集型任务的时候，程序经常会因为等待IO而阻塞。比如平时使用的requests库来进行请求接口，如果响应过慢，程序会一直等待响应，最后导致抓取数据的效率低下。为了解决这一问题，来研究一下异步协程加速的方法。</p>
 <h2 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h2><ul>
 <li>阻塞。阻塞状态是指程序未得到所需计算资源被挂起的状态。程序在等待某操作期间，自身无法继续干别的事。常见的阻塞形式：网络I&#x2F;O阻塞、磁盘IO&#x2F;阻塞、用户输入阻塞等。</li>
@@ -4324,7 +4324,7 @@ The cluster should be running! Launch a test pod.<br>Support Level</li>
   </entry>
   <entry>
     <title>关于混合部署方案的设想</title>
-    <url>/%E5%85%B3%E4%BA%8E%E6%B7%B7%E5%90%88%E9%83%A8%E7%BD%B2%E6%96%B9%E6%A1%88%E7%9A%84%E8%AE%BE%E6%83%B3.html</url>
+    <url>/2023/10/31/%E5%85%B3%E4%BA%8E%E6%B7%B7%E5%90%88%E9%83%A8%E7%BD%B2%E6%96%B9%E6%A1%88%E7%9A%84%E8%AE%BE%E6%83%B3/</url>
     <content><![CDATA[<h2 id="理论依据"><a href="#理论依据" class="headerlink" title="理论依据"></a>理论依据</h2><p>在时效性上来区分任务，常规的任务一般分为在线任务和离线任务。其中在线任务消耗的资源相对较少，但是要求相应时间较短，比如web服务；而离线任务则对时效性要求不高，但是任务量大，需要的资源更多。因此把两种项目混合部署在一起就叫做混合部署。</p>
 <p>大多数进程可以分为I&#x2F;O密集型和CPU密集型。I&#x2F;O密集型程序将大多数时间都花在了I&#x2F;O操作而不是运算上，而CPU密集型程序正好相反，将大多数时间花在了运算上，而很少产生I&#x2F;O操作。选出一个I&#x2F;O密集型和CPU密集型程序的良好组合，对于长期调度器是非常重要的。否则，假如所有的程序都是CPU密集型的，那么I&#x2F;O队列将会几乎永远都是空的，这样就会导致一些设备从来没被使用过，系统资源分配就是不均衡的。显然，性能极佳的系统必然是CPU密集型和I&#x2F;O密集型程序的组合。在现代操作系统中，这被用来保证实时进程能获得足够的CPU时间来完成任务。但我们的当前绝大部分项目并不能做到资源的和谐组合——cpu使用率远低于内存使用率。这样的特点也方便混合部署的时候只需要考虑内存的瓶颈即可。</p>
 <h2 id="资源使用率现状"><a href="#资源使用率现状" class="headerlink" title="资源使用率现状"></a>资源使用率现状</h2><p>通俗来讲，我们希望使用提高资源使用率的同时降低成本。任务类型的分类是提高资源利用率的理论依据，只不过迫于现实，实践过程中会有些偏差。<br>当前的现状，大部分CPU平均使用率长期在30%以内徘徊，极大的浪费资源。<br><img data-src="https://img.econow.cn/medivh/1630553329133.png"  /></p>
@@ -4383,7 +4383,7 @@ The cluster should be running! Launch a test pod.<br>Support Level</li>
   </entry>
   <entry>
     <title>Flask 学习</title>
-    <url>/%E5%85%B3%E4%BA%8E%E5%AF%B9Flask%E7%9A%84%E7%90%86%E8%A7%A3%E5%92%8C%E8%AE%B0%E5%BD%95.html</url>
+    <url>/2023/10/31/%E5%85%B3%E4%BA%8E%E5%AF%B9Flask%E7%9A%84%E7%90%86%E8%A7%A3%E5%92%8C%E8%AE%B0%E5%BD%95/</url>
     <content><![CDATA[<h2 id="架构"><a href="#架构" class="headerlink" title="架构"></a>架构</h2><p>常用的架构有以下两种方式：</p>
 <ul>
 <li>功能式</li>
@@ -4535,7 +4535,7 @@ The cluster should be running! Launch a test pod.<br>Support Level</li>
   </entry>
   <entry>
     <title>创建Kubernetes manifest 指南</title>
-    <url>/%E5%88%9B%E5%BB%BAKubernetes%20manifest%20%E6%8C%87%E5%8D%97.html</url>
+    <url>/2023/10/31/%E5%88%9B%E5%BB%BAKubernetes%20manifest%20%E6%8C%87%E5%8D%97/</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>创建编排文件，是一件复杂的事情，很多时候可能没有头绪该如何开始。所以此篇文章提供一些创建的思路。</p>
 <p>在定义资源时，将包含以下字段：</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">apiVersion: apps/v1</span><br><span class="line">kind: Deployment</span><br><span class="line">metadata:</span><br><span class="line">  ...</span><br><span class="line">spec:</span><br><span class="line">  ... </span><br></pre></td></tr></table></figure>
@@ -4588,7 +4588,7 @@ The cluster should be running! Launch a test pod.<br>Support Level</li>
   </entry>
   <entry>
     <title>基于Kubernetes的Jenkins实现动态slave</title>
-    <url>/%E5%9F%BA%E4%BA%8EKubernetes%E7%9A%84Jenkins%E5%AE%9E%E7%8E%B0%E5%8A%A8%E6%80%81slave.html</url>
+    <url>/2023/10/31/%E5%9F%BA%E4%BA%8EKubernetes%E7%9A%84Jenkins%E5%AE%9E%E7%8E%B0%E5%8A%A8%E6%80%81slave/</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>一般情况下都是在物理机或者虚拟机上部署Jenkins，但是这种部署方式会存在一些缺点，比如：</p>
 <ol>
 <li>master节点故障，整体不可用</li>
@@ -5156,7 +5156,7 @@ The cluster should be running! Launch a test pod.<br>Support Level</li>
   </entry>
   <entry>
     <title>基于registry的Harbor镜像仓库部署</title>
-    <url>/%E5%9F%BA%E4%BA%8Eregistry%E7%9A%84Harbor%E9%95%9C%E5%83%8F%E4%BB%93%E5%BA%93%E9%83%A8%E7%BD%B2.html</url>
+    <url>/2023/10/31/%E5%9F%BA%E4%BA%8Eregistry%E7%9A%84Harbor%E9%95%9C%E5%83%8F%E4%BB%93%E5%BA%93%E9%83%A8%E7%BD%B2/</url>
     <content><![CDATA[<blockquote>
 <p>Harbor 是 Vmwar 公司开源的 企业级的 Docker Registry 管理项目 它主要 提供 Dcoker Registry 管理UI，可基于角色访问控制, AD&#x2F;LDAP 集成，日志审核等功能，完全的支持中文。 Harbor 的所有组件都在 Dcoker 中部署，所以 Harbor 可使用 Docker Compose 快速部署。</p>
 </blockquote>
@@ -5319,7 +5319,7 @@ The cluster should be running! Launch a test pod.<br>Support Level</li>
   </entry>
   <entry>
     <title>多环境下的Kubernetes网络打通方案研究</title>
-    <url>/%E5%A4%9A%E7%8E%AF%E5%A2%83%E4%B8%8B%E7%9A%84Kubernetes%E7%BD%91%E7%BB%9C%E6%89%93%E9%80%9A%E6%96%B9%E6%A1%88%E7%A0%94%E7%A9%B6.html</url>
+    <url>/2023/10/31/%E5%A4%9A%E7%8E%AF%E5%A2%83%E4%B8%8B%E7%9A%84Kubernetes%E7%BD%91%E7%BB%9C%E6%89%93%E9%80%9A%E6%96%B9%E6%A1%88%E7%A0%94%E7%A9%B6/</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><blockquote>
 <p>本文中的Kubernetes集群统称为集群。</p>
 </blockquote>
@@ -5622,7 +5622,7 @@ The cluster should be running! Launch a test pod.<br>Support Level</li>
   </entry>
   <entry>
     <title>小熊加湿器的复活</title>
-    <url>/%E5%B0%8F%E7%86%8A%E5%8A%A0%E6%B9%BF%E5%99%A8%E7%9A%84%E5%A4%8D%E6%B4%BB.html</url>
+    <url>/2023/10/31/%E5%B0%8F%E7%86%8A%E5%8A%A0%E6%B9%BF%E5%99%A8%E7%9A%84%E5%A4%8D%E6%B4%BB/</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><blockquote>
 <p>上周空气有点干燥，打算把加湿器拿出来用上，但是它不出雾了！<br>明明上个月的时候还用过呢，咋就不行了呢？</p>
 </blockquote>
@@ -5886,7 +5886,7 @@ The cluster should be running! Launch a test pod.<br>Support Level</li>
   </entry>
   <entry>
     <title>数据库操作审批规范</title>
-    <url>/%E6%95%B0%E6%8D%AE%E5%BA%93%E6%93%8D%E4%BD%9C%E5%AE%A1%E6%89%B9%E8%A7%84%E8%8C%83.html</url>
+    <url>/2023/10/31/%E6%95%B0%E6%8D%AE%E5%BA%93%E6%93%8D%E4%BD%9C%E5%AE%A1%E6%89%B9%E8%A7%84%E8%8C%83/</url>
     <content><![CDATA[<h2 id="总则"><a href="#总则" class="headerlink" title="总则"></a>总则</h2><p>为规范生产环境数据库管理和操作，提高审核执行效率，特制定本规范。</p>
 <h2 id="适用范围"><a href="#适用范围" class="headerlink" title="适用范围"></a>适用范围</h2><p>本规范中所定义的数据管理内容，指生产环境中的数据库（公司内部项目以及外部项目中的数据库），且包括并不限于 MySQL、Redis、Hive 等。</p>
 <h2 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h2><ul>
@@ -6015,7 +6015,7 @@ The cluster should be running! Launch a test pod.<br>Support Level</li>
   </entry>
   <entry>
     <title>数据库设计</title>
-    <url>/%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AE%BE%E8%AE%A1.html</url>
+    <url>/2021/01/16/%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AE%BE%E8%AE%A1/</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>数据库设计(Database Design)是指根据用户的需求，在某一具体的数据库管理系统上，设计数据库的结构和建立数据库的过程。数据库系统需要操作系统的支持。</p>
 <h2 id="基本步骤"><a href="#基本步骤" class="headerlink" title="基本步骤"></a>基本步骤</h2><h3 id="需求分析"><a href="#需求分析" class="headerlink" title="需求分析"></a>需求分析</h3><p>调查和分析用户的业务活动和数据的使用情况，弄清所用数据的种类、范围、数量以及它们在业务活动中交流的情况，确定用户对数据库系统的使用要求和各种约束条件等，形成用户需求规约。<br>需求分析是在用户调查的基础上，通过分析，逐步明确用户对系统的需求，包括数据需求和围绕这些数据的业务处理需求。在需求分析中，通过自顶向下，逐步分解的方法分析系统，分析的结果采用数据流程图(DFD)进行图形化的描述。</p>
 <h3 id="概念设计"><a href="#概念设计" class="headerlink" title="概念设计"></a>概念设计</h3><p>对用户要求描述的现实世界(可能是一个工厂、一个商场或者一个学校等)，通过对其中诸处的分类、聚集和概括，建立抽象的概念数据模型。这个概念模型应反映现实世界各部门的信息结构、信息流动情况、信息间的互相制约关系以及各部门对信息储存、查询和加工的要求等。所建立的模型应避开数据库在计算机上的具体实现细节，用一种抽象的形式表示出来。以扩充的实体—（E-R 模型）联系模型方法为例，第一步先明确现实世界各部门所含的各种实体及其属性、实体间的联系以及对信息的制约条件等，从而给出各部门内所用信息的局部描述(在数据库中称为用户的局部视图)。第二步再将前面得到的多个用户的局部视图集成为一个全局视图，即用户要描述的现实世界的概念数据模型。</p>
@@ -6076,7 +6076,7 @@ The cluster should be running! Launch a test pod.<br>Support Level</li>
   </entry>
   <entry>
     <title>树莓派初始化总结</title>
-    <url>/%E6%A0%91%E8%8E%93%E6%B4%BE%E5%88%9D%E5%A7%8B%E5%8C%96%E6%80%BB%E7%BB%93.html</url>
+    <url>/2017/05/03/%E6%A0%91%E8%8E%93%E6%B4%BE%E5%88%9D%E5%A7%8B%E5%8C%96%E6%80%BB%E7%BB%93/</url>
     <content><![CDATA[<h3 id="修改软件源"><a href="#修改软件源" class="headerlink" title="修改软件源"></a>修改软件源</h3><p>由于默认的软件源在国外，一般速度会略微有点慢，因此最好选择国内的。起初用过阿里云的，但是很多包装不了，因此推荐阿里云以外的其它源。<br>需要修改&#x2F;etc&#x2F;apt&#x2F;sources.list文件，注释并添加。<br>修改示例：</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#deb http://mirrordirector.raspbian.org/raspbian/ jessie main contrib non-free rpi</span><br><span class="line"># Uncomment line below then &#x27;apt-get update&#x27; to enable &#x27;apt-get source&#x27;</span><br><span class="line">#deb-src http://archive.raspbian.org/raspbian/ jessie main contrib non-free rpi</span><br><span class="line">deb http://mirrors.ustc.edu.cn/raspbian/raspbian/ wheezy main contrib non-free</span><br><span class="line">deb-src http://mirrors.ustc.edu.cn/raspbian/raspbian/ wheezy main contrib non-free</span><br></pre></td></tr></table></figure>
 <h4 id="更新："><a href="#更新：" class="headerlink" title="更新："></a>更新：</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get upgrade</span><br></pre></td></tr></table></figure>
@@ -6102,7 +6102,7 @@ The cluster should be running! Launch a test pod.<br>Support Level</li>
   </entry>
   <entry>
     <title>树莓派编译安装Python3.5</title>
-    <url>/%E6%A0%91%E8%8E%93%E6%B4%BE%E7%BC%96%E8%AF%91%E5%AE%89%E8%A3%85Python3-5.html</url>
+    <url>/2017/05/03/%E6%A0%91%E8%8E%93%E6%B4%BE%E7%BC%96%E8%AF%91%E5%AE%89%E8%A3%85Python3-5/</url>
     <content><![CDATA[<p>刚写了一个天气预报的脚本，想部署在服务器上，但是运行的时候报错，说找不到requests库，奇怪的是装上了也报错。后来发现树莓派自带的是3.2，版本有点老可能会有点不兼容吧。<br>那就装个Python3.5吧！</p>
 <h4 id="环境依赖"><a href="#环境依赖" class="headerlink" title="环境依赖"></a>环境依赖</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo apt-get install libssl-dev</span><br><span class="line">sudo apt-get install openssl</span><br><span class="line"></span><br><span class="line">sudo wget https://www.python.org/ftp/python/3.5.3/Python-3.5.3.tar.xz</span><br><span class="line">tar -xvf Python-3.5.3.tar.xz</span><br><span class="line">cd Python-3.5.3</span><br><span class="line">./configure --prefix=/usr/local/python3.5</span><br><span class="line">make</span><br><span class="line">make altinstall</span><br></pre></td></tr></table></figure>
 <p>进入&#x2F;usr&#x2F;local&#x2F;python3.5 检查是否完整<br><img data-src='http://7xp3xc.com1.z0.glb.clouddn.com/2016/1493107147483.png' width=873></p>
@@ -6212,7 +6212,7 @@ The cluster should be running! Launch a test pod.<br>Support Level</li>
   </entry>
   <entry>
     <title>深入理解StatefulSet（二）</title>
-    <url>/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3StatefulSet%20(%E4%BA%8C).html</url>
+    <url>/2023/10/31/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3StatefulSet%20(%E4%BA%8C)/</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>上一篇介绍了 StatefulSet 的基础原理，但是只使用了应用之一的拓扑状态。这一篇将会介绍使用存储状态。</p>
 <h3 id="应用背景"><a href="#应用背景" class="headerlink" title="应用背景"></a>应用背景</h3><p>应用的多个实例分别绑定了不同的存储数据。典型例子就是一个数据库应用的多个存储实例。StatefulSet 的核心功能就是通过某种方式记录这些状态，然后在Pod被重新创建时，能够为新Pod恢复这些状态。比较典型之一，Redis的主从架构。</p>
 <h3 id="知识点解析"><a href="#知识点解析" class="headerlink" title="知识点解析"></a>知识点解析</h3><h4 id="主从架构"><a href="#主从架构" class="headerlink" title="主从架构"></a>主从架构</h4><p><img data-src="https://img.econow.cn/medivh/1649409054685.png" alt="1649409054685.png"></p>
@@ -6308,7 +6308,7 @@ The cluster should be running! Launch a test pod.<br>Support Level</li>
   </entry>
   <entry>
     <title>深入理解StatefulSet（一）</title>
-    <url>/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3StatefulSet%EF%BC%88%E4%B8%80%EF%BC%89.html</url>
+    <url>/2023/10/31/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3StatefulSet%EF%BC%88%E4%B8%80%EF%BC%89/</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>首先聊一下Deployment，一个应用的所有Pod是完全一样的。它们相互之间没有顺序，也无所谓运行在哪台宿主机上，需要的时候就创建，不需要的时候就可以中止任意一个Pod。</p>
 <p>有些分布式应用，在多个实例之间存有依赖关系，比如主从、主备关系。还有些数据库存储类应用，在本地磁盘会存放一些数据，而实例一旦被杀掉，即使重建出来，实例和数据之间的对应关系都已经丢失。</p>
 <p>所以实例之间有不对等关系，以及实例对外部数据有依赖关系的应用，被称为有状态应用（Stateful Appication）。</p>
@@ -6430,7 +6430,7 @@ The cluster should be running! Launch a test pod.<br>Support Level</li>
   </entry>
   <entry>
     <title>USB存储设备启动树莓派</title>
-    <url>/%E7%A1%AC%E7%9B%98%E5%90%AF%E5%8A%A8%E6%A0%91%E8%8E%93%E6%B4%BE.html</url>
+    <url>/2017/05/03/%E7%A1%AC%E7%9B%98%E5%90%AF%E5%8A%A8%E6%A0%91%E8%8E%93%E6%B4%BE/</url>
     <content><![CDATA[<p>USB存储设备的系统安装<br>准备一个USB存储设备，我用的是U盘，硬盘应该也行。需要格式化，所以注意备数据的备份。</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo parted /dev/sda  # 使用parted对U欧盘进行分区</span><br><span class="line"></span><br><span class="line">(parted) mktable msdos # 创建msdos格式的分区表</span><br><span class="line">Warning: The existing disk label on /dev/sda will be destroyed and all data on this disk will be lost. Do you want to continue?</span><br><span class="line">Yes/No? Yes       </span><br><span class="line">(parted) mkpart primary fat32 0% 100M # 分 100M 格式成fat32</span><br><span class="line">(parted) mkpart primary ext4 100M 100% #  剩下的全都格式成ext4</span><br></pre></td></tr></table></figure>
 <p>一般都是sda,不过分不清楚的话可以用 $sudo fdisk -l | grep sd查看。</p>
@@ -6593,6 +6593,95 @@ The cluster should be running! Launch a test pod.<br>Support Level</li>
       </categories>
       <tags>
         <tag>Kubenetes</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>【爬虫实战】使用Python采集小红书笔记的评论，爬了10000多条，含多级评论！</title>
+    <url>/2023/11/13/%E3%80%90%E7%88%AC%E8%99%AB%E5%AE%9E%E6%88%98%E3%80%91%E4%BD%BF%E7%94%A8Python%E9%87%87%E9%9B%86%E5%B0%8F%E7%BA%A2%E4%B9%A6%E7%AC%94%E8%AE%B0%E7%9A%84%E8%AF%84%E8%AE%BA%EF%BC%8C%E7%88%AC%E4%BA%8610000%E5%A4%9A%E6%9D%A1%EF%BC%8C%E5%90%AB%E5%A4%9A%E7%BA%A7%E8%AF%84%E8%AE%BA%EF%BC%81/</url>
+    <content><![CDATA[<h2 id="一、目标整理"><a href="#一、目标整理" class="headerlink" title="一、目标整理"></a>一、目标整理</h2><p>今天的目标是爬取小红书上指定笔记下的所有评论数据。</p>
+<p>以某篇举例，有2千多条评论。</p>
+<p><img data-src="https://img.econow.cn/blog/1699846462459.png" alt="穿上了最漂亮的衣服向杀害孩子的凶手投石头"></p>
+<p>效果如下：</p>
+<p><img data-src="https://img.econow.cn/blog/1699846258815.png" alt="首页"></p>
+<p><img data-src="https://img.econow.cn/blog/1699846241920.png" alt="其他页"></p>
+<p>每条评论获取多个字段，</p>
+<ul>
+<li>笔记链接</li>
+<li>页码</li>
+<li>评论者昵称</li>
+<li>评论者ID</li>
+<li>评论者主页链接</li>
+<li>评论时间</li>
+<li>评论IP属地</li>
+<li>评论点赞数</li>
+<li>评论级别</li>
+<li>评论内容</li>
+</ul>
+<p>而评论包含根级评论、二级评论和二级展开评论（评论回复）。</p>
+<h2 id="二、逻辑分析"><a href="#二、逻辑分析" class="headerlink" title="二、逻辑分析"></a>二、逻辑分析</h2><h3 id="接口分析"><a href="#接口分析" class="headerlink" title="接口分析"></a>接口分析</h3><p><img data-src="https://img.econow.cn/blog/1699846810764.png" alt="抓取目标"></p>
+<p>可以看到从这个接口中获取了我们想要的数据，左边是内容展示，右边是接口返回的相关字段。</p>
+<h3 id="请求头"><a href="#请求头" class="headerlink" title="请求头"></a>请求头</h3><p><img data-src="https://img.econow.cn/blog/1699853062807.png" alt="请求头"></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 请求头</span></span><br><span class="line">headers = &#123;</span><br><span class="line">	<span class="string">&#x27;User-Agent&#x27;</span>: <span class="string">&#x27;Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36&#x27;</span>,</span><br><span class="line">	<span class="comment"># cookie需定期更换</span></span><br><span class="line">	<span class="string">&#x27;Cookie&#x27;</span>: <span class="string">&#x27;换成自己的cookie值&#x27;</span>,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>请求头这部分主要的就是UA和Cookie，其中Cookie需要定期更换，否则会出现响应数据为空的情况。</p>
+<h3 id="请求参数"><a href="#请求参数" class="headerlink" title="请求参数"></a>请求参数</h3><p><img data-src="https://img.econow.cn/blog/1699847997111.png" alt="载荷"></p>
+<p><img data-src="https://img.econow.cn/blog/1699848125908.png"></p>
+<p>简单说明一下这几个参数：</p>
+<ul>
+<li>note_id 这个是笔记的ID，为固定值</li>
+<li>cusor，获取第一页的时候可以为空，获取后面评论的时候需要使用，稍后再讲</li>
+<li>top_comment_id ，同样首次请求可以为空，之后才需要。</li>
+<li>image_scenes 固定值</li>
+</ul>
+<h3 id="响应数据分析"><a href="#响应数据分析" class="headerlink" title="响应数据分析"></a>响应数据分析</h3><h4 id="根评论"><a href="#根评论" class="headerlink" title="根评论"></a>根评论</h4><p>首次请求接口后会返回如下数据，接下来需要具体分析一下可能用到的字段。</p>
+<p><img data-src="https://img.econow.cn/blog/1699853391435.png" alt="分析数据"></p>
+<p>从图中可以很清晰的猜出部分字段的功能：</p>
+<ul>
+<li>comments 以list的方式存储每条评论的数据。<ul>
+<li>content、create_time、id、ip_location、like_count、</li>
+<li>sub_comment_count 这是个布尔类型的字段，可以猜测一下这个字段的含义，后面还有两个字段带有sub。<ul>
+<li>根据<code>sub</code>可以联想到 <code>subsequent</code>，也就是随后的，后来的意思，所以很可能就是和二级评论或者二级展开评论有关。</li>
+<li>count 的含义就是计数，也就是说当前这条评论有多少二级评论。</li>
+</ul>
+</li>
+<li>sub_comment_cursor </li>
+<li>sub_comment_has_more 还有更多？</li>
+</ul>
+</li>
+<li>cursor 游标</li>
+<li>has_more 还有更多？</li>
+</ul>
+<p>简单总结一下，我们获取到了首次请求的数据，而且获取了一些其他的字段，比如has_more很有可能就是可以继续翻页的意思。那么就是说如果这个字段一直为true，就可以一直翻页，省去了我们单独计算需要多少页的问题。那么如何拼接第二页的请求参数呢，接着看第二次请求。</p>
+<p><img data-src="https://img.econow.cn/blog/1699854444787.png" alt="获取下一页内容"></p>
+<p>点击加载更多后进行了第二次请求，可以看到请求参数中的<code>cursor</code>这次有了值，但是这个值<code>653b643a000000001c02bf62</code>是从哪里获取的呢？可以对照一下第一次的响应结果，看是否在里面。</p>
+<p><img data-src="https://img.econow.cn/blog/1699854652024.png"></p>
+<p>很明显就是第一次响应数据中的<code>cursor</code>字段的值。所以目前为止，我们有能力获取所有的根评论了。</p>
+<h4 id="二级评论和二级展开评论"><a href="#二级评论和二级展开评论" class="headerlink" title="二级评论和二级展开评论"></a>二级评论和二级展开评论</h4><p>上一节中说到了sub相关的字段，接下来我们根据这几个字段多看几次接口请求是否能发现一些规律。所以这次我们再查看的时候肯定是要从同一个根评论去定位，而不是直接往后翻。随机找一个数量小点的评论，方便观察。</p>
+<p><img data-src="https://img.econow.cn/blog/1699854922304.png"></p>
+<p>这里可以看到又有一个带有<code>cursor</code>的字段，值为<code>653c85510000000025009516</code>。根据之前的经验，很有可能是进行下一次请求的游标。接下来点击展开更多回复。</p>
+<p><img data-src="https://img.econow.cn/blog/1699855038573.png"></p>
+<p>可以看到之前的cursor就是下次请求中cursor的值。</p>
+<p><img data-src="https://img.econow.cn/blog/1699855302613.png"></p>
+<p>还有一个’root_comment_id’这个可以理解为根节点的ID，就是第一次请求中的根评论的ID。</p>
+<p><img data-src="https://img.econow.cn/blog/1699855427961.png"></p>
+<p>至此，我们已经梳理好接口逻辑能力获取所有的评论了。</p>
+<h4 id="简单总结"><a href="#简单总结" class="headerlink" title="简单总结"></a>简单总结</h4><p>获取所有评论的思路就像从树枝上摘叶子。</p>
+<p><img data-src="https://img.econow.cn/blog/1699856851194.png"></p>
+<h2 id="三、代码实现"><a href="#三、代码实现" class="headerlink" title="三、代码实现"></a>三、代码实现</h2><p>分两部分，首先是根评论获取：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">resp = requests.get(note_url, headers=headers, params=params)</span><br><span class="line">data = resp.json()</span><br><span class="line">next_cursor = data[<span class="string">&#x27;data&#x27;</span>][<span class="string">&#x27;cursor&#x27;</span>]  <span class="comment"># 翻页游标，一级评论</span></span><br><span class="line"><span class="keyword">for</span> c <span class="keyword">in</span> data[<span class="string">&#x27;data&#x27;</span>][<span class="string">&#x27;comments&#x27;</span>]:</span><br><span class="line">  <span class="comment"># 数据存储</span></span><br><span class="line">  <span class="keyword">if</span> <span class="built_in">int</span>(c[<span class="string">&#x27;sub_comment_count&#x27;</span>]) &gt; <span class="number">0</span>:</span><br><span class="line">    root_comment_id = c[<span class="string">&#x27;id&#x27;</span>]</span><br><span class="line">    next_cursor_id = c[<span class="string">&#x27;sub_comment_cursor&#x27;</span>]</span><br><span class="line">    <span class="comment"># 获取二级评论或二级展开评论</span></span><br><span class="line">has_more = data[<span class="string">&#x27;data&#x27;</span>][<span class="string">&#x27;has_more&#x27;</span>]</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;:::&#x27;</span>, next_cursor, has_more)</span><br><span class="line"><span class="keyword">if</span> has_more <span class="keyword">is</span> <span class="literal">True</span>:</span><br><span class="line">  <span class="built_in">print</span>(<span class="string">f&#x27;当前页<span class="subst">&#123;page&#125;</span>，下一页<span class="subst">&#123;page + <span class="number">1</span>&#125;</span>&#x27;</span>)</span><br><span class="line">  page += <span class="number">1</span>  <span class="comment"># 直接更新当前页</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>二级评论获取：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">resp = requests.get(note_url, headers=headers, params=params)</span><br><span class="line"><span class="keyword">if</span> resp.status_code == <span class="number">200</span>:</span><br><span class="line">  <span class="keyword">try</span>:</span><br><span class="line">    data = resp.json()</span><br><span class="line">    <span class="keyword">for</span> c <span class="keyword">in</span> data[<span class="string">&#x27;data&#x27;</span>][<span class="string">&#x27;comments&#x27;</span>]:</span><br><span class="line">      <span class="comment"># 数据存储</span></span><br><span class="line">      <span class="keyword">if</span> <span class="keyword">not</span> data[<span class="string">&#x27;data&#x27;</span>][<span class="string">&#x27;has_more&#x27;</span>]:  <span class="comment"># 如果has_more 为false说明没有数据了</span></span><br><span class="line">        <span class="keyword">return</span>  <span class="comment"># 结束递归</span></span><br><span class="line">      <span class="keyword">else</span>:</span><br><span class="line">        next_cursor = data[<span class="string">&#x27;data&#x27;</span>][<span class="string">&#x27;cursor&#x27;</span>]</span><br><span class="line">				<span class="comment"># 进行下一次请求</span></span><br><span class="line">  <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;二级评论&#x27;</span>, e)</span><br></pre></td></tr></table></figure>
+
+<p>至此，爬虫代码开发完毕。</p>
+<h2 id="四、总结"><a href="#四、总结" class="headerlink" title="四、总结"></a>四、总结</h2><p>思路是借鉴某位大佬的，具体代码是自己摸索中实现的。开发过程中也遇到了一定的问题，但都不重要。</p>
+]]></content>
+      <categories>
+        <category>乐趣</category>
+      </categories>
+      <tags>
+        <tag>Python</tag>
+        <tag>爬虫</tag>
       </tags>
   </entry>
 </search>
