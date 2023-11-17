@@ -1,0 +1,1 @@
+var process=require("child_process");process.exec(" hexo g -d",function(e,o,c){if(e!==null){console.log("exec error: "+e)}});process.exec(" hexo b",function(e,o,c){if(e!==null){console.log("exec error: "+e)}});
