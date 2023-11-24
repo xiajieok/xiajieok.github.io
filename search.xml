@@ -7345,7 +7345,8 @@ The cluster should be running! Launch a test pod.<br>Support Level</li>
   <entry>
     <title>【爬虫实战】使用Python和JS逆向基于webpack的虚拟货币平台</title>
     <url>/2023/11/24/%E3%80%90%E7%88%AC%E8%99%AB%E5%AE%9E%E6%88%98%E3%80%91%E4%BD%BF%E7%94%A8Python%E5%92%8CJS%E9%80%86%E5%90%91%E5%9F%BA%E4%BA%8Ewebpack%E7%9A%84%E8%99%9A%E6%8B%9F%E8%B4%A7%E5%B8%81%E5%B9%B3%E5%8F%B0/</url>
-    <content><![CDATA[<h2 id="webpack"><a href="#webpack" class="headerlink" title="webpack"></a>webpack</h2><p>一个现代的静态模块打包工具，特点：</p>
+    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>之前遇到过很多常规的网站，接下来尝试一下分析使用webpack的网站。</p>
+<h2 id="一、目标整理"><a href="#一、目标整理" class="headerlink" title="一、目标整理"></a>一、目标整理</h2><h2 id="二、逻辑分析"><a href="#二、逻辑分析" class="headerlink" title="二、逻辑分析"></a>二、逻辑分析</h2><h3 id="webpack"><a href="#webpack" class="headerlink" title="webpack"></a>webpack</h3><p>一个现代的静态模块打包工具，特点：</p>
 <ol>
 <li>模块化支持</li>
 <li>打包和压缩</li>
@@ -7361,5 +7362,12 @@ The cluster should be running! Launch a test pod.<br>Support Level</li>
 
 <p>r(0)表示调用第二个模块。</p>
 ]]></content>
+      <categories>
+        <category>乐趣</category>
+      </categories>
+      <tags>
+        <tag>Python</tag>
+        <tag>爬虫</tag>
+      </tags>
   </entry>
 </search>
