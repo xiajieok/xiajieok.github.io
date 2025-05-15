@@ -609,7 +609,13 @@
 <blockquote>
 <p>相对地址<br>默认情况下，Hexo 生成的超链接都是绝对地址。例如，如果您的网站域名为 example.com,您有一篇文章名为 hello，那么绝对链接可能像这样：<code>http://example.com/hello.html</code>，它是绝对于域名的。相对链接像这样：&#x2F;hello.html，也就是说，无论用什么域名访问该站点，都没有关系，这在进行反向代理时可能用到。通常情况下，建议使用绝对地址。</p>
 </blockquote>
-<h2 id="常见问题"><a href="#常见问题" class="headerlink" title="常见问题"></a>常见问题</h2><h3 id="文件修改，但是内容没有变化"><a href="#文件修改，但是内容没有变化" class="headerlink" title="文件修改，但是内容没有变化"></a>文件修改，但是内容没有变化</h3><ul>
+<h2 id="常见问题"><a href="#常见问题" class="headerlink" title="常见问题"></a>常见问题</h2><h3 id="部署报错"><a href="#部署报错" class="headerlink" title="部署报错"></a>部署报错</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">Please make sure you have the correct access rights</span><br><span class="line">and the repository exists.</span><br><span class="line">FATAL Something<span class="string">&#x27;s wrong. Maybe you can find the solution here: https://hexo.io/docs/troubleshooting.html</span></span><br><span class="line"><span class="string">Error: Spawn failed</span></span><br><span class="line"><span class="string">    at ChildProcess.&lt;anonymous&gt; (/Users/medivh/Documents/hexo/node_modules/hexo-util/lib/spawn.js:51:21)</span></span><br><span class="line"><span class="string">    at ChildProcess.emit (node:events:513:28)</span></span><br><span class="line"><span class="string">    at Process.ChildProcess._handle.onexit (node:internal/child_process:293:12)</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>解决：可能是部署的key有问题，检查<a href="https://github.com/xiajieok/xiajieok.github.io/settings/keys">https://github.com/xiajieok/xiajieok.github.io/settings/keys</a></p>
+<p><img data-src="https://img.econow.cn/ranch/gt0LHx.png" alt="gt0LHx"></p>
+<h3 id="文件修改，但是内容没有变化"><a href="#文件修改，但是内容没有变化" class="headerlink" title="文件修改，但是内容没有变化"></a>文件修改，但是内容没有变化</h3><ul>
 <li>文件没有提交<ul>
 <li>检查 public 目录是否有对应的新的 HTML 文件</li>
 <li>检查 Git 仓库是否是否有对应的新的 HTML 文件</li>
@@ -7843,6 +7849,818 @@ The cluster should be running! Launch a test pod.<br>Support Level</li>
       <tags>
         <tag>Python</tag>
         <tag>爬虫</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>【Mac】一次重装的总结</title>
+    <url>/2025/05/14/%E3%80%90Mac%E3%80%91%E4%B8%80%E6%AC%A1%E9%87%8D%E8%A3%85%E7%9A%84%E6%80%BB%E7%BB%93/</url>
+    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>最近需要使用之前旧的MacBook 搭一些环境，但是系统太旧了，很多软件不支持，因此只能升级系统。之前是10.14，想升级到12或者13，但是尝试了好几次都会卡在存储检测阶段。查了一些资料，整理如下：</p>
+<blockquote>
+<ol>
+<li><strong>存储检测的版本起点</strong>：<ul>
+<li>macOS 10.13 High Sierra  是首个要求严格检测存储兼容性的版本，尤其是对 SSD 和 Fusion Drive 的 APFS 格式支持</li>
+<li>早期版本（如 macOS 10.12 及更早）默认使用 <strong>HFS+</strong> 文件系统，存储检测逻辑较简单。</li>
+</ul>
+</li>
+<li><strong>检测内容</strong>：<ul>
+<li><strong>硬件兼容性</strong>：检查硬盘接口（如 PCIe&#x2F;NVMe）、转接卡支持（如第三方 SSD 适配器）。</li>
+<li>文件系统验证：安装时会自动检测磁盘格式（APFS&#x2F;HFS+），若格式不兼容会提示格式化</li>
+</ul>
+</li>
+<li><strong>特殊情况</strong>：<ul>
+<li>若在旧版本（如 macOS 10.12）中强制格式化为 APFS，系统可能无法识别磁盘，需通过恢复模式重新格式化为 HFS+</li>
+</ul>
+</li>
+</ol>
+</blockquote>
+<h2 id="探索之路"><a href="#探索之路" class="headerlink" title="探索之路"></a>探索之路</h2><p>最开始的是直接使用自动更新，忘记升级的是哪个版本了，也可能是最新的15系统。后来提示存储检测失败，就开始了其他的尝试。</p>
+<h3 id="Monterey-尝试U盘启动"><a href="#Monterey-尝试U盘启动" class="headerlink" title="Monterey 尝试U盘启动"></a>Monterey 尝试U盘启动</h3><p>搜索到了多种方式，首先看到说用U盘启动就可以。</p>
+<p>通过制作可引导的USB启动盘，可以避免依赖网络恢复模式的存储检测。</p>
+<ol>
+<li><p>准备USB启动盘：</p>
+<ul>
+<li><p>在另一台Mac上，下载目标macOS安装程序（从Mac App Store或Apple支持页面）。</p>
+</li>
+<li><p>准备一个至少16GB的USB驱动器。</p>
+</li>
+<li><p>使用终端命令创建启动盘，例如：</p>
+<p><code>sudo /Applications/Install\ macOS\ Monterey.app/Contents/Resources/createinstallmedia --volume /Volumes/MyUSB</code></p>
+<p>（将“Monterey”替换为目标版本名称，MyUSB替换为USB名称）。</p>
+</li>
+<li><p>按提示格式化USB并等待制作完成。</p>
+</li>
+</ul>
+</li>
+<li><p>启动到USB：</p>
+<ul>
+<li>将USB插入2015款MacBook。</li>
+<li>开机时按住 Option 键，选择USB启动盘。</li>
+<li>进入安装界面后，选择“磁盘工具”。</li>
+</ul>
+</li>
+<li><p>格式化硬盘：</p>
+<ul>
+<li>选择转接卡的硬盘，抹掉并格式化为APFS或Mac OS 扩展（日志式），方案为GUID分区图。</li>
+<li>关闭“磁盘工具”。</li>
+</ul>
+</li>
+<li><p>安装macOS：</p>
+<ul>
+<li>返回安装界面，选择“安装macOS”，目标磁盘选择刚格式化的硬盘。</li>
+<li>USB启动盘的安装过程可能跳过部分在线检测，直接写入系统。</li>
+</ul>
+</li>
+</ol>
+<p>测试结果：失败，依然卡住。</p>
+<h3 id="使用OpenCore-Legacy-Patcher-OCLP-绕过限制"><a href="#使用OpenCore-Legacy-Patcher-OCLP-绕过限制" class="headerlink" title="使用OpenCore Legacy Patcher (OCLP)绕过限制"></a>使用OpenCore Legacy Patcher (OCLP)绕过限制</h3><p>如果你的目标是安装不受官方支持的macOS版本（例如2015款MacBook安装Ventura或Sonoma），或存储检测反复失败，OCLP是一个强大的工具，可以修改系统安装行为以绕过硬件限制和检测。</p>
+<ol>
+<li>准备OCLP：<ul>
+<li>在另一台Mac上，下载最新版OpenCore Legacy Patcher（从OCLP官网或GitHub）。</li>
+<li>准备一个16GB以上的USB驱动器。</li>
+</ul>
+</li>
+<li>设置目标 Mac 型号：<ul>
+<li>在 OCLP 主界面，点击“设置”（Settings）。</li>
+<li>选择你的 MacBook 型号（例如 MacBookPro12,1 或 MacBookAir7,2）。<ul>
+<li>如果在另一台 Mac 上操作，确保选择目标 MacBook 的型号，以确保修补正确应用。</li>
+</ul>
+</li>
+<li>保存设置并返回主界面。</li>
+</ul>
+</li>
+<li>下载 macOS 安装程序</li>
+<li>在 OCLP 主界面，点击“Create macOS Installer”（创建 macOS 安装程序）。</li>
+<li>选择“Download macOS Installer”（下载 macOS 安装程序）。</li>
+<li>从列表中选择目标 macOS 版本（例如 macOS Monterey 12.7.4、Ventura 13.6 或 Sonoma 14.x）。</li>
+<li>等待下载完成，安装程序将保存到“应用程序”文件夹。</li>
+<li>制作可引导安装盘</li>
+<li>在 OCLP 的“Create macOS Installer”界面，选择“Flash Installer”（写入安装程序）。</li>
+<li>选择刚格式化的 USB 闪存盘。</li>
+<li>选择已下载的 macOS 安装程序（例如“Install macOS Monterey”）。</li>
+<li>点击“Flash”开始制作，OCLP 将：<ul>
+<li>使用 Apple 的 createinstallmedia 工具写入 macOS 安装程序。</li>
+<li>自动应用必要的修补（例如绕过硬件兼容性检查）。</li>
+</ul>
+</li>
+<li>等待制作完成（可能需要 10-20 分钟），期间不要拔出 USB。</li>
+<li>安装系统：<ul>
+<li>制作完成后，返回 OCLP 主界面，点击“Build and Install OpenCore”（构建并安装 OpenCore）。</li>
+<li>选择 USB 闪存盘作为目标磁盘。</li>
+<li>点击“Build OpenCore”，OCLP 将生成修补过的 OpenCore EFI 文件。</li>
+<li>点击“Install OpenCore”，将 EFI 文件写入 USB 的 EFI 分区。<ul>
+<li>如果 USB 未显示，确保已格式化为 GUID 分区图，或尝试重新插入 USB。</li>
+</ul>
+</li>
+<li>完成后，USB 闪存盘将成为可引导的修补安装盘。</li>
+</ul>
+</li>
+<li>验证安装盘<ol>
+<li>安全弹出 USB 闪存盘。</li>
+<li>插入到 2015 款 MacBook，关机后按住 Option 键开机。</li>
+<li>在启动选择界面，确认是否出现“EFI Boot”选项（表示 OpenCore 已正确加载）。</li>
+<li>选择“macOS Installer”或目标磁盘名称，继续验证安装程序是否可启动</li>
+</ol>
+</li>
+</ol>
+<p>最后尝试了多个版本系统，依然无效。基本都是提示应用程序损坏。</p>
+<h3 id="历史经验"><a href="#历史经验" class="headerlink" title="历史经验"></a>历史经验</h3><p>恰巧就是因为多年前笔记本的硬盘坏掉换了一块新的，正好使用了转接卡。但是当时也是使用U盘重装的系统，但是没有遇到存储检测的情况呢？现在回想不起来了。简单搜索了一下记录，大概可能得情况是U盘也制作了，但是可能是U盘启动的，但是是从时光机里恢复的系统，可能就是如此吧。</p>
+<p>搜索了信息，可能得原因如下：</p>
+<blockquote>
+<p>虽然从 macOS 10.13 开始有存储检测机制，但不同版本的系统在检测的严格程度和具体方式上可能存在差异。macOS 10.15 可能对某些转接卡的兼容性有所改进，或者在检测过程中对特定类型的转接卡有更好的识别和支持，使得它在安装时能够顺利通过存储检测，即便使用了转接卡也能正常安装系统。</p>
+</blockquote>
+<p>其实我陆续尝试了很多个版本的系统，但是最后才使用了10.15这个版本，可能恰巧这个版本就是存在这么个机制吧。</p>
+<h3 id="最后的尝试"><a href="#最后的尝试" class="headerlink" title="最后的尝试"></a>最后的尝试</h3><p>尝试了好几个版本的系统，12、13、11都尝试过了，最后再试一次10.15吧。可是这么久了去哪下载这个镜像呢，去官网找了一圈。</p>
+<h4 id="官网寻找历史镜像"><a href="#官网寻找历史镜像" class="headerlink" title="官网寻找历史镜像"></a>官网寻找历史镜像</h4><p>官网地址<a href="https://support.apple.com/zh-cn/102662">https://support.apple.com/zh-cn/102662</a></p>
+<p><img data-src="https://img.econow.cn/ranch/Kdiwig.png" alt="Kdiwig"></p>
+<p>很明显，要想获取10.15就得去appstore里下载，但是我当前的电脑都是m1或者m2的高版本系统，早就不支持这两款设备了。头疼，再找找。</p>
+<h4 id="第三方寻找"><a href="#第三方寻找" class="headerlink" title="第三方寻找"></a>第三方寻找</h4><p>找到了一个好人博客<a href="https://sysin.org/blog/macOS/">https://sysin.org/blog/macOS/</a>，收录着大部分的历史版本。</p>
+<table>
+<thead>
+<tr>
+<th align="left"> macOS (sysin)</th>
+<th align="left">CPU</th>
+<th align="left">发布年份</th>
+<th align="left">最新版本</th>
+<th align="left">💻 本站下载</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">macOS Sequoia</td>
+<td align="left">Apple&#x2F;Intel</td>
+<td align="left">2024</td>
+<td align="left">15.x</td>
+<td align="left"><a href="https://sysin.org/blog/macOS-Sequoia/">macOS Sequoia 15.5 (24F74) 正式版 ISO、IPSW、PKG 下载</a></td>
+</tr>
+<tr>
+<td align="left">macOS Sonoma</td>
+<td align="left">Apple&#x2F;Intel</td>
+<td align="left">2023</td>
+<td align="left">14.x</td>
+<td align="left"><a href="https://sysin.org/blog/macOS-Sonoma/">macOS Sonoma 14.7.6 (23H626) 正式版 ISO、IPSW、PKG 下载</a></td>
+</tr>
+<tr>
+<td align="left">macOS Ventura</td>
+<td align="left">Apple&#x2F;Intel</td>
+<td align="left">2022</td>
+<td align="left">13.x</td>
+<td align="left"><a href="https://sysin.org/blog/macOS-Ventura/">macOS Ventura 13.7.6 (22H625) 正式版 ISO、IPSW、PKG 下载</a></td>
+</tr>
+<tr>
+<td align="left">macOS Monterey</td>
+<td align="left">Apple&#x2F;Intel</td>
+<td align="left">2021</td>
+<td align="left">12.7.6</td>
+<td align="left"><a href="https://sysin.org/blog/macOS-Monterey/">macOS Monterey 12.7.6 (21H1320) 正式版 ISO、IPSW、PKG 下载</a></td>
+</tr>
+<tr>
+<td align="left">macOS Big Sur</td>
+<td align="left">Intel&#x2F;Apple</td>
+<td align="left">2020</td>
+<td align="left">11.7.10</td>
+<td align="left"><a href="https://sysin.org/blog/macOS-Big-Sur/">macOS Big Sur 11.7.10 (20G1427) 正式版 ISO、PKG、DMG、IPSW 下载</a></td>
+</tr>
+<tr>
+<td align="left">macOS Catalina</td>
+<td align="left">Intel</td>
+<td align="left">2019</td>
+<td align="left">10.15.7</td>
+<td align="left"><a href="https://sysin.org/blog/macOS-Catalina/">macOS Catalina 10.15.7 (19H15) 正式版 ISO DMG 下载</a></td>
+</tr>
+<tr>
+<td align="left">macOS Mojave</td>
+<td align="left">Intel</td>
+<td align="left">2018</td>
+<td align="left">10.14.6</td>
+<td align="left"><a href="https://sysin.org/blog/macOS-Mojave/">macOS Mojave 10.14.6 (18G103) 正式版 ISO DMG 下载</a></td>
+</tr>
+<tr>
+<td align="left">macOS High Sierra</td>
+<td align="left">Intel</td>
+<td align="left">2017</td>
+<td align="left">10.13.6</td>
+<td align="left"><a href="https://sysin.org/blog/macOS-High-Sierra/">macOS High Sierra 10.13.6 (17G66) 正式版 ISO DMG 下载</a></td>
+</tr>
+<tr>
+<td align="left">macOS Sierra</td>
+<td align="left">Intel</td>
+<td align="left">2016</td>
+<td align="left">10.12.6</td>
+<td align="left"><a href="https://sysin.org/blog/macOS-Sierra/">macOS Sierra 10.12.6 (16G29) 正式版 ISO DMG 下载</a></td>
+</tr>
+<tr>
+<td align="left">OS X El Capitan</td>
+<td align="left">Intel</td>
+<td align="left">2015</td>
+<td align="left">10.11.6</td>
+<td align="left"><a href="https://sysin.org/blog/os-x">下载</a></td>
+</tr>
+<tr>
+<td align="left">OS X Yosemite</td>
+<td align="left">Intel</td>
+<td align="left">2014</td>
+<td align="left">10.10.5</td>
+<td align="left"><a href="https://sysin.org/blog/os-x">下载</a></td>
+</tr>
+<tr>
+<td align="left">OS X Mavericks</td>
+<td align="left">Intel</td>
+<td align="left">2013</td>
+<td align="left">10.9.5</td>
+<td align="left"><a href="https://sysin.org/blog/os-x">下载</a> (备注：此版本开始免费)</td>
+</tr>
+<tr>
+<td align="left">OS X Mountain Lion</td>
+<td align="left">Intel</td>
+<td align="left">2012</td>
+<td align="left">10.8.5</td>
+<td align="left"><a href="https://sysin.org/blog/os-x">下载</a> (备注：2021 年免费)</td>
+</tr>
+<tr>
+<td align="left">Mac OS X Lion</td>
+<td align="left">Intel</td>
+<td align="left">2010</td>
+<td align="left">10.7.5</td>
+<td align="left"><a href="https://sysin.org/blog/mac-os-x">下载</a> (备注：2021 年免费)</td>
+</tr>
+<tr>
+<td align="left">Mac OS X Snow Leopard</td>
+<td align="left">Intel</td>
+<td align="left">2009</td>
+<td align="left">10.6.8</td>
+<td align="left">N&#x2F;A (备注：该版本及以下为付费软件)</td>
+</tr>
+<tr>
+<td align="left">Mac OS X Leopard</td>
+<td align="left">Intel&#x2F;PowerPC</td>
+<td align="left">2007</td>
+<td align="left">10.5.8</td>
+<td align="left">N&#x2F;A</td>
+</tr>
+<tr>
+<td align="left">Mac OS X Tiger</td>
+<td align="left">PowerPC&#x2F;Intel</td>
+<td align="left">2005</td>
+<td align="left">10.4.11</td>
+<td align="left">N&#x2F;A</td>
+</tr>
+<tr>
+<td align="left">Mac OS X Panther</td>
+<td align="left">PowerPC</td>
+<td align="left">2003</td>
+<td align="left">10.3.9</td>
+<td align="left">N&#x2F;A</td>
+</tr>
+<tr>
+<td align="left">Mac OS X Jaguar</td>
+<td align="left">PowerPC</td>
+<td align="left">2002</td>
+<td align="left">10.2.8</td>
+<td align="left">N&#x2F;A</td>
+</tr>
+<tr>
+<td align="left">Mac OS X Puma</td>
+<td align="left">PowerPC</td>
+<td align="left">2001</td>
+<td align="left">10.1.5</td>
+<td align="left">N&#x2F;A</td>
+</tr>
+<tr>
+<td align="left">Mac OS X Cheetah</td>
+<td align="left">PowerPC</td>
+<td align="left">2001</td>
+<td align="left">10.0.4</td>
+<td align="left">N&#x2F;A</td>
+</tr>
+</tbody></table>
+<p>但是下载源都是百度网盘的，祖传的80K，下载完得24小时。后来想起来了还有一台Macbook air，是个好主意，从AppStore里下载，然后写入U盘。</p>
+<h4 id="10-15-U盘安装"><a href="#10-15-U盘安装" class="headerlink" title="10.15 U盘安装"></a>10.15 U盘安装</h4><p>首先格式化U盘，但是这时候有一个其他的问题，我之前安装13系统的时候把硬盘格式化成了APFS格式，导致在低版本的Mac上无法处理U盘。处理方式如下；</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo diskutil apfs deleteVolume /dev/disk2s1  <span class="comment"># 删除 APFS 容器</span></span><br><span class="line">sudo diskutil eraseDisk JHFS+ <span class="string">&quot;MyUSB&quot;</span> GPT /dev/disk2</span><br></pre></td></tr></table></figure>
+
+<p>执行完后并没有输出正确的格式，但是去磁盘工具里点击抹掉磁盘后出现了<strong>Mac OS 扩展（日志式）</strong> 选项。</p>
+<h5 id="创建可引导安装器"><a href="#创建可引导安装器" class="headerlink" title="创建可引导安装器"></a>创建可引导安装器</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo /Applications/Install\ macOS\ Catalina.app/Contents/Resources/createinstallmedia --volume /Volumes/MyVolume</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>将 Mac 开机，并立即按住 Option (Alt) 键。</li>
+<li>当你看到显示可引导宗卷（包含可引导的安装器）的黑屏时，松开 Option 键</li>
+<li>选择可引导的安装器，然后点按屏幕上的箭头或按下 Return 键</li>
+<li>从“实用工具”窗口中选择“安装 macOS”（或“安装 OS X”），然后点按“继续”，并按照屏幕上的说明进行操作</li>
+</ol>
+<p>又出现一个新的问题，提示macOScatalina 应用程序副本已经损坏。在安装 <strong>macOS Catalina</strong> 时遇到 <strong>“应用程序副本已损坏”</strong> 的报错，通常是由于系统时间验证、证书过期或下载文件不完整导致的。</p>
+<p>首先先确认你下载的系统镜像MD5值是否正确，如果不正确请重新下载，正确的话请看下面操作</p>
+<p>关闭WIFI，断开有线网线，输入：date 101112132020</p>
+<p>修改完毕后退出终端，继续安装苹果系统。</p>
+<p>10.15.7 的时间是这个，其他版本的系统需要查询。有个表格，但是不太准</p>
+<p>![PastedGraphic1](<a href="https://img.econow.cn/ranch/Pasted">https://img.econow.cn/ranch/Pasted</a> Graphic 1.png)</p>
+<p>终于系统安装好了。</p>
+<h2 id="后续问题"><a href="#后续问题" class="headerlink" title="后续问题"></a>后续问题</h2><p>用了一天后发现，自动关机了，运行了12个小时候左右。充不进去电了，指示灯一直是橙色，且剩余电量为1%，拔掉立刻关机。</p>
+<p>尝试了<strong>SMC&#x2F;NVRAM</strong>重置，无效。</p>
+<h3 id="①-查看电池状态"><a href="#①-查看电池状态" class="headerlink" title="① 查看电池状态"></a><strong>① 查看电池状态</strong></h3><ul>
+<li><p>点击菜单栏 <strong>电池图标</strong>，检查是否显示 <strong>“未充电”</strong> 或 <strong>“电源适配器未连接”</strong>。</p>
+</li>
+<li><p>进入 </p>
+<p><code>系统设置 &gt; 电池</code></p>
+<p>，查看：</p>
+<ul>
+<li><strong>电池健康</strong>：是否提示 <strong>“建议维修”</strong>（电池老化需更换）。</li>
+<li><strong>优化电池充电</strong>：如果开启，可能会暂停充电（可临时关闭测试）。</li>
+</ul>
+</li>
+</ul>
+<h3 id="②-重置-SMC（Intel-Mac）"><a href="#②-重置-SMC（Intel-Mac）" class="headerlink" title="② 重置 SMC（Intel Mac）"></a><strong>② 重置 SMC（Intel Mac）</strong></h3><p><strong>适用于 Intel 芯片的 MacBook（2018 年及之前）</strong>：</p>
+<ol>
+<li><strong>关机</strong>，连接电源适配器。</li>
+<li>按下 **<code>Shift + Control + Option + 电源键</code>**（全部同时按）10 秒。</li>
+<li>松开所有键，重新开机。</li>
+</ol>
+<h3 id="③-重置-NVRAM-PRAM"><a href="#③-重置-NVRAM-PRAM" class="headerlink" title="③ 重置 NVRAM&#x2F;PRAM"></a><strong>③ 重置 NVRAM&#x2F;PRAM</strong></h3><ol>
+<li><strong>关机</strong>，开机时立即按住 <strong><code>Option + Command + P + R</code></strong> 20 秒。</li>
+<li>重置后检查是否恢复正常充电。</li>
+</ol>
+<p>关机后，按住 <strong>D</strong> + 电源键，进行检测，提示电池存在错误代码。</p>
+<p>第一次关机，以外是一个意外，直到第二天再次发生。没办法，买块新电池试试吧。对，顺便再抹点硅脂试试吧，没准那么多年硅脂挥发完了。</p>
+]]></content>
+      <tags>
+        <tag>Mac</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>【kubernetes由浅入深的总结】</title>
+    <url>/2025/04/28/%E3%80%90kubernetes%E3%80%91%E7%94%B1%E6%B5%85%E5%85%A5%E6%B7%B1%E7%9A%84%E6%80%BB%E7%BB%93/</url>
+    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>使用了kubernetes很多年，经历了从0.x到1.x等版本的迭代，不少知识点和使用方式已经发生了改变，特此记录。多年以后，就算用不着了kubernets集群，但是kubernets对一个运维的影响也不可磨灭，总之，记录一下。</p>
+<h2 id="一、基础概念"><a href="#一、基础概念" class="headerlink" title="一、基础概念"></a>一、基础概念</h2><ol>
+<li><p><strong>核心组件</strong></p>
+<ul>
+<li>解释 Kubernetes Master 节点的核心组件及其作用（API Server、Scheduler、Controller Manager、etcd）。</li>
+</ul>
+<h4 id="API-Server"><a href="#API-Server" class="headerlink" title="API Server"></a>API Server</h4><p>作为集群的前端和网关，所有组件和用户都通过它进行交互。</p>
+<p>关键功能：</p>
+<ul>
+<li>提供resful api:接收来自kubectl&#x2F;dashboard&#x2F;其他组件或外部客户端的请求，比如创建pod&#x2F;service等。</li>
+<li>认证和授权，验证用户、服务的权限</li>
+<li>请求校验和准入控制：检查资源定义是否合法，比如pod 的resources.limits是否合理。</li>
+<li>数据读写的中介：所有对集群状态的修改（比如创建、删除pod）都通过API SERVER持久化到ETCD。</li>
+</ul>
+<p>特点：</p>
+<ul>
+<li>无状态，可水平扩展，多个实例共享负载</li>
+<li>是唯一直接与etcd通信的组件，其他组件必须通过API SERVER 访问数据。</li>
+</ul>
+<h4 id="Scheduler"><a href="#Scheduler" class="headerlink" title="Scheduler"></a>Scheduler</h4><p>决定pod应该运行在哪个node上。</p>
+<p>关键功能：</p>
+<ul>
+<li>监听未调度的pod:通过API SERVER监听spec.nodeName为空的pod</li>
+<li>过滤和打分：<ul>
+<li>过滤阶段，排除不符合条件的node，比如资源不足、不满足节点亲和性</li>
+<li>打分阶段，对剩余node评分（比如选择资源利用率最低的节点）</li>
+</ul>
+</li>
+<li>绑定pod到node，将调度决策（spec.nodeName）通过api server 写入到ETCD</li>
+</ul>
+<p>示例：如果一个pod请求4G内存，scheduler会跳过只有2G内存的node；支持自定义调度策略（优先调度到GPU节点）</p>
+<h4 id="Controller-Manager"><a href="#Controller-Manager" class="headerlink" title="Controller Manager"></a>Controller Manager</h4><p>运行各种控制器，确保集群的实际状态和期望状态一致。</p>
+<p>核心控制器：</p>
+<ul>
+<li>deployment：监控deployment对象，确保指定数量的replicaSet副本在运行。</li>
+<li>ReplicaSet: 确保pod副本数符合预期</li>
+<li>node：监控node状态，处理不可用节点（如标记为notReady）</li>
+<li>service：管理service和endpoints的关联关系</li>
+</ul>
+<p>工作原理：</p>
+<ol>
+<li>通过API SERVER监听资源变更（如用户创建了一个deployment）</li>
+<li>对比当前状态和期望状态（如实际pod数和replicas配置）</li>
+<li>调用API SERVER执行调整（如创建新的pod）</li>
+</ol>
+<h4 id="ETCD"><a href="#ETCD" class="headerlink" title="ETCD"></a>ETCD</h4><p>kubernetes的分布式键值存储数据库，保存集群的所有关键数据</p>
+<p>存储内容：</p>
+<ul>
+<li>集群配置（如configMap、Secret）</li>
+<li>资源对象状态（如pod、service、deployment的定义和当前状态）</li>
+<li>集群元数据（如node信息、角色标签）</li>
+</ul>
+<p>关键特性：</p>
+<ul>
+<li>强一致性：所有读写操作需要多数节点确认，保证数据一致性</li>
+<li>高可用：通常以奇数节点部署，容忍部分节点故障</li>
+<li>唯一数据源：只有API SERVER能直接读写ETCD，其他组件通过API SERVER间接访问。</li>
+</ul>
+<p>注意：</p>
+<ul>
+<li>备份ETCD数据是恢复集群的关键（使用 etcdctl snapshot save)</li>
+<li>性能敏感：大规模集群需要优化ETCD，如SSD存储、独立部署</li>
+</ul>
+<h4 id="kubelet"><a href="#kubelet" class="headerlink" title="kubelet"></a>kubelet</h4><p>核心职责：</p>
+<ul>
+<li>pod的生命周期管理：<ul>
+<li>监听APISERVER 分配的pod清单</li>
+<li>调用Docker启动&#x2F;停止容器</li>
+<li>确保Pod中所有容器正常运行（如崩溃后自动重启）</li>
+</ul>
+</li>
+<li>资源监控，向master报告节点和Pod的状态</li>
+<li>Volume和网络挂载：<ul>
+<li>按照Pod定义挂载存储卷（如hostPath、NFS）</li>
+<li>配合CNI插件配置Pod网络命名空间</li>
+</ul>
+</li>
+<li>关键特性：<ul>
+<li>直接操作容器</li>
+<li>不管理非kubernetes创建的容器</li>
+</ul>
+</li>
+</ul>
+<h4 id="kube-proxy"><a href="#kube-proxy" class="headerlink" title="kube-proxy"></a>kube-proxy</h4><p>核心职责：</p>
+<ul>
+<li>service网络代理：<ul>
+<li>维护节点上的网络规则（通过iptables&#x2F;ipvs模式），实现：<ul>
+<li>service的clusterIP访问（将请求转发到后端pod）</li>
+<li>NodePort&#x2F;LoadBalancer 流量路由</li>
+<li>会话亲和性</li>
+</ul>
+</li>
+<li>endpoint同步：监听apiserver 的endpoint变化，实时更新转发规则（如Pod扩缩容后更新IP列表）</li>
+</ul>
+</li>
+</ul>
+<p><strong>工作模式</strong>：</p>
+<table>
+<thead>
+<tr>
+<th align="left">模式</th>
+<th align="left">原理</th>
+<th align="left">适用场景</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><strong>iptables</strong></td>
+<td align="left">通过 Linux 内核的 <code>iptables</code> 规则链实现流量转发（默认模式）。</td>
+<td align="left">中小规模集群</td>
+</tr>
+<tr>
+<td align="left"><strong>IPVS</strong></td>
+<td align="left">使用内核的 IPVS（L4 负载均衡），规则规模大时性能更高。</td>
+<td align="left">大规模集群（Service 多）</td>
+</tr>
+<tr>
+<td align="left"><strong>userspace</strong></td>
+<td align="left">代理流量通过用户空间程序（已弃用，性能差）。</td>
+<td align="left">不推荐使用</td>
+</tr>
+</tbody></table>
+<p><strong>示例</strong>：</p>
+<ul>
+<li>当访问 <code>Service</code> 的 <code>ClusterIP:80</code> 时，<code>kube-proxy</code> 的 <code>iptables</code> 规则会将请求随机转发到一个后端 Pod（如 <code>10.244.1.2:8080</code>）。</li>
+</ul>
+<h4 id="组件协作示例"><a href="#组件协作示例" class="headerlink" title="组件协作示例"></a>组件协作示例</h4><ol>
+<li>用户：执行<code>kubectl create -f pod.yml</code></li>
+<li>API SERVER：校验请求合法性-》写入ETCD（此时pod状态为pending)</li>
+<li>scheduler：发现未调度的pod-》选择合适的node-》通过API SERVER更新pod的nodeName</li>
+<li>Controller Manager：确保node上的kubelet已经启动pod，如未运行，触发重新调度</li>
+<li>kubelet: 监听到分配给自己的pod-》调用容器运行时启动容器</li>
+<li>API SERVER： kubelet上报pod状态如running-》写入ETCD。</li>
+</ol>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a><strong>总结</strong></h3><table>
+<thead>
+<tr>
+<th align="left">组件</th>
+<th align="left">核心职责</th>
+<th align="left">高可用部署建议</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><strong>API Server</strong></td>
+<td align="left">集群入口，认证授权，数据读写中介</td>
+<td align="left">多实例 + 负载均衡</td>
+</tr>
+<tr>
+<td align="left"><strong>Scheduler</strong></td>
+<td align="left">决策 Pod 调度到哪个 Node</td>
+<td align="left">多实例（仅一个生效）</td>
+</tr>
+<tr>
+<td align="left"><strong>Controller Manager</strong></td>
+<td align="left">确保资源状态符合预期（如副本数）</td>
+<td align="left">多实例（Leader 选举）</td>
+</tr>
+<tr>
+<td align="left"><strong>etcd</strong></td>
+<td align="left">持久化存储集群数据</td>
+<td align="left">3&#x2F;5 节点分布式部署</td>
+</tr>
+</tbody></table>
+<p><strong>故障影响</strong>：</p>
+<ul>
+<li><strong>API Server 宕机</strong>：集群无法管理（但已运行的 Pod 不受影响）。</li>
+<li><strong>etcd 宕机</strong>：集群完全不可用（无法读取或更新状态）。</li>
+<li><strong>Scheduler&#x2F;Controller Manager 宕机</strong>：无法创建新资源，但已有资源继续运行。</li>
+</ul>
+<p>通过理解这些组件的职责，可以更好地诊断集群问题（如 Pod 卡在 <code>Pending</code> 状态可能是 Scheduler 故障）。</p>
+<ul>
+<li>Worker 节点上必须运行哪些组件？<code>kubelet</code> 和 <code>kube-proxy</code> 的作用是什么？<ul>
+<li>必须运行的组件：<ul>
+<li>kubelet，负责和master通信，管理pod和容器的声明周期（启动、停止、监控）</li>
+<li>Kube-proxy, 维护节点上的网络规则（如service的负载均衡、iptables规则）</li>
+<li>实际运行容器的引擎，比如Docker</li>
+</ul>
+</li>
+<li>可选组件：<ul>
+<li>cAdvisor，通常内置于kubelet，收集节点和容器的监控数据</li>
+<li>日志收集器，将容器日志发送到集中式存储</li>
+<li>CNI插件，如Calico&#x2F;Flannel，实现pod网络通信。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>worker节点组件协作流程<ul>
+<li><ol>
+<li>Pod启动。<ol>
+<li>kubelet收到APIServer 下发的pod定义，调用容器引擎启动容器</li>
+<li>kube-proxy 检测到新Pod的IP，更新iptables规则（如果该Pod属于某个service）</li>
+</ol>
+</li>
+<li>service 访问：用户访问clusterIP-》kube-proxy 的规则将流量转发到Pod</li>
+<li>监控和自愈，kubelet发现容器崩溃-》自动重启容器并上报状态给API SERVER</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>资源对象</strong></p>
+<ul>
+<li><p>Deployment、StatefulSet、DaemonSet 的区别及适用场景？</p>
+<ul>
+<li>Deployment <ul>
+<li>管理无状态应用（Pod可以随意替换），支持滚动更新和回滚，通过ReplicaSet控制副本数</li>
+<li>使用web服务、API、无状态微服务（NGINX、前端）</li>
+</ul>
+</li>
+<li>StatefulSet<ul>
+<li>管理有状态应用（pod有唯一标识和持久存储），固定网络标识（如Pod名称+序号），按顺序部署&#x2F;扩展</li>
+<li>适用数据库（MySQL、MongoDB）、消息队列、有状态服务（ETCD、Zookeeper）</li>
+</ul>
+</li>
+<li>DaemonSet<ul>
+<li>每个Node上运行一个Pod副本，适合集群级守护进程，忽略调度策略</li>
+<li>适合日志收集、监控、网络插件、存储插件</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Service 的 ClusterIP、NodePort、LoadBalancer 类型有何不同？</p>
+</li>
+<li><table>
+<thead>
+<tr>
+<th align="left">类型</th>
+<th align="left">访问方式</th>
+<th align="left">适用场景</th>
+<th align="left">示例 YAML 片段</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><strong>ClusterIP</strong></td>
+<td align="left">- 集群内部 IP（默认类型） - 仅集群内 Pod 可访问</td>
+<td align="left">内部服务通信（如微服务间调用）</td>
+<td align="left"><code>type: ClusterIP</code></td>
+</tr>
+<tr>
+<td align="left"><strong>NodePort</strong></td>
+<td align="left">- 在集群所有节点的<strong>固定端口</strong>（30000-32767）暴露服务 - 可通过 <code>NodeIP:Port</code> 从外部访问</td>
+<td align="left">开发测试、临时外部访问</td>
+<td align="left"><code>type: NodePort</code> <code>nodePort: 31000</code></td>
+</tr>
+<tr>
+<td align="left"><strong>LoadBalancer</strong></td>
+<td align="left">- 自动创建云提供商的负载均衡器（如 AWS ALB、GCP LB） - 外部流量直接接入</td>
+<td align="left">生产环境对外暴露服务（如公网访问）</td>
+<td align="left"><code>type: LoadBalancer</code></td>
+</tr>
+</tbody></table>
+</li>
+</ul>
+</li>
+<li><p><strong>网络模型</strong></p>
+<ul>
+<li>Pod 之间如何通信？跨节点通信如何实现？</li>
+<li>解释 CNI（Container Network Interface）的作用，列举常见的 CNI 插件（如 Calico、Cilium）</li>
+</ul>
+</li>
+<li><h4 id="Pod间网络通信"><a href="#Pod间网络通信" class="headerlink" title="Pod间网络通信"></a>Pod间网络通信</h4><p>Kubernetes 的网络模型要求：</p>
+<ul>
+<li>每个Pod都拥有唯一的IP地址</li>
+<li>所有Pod可以直接通过IP通信，无需NAT（无论是否跨节点）</li>
+</ul>
+<p>实现方式：</p>
+<ul>
+<li>CNI插件：通过CNI插件（如calico、flannel）配置底层网络，确保Pod间连同</li>
+<li>Overlay网络：部分插件（如flannel的VXLAN模式）通过封装数据包实现跨节点通信</li>
+<li>路由模式：部分插件（如calico的BGP模式）通过节点路由表直接转发数据包</li>
+</ul>
+<p>通信示例：</p>
+<ul>
+<li>同一节点：通过Docker创建的虚拟网桥（cni0）直接通信</li>
+<li>跨节点：数据包通过节点网络接口（如eth0）转发到目标节点</li>
+</ul>
+</li>
+</ol>
+<p>​	节点间网络通信：</p>
+<pre><code>    - 节点间需要L3连通，可通过物理网络、云网络或者Overlay网络实现
+    - CNI插件负责解决跨节点路由问题
+
+ 典型跨节点通信流程：
+
+1. 源Pod发送数据包到目标Pod IP
+1. 源节点的CNI插件识别目标IP属于另一节点，封装数据包为VXLAN格式
+1. 封装后的数据包通过节点的eth0发送到目标节点
+1. 目标节点解封数据包并转发到目标Pod	
+</code></pre>
+<hr>
+<h3 id="二、日常运维操作"><a href="#二、日常运维操作" class="headerlink" title="二、日常运维操作"></a><strong>二、日常运维操作</strong></h3><ol>
+<li><strong>命令与调试</strong><ul>
+<li>如何查看某个 Pod 的详细错误日志？如果 Pod 处于 <code>CrashLoopBackOff</code> 状态，如何排查？</li>
+<li>如何在不重启 Pod 的情况下更新 ConfigMap 的配置？</li>
+</ul>
+</li>
+<li><strong>扩缩容与滚动更新</strong><ul>
+<li>如何手动扩展 Deployment 的副本数？滚动更新的策略如何配置？</li>
+<li>金丝雀发布（Canary Release）在 Kubernetes 中如何实现？</li>
+</ul>
+</li>
+<li><strong>存储管理</strong><ul>
+<li>PVC（PersistentVolumeClaim）和 PV（PersistentVolume）的工作流程是什么？</li>
+<li>如何调试 Pod 挂载 Volume 失败的问题？</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h3 id="三、故障排查"><a href="#三、故障排查" class="headerlink" title="三、故障排查"></a><strong>三、故障排查</strong></h3><ol>
+<li><p><strong>节点故障</strong></p>
+<ul>
+<li><p>某个 Node 状态为 <code>NotReady</code>，如何逐步排查原因？</p>
+</li>
+<li><p><img data-src="https://img.econow.cn/ranch/sNJz8Q.png" alt="sNJz8Q"></p>
+</li>
+<li><p>如何安全驱逐一个节点上的所有 Pod？（<code>kubectl drain</code> 的注意事项）</p>
+<ul>
+<li>驱逐前检查节点上的Pod</li>
+<li>处理Daemonsets管理的Pod</li>
+<li>处理持久化存储的Pod</li>
+<li>处理长任务Pod（等待job跑完）</li>
+<li>设置优雅终止时间</li>
+<li>设置超时时间</li>
+<li>kubectl drain <node-name> <br>  –ignore-daemonsets \  # 忽略 DaemonSet 管理的 Pod<br>  –delete-emptydir-data \  # 删除 EmptyDir 数据<br>  –force \  # 强制驱逐无控制器管理的 Pod（如裸 Pod）<br>  –timeout&#x3D;5m  # 超时时间</li>
+</ul>
+<ol>
+<li>首先将Node标记为不可调度</li>
+<li>执行驱逐</li>
+<li>验证驱逐结果，检查pod是否已经重建</li>
+</ol>
+</li>
+</ul>
+</li>
+<li><p><strong>网络问题</strong></p>
+<ul>
+<li>用户反馈 Service 无法访问，如何从 Pod、Service、Ingress 逐层排查？<ol>
+<li>检查Pod的状态和配置<ol>
+<li>测试Pod是否可以访问，可以从集群内部测试或者进入Pod测试</li>
+<li>检查Pod的日志和事件，比如镜像拉取失败和应用启动崩溃</li>
+</ol>
+</li>
+<li>检查service层<ol>
+<li>确认配置：clusterIP&#x2F;Port；标签是否匹配；endpoints，检查service是否关联到了正确的Pod</li>
+<li>测试service配置: 判断service类型是否正确，确认是clusterIP、nodePort还是LoadBalancer；检查端口映射是否错误</li>
+<li>检查kube-proxy和网络插件</li>
+<li>检查ingress层，检查ingress的path和backend、证书</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>如何检查集群 DNS（CoreDNS）是否正常工作？</li>
+</ul>
+</li>
+<li><p><strong>性能问题</strong></p>
+<ul>
+<li>如何发现集群中的资源瓶颈（CPU&#x2F;内存）？如何优化 Pod 的 <code>requests/limits</code> 配置？</li>
+<li>如何分析 <code>kube-apiserver</code> 的高延迟问题？<ol>
+<li>资源瓶颈分析：<ol>
+<li>CPU、内存资源不足，垂直扩容或者水平扩容</li>
+<li>ETCD存储性能瓶颈，写入延迟高，日志中出现apply request took too  long</li>
+</ol>
+</li>
+<li>请求流量分析</li>
+<li>网络问题：<ol>
+<li>节点间网络延迟，测试API SERVER和ETCD节点间的延迟</li>
+<li>检查网络丢包</li>
+</ol>
+</li>
+<li>负载均衡问题，检查后端节点的健康状态和连接数</li>
+</ol>
+</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h3 id="四、安全与优化"><a href="#四、安全与优化" class="headerlink" title="四、安全与优化"></a><strong>四、安全与优化</strong></h3><ol>
+<li><strong>安全实践</strong><ul>
+<li>如何限制某个 Namespace 的 Pod 只能访问特定资源（NetworkPolicy）？</li>
+<li>ServiceAccount 的权限如何通过 RBAC 控制？举例说明 Role 和 ClusterRole 的区别。</li>
+</ul>
+</li>
+<li><strong>集群优化</strong><ul>
+<li>如何减少 <code>kubelet</code> 的 CPU&#x2F;内存占用？</li>
+<li>如何优化大规模集群的调度性能？（提示：优先级调度、动态资源分配）</li>
+</ul>
+</li>
+<li><strong>备份与高可用</strong><ul>
+<li>如何备份和恢复 etcd 数据？</li>
+<li>如何设计一个高可用的 Kubernetes 集群（Master 节点多实例部署方案）？</li>
+</ul>
+</li>
+</ol>
+<h4 id="高可用集群"><a href="#高可用集群" class="headerlink" title="高可用集群"></a>高可用集群</h4><h5 id="1-Master节点多实例部署（至少3个节点）"><a href="#1-Master节点多实例部署（至少3个节点）" class="headerlink" title="1. Master节点多实例部署（至少3个节点）"></a>1. Master节点多实例部署（至少3个节点）</h5><p>奇数节点避免脑裂的问题，可以通过Raft协议（ETCD）实现一致性。</p>
+<p>部署方式：</p>
+<ul>
+<li>stacked模式，每个master节点部署API SERVER、kube-scheduler、kube-controller-manager、ETCD。<ul>
+<li>节省资源，适合小规模部署</li>
+<li>ETCD和master组件耦合，故障可能相互影响</li>
+</ul>
+</li>
+<li>Extermal etcd模式，ETCD集群独立于api-server部署<ul>
+<li>解耦ETCD和master，适合生成环境</li>
+<li>需要额外资源</li>
+</ul>
+</li>
+</ul>
+<h5 id="Master-组件配置"><a href="#Master-组件配置" class="headerlink" title="Master 组件配置"></a><strong>Master 组件配置</strong></h5><ul>
+<li><strong>kube-apiserver</strong>：启用 <code>--endpoint-reconciler-type=lease</code> 支持动态端点。</li>
+<li>kube-controller-manager 和 kube-scheduler：<ul>
+<li>通过 <code>--leader-elect=true</code> 启用领导者选举。</li>
+<li>设置 <code>--bind-address=0.0.0.0</code> 允许跨节点通信。</li>
+</ul>
+</li>
+</ul>
+<h5 id="2-负载均衡层"><a href="#2-负载均衡层" class="headerlink" title="2. 负载均衡层"></a>2. 负载均衡层</h5><p>将流量均匀分发到多个API SERVER实例。</p>
+<ul>
+<li>实现方式：<ul>
+<li><strong>硬件负载均衡器</strong>（如 F5、AWS ALB）。</li>
+<li><strong>软件负载均衡器</strong>（如 HAProxy + Keepalived、Nginx）。</li>
+</ul>
+</li>
+<li>关键配置：<ul>
+<li>健康检查：监听 apiserver 的 <code>6443</code> 端口和 <code>/healthz</code> 端点。</li>
+<li>会话保持：禁用（Kubernetes API 无状态服务）。<ul>
+<li>客户端的每个请求都应该被视作独立请求，无需绑定到特定master节点。</li>
+<li>防止负载均衡不均</li>
+<li>避免与kubernetes自身的重试机制冲突</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="五、场景设计题"><a href="#五、场景设计题" class="headerlink" title="五、场景设计题"></a><strong>五、场景设计题</strong></h3><ol>
+<li><strong>设计题</strong><ul>
+<li>假设集群中有 1000 个节点，突然出现大量 Pod 被驱逐（Evicted），如何快速定位原因并恢复？</li>
+<li>如何设计一个自动化方案，监控所有 Deployment 的镜像版本并自动告警过期的版本？</li>
+</ul>
+</li>
+<li><strong>版本与生态</strong><ul>
+<li>你熟悉哪些 Kubernetes 发行版（如 OpenShift、RKE）？它们的优缺点是什么？</li>
+<li>如何从 Kubernetes 1.24 升级到 1.30？列举关键步骤和风险点。</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h3 id="六、工具与扩展"><a href="#六、工具与扩展" class="headerlink" title="六、工具与扩展"></a><strong>六、工具与扩展</strong></h3><ol>
+<li><strong>周边工具</strong><ul>
+<li>你用过哪些 Kubernetes 运维工具（如 Helm、ArgoCD、Velero）？简述它们的用途。</li>
+<li>如何通过 Prometheus 监控 Kubernetes 集群的自定义指标？</li>
+</ul>
+</li>
+<li><strong>扩展开发</strong><ul>
+<li>如何编写一个简单的 Operator？CRD（Custom Resource Definition）的作用是什么？</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h3 id="考察重点"><a href="#考察重点" class="headerlink" title="考察重点"></a><strong>考察重点</strong></h3><ul>
+<li><strong>基础扎实</strong>：能清晰解释核心概念（如 Pod 生命周期、Service 负载均衡）。</li>
+<li><strong>实战经验</strong>：对故障排查有方法论（如从日志、事件、监控入手）。</li>
+<li><strong>安全意识</strong>：熟悉 RBAC、NetworkPolicy、Secret 加密等最佳实践。</li>
+<li><strong>自动化思维</strong>：能结合 CI&#x2F;CD 或 Operator 提升运维效率。</li>
+</ul>
+<hr>
+<h3 id="附加建议"><a href="#附加建议" class="headerlink" title="附加建议"></a><strong>附加建议</strong></h3><ul>
+<li>对候选人可追问 <strong>“你在实际工作中遇到的最难解决的 K8s 问题是什么？”</strong> 以考察真实经验。</li>
+<li>要求候选人手写命令或 YAML 片段（如创建一个 Deployment 并暴露 Service）。</li>
+</ul>
+]]></content>
+      <categories>
+        <category>云原生</category>
+      </categories>
+      <tags>
+        <tag>Kubernetes</tag>
       </tags>
   </entry>
 </search>
