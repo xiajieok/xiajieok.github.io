@@ -8179,6 +8179,9 @@ The cluster should be running! Launch a test pod.<br>Support Level</li>
 <p>关机后，按住 <strong>D</strong> + 电源键，进行检测，提示电池存在错误代码。</p>
 <p>第一次关机，以外是一个意外，直到第二天再次发生。没办法，买块新电池试试吧。对，顺便再抹点硅脂试试吧，没准那么多年硅脂挥发完了。</p>
 ]]></content>
+      <categories>
+        <category>工具</category>
+      </categories>
       <tags>
         <tag>Mac</tag>
       </tags>
