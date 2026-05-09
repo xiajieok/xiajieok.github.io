@@ -3034,7 +3034,7 @@
   </entry>
   <entry>
     <title>kubadm 高可用</title>
-    <url>/2023/10/31/kubadm%E9%AB%98%E5%8F%AF%E7%94%A8/</url>
+    <url>/2025/07/10/kubadm%E9%AB%98%E5%8F%AF%E7%94%A8/</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>使用kubeadm搭建一套kubernetes集群很简单，但是一个单节点的master并不能满足我们在生产环境的需求。因此必须得解决单点的问题后才能考虑在生产环境大面积推广应用。</p>
 <p>实践目标</p>
 <ol>
@@ -3043,10 +3043,28 @@
 <li>支持后续扩展；</li>
 </ol>
 <h3 id="环境准备"><a href="#环境准备" class="headerlink" title="环境准备"></a>环境准备</h3><p>参考master单节点安装，此处不再具体描述。<br><strong>系统参数</strong> 修改系统内核参数：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">setenforce 0 </span><br><span class="line">sed -i <span class="string">&#x27;s/SELINUX=enforcing/SELINUX=disabled/&#x27;</span> /etc/selinux/config  </span><br><span class="line">systemctl stop firewalld &amp;&amp; systemctl <span class="built_in">disable</span> firewalld</span><br><span class="line">swapoff -a </span><br><span class="line">sed -i <span class="string">&#x27;s/.*swap.*/#&amp;/&#x27;</span> /etc/fstab </span><br><span class="line"></span><br><span class="line"><span class="built_in">cat</span> &gt;&gt; /etc/sysctl.conf &lt;&lt;<span class="string">eof</span></span><br><span class="line"><span class="string">net.bridge.bridge-nf-call-ip6tables = 1</span></span><br><span class="line"><span class="string">net.bridge.bridge-nf-call-iptables = 1</span></span><br><span class="line"><span class="string">vm.swappiness=0</span></span><br><span class="line"><span class="string">eof</span></span><br><span class="line"></span><br><span class="line">sysctl -p</span><br><span class="line">lsmod | grep ip</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">setenforce 0 </span><br><span class="line">sed -i <span class="string">&#x27;s/SELINUX=enforcing/SELINUX=disabled/&#x27;</span> /etc/selinux/config  </span><br><span class="line">systemctl stop firewalld &amp;&amp; systemctl <span class="built_in">disable</span> firewalld</span><br><span class="line">swapoff -a </span><br><span class="line">sed -i <span class="string">&#x27;s/.*swap.*/#&amp;/&#x27;</span> /etc/fstab </span><br><span class="line"></span><br><span class="line"><span class="built_in">cat</span> &gt;&gt; /etc/sysctl.conf &lt;&lt;<span class="string">eof</span></span><br><span class="line"><span class="string">net.bridge.bridge-nf-call-ip6tables = 1</span></span><br><span class="line"><span class="string">net.bridge.bridge-nf-call-iptables = 1</span></span><br><span class="line"><span class="string">net.ipv4.ip_forward=1</span></span><br><span class="line"><span class="string">vm.swappiness=0</span></span><br><span class="line"><span class="string">eof</span></span><br><span class="line"></span><br><span class="line">sysctl -p</span><br><span class="line">lsmod | grep ip</span><br></pre></td></tr></table></figure>
 
+<blockquote>
+<p>部署Kubernetes时，通常建议使用iptables，而非firewalld，原因如下：</p>
+<p>性能与效率：iptables直接基于内核的netfilter框架，规则处理高效，能快速处理大量网络流量。而firewalld基于D-Bus和XML配置，在规则匹配和执行时需额外开销，性能稍逊。<br>灵活性与可定制性：iptables规则配置灵活，可精细控制网络流量，满足复杂网络策略需求。firewalld虽配置简单，但在端口和IP不连续等复杂场景下，灵活性不足。<br>与Kubernetes集成：Kubernetes的网络插件（如Calico）和网络策略通常基于iptables实现流量控制。使用iptables可更好地与这些组件集成，避免因firewalld导致的策略冲突或不一致。</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">yum install -y epel-release</span><br><span class="line">yum install -y bridge-utils</span><br><span class="line"></span><br><span class="line">modprobe br_netfilter</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;br_netfilter&#x27;</span> &gt;&gt; /etc/modules-load.d/bridge.conf</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;net.bridge.bridge-nf-call-iptables=1&#x27;</span> &gt;&gt; /etc/sysctl.conf</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;net.bridge.bridge-nf-call-ip6tables=1&#x27;</span> &gt;&gt; /etc/sysctl.conf</span><br><span class="line">sysctl -p</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 配置 ulimit</span></span><br><span class="line"><span class="built_in">ulimit</span> -SHn 65535</span><br><span class="line"></span><br><span class="line"><span class="built_in">cat</span> &gt;&gt; /etc/security/limits.conf &lt;&lt;<span class="string">EOF</span></span><br><span class="line"><span class="string">* soft nofile 655360</span></span><br><span class="line"><span class="string">* hard nofile 131072</span></span><br><span class="line"><span class="string">* soft nproc 655350</span></span><br><span class="line"><span class="string">* hard nproc 655350</span></span><br><span class="line"><span class="string">* soft memlock unlimited</span></span><br><span class="line"><span class="string">* hard memlock unlimitedd</span></span><br><span class="line"><span class="string">EOF</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装 ipvs</span></span><br><span class="line">yum install ipvsadm ipset sysstat conntrack libseccomp -y</span><br><span class="line"></span><br><span class="line"><span class="built_in">cat</span> &gt;&gt; /etc/modules-load.d/ipvs.conf &lt;&lt;<span class="string">EOF </span></span><br><span class="line"><span class="string">ip_vs</span></span><br><span class="line"><span class="string">ip_vs_rr</span></span><br><span class="line"><span class="string">ip_vs_wrr</span></span><br><span class="line"><span class="string">ip_vs_sh</span></span><br><span class="line"><span class="string">nf_conntrack</span></span><br><span class="line"><span class="string">ip_tables</span></span><br><span class="line"><span class="string">ip_set</span></span><br><span class="line"><span class="string">xt_set</span></span><br><span class="line"><span class="string">ipt_set</span></span><br><span class="line"><span class="string">ipt_rpfilter</span></span><br><span class="line"><span class="string">ipt_REJECT</span></span><br><span class="line"><span class="string">ipip</span></span><br><span class="line"><span class="string">EOF</span></span><br><span class="line"></span><br><span class="line">systemctl restart systemd-modules-load.service</span><br><span class="line"></span><br><span class="line">lsmod | grep -e ip_vs -e nf_conntrack</span><br><span class="line"></span><br><span class="line"><span class="comment"># 修改内核参数</span></span><br><span class="line"><span class="built_in">cat</span> &lt;&lt;<span class="string">EOF &gt; /etc/sysctl.d/k8s.conf</span></span><br><span class="line"><span class="string">net.ipv4.ip_forward = 1</span></span><br><span class="line"><span class="string">net.bridge.bridge-nf-call-iptables = 1</span></span><br><span class="line"><span class="string">fs.may_detach_mounts = 1</span></span><br><span class="line"><span class="string">vm.overcommit_memory=1</span></span><br><span class="line"><span class="string">vm.panic_on_oom=0</span></span><br><span class="line"><span class="string">fs.inotify.max_user_watches=89100</span></span><br><span class="line"><span class="string">fs.file-max=52706963</span></span><br><span class="line"><span class="string">fs.nr_open=52706963</span></span><br><span class="line"><span class="string">net.netfilter.nf_conntrack_max=2310720</span></span><br><span class="line"><span class="string">net.ipv4.tcp_keepalive_time = 600</span></span><br><span class="line"><span class="string">net.ipv4.tcp_keepalive_probes = 3</span></span><br><span class="line"><span class="string">net.ipv4.tcp_keepalive_intvl =15</span></span><br><span class="line"><span class="string">net.ipv4.tcp_max_tw_buckets = 36000</span></span><br><span class="line"><span class="string">net.ipv4.tcp_tw_reuse = 1</span></span><br><span class="line"><span class="string">net.ipv4.tcp_max_orphans = 327680</span></span><br><span class="line"><span class="string">net.ipv4.tcp_orphan_retries = 3</span></span><br><span class="line"><span class="string">net.ipv4.tcp_syncookies = 1</span></span><br><span class="line"><span class="string">net.ipv4.tcp_max_syn_backlog = 16384</span></span><br><span class="line"><span class="string">net.ipv4.ip_conntrack_max = 65536</span></span><br><span class="line"><span class="string">net.ipv4.tcp_max_syn_backlog = 16384</span></span><br><span class="line"><span class="string">net.ipv4.tcp_timestamps = 0</span></span><br><span class="line"><span class="string">net.core.somaxconn = 16384</span></span><br><span class="line"><span class="string">net.ipv6.conf.all.disable_ipv6 = 0</span></span><br><span class="line"><span class="string">net.ipv6.conf.default.disable_ipv6 = 0</span></span><br><span class="line"><span class="string">net.ipv6.conf.lo.disable_ipv6 = 0</span></span><br><span class="line"><span class="string">net.ipv6.conf.all.forwarding = 1</span></span><br><span class="line"><span class="string">EOF</span></span><br><span class="line"></span><br><span class="line">sysctl --system</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>这些是Linux系统的一些参数设置，用于配置和优化网络、文件系统和虚拟内存等方面的功能。以下是每个参数的详细解释：</p>
+<p>net.ipv4.ip_forward &#x3D; 1<br>这个参数启用了IPv4的IP转发功能，允许服务器作为网络路由器转发数据包。<br>net.bridge.bridge-nf-call-iptables &#x3D; 1<br>当使用网络桥接技术时，将数据包传递到iptables进行处理。<br>fs.may_detach_mounts &#x3D; 1<br>允许在挂载文件系统时，允许被其他进程使用。<br>vm.overcommit_memory&#x3D;1<br>该设置允许原始的内存过量分配策略，当系统的内存已经被完全使用时，系统仍然会分配额外的内存。<br>vm.panic_on_oom&#x3D;0<br>当系统内存不足（OOM）时，禁用系统崩溃和重启。<br>fs.inotify.max_user_watches&#x3D;89100<br>设置系统允许一个用户的inotify实例可以监控的文件数目的上限。<br>fs.file-max&#x3D;52706963<br>设置系统同时打开的文件数的上限。<br>fs.nr_open&#x3D;52706963<br>设置系统同时打开的文件描述符数的上限。<br>net.netfilter.nf_conntrack_max&#x3D;2310720<br>设置系统可以创建的网络连接跟踪表项的最大数量。<br>net.ipv4.tcp_keepalive_time &#x3D; 600<br>设置TCP套接字的空闲超时时间（秒），超过该时间没有活动数据时，内核会发送心跳包。<br>net.ipv4.tcp_keepalive_probes &#x3D; 3<br>设置未收到响应的TCP心跳探测次数。<br>net.ipv4.tcp_keepalive_intvl &#x3D; 15<br>设置TCP心跳探测的时间间隔（秒）。<br>net.ipv4.tcp_max_tw_buckets &#x3D; 36000<br>设置系统可以使用的TIME_WAIT套接字的最大数量。<br>net.ipv4.tcp_tw_reuse &#x3D; 1<br>启用TIME_WAIT套接字的重新利用，允许新的套接字使用旧的TIME_WAIT套接字。<br>net.ipv4.tcp_max_orphans &#x3D; 327680<br>设置系统可以同时存在的TCP套接字垃圾回收包裹数的最大数量。<br>net.ipv4.tcp_orphan_retries &#x3D; 3<br>设置系统对于孤立的TCP套接字的重试次数。<br>net.ipv4.tcp_syncookies &#x3D; 1<br>启用TCP SYN cookies保护，用于防止SYN洪泛攻击。<br>net.ipv4.tcp_max_syn_backlog &#x3D; 16384<br>设置新的TCP连接的半连接数（半连接队列）的最大长度。<br>net.ipv4.ip_conntrack_max &#x3D; 65536<br>设置系统可以创建的网络连接跟踪表项的最大数量。<br>net.ipv4.tcp_timestamps &#x3D; 0<br>关闭TCP时间戳功能，用于提供更好的安全性。<br>net.core.somaxconn &#x3D; 16384<br>设置系统核心层的连接队列的最大值。<br>net.ipv6.conf.all.disable_ipv6 &#x3D; 0<br>启用IPv6协议。<br>net.ipv6.conf.default.disable_ipv6 &#x3D; 0<br>启用IPv6协议。<br>net.ipv6.conf.lo.disable_ipv6 &#x3D; 0<br>启用IPv6协议。<br>net.ipv6.conf.all.forwarding &#x3D; 1<br>允许IPv6数据包转发。</p>
+</blockquote>
 <p><strong>docker相关</strong> 安装docker。</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cat</span> &lt;&lt;<span class="string">EOF &gt; /etc/yum.repos.d/kubernetes.repo</span></span><br><span class="line"><span class="string">[kubernetes]</span></span><br><span class="line"><span class="string">name=Kubernetes</span></span><br><span class="line"><span class="string">baseurl=https://mirrors.aliyun.com/kubernetes/yum/repos/kubernetes-el7-x86_64</span></span><br><span class="line"><span class="string">enabled=1</span></span><br><span class="line"><span class="string">gpgcheck=0</span></span><br><span class="line"><span class="string">EOF</span></span><br><span class="line"></span><br><span class="line">yum remove docker \</span><br><span class="line">                  docker-client \</span><br><span class="line">                  docker-client-latest \</span><br><span class="line">                  docker-common \</span><br><span class="line">                  docker-latest \</span><br><span class="line">                  docker-latest-logrotate \</span><br><span class="line">                  docker-logrotate \</span><br><span class="line">                  docker-selinux \</span><br><span class="line">                  docker-engine-selinux \</span><br><span class="line">                  docker-engine</span><br><span class="line">                  </span><br><span class="line">yum install -y yum-utils device-mapper-persistent-data lvm2</span><br><span class="line">yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo</span><br><span class="line">yum makecache fast</span><br><span class="line">yum -y install docker-ce</span><br><span class="line">systemctl <span class="built_in">enable</span> docker</span><br><span class="line">systemctl start docker</span><br><span class="line"></span><br><span class="line">docker --version</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cat</span> &lt;&lt;<span class="string">EOF &gt; /etc/yum.repos.d/kubernetes.repo</span></span><br><span class="line"><span class="string">[kubernetes]</span></span><br><span class="line"><span class="string">name=Kubernetes</span></span><br><span class="line"><span class="string">baseurl=https://mirrors.aliyun.com/kubernetes/yum/repos/kubernetes-el7-x86_64</span></span><br><span class="line"><span class="string">enabled=1</span></span><br><span class="line"><span class="string">gpgcheck=0</span></span><br><span class="line"><span class="string">EOF</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="built_in">cat</span> &lt;&lt;<span class="string">EOF | tee /etc/yum.repos.d/kubernetes.repo</span></span><br><span class="line"><span class="string">[kubernetes]</span></span><br><span class="line"><span class="string">name=Kubernetes</span></span><br><span class="line"><span class="string">baseurl=https://mirrors.aliyun.com/kubernetes-new/core/stable/v1.29/rpm/</span></span><br><span class="line"><span class="string">enabled=1</span></span><br><span class="line"><span class="string">gpgcheck=1</span></span><br><span class="line"><span class="string">gpgkey=https://mirrors.aliyun.com/kubernetes-new/core/stable/v1.29/rpm/repodata/repomd.xml.key</span></span><br><span class="line"><span class="string">EOF</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="built_in">cat</span> &gt; /etc/sysconfig/kubelet &lt;&lt;<span class="string">EOF</span></span><br><span class="line"><span class="string">KUBELET_EXTRA_ARGS=&quot;--cgroup-driver=systemd&quot;</span></span><br><span class="line"><span class="string">EOF</span></span><br><span class="line">systemctl <span class="built_in">enable</span> kubelet.service</span><br><span class="line"></span><br><span class="line">yum remove docker \</span><br><span class="line">                  docker-client \</span><br><span class="line">                  docker-client-latest \</span><br><span class="line">                  docker-common \</span><br><span class="line">                  docker-latest \</span><br><span class="line">                  docker-latest-logrotate \</span><br><span class="line">                  docker-logrotate \</span><br><span class="line">                  docker-selinux \</span><br><span class="line">                  docker-engine-selinux \</span><br><span class="line">                  docker-engine</span><br><span class="line">                  </span><br><span class="line">yum install -y yum-utils device-mapper-persistent-data lvm2</span><br><span class="line">yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo</span><br><span class="line">yum makecache fast</span><br><span class="line">yum -y install docker-ce</span><br><span class="line">systemctl <span class="built_in">enable</span> docker</span><br><span class="line">systemctl start docker</span><br><span class="line"></span><br><span class="line">docker --version</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 添加 docker-ce yum 源</span></span><br><span class="line"><span class="comment"># 中科大(ustc)</span></span><br><span class="line">sudo dnf config-manager --add-repo https://mirrors.ustc.edu.cn/docker-ce/linux/centos/docker-ce.repo</span><br><span class="line"><span class="built_in">cd</span> /etc/yum.repos.d</span><br><span class="line"><span class="comment"># 切换中科大源</span></span><br><span class="line">sed -e <span class="string">&#x27;s|download.docker.com|mirrors.ustc.edu.cn/docker-ce|g&#x27;</span> docker-ce.repo</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装 docker-ce</span></span><br><span class="line">yum -y install docker-ce</span><br><span class="line"></span><br><span class="line"><span class="comment"># 配置 daemon.</span></span><br><span class="line"><span class="built_in">cat</span> &gt; /etc/docker/daemon.json &lt;&lt;<span class="string">EOF</span></span><br><span class="line"><span class="string">&#123;</span></span><br><span class="line"><span class="string">  &quot;data-root&quot;: &quot;/data/docker&quot;,</span></span><br><span class="line"><span class="string">  &quot;exec-opts&quot;: [&quot;native.cgroupdriver=systemd&quot;],</span></span><br><span class="line"><span class="string">  &quot;log-driver&quot;: &quot;json-file&quot;,</span></span><br><span class="line"><span class="string">  &quot;log-opts&quot;: &#123;</span></span><br><span class="line"><span class="string">    &quot;max-size&quot;: &quot;100m&quot;,</span></span><br><span class="line"><span class="string">    &quot;max-file&quot;: &quot;100&quot;</span></span><br><span class="line"><span class="string">  &#125;,</span></span><br><span class="line"><span class="string">  &quot;insecure-registries&quot;: [&quot;harbor.xinxainghf.com&quot;],</span></span><br><span class="line"><span class="string">  &quot;registry-mirrors&quot;: [&quot;https://docker.cloudmessage.top&quot;]</span></span><br><span class="line"><span class="string">&#125;</span></span><br><span class="line"><span class="string">EOF</span></span><br><span class="line"><span class="built_in">mkdir</span> -p /etc/systemd/system/docker.service.d</span><br><span class="line"></span><br><span class="line"><span class="comment"># 重启docker服务</span></span><br><span class="line">systemctl daemon-reload &amp;&amp; systemctl restart docker &amp;&amp; systemctl <span class="built_in">enable</span> docker</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 解压 cri-docker</span></span><br><span class="line"><span class="comment"># https://github.com/Mirantis/cri-dockerd/releases/</span></span><br><span class="line"><span class="comment"># wget  https://github.com/Mirantis/cri-dockerd/releases/download/v0.3.10/cri-dockerd-0.3.10.amd64.tgz</span></span><br><span class="line"></span><br><span class="line">tar xvf cri-dockerd-*.amd64.tgz </span><br><span class="line"></span><br><span class="line"><span class="built_in">cp</span> -r cri-dockerd  /usr/bin/</span><br><span class="line"></span><br><span class="line"><span class="built_in">chmod</span> +x /usr/bin/cri-dockerd</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装 cri-docker</span></span><br><span class="line">wget https://github.com/Mirantis/cri-dockerd/releases/download/v0.2.6/cri-dockerd-0.2.6.amd64.tgz</span><br><span class="line">tar -xf cri-dockerd-0.3.9.amd64.tgz</span><br><span class="line"><span class="built_in">cp</span> cri-dockerd/cri-dockerd /usr/bin/</span><br><span class="line"><span class="built_in">chmod</span> +x /usr/bin/cri-dockerd</span><br><span class="line"></span><br><span class="line"><span class="comment"># 配置 cri-docker 服务</span></span><br><span class="line"><span class="built_in">cat</span> &lt;&lt;<span class="string">&quot;EOF&quot;</span> &gt; /usr/lib/systemd/system/cri-docker.service</span><br><span class="line">[Unit]</span><br><span class="line">Description=CRI Interface <span class="keyword">for</span> Docker Application Container Engine</span><br><span class="line">Documentation=https://docs.mirantis.com</span><br><span class="line">After=network-online.target firewalld.service docker.service</span><br><span class="line">Wants=network-online.target</span><br><span class="line">Requires=cri-docker.socket</span><br><span class="line">[Service]</span><br><span class="line">Type=notify</span><br><span class="line">ExecStart=/usr/bin/cri-dockerd --network-plugin=cni --pod-infra-container-image=registry.aliyuncs.com/google_containers/pause:3.8</span><br><span class="line">ExecReload=/bin/kill -s HUP <span class="variable">$MAINPID</span></span><br><span class="line">TimeoutSec=0</span><br><span class="line">RestartSec=2</span><br><span class="line">Restart=always</span><br><span class="line">StartLimitBurst=3</span><br><span class="line">StartLimitInterval=60s</span><br><span class="line">LimitNOFILE=infinity</span><br><span class="line">LimitNPROC=infinity</span><br><span class="line">LimitCORE=infinity</span><br><span class="line">TasksMax=infinity</span><br><span class="line">Delegate=<span class="built_in">yes</span></span><br><span class="line">KillMode=process</span><br><span class="line">[Install]</span><br><span class="line">WantedBy=multi-user.target</span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line"><span class="comment"># 添加 cri-docker 套接字</span></span><br><span class="line"><span class="built_in">cat</span> &lt;&lt;<span class="string">&quot;EOF&quot;</span> &gt; /usr/lib/systemd/system/cri-docker.socket</span><br><span class="line">[Unit]</span><br><span class="line">Description=CRI Docker Socket <span class="keyword">for</span> the API</span><br><span class="line">PartOf=cri-docker.service</span><br><span class="line">[Socket]</span><br><span class="line">ListenStream=%t/cri-dockerd.sock</span><br><span class="line">SocketMode=0660</span><br><span class="line">SocketUser=root</span><br><span class="line">SocketGroup=docker</span><br><span class="line">[Install]</span><br><span class="line">WantedBy=sockets.target</span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line"><span class="comment"># 启动 cri-docker 对应服务</span></span><br><span class="line">systemctl daemon-reload</span><br><span class="line">systemctl <span class="built_in">enable</span> cri-docker</span><br><span class="line">systemctl start cri-docker</span><br><span class="line">systemctl is-active cri-docker</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+
 
 <p><strong>安装相关组件</strong> 安装kubeadm必须组件</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 安装其他组件</span></span><br><span class="line">yum install -y kubelet kubeadm kubectl</span><br><span class="line"></span><br><span class="line"><span class="comment"># 也可以指定版本</span></span><br><span class="line">yum install -y kubelet-1.23.4 kubeadm-1.23.4 kubectl-1.23.4 --disableexcludes=kubernetes</span><br></pre></td></tr></table></figure>
@@ -3846,7 +3864,7 @@ The cluster should be running! Launch a test pod.<br>Support Level</li>
   </entry>
   <entry>
     <title>【kubernetes由浅入深的总结】</title>
-    <url>/2025/04/28/%E3%80%90kubernetes%E3%80%91%E7%94%B1%E6%B5%85%E5%85%A5%E6%B7%B1%E7%9A%84%E6%80%BB%E7%BB%93/</url>
+    <url>/2025/08/08/%E3%80%90kubernetes%E3%80%91%E7%94%B1%E6%B5%85%E5%85%A5%E6%B7%B1%E7%9A%84%E6%80%BB%E7%BB%93/</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>使用了kubernetes很多年，经历了从0.x到1.x等版本的迭代，不少知识点和使用方式已经发生了改变，特此记录。多年以后，就算用不着了kubernets集群，但是kubernets对一个运维的影响也不可磨灭，总之，记录一下。</p>
 <h2 id="一、基础概念"><a href="#一、基础概念" class="headerlink" title="一、基础概念"></a>一、基础概念</h2><ol>
 <li><p><strong>核心组件</strong></p>
@@ -4129,15 +4147,89 @@ The cluster should be running! Launch a test pod.<br>Support Level</li>
 <pre><code>    - 节点间需要L3连通，可通过物理网络、云网络或者Overlay网络实现
     - CNI插件负责解决跨节点路由问题
 
- 典型跨节点通信流程：
+典型跨节点通信流程：
 
 1. 源Pod发送数据包到目标Pod IP
 1. 源节点的CNI插件识别目标IP属于另一节点，封装数据包为VXLAN格式
 1. 封装后的数据包通过节点的eth0发送到目标节点
 1. 目标节点解封数据包并转发到目标Pod	
 </code></pre>
+<h3 id="Pod"><a href="#Pod" class="headerlink" title="Pod"></a>Pod</h3><h4 id="pause"><a href="#pause" class="headerlink" title="pause"></a>pause</h4><p>作用：</p>
+<ul>
+<li>Pod内部第一个启动的容器</li>
+<li>初始化网络栈</li>
+<li>挂载存储卷</li>
+<li>回收僵尸进程</li>
+</ul>
+<p>共享namespace（network、PID、IPC）</p>
+<h3 id="CNI——calico"><a href="#CNI——calico" class="headerlink" title="CNI——calico"></a>CNI——calico</h3><p>calico是一个纯三层的虚拟网络，没有复用Docker的docker0网桥，而是自己实现的。calico网络不对数据包进行额外封装，不需要NAT和端口映射。</p>
+<h4 id="架构"><a href="#架构" class="headerlink" title="架构"></a>架构</h4><p><img data-src="https://img.econow.cn/ranch/dq3gn2.png" alt="dq3gn2"></p>
+<h5 id="Felix"><a href="#Felix" class="headerlink" title="Felix"></a>Felix</h5><ul>
+<li>管理网络接口</li>
+<li>编写路由</li>
+<li>编写ACL</li>
+<li>报告状态</li>
+</ul>
+<h5 id="bird"><a href="#bird" class="headerlink" title="bird"></a>bird</h5><ul>
+<li>将通过BGP协议广播告诉剩余calico节点，从而实现网络互通</li>
+</ul>
+<h5 id="confd"><a href="#confd" class="headerlink" title="confd"></a>confd</h5><ul>
+<li>通过监听ETCD以了解BGP配置和全局默认值的更改。根据ETCD中的数据更新，动态生成bird配置文件。</li>
+</ul>
+<h4 id="网络模式"><a href="#网络模式" class="headerlink" title="网络模式"></a>网络模式</h4><h5 id="VXLAN"><a href="#VXLAN" class="headerlink" title="VXLAN"></a>VXLAN</h5><ol>
+<li>虚拟可扩展局域网，完全在内核态实现封装和解封装工作，从而通过隧道机制，构建出覆盖网络</li>
+<li>基于三层的二层通信，即VXLAN包封装在UDP数据包中，要求UDP在K8S节点三层可达。（可以跨路由，但是之后基于mac寻址）</li>
+</ol>
+<p><img data-src="https://img.econow.cn/ranch/Il2xoh.png" alt="Il2xoh"></p>
+<p><img data-src="https://img.econow.cn/ranch/5gC3ec.png" alt="5gC3ec"></p>
+<h6 id="开启方式"><a href="#开启方式" class="headerlink" title="开启方式"></a>开启方式</h6><p><img data-src="https://img.econow.cn/ranch/HavOX2.png" alt="HavOX2"></p>
+<h5 id="IPIP"><a href="#IPIP" class="headerlink" title="IPIP"></a>IPIP</h5><p>将源主机的IP数据包封装在一个新的IP数据包中，新的IP数据包的目的地址是隧道的另一端。在隧道的另一端，接收方将解封装原始IP数据包。</p>
+<p><img data-src="https://img.econow.cn/ranch/fTENZc.png" alt="fTENZc"></p>
+<h6 id="数据包结构"><a href="#数据包结构" class="headerlink" title="数据包结构"></a>数据包结构</h6><p><img data-src="https://img.econow.cn/ranch/hbfiHg.png" alt="hbfiHg"></p>
+<h6 id="总结-1"><a href="#总结-1" class="headerlink" title="总结"></a>总结</h6><ol>
+<li>数据包封包。在tunl0设备上将pod发来的数据包的mac层去掉，留下IP层封包。外层数据包目的IP地址根据路由得到。</li>
+<li>只需要三层互通，就可以跨网段</li>
+<li>缺点：需要进行封包和解包会存在一定的性能损耗。</li>
+</ol>
+<h6 id="开启方式-1"><a href="#开启方式-1" class="headerlink" title="开启方式"></a>开启方式</h6><p><img data-src="https://img.econow.cn/ranch/YEeYg9.png" alt="YEeYg9"></p>
+<h5 id="BGP"><a href="#BGP" class="headerlink" title="BGP"></a>BGP</h5><p>矢量路由协议，基于路径、网络策略或规则集来决定路由。</p>
+<p><img data-src="https://img.econow.cn/ranch/2xA5Qk.png" alt="2xA5Qk"></p>
+<h6 id="总结-2"><a href="#总结-2" class="headerlink" title="总结"></a>总结</h6><ol>
+<li>不需要封包解包</li>
+<li>不需要封包解包，通过BGP协议可实现POD网络在主机间的三层可达</li>
+<li>缺点：跨网段时，配置较为复杂网络要求较高，主机网关路由也需要充当BGPSpeaker</li>
+</ol>
+<h6 id="开启"><a href="#开启" class="headerlink" title="开启"></a>开启</h6><p><img data-src="https://img.econow.cn/ranch/uZcmLJ.png" alt="uZcmLJ"></p>
+<h3 id="资源清单"><a href="#资源清单" class="headerlink" title="资源清单"></a>资源清单</h3><figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Pod</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">	<span class="attr">name:</span> <span class="string">pod-demo</span></span><br><span class="line">	<span class="attr">namespace:</span> <span class="string">default</span></span><br><span class="line">	<span class="attr">lables:</span></span><br><span class="line">		<span class="attr">app:</span> <span class="string">myapp</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">	<span class="attr">containers:</span></span><br><span class="line">	<span class="bullet">-</span> <span class="attr">name:</span> <span class="string">myapp-1</span></span><br><span class="line">		<span class="attr">image:</span> <span class="string">xxx/myapp:v1.0</span></span><br><span class="line">	<span class="bullet">-</span> <span class="attr">name:</span> <span class="string">busybox-1</span></span><br><span class="line">		<span class="attr">image:</span> <span class="string">xxx/tools:busybox</span></span><br><span class="line">		<span class="attr">command:</span></span><br><span class="line">		<span class="bullet">-</span> <span class="string">&quot;/bin/sh&quot;</span></span><br><span class="line">		<span class="bullet">-</span> <span class="string">&quot;-c&quot;</span></span><br><span class="line">		<span class="bullet">-</span> <span class="string">&quot;sleep 3600&quot;</span></span><br><span class="line"><span class="attr">status:</span></span><br><span class="line">	<span class="attr">conditions:</span></span><br><span class="line">	<span class="bullet">-</span> <span class="attr">lastProbeTime:</span> <span class="literal">null</span></span><br><span class="line">		<span class="attr">lastTransitionTime:</span> <span class="string">&quot;2025-11-111T02:23:21z&quot;</span></span><br><span class="line">		<span class="attr">status:</span> <span class="string">&quot;True&quot;</span></span><br><span class="line">		<span class="attr">type:</span> <span class="string">Initialized</span></span><br><span class="line">	<span class="string">...</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="探针"><a href="#探针" class="headerlink" title="探针"></a>探针</h3><p>startupProbe 启动了吗</p>
+<p>livenessProbe 活着呢吗</p>
+<p>readinessProbe  就绪探针，准备好服务了吗</p>
+<ul>
+<li>开始工作的时间，秒</li>
+<li>执行探测间隔，默认10s</li>
+<li>等待响应的超时时间</li>
+<li>探针检测失败后认为成功的最小连接成功次数，默认值为1</li>
+<li>连续探测失败次数，默认值为3</li>
+</ul>
+<p>如果pod内部不添加就绪探测，默认就绪。如果添加了就绪探针，只有就绪通过了，才标记为就绪状态。当前Pod内的所有的C都就绪，才标记当前pod就绪。</p>
+<p>结果：</p>
+<ul>
+<li><p>成功：将当前的容器标记为就绪</p>
+</li>
+<li><p>失败：静默</p>
+</li>
+<li><p>未知：静默</p>
+</li>
+</ul>
+<h3 id="kube-proxy-1"><a href="#kube-proxy-1" class="headerlink" title="kube-proxy"></a>kube-proxy</h3><p>监听apiserver 将service变化修改本地的iptables规则。优点：压力较小</p>
+<p>ipvs：</p>
+<h3 id="环境准备"><a href="#环境准备" class="headerlink" title="环境准备"></a>环境准备</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 防火墙修改 firewalld 为 iptables</span></span><br><span class="line">systemctl stop firewalld</span><br><span class="line">systemctl <span class="built_in">disable</span> firewalld</span><br><span class="line"></span><br><span class="line">yum -y install iptables-services</span><br><span class="line">systemctl start iptables</span><br><span class="line">iptables -F</span><br><span class="line">iptables -X</span><br><span class="line">iptables -Z</span><br><span class="line">systemctl <span class="built_in">enable</span> iptables</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 禁用 Selinux</span></span><br><span class="line">setenforce 0</span><br><span class="line">sed -i <span class="string">&quot;s/SELINUX=enforcing/SELINUX=disabled/g&quot;</span> /etc/selinux/config</span><br><span class="line">grubby --update-kernel ALL --args selinux=0</span><br><span class="line"><span class="comment"># 查看是否禁用，grubby --info DEFAULT</span></span><br><span class="line"><span class="comment"># 回滚内核层禁用操作，grubby --update-kernel ALL --remove-args selinux</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置时区</span></span><br><span class="line">timedatectl set-timezone Asia/Shanghai</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 关闭 swap 分区</span></span><br><span class="line">swapoff -a</span><br><span class="line">sed -i <span class="string">&#x27;s:/dev/mapper/rl-swap:#/dev/mapper/rl-swap:g&#x27;</span> /etc/fstab</span><br><span class="line"></span><br><span class="line"><span class="comment"># 开启路由转发</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;net.ipv4.ip_forward=1&#x27;</span> &gt;&gt; /etc/sysctl.conf</span><br><span class="line">sysctl -p</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装必备的工具包</span></span><br><span class="line">yum update -y &amp;&amp; yum -y install wget psmisc vim net-tools nfs-utils telnet yum-utils device-mapper-persistent-data lvm2 git network-scripts tar curl</span><br><span class="line"></span><br><span class="line"><span class="comment"># 加载 bridge</span></span><br><span class="line">yum install -y epel-release</span><br><span class="line">yum install -y bridge-utils</span><br><span class="line"></span><br><span class="line">modprobe br_netfilter</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;br_netfilter&#x27;</span> &gt;&gt; /etc/modules-load.d/bridge.conf</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;net.bridge.bridge-nf-call-iptables=1&#x27;</span> &gt;&gt; /etc/sysctl.conf</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;net.bridge.bridge-nf-call-ip6tables=1&#x27;</span> &gt;&gt; /etc/sysctl.conf</span><br><span class="line">sysctl -p</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 时间同步配置</span></span><br><span class="line"><span class="comment"># 服务端</span></span><br><span class="line">yum install chrony -y</span><br><span class="line"></span><br><span class="line"><span class="built_in">cat</span> &gt; /etc/chrony.conf &lt;&lt; <span class="string">EOF </span></span><br><span class="line"><span class="string">pool ntp.aliyun.com iburst</span></span><br><span class="line"><span class="string">driftfile /var/lib/chrony/drift</span></span><br><span class="line"><span class="string">makestep 1.0 3</span></span><br><span class="line"><span class="string">rtcsync</span></span><br><span class="line"><span class="string">allow 192.168.10.0/24</span></span><br><span class="line"><span class="string">local stratum 10</span></span><br><span class="line"><span class="string">keyfile /etc/chrony.keys</span></span><br><span class="line"><span class="string">leapsectz right/UTC</span></span><br><span class="line"><span class="string">logdir /var/log/chrony</span></span><br><span class="line"><span class="string">EOF</span></span><br><span class="line"></span><br><span class="line">systemctl restart chronyd ; systemctl <span class="built_in">enable</span> chronyd</span><br><span class="line"></span><br><span class="line"><span class="comment"># 客户端</span></span><br><span class="line">yum install chrony -y</span><br><span class="line"></span><br><span class="line"><span class="built_in">cat</span> &gt; /etc/chrony.conf &lt;&lt; <span class="string">EOF </span></span><br><span class="line"><span class="string">pool 192.168.10.11 iburst</span></span><br><span class="line"><span class="string">pool 192.168.10.12 iburst</span></span><br><span class="line"><span class="string">pool 192.168.10.13 iburst</span></span><br><span class="line"><span class="string">driftfile /var/lib/chrony/drift</span></span><br><span class="line"><span class="string">makestep 1.0 3</span></span><br><span class="line"><span class="string">rtcsync</span></span><br><span class="line"><span class="string">keyfile /etc/chrony.keys</span></span><br><span class="line"><span class="string">leapsectz right/UTC</span></span><br><span class="line"><span class="string">logdir /var/log/chrony</span></span><br><span class="line"><span class="string">EOF</span></span><br><span class="line"></span><br><span class="line">systemctl restart chronyd ; systemctl <span class="built_in">enable</span> chronyd</span><br><span class="line"></span><br><span class="line"><span class="comment">#使用客户端进行验证</span></span><br><span class="line">chronyc sources -v</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 配置 ulimit</span></span><br><span class="line"><span class="built_in">ulimit</span> -SHn 65535</span><br><span class="line"></span><br><span class="line"><span class="built_in">cat</span> &gt;&gt; /etc/security/limits.conf &lt;&lt;<span class="string">EOF</span></span><br><span class="line"><span class="string">* soft nofile 655360</span></span><br><span class="line"><span class="string">* hard nofile 131072</span></span><br><span class="line"><span class="string">* soft nproc 655350</span></span><br><span class="line"><span class="string">* hard nproc 655350</span></span><br><span class="line"><span class="string">* soft memlock unlimited</span></span><br><span class="line"><span class="string">* hard memlock unlimitedd</span></span><br><span class="line"><span class="string">EOF</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装 ipvs</span></span><br><span class="line">yum install ipvsadm ipset sysstat conntrack libseccomp -y</span><br><span class="line"></span><br><span class="line"><span class="built_in">cat</span> &gt;&gt; /etc/modules-load.d/ipvs.conf &lt;&lt;<span class="string">EOF </span></span><br><span class="line"><span class="string">ip_vs</span></span><br><span class="line"><span class="string">ip_vs_rr</span></span><br><span class="line"><span class="string">ip_vs_wrr</span></span><br><span class="line"><span class="string">ip_vs_sh</span></span><br><span class="line"><span class="string">nf_conntrack</span></span><br><span class="line"><span class="string">ip_tables</span></span><br><span class="line"><span class="string">ip_set</span></span><br><span class="line"><span class="string">xt_set</span></span><br><span class="line"><span class="string">ipt_set</span></span><br><span class="line"><span class="string">ipt_rpfilter</span></span><br><span class="line"><span class="string">ipt_REJECT</span></span><br><span class="line"><span class="string">ipip</span></span><br><span class="line"><span class="string">EOF</span></span><br><span class="line"></span><br><span class="line">systemctl restart systemd-modules-load.service</span><br><span class="line"></span><br><span class="line">lsmod | grep -e ip_vs -e nf_conntrack</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 修改内核参数</span></span><br><span class="line"><span class="built_in">cat</span> &lt;&lt;<span class="string">EOF &gt; /etc/sysctl.d/k8s.conf</span></span><br><span class="line"><span class="string">net.ipv4.ip_forward = 1</span></span><br><span class="line"><span class="string">net.bridge.bridge-nf-call-iptables = 1</span></span><br><span class="line"><span class="string">fs.may_detach_mounts = 1</span></span><br><span class="line"><span class="string">vm.overcommit_memory=1</span></span><br><span class="line"><span class="string">vm.panic_on_oom=0</span></span><br><span class="line"><span class="string">fs.inotify.max_user_watches=89100</span></span><br><span class="line"><span class="string">fs.file-max=52706963</span></span><br><span class="line"><span class="string">fs.nr_open=52706963</span></span><br><span class="line"><span class="string">net.netfilter.nf_conntrack_max=2310720</span></span><br><span class="line"><span class="string">net.ipv4.tcp_keepalive_time = 600</span></span><br><span class="line"><span class="string">net.ipv4.tcp_keepalive_probes = 3</span></span><br><span class="line"><span class="string">net.ipv4.tcp_keepalive_intvl =15</span></span><br><span class="line"><span class="string">net.ipv4.tcp_max_tw_buckets = 36000</span></span><br><span class="line"><span class="string">net.ipv4.tcp_tw_reuse = 1</span></span><br><span class="line"><span class="string">net.ipv4.tcp_max_orphans = 327680</span></span><br><span class="line"><span class="string">net.ipv4.tcp_orphan_retries = 3</span></span><br><span class="line"><span class="string">net.ipv4.tcp_syncookies = 1</span></span><br><span class="line"><span class="string">net.ipv4.tcp_max_syn_backlog = 16384</span></span><br><span class="line"><span class="string">net.ipv4.ip_conntrack_max = 65536</span></span><br><span class="line"><span class="string">net.ipv4.tcp_max_syn_backlog = 16384</span></span><br><span class="line"><span class="string">net.ipv4.tcp_timestamps = 0</span></span><br><span class="line"><span class="string">net.core.somaxconn = 16384</span></span><br><span class="line"><span class="string">net.ipv6.conf.all.disable_ipv6 = 0</span></span><br><span class="line"><span class="string">net.ipv6.conf.default.disable_ipv6 = 0</span></span><br><span class="line"><span class="string">net.ipv6.conf.lo.disable_ipv6 = 0</span></span><br><span class="line"><span class="string">net.ipv6.conf.all.forwarding = 1</span></span><br><span class="line"><span class="string">EOF</span></span><br><span class="line"></span><br><span class="line">sysctl --system</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建 containerd 的 service 文件,并且启动</span></span><br><span class="line"><span class="built_in">cat</span> &gt;/etc/systemd/system/containerd.service &lt;&lt;<span class="string">EOF</span></span><br><span class="line"><span class="string">[Unit]</span></span><br><span class="line"><span class="string">Description=containerd container runtime</span></span><br><span class="line"><span class="string">Documentation=https://containerd.io</span></span><br><span class="line"><span class="string">After=network.target local-fs.target</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">[Service]</span></span><br><span class="line"><span class="string">ExecStartPre=-/sbin/modprobe overlay</span></span><br><span class="line"><span class="string">ExecStart=/usr/bin/containerd</span></span><br><span class="line"><span class="string">Type=notify</span></span><br><span class="line"><span class="string">Delegate=yes</span></span><br><span class="line"><span class="string">KillMode=process</span></span><br><span class="line"><span class="string">Restart=always</span></span><br><span class="line"><span class="string">RestartSec=5</span></span><br><span class="line"><span class="string">LimitNPROC=infinity</span></span><br><span class="line"><span class="string">LimitCORE=infinity</span></span><br><span class="line"><span class="string">LimitNOFILE=1048576</span></span><br><span class="line"><span class="string">TasksMax=infinity</span></span><br><span class="line"><span class="string">OOMScoreAdjust=-999</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">[Install]</span></span><br><span class="line"><span class="string">WantedBy=multi-user.target</span></span><br><span class="line"><span class="string">EOF</span></span><br><span class="line"></span><br><span class="line">systemctl <span class="built_in">enable</span> --now containerd.service</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 准备 docker 的 service 文件</span></span><br><span class="line"><span class="built_in">cat</span> &gt; /etc/systemd/system/docker.service &lt;&lt;<span class="string">EOF</span></span><br><span class="line"><span class="string">[Unit]</span></span><br><span class="line"><span class="string">Description=Docker Application Container Engine</span></span><br><span class="line"><span class="string">Documentation=https://docs.docker.com</span></span><br><span class="line"><span class="string">After=network-online.target firewalld.service cri-docker.service docker.socket containerd.service</span></span><br><span class="line"><span class="string">Wants=network-online.target</span></span><br><span class="line"><span class="string">Requires=docker.socket containerd.service</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">[Service]</span></span><br><span class="line"><span class="string">Type=notify</span></span><br><span class="line"><span class="string">ExecStart=/usr/bin/dockerd -H fd:// --containerd=/run/containerd/containerd.sock</span></span><br><span class="line"><span class="string">ExecReload=/bin/kill -s HUP $MAINPID</span></span><br><span class="line"><span class="string">TimeoutSec=0</span></span><br><span class="line"><span class="string">RestartSec=2</span></span><br><span class="line"><span class="string">Restart=always</span></span><br><span class="line"><span class="string">StartLimitBurst=3</span></span><br><span class="line"><span class="string">StartLimitInterval=60s</span></span><br><span class="line"><span class="string">LimitNOFILE=infinity</span></span><br><span class="line"><span class="string">LimitNPROC=infinity</span></span><br><span class="line"><span class="string">LimitCORE=infinity</span></span><br><span class="line"><span class="string">TasksMax=infinity</span></span><br><span class="line"><span class="string">Delegate=yes</span></span><br><span class="line"><span class="string">KillMode=process</span></span><br><span class="line"><span class="string">OOMScoreAdjust=-500</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">[Install]</span></span><br><span class="line"><span class="string">WantedBy=multi-user.target</span></span><br><span class="line"><span class="string">EOF</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 准备 docker 的 service 文件</span></span><br><span class="line"><span class="built_in">cat</span> &gt; /etc/systemd/system/docker.service &lt;&lt;<span class="string">EOF</span></span><br><span class="line"><span class="string">[Unit]</span></span><br><span class="line"><span class="string">Description=Docker Application Container Engine</span></span><br><span class="line"><span class="string">Documentation=https://docs.docker.com</span></span><br><span class="line"><span class="string">After=network-online.target firewalld.service cri-docker.service docker.socket containerd.service</span></span><br><span class="line"><span class="string">Wants=network-online.target</span></span><br><span class="line"><span class="string">Requires=docker.socket containerd.service</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">[Service]</span></span><br><span class="line"><span class="string">Type=notify</span></span><br><span class="line"><span class="string">ExecStart=/usr/bin/dockerd -H fd:// --containerd=/run/containerd/containerd.sock</span></span><br><span class="line"><span class="string">ExecReload=/bin/kill -s HUP $MAINPID</span></span><br><span class="line"><span class="string">TimeoutSec=0</span></span><br><span class="line"><span class="string">RestartSec=2</span></span><br><span class="line"><span class="string">Restart=always</span></span><br><span class="line"><span class="string">StartLimitBurst=3</span></span><br><span class="line"><span class="string">StartLimitInterval=60s</span></span><br><span class="line"><span class="string">LimitNOFILE=infinity</span></span><br><span class="line"><span class="string">LimitNPROC=infinity</span></span><br><span class="line"><span class="string">LimitCORE=infinity</span></span><br><span class="line"><span class="string">TasksMax=infinity</span></span><br><span class="line"><span class="string">Delegate=yes</span></span><br><span class="line"><span class="string">KillMode=process</span></span><br><span class="line"><span class="string">OOMScoreAdjust=-500</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">[Install]</span></span><br><span class="line"><span class="string">WantedBy=multi-user.target</span></span><br><span class="line"><span class="string">EOF</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 添加 docker-ce yum 源</span></span><br><span class="line"><span class="comment"># 中科大(ustc)</span></span><br><span class="line">sudo dnf config-manager --add-repo https://mirrors.ustc.edu.cn/docker-ce/linux/centos/docker-ce.repo</span><br><span class="line"><span class="built_in">cd</span> /etc/yum.repos.d</span><br><span class="line"><span class="comment"># 切换中科大源</span></span><br><span class="line">sed -e <span class="string">&#x27;s|download.docker.com|mirrors.ustc.edu.cn/docker-ce|g&#x27;</span> docker-ce.repo</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装 docker-ce</span></span><br><span class="line">yum -y install docker-ce</span><br><span class="line"></span><br><span class="line"><span class="comment"># 配置 daemon.</span></span><br><span class="line"><span class="built_in">cat</span> &gt; /etc/docker/daemon.json &lt;&lt;<span class="string">EOF</span></span><br><span class="line"><span class="string">&#123;</span></span><br><span class="line"><span class="string">  &quot;data-root&quot;: &quot;/data/docker&quot;,</span></span><br><span class="line"><span class="string">  &quot;exec-opts&quot;: [&quot;native.cgroupdriver=systemd&quot;],</span></span><br><span class="line"><span class="string">  &quot;log-driver&quot;: &quot;json-file&quot;,</span></span><br><span class="line"><span class="string">  &quot;log-opts&quot;: &#123;</span></span><br><span class="line"><span class="string">    &quot;max-size&quot;: &quot;100m&quot;,</span></span><br><span class="line"><span class="string">    &quot;max-file&quot;: &quot;100&quot;</span></span><br><span class="line"><span class="string">  &#125;,</span></span><br><span class="line"><span class="string">  &quot;insecure-registries&quot;: [&quot;harbor.xinxainghf.com&quot;],</span></span><br><span class="line"><span class="string">  &quot;registry-mirrors&quot;: [&quot;https://docker.cloudmessage.top&quot;]</span></span><br><span class="line"><span class="string">&#125;</span></span><br><span class="line"><span class="string">EOF</span></span><br><span class="line"><span class="built_in">mkdir</span> -p /etc/systemd/system/docker.service.d</span><br><span class="line"></span><br><span class="line"><span class="comment"># 重启docker服务</span></span><br><span class="line">systemctl daemon-reload &amp;&amp; systemctl restart docker &amp;&amp; systemctl <span class="built_in">enable</span> docker</span><br><span class="line"><span class="comment"># 安装 cri-docker</span></span><br><span class="line">wget https://github.com/Mirantis/cri-dockerd/releases/download/v0.2.6/cri-dockerd-0.2.6.amd64.tgz</span><br><span class="line">tar -xf cri-dockerd-0.3.9.amd64.tgz</span><br><span class="line"><span class="built_in">cp</span> cri-dockerd/cri-dockerd /usr/bin/</span><br><span class="line"><span class="built_in">chmod</span> +x /usr/bin/cri-dockerd</span><br><span class="line"></span><br><span class="line"><span class="comment"># 配置 cri-docker 服务</span></span><br><span class="line"><span class="built_in">cat</span> &lt;&lt;<span class="string">&quot;EOF&quot;</span> &gt; /usr/lib/systemd/system/cri-docker.service</span><br><span class="line">[Unit]</span><br><span class="line">Description=CRI Interface <span class="keyword">for</span> Docker Application Container Engine</span><br><span class="line">Documentation=https://docs.mirantis.com</span><br><span class="line">After=network-online.target firewalld.service docker.service</span><br><span class="line">Wants=network-online.target</span><br><span class="line">Requires=cri-docker.socket</span><br><span class="line">[Service]</span><br><span class="line">Type=notify</span><br><span class="line">ExecStart=/usr/bin/cri-dockerd --network-plugin=cni --pod-infra-container-image=registry.aliyuncs.com/google_containers/pause:3.8</span><br><span class="line">ExecReload=/bin/kill -s HUP <span class="variable">$MAINPID</span></span><br><span class="line">TimeoutSec=0</span><br><span class="line">RestartSec=2</span><br><span class="line">Restart=always</span><br><span class="line">StartLimitBurst=3</span><br><span class="line">StartLimitInterval=60s</span><br><span class="line">LimitNOFILE=infinity</span><br><span class="line">LimitNPROC=infinity</span><br><span class="line">LimitCORE=infinity</span><br><span class="line">TasksMax=infinity</span><br><span class="line">Delegate=<span class="built_in">yes</span></span><br><span class="line">KillMode=process</span><br><span class="line">[Install]</span><br><span class="line">WantedBy=multi-user.target</span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line"><span class="comment"># 添加 cri-docker 套接字</span></span><br><span class="line"><span class="built_in">cat</span> &lt;&lt;<span class="string">&quot;EOF&quot;</span> &gt; /usr/lib/systemd/system/cri-docker.socket</span><br><span class="line">[Unit]</span><br><span class="line">Description=CRI Docker Socket <span class="keyword">for</span> the API</span><br><span class="line">PartOf=cri-docker.service</span><br><span class="line">[Socket]</span><br><span class="line">ListenStream=%t/cri-dockerd.sock</span><br><span class="line">SocketMode=0660</span><br><span class="line">SocketUser=root</span><br><span class="line">SocketGroup=docker</span><br><span class="line">[Install]</span><br><span class="line">WantedBy=sockets.target</span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line"><span class="comment"># 启动 cri-docker 对应服务</span></span><br><span class="line">systemctl daemon-reload</span><br><span class="line">systemctl <span class="built_in">enable</span> cri-docker</span><br><span class="line">systemctl start cri-docker</span><br><span class="line">systemctl is-active cri-docker</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 配置加速器</span></span><br><span class="line"><span class="built_in">mkdir</span> /etc/docker/ -pv</span><br><span class="line"></span><br><span class="line"><span class="built_in">cat</span> &gt;/etc/docker/daemon.json &lt;&lt;<span class="string">EOF</span></span><br><span class="line"><span class="string">&#123;</span></span><br><span class="line"><span class="string">  &quot;exec-opts&quot;: [&quot;native.cgroupdriver=systemd&quot;],</span></span><br><span class="line"><span class="string">  &quot;registry-mirrors&quot;: [</span></span><br><span class="line"><span class="string">    &quot;https://docker.mirrors.ustc.edu.cn&quot;</span></span><br><span class="line"><span class="string">  ],</span></span><br><span class="line"><span class="string">  &quot;max-concurrent-downloads&quot;: 10,</span></span><br><span class="line"><span class="string">  &quot;log-driver&quot;: &quot;json-file&quot;,</span></span><br><span class="line"><span class="string">  &quot;log-level&quot;: &quot;warn&quot;,</span></span><br><span class="line"><span class="string">  &quot;log-opts&quot;: &#123;</span></span><br><span class="line"><span class="string">    &quot;max-size&quot;: &quot;10m&quot;,</span></span><br><span class="line"><span class="string">    &quot;max-file&quot;: &quot;3&quot;</span></span><br><span class="line"><span class="string">    &#125;,</span></span><br><span class="line"><span class="string">  &quot;data-root&quot;: &quot;/var/lib/docker&quot;</span></span><br><span class="line"><span class="string">&#125;</span></span><br><span class="line"><span class="string">EOF</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 启动 Docker</span></span><br><span class="line">groupadd docker</span><br><span class="line"></span><br><span class="line">systemctl daemon-reload</span><br><span class="line"></span><br><span class="line">systemctl <span class="built_in">enable</span> --now docker.socket</span><br><span class="line"></span><br><span class="line">systemctl <span class="built_in">enable</span> --now docker.service</span><br><span class="line"></span><br><span class="line">systemctl status docker.service</span><br><span class="line"></span><br><span class="line">docker info</span><br><span class="line"></span><br><span class="line"><span class="comment"># 解压 cri-docker</span></span><br><span class="line"><span class="comment"># https://github.com/Mirantis/cri-dockerd/releases/</span></span><br><span class="line"><span class="comment"># wget  https://mirrors.chenby.cn/https://github.com/Mirantis/cri-dockerd/releases/download/v0.3.10/cri-dockerd-0.3.10.amd64.tgz</span></span><br><span class="line"></span><br><span class="line">tar xvf cri-dockerd-*.amd64.tgz </span><br><span class="line"></span><br><span class="line"><span class="built_in">cp</span> -r cri-dockerd  /usr/bin/</span><br><span class="line"></span><br><span class="line"><span class="built_in">chmod</span> +x /usr/bin/cri-dockerd</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 写入启动  cri-docker 配置文件</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">cat</span> &gt;  /usr/lib/systemd/system/cri-docker.service &lt;&lt;<span class="string">EOF</span></span><br><span class="line"><span class="string">[Unit]</span></span><br><span class="line"><span class="string">Description=CRI Interface for Docker Application Container Engine</span></span><br><span class="line"><span class="string">Documentation=https://docs.mirantis.com</span></span><br><span class="line"><span class="string">After=network-online.target firewalld.service docker.service</span></span><br><span class="line"><span class="string">Wants=network-online.target</span></span><br><span class="line"><span class="string">Requires=cri-docker.socket</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">[Service]</span></span><br><span class="line"><span class="string">Type=notify</span></span><br><span class="line"><span class="string">ExecStart=/usr/bin/cri-dockerd --network-plugin=cni --pod-infra-container-image=registry.aliyuncs.com/google_containers/pause:3.7</span></span><br><span class="line"><span class="string">ExecReload=/bin/kill -s HUP $MAINPID</span></span><br><span class="line"><span class="string">TimeoutSec=0</span></span><br><span class="line"><span class="string">RestartSec=2</span></span><br><span class="line"><span class="string">Restart=always</span></span><br><span class="line"><span class="string">StartLimitBurst=3</span></span><br><span class="line"><span class="string">StartLimitInterval=60s</span></span><br><span class="line"><span class="string">LimitNOFILE=infinity</span></span><br><span class="line"><span class="string">LimitNPROC=infinity</span></span><br><span class="line"><span class="string">LimitCORE=infinity</span></span><br><span class="line"><span class="string">TasksMax=infinity</span></span><br><span class="line"><span class="string">Delegate=yes</span></span><br><span class="line"><span class="string">KillMode=process</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">[Install]</span></span><br><span class="line"><span class="string">WantedBy=multi-user.target</span></span><br><span class="line"><span class="string">EOF</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 写入 cri-docker 的 socket 配置文件</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">cat</span> &gt; /usr/lib/systemd/system/cri-docker.socket &lt;&lt;<span class="string">EOF</span></span><br><span class="line"><span class="string">[Unit]</span></span><br><span class="line"><span class="string">Description=CRI Docker Socket for the API</span></span><br><span class="line"><span class="string">PartOf=cri-docker.service</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">[Socket]</span></span><br><span class="line"><span class="string">ListenStream=%t/cri-dockerd.sock</span></span><br><span class="line"><span class="string">SocketMode=0660</span></span><br><span class="line"><span class="string">SocketUser=root</span></span><br><span class="line"><span class="string">SocketGroup=docker</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">[Install]</span></span><br><span class="line"><span class="string">WantedBy=sockets.target</span></span><br><span class="line"><span class="string">EOF</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 启动 cri-docker</span></span><br><span class="line"></span><br><span class="line">systemctl daemon-reload</span><br><span class="line"></span><br><span class="line">systemctl <span class="built_in">enable</span> --now cri-docker.service</span><br><span class="line"></span><br><span class="line">systemctl status docker.service</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
 <hr>
-<h3 id="二、日常运维操作"><a href="#二、日常运维操作" class="headerlink" title="二、日常运维操作"></a><strong>二、日常运维操作</strong></h3><ol>
+<h2 id="二、日常运维操作"><a href="#二、日常运维操作" class="headerlink" title="二、日常运维操作"></a><strong>二、日常运维操作</strong></h2><ol>
 <li><strong>命令与调试</strong><ul>
 <li>如何查看某个 Pod 的详细错误日志？如果 Pod 处于 <code>CrashLoopBackOff</code> 状态，如何排查？</li>
 <li>如何在不重启 Pod 的情况下更新 ConfigMap 的配置？</li>
@@ -4155,7 +4247,7 @@ The cluster should be running! Launch a test pod.<br>Support Level</li>
 </li>
 </ol>
 <hr>
-<h3 id="三、故障排查"><a href="#三、故障排查" class="headerlink" title="三、故障排查"></a><strong>三、故障排查</strong></h3><ol>
+<h2 id="三、故障排查"><a href="#三、故障排查" class="headerlink" title="三、故障排查"></a><strong>三、故障排查</strong></h2><ol>
 <li><p><strong>节点故障</strong></p>
 <ul>
 <li><p>某个 Node 状态为 <code>NotReady</code>，如何逐步排查原因？</p>
@@ -4222,7 +4314,7 @@ The cluster should be running! Launch a test pod.<br>Support Level</li>
 </li>
 </ol>
 <hr>
-<h3 id="四、安全与优化"><a href="#四、安全与优化" class="headerlink" title="四、安全与优化"></a><strong>四、安全与优化</strong></h3><ol>
+<h2 id="四、安全与优化"><a href="#四、安全与优化" class="headerlink" title="四、安全与优化"></a><strong>四、安全与优化</strong></h2><ol>
 <li><strong>安全实践</strong><ul>
 <li>如何限制某个 Namespace 的 Pod 只能访问特定资源（NetworkPolicy）？</li>
 <li>ServiceAccount 的权限如何通过 RBAC 控制？举例说明 Role 和 ClusterRole 的区别。</li>
@@ -4280,7 +4372,7 @@ The cluster should be running! Launch a test pod.<br>Support Level</li>
 </li>
 </ul>
 <hr>
-<h3 id="五、场景设计题"><a href="#五、场景设计题" class="headerlink" title="五、场景设计题"></a><strong>五、场景设计题</strong></h3><ol>
+<h2 id="五、场景设计题"><a href="#五、场景设计题" class="headerlink" title="五、场景设计题"></a><strong>五、场景设计题</strong></h2><ol>
 <li><strong>设计题</strong><ul>
 <li>假设集群中有 1000 个节点，突然出现大量 Pod 被驱逐（Evicted），如何快速定位原因并恢复？</li>
 <li>如何设计一个自动化方案，监控所有 Deployment 的镜像版本并自动告警过期的版本？</li>
@@ -4293,7 +4385,7 @@ The cluster should be running! Launch a test pod.<br>Support Level</li>
 </li>
 </ol>
 <hr>
-<h3 id="六、工具与扩展"><a href="#六、工具与扩展" class="headerlink" title="六、工具与扩展"></a><strong>六、工具与扩展</strong></h3><ol>
+<h2 id="六、工具与扩展"><a href="#六、工具与扩展" class="headerlink" title="六、工具与扩展"></a><strong>六、工具与扩展</strong></h2><ol>
 <li><strong>周边工具</strong><ul>
 <li>你用过哪些 Kubernetes 运维工具（如 Helm、ArgoCD、Velero）？简述它们的用途。</li>
 <li>如何通过 Prometheus 监控 Kubernetes 集群的自定义指标？</li>
@@ -4304,6 +4396,76 @@ The cluster should be running! Launch a test pod.<br>Support Level</li>
 </ul>
 </li>
 </ol>
+<h3 id="helm"><a href="#helm" class="headerlink" title="helm"></a>helm</h3><p>本质是让k8s的应用管理可配置，能动态生成。通过动态生成k8s的资源清单文件，然后调用kubectl自动执行k8s资源部署。</p>
+<p>打包的方式，支持发布的版本管理和控制，很大程度上简化了kubernetes应用的部署和管理。</p>
+<ul>
+<li>chart：是一个应用的信息集合。可以理解为ap&#x2F;yum中的软件包</li>
+<li>release：是chart的运行实例，代表一个正在运行的应用。可以理解为镜像</li>
+<li>helm cli: 客户端软件，负责和kubernetes api server 通信</li>
+<li>repository： 用于发布和存储chart的仓库</li>
+</ul>
+<p>查看repo</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[root@master ~]<span class="comment"># helm repo list</span></span><br><span class="line">NAME  	URL</span><br><span class="line">stable	http://mirror.azure.cn/kubernetes/charts</span><br><span class="line">aliyun	https://kubernetes.oss-cn-hangzhou.aliyuncs.com/charts</span><br></pre></td></tr></table></figure>
+
+<p>缓存目录</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">/root/.cache/helm/repository</span><br></pre></td></tr></table></figure>
+
+<p>查看有哪些可安装的chart</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># repo 后需要跟着仓库名</span></span><br><span class="line">helm search repo stable</span><br><span class="line"><span class="comment"># 展示所有版本</span></span><br><span class="line">helm search repo fluent/fluent-bit --versions</span><br><span class="line"></span><br><span class="line"><span class="comment"># 在线查找</span></span><br><span class="line">helm search hub xxxx</span><br></pre></td></tr></table></figure>
+
+<p>安装chart</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">helm show values stable/apache</span><br><span class="line"><span class="comment"># 安装，自动生成名称</span></span><br><span class="line">helm install stable/apache --generate-name</span><br><span class="line">helm show chart stable/apache</span><br><span class="line">helm show all stable/apache</span><br><span class="line"><span class="comment"># 卸载</span></span><br><span class="line">helm uninstall apache-123291919</span><br></pre></td></tr></table></figure>
+
+<p>更新</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">helm upgrade [RELEASE_NAME] [CHART_PATH] -f values.yaml</span><br><span class="line"></span><br><span class="line">helm upgrade my-nginx ./nginx-template -f values.yaml</span><br><span class="line"></span><br><span class="line"><span class="comment"># 如果只想修改某个参数（如仅调整副本数），可以使用 --set：</span></span><br><span class="line">helm upgrade my-nginx ./nginx-template --<span class="built_in">set</span> replicaCount=3</span><br><span class="line"><span class="comment"># 升级前检查变更内容</span></span><br><span class="line">helm diff upgrade my-nginx ./nginx-template -f values.yaml</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<p>灰度</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">helm upgrade --<span class="built_in">set</span> replicaCount=1  <span class="comment"># 先更新1个副本</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="创建NGINX示例"><a href="#创建NGINX示例" class="headerlink" title="创建NGINX示例"></a>创建NGINX示例</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">helm create myapp</span><br><span class="line"><span class="built_in">cd</span> myapp</span><br><span class="line"><span class="built_in">rm</span> -rf templates/*  <span class="comment"># 清空默认模板</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>以下是使用 Helm 创建一个 NGINX 部署模板的完整步骤，包含副本数设置和局域网访问配置：</p>
+<h4 id="1-创建-Helm-Chart-结构"><a href="#1-创建-Helm-Chart-结构" class="headerlink" title="1. 创建 Helm Chart 结构"></a>1. 创建 Helm Chart 结构</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">helm create nginx-template</span><br><span class="line">cd nginx-template</span><br><span class="line">rm -rf templates/*  # 清空默认模板</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-配置-values-yaml"><a href="#2-配置-values-yaml" class="headerlink" title="2. 配置 values.yaml"></a>2. 配置 values.yaml</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># values.yaml</span><br><span class="line">replicaCount: 2</span><br><span class="line">image:</span><br><span class="line">  repository: nginx</span><br><span class="line">  tag: latest</span><br><span class="line">  pullPolicy: IfNotPresent</span><br><span class="line"></span><br><span class="line">service:</span><br><span class="line">  type: NodePort  # 局域网访问关键配置</span><br><span class="line">  port: 80</span><br><span class="line">  nodePort: 30080  # 30000-32767 范围内</span><br></pre></td></tr></table></figure>
+
+<h4 id="3-创建部署模板"><a href="#3-创建部署模板" class="headerlink" title="3. 创建部署模板"></a>3. 创建部署模板</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># templates/deployment.yaml</span><br><span class="line">apiVersion: apps/v1</span><br><span class="line">kind: Deployment</span><br><span class="line">metadata:</span><br><span class="line">  name: &#123;&#123; .Release.Name &#125;&#125;-nginx</span><br><span class="line">spec:</span><br><span class="line">  replicas: &#123;&#123; .Values.replicaCount &#125;&#125;</span><br><span class="line">  selector:</span><br><span class="line">    matchLabels:</span><br><span class="line">      app: nginx</span><br><span class="line">  template:</span><br><span class="line">    metadata:</span><br><span class="line">      labels:</span><br><span class="line">        app: nginx</span><br><span class="line">    spec:</span><br><span class="line">      containers:</span><br><span class="line">      - name: nginx</span><br><span class="line">        image: &quot;&#123;&#123; .Values.image.repository &#125;&#125;:&#123;&#123; .Values.image.tag &#125;&#125;&quot;</span><br><span class="line">        imagePullPolicy: &#123;&#123; .Values.image.pullPolicy &#125;&#125;</span><br><span class="line">        ports:</span><br><span class="line">        - containerPort: 80</span><br></pre></td></tr></table></figure>
+
+<h4 id="4-创建服务模板"><a href="#4-创建服务模板" class="headerlink" title="4. 创建服务模板"></a>4. 创建服务模板</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># templates/service.yaml</span><br><span class="line">apiVersion: v1</span><br><span class="line">kind: Service</span><br><span class="line">metadata:</span><br><span class="line">  name: &#123;&#123; .Release.Name &#125;&#125;-svc</span><br><span class="line">spec:</span><br><span class="line">  type: &#123;&#123; .Values.service.type &#125;&#125;</span><br><span class="line">  ports:</span><br><span class="line">    - port: &#123;&#123; .Values.service.port &#125;&#125;</span><br><span class="line">      targetPort: 80</span><br><span class="line">      nodePort: &#123;&#123; .Values.service.nodePort &#125;&#125;</span><br><span class="line">  selector:</span><br><span class="line">    app: nginx</span><br></pre></td></tr></table></figure>
+
+<h4 id="5-安装和验证"><a href="#5-安装和验证" class="headerlink" title="5. 安装和验证"></a>5. 安装和验证</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 安装Chart</span></span><br><span class="line">helm install my-nginx .</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看服务</span></span><br><span class="line">kubectl get svc my-nginx-svc</span><br><span class="line"><span class="comment"># 输出示例：</span></span><br><span class="line"><span class="comment"># NAME          TYPE       CLUSTER-IP    EXTERNAL-IP   PORT(S)        AGE</span></span><br><span class="line"><span class="comment"># my-nginx-svc  NodePort   10.96.1.123   &lt;none&gt;        80:30080/TCP   15s</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 局域网访问测试（假设节点IP为192.168.31.100）</span></span><br><span class="line">curl http://192.168.31.100:30080</span><br><span class="line"><span class="comment"># 查看release状态</span></span><br><span class="line">helm status xxxx -n xxx</span><br></pre></td></tr></table></figure>
+
+<p>增加资源限制</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># values.yaml</span></span><br><span class="line">resources:</span><br><span class="line">limits:</span><br><span class="line">  cpu: 500m</span><br><span class="line">  memory: 512Mi</span><br></pre></td></tr></table></figure>
+
+<h3 id="harbor"><a href="#harbor" class="headerlink" title="harbor"></a>harbor</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">helm pull harbor/harbor --version 1.11.0</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">helm install harbor -n harbor -f values.yaml  .</span><br></pre></td></tr></table></figure>
+
+<h4 id="storageClass"><a href="#storageClass" class="headerlink" title="storageClass"></a>storageClass</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker pull swr.cn-north-4.myhuaweicloud.com/ddn-k8s/registry.k8s.io/sig-storage/nfs-subdir-external-provisioner:v4.0.2</span><br></pre></td></tr></table></figure>
+
+<p>其他机器要是使用的时候要先安装</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">yum install nfs-utils -y</span><br></pre></td></tr></table></figure>
+
+<h3 id="自动补全"><a href="#自动补全" class="headerlink" title="自动补全"></a>自动补全</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">yum install bash-completion -y </span><br><span class="line">vim ~/.bashrc</span><br><span class="line"><span class="comment"># 增加</span></span><br><span class="line"><span class="built_in">source</span> &lt;(kubectl completion bash)</span><br><span class="line"></span><br><span class="line"><span class="built_in">source</span>  ~/.bashrc</span><br><span class="line"></span><br><span class="line"><span class="comment"># 检查是否生效，应该返回函数定义</span></span><br><span class="line"><span class="built_in">type</span> _get_comp_words_by_ref  </span><br><span class="line"><span class="comment"># 如果不生效</span></span><br><span class="line"><span class="built_in">source</span> /usr/share/bash-completion/bash_completion</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 进入pod</span></span><br><span class="line">kubectl <span class="built_in">exec</span> -it test-pod -- /bin/bash</span><br></pre></td></tr></table></figure>
+
+<h3 id="Loki"><a href="#Loki" class="headerlink" title="Loki"></a>Loki</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 查看grafana 密码</span></span><br><span class="line">[root@master ~]<span class="comment"># kubectl get secret --namespace loki loki-grafana -o jsonpath=&quot;&#123;.data.admin-password&#125;&quot; | base64 --decode ; echo</span></span><br><span class="line">vzaFKvKad4MAogaZNe8ppZ6QRcUB8fvbykPuoKiV</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">loki:</span></span><br><span class="line">  <span class="attr">enabled:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">persistence:</span></span><br><span class="line">    <span class="attr">enabled:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">accessModes:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">ReadWriteOnce</span></span><br><span class="line">    <span class="attr">size:</span> <span class="string">2Gi</span></span><br><span class="line">    <span class="attr">storageClassName:</span> <span class="string">nfs-client</span></span><br><span class="line"></span><br><span class="line"><span class="attr">promtail:</span></span><br><span class="line">  <span class="attr">enabled:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">config:</span></span><br><span class="line">    <span class="attr">clients:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">url:</span> <span class="string">http://loki:3100/loki/api/v1/push</span></span><br><span class="line">    <span class="attr">scrape_configs:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">job_name:</span> <span class="string">java-json-logs</span></span><br><span class="line">        <span class="attr">kubernetes_sd_configs:</span></span><br><span class="line">          <span class="bullet">-</span> <span class="attr">role:</span> <span class="string">pod</span></span><br><span class="line">        <span class="attr">pipeline_stages:</span></span><br><span class="line">          <span class="bullet">-</span> <span class="attr">docker:</span> &#123;&#125;  <span class="comment"># 解析容器日志格式</span></span><br><span class="line">          <span class="bullet">-</span> <span class="attr">json:</span>      <span class="comment"># 新增JSON解析阶段</span></span><br><span class="line">              <span class="attr">expressions:</span></span><br><span class="line">                <span class="attr">level:</span> <span class="string">level</span>       <span class="comment"># 提取JSON中的level字段</span></span><br><span class="line">                <span class="attr">traceId:</span> <span class="string">traceId</span>   <span class="comment"># 提取traceId字段</span></span><br><span class="line">                <span class="attr">message:</span> <span class="string">message</span></span><br><span class="line">                <span class="attr">timestamp:</span> <span class="string">timestamp</span></span><br><span class="line">          <span class="bullet">-</span> <span class="attr">timestamp:</span> <span class="comment"># 将JSON中的时间戳转为日志时间</span></span><br><span class="line">              <span class="attr">source:</span> <span class="string">timestamp</span></span><br><span class="line">              <span class="attr">format:</span> <span class="string">RFC3339</span></span><br><span class="line">          <span class="bullet">-</span> <span class="attr">labels:</span>    <span class="comment"># 将关键字段设为标签（注意基数控制）</span></span><br><span class="line">              <span class="attr">level:</span> <span class="string">&quot;&quot;</span></span><br><span class="line">              <span class="attr">app:</span> <span class="string">&quot;<span class="template-variable">&#123;&#123; .app &#125;&#125;</span>&quot;</span>  <span class="comment"># 从K8S标签继承应用名</span></span><br><span class="line">        <span class="attr">relabel_configs:</span></span><br><span class="line">          <span class="bullet">-</span> <span class="attr">source_labels:</span> [<span class="string">__meta_kubernetes_pod_label_app</span>]</span><br><span class="line">            <span class="attr">target_label:</span> <span class="string">app</span></span><br><span class="line">          <span class="bullet">-</span> <span class="attr">source_labels:</span> [<span class="string">__meta_kubernetes_namespace</span>]</span><br><span class="line">            <span class="attr">target_label:</span> <span class="string">namespace</span></span><br><span class="line">  <span class="attr">defaultVolumes:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">run</span></span><br><span class="line">      <span class="attr">hostPath:</span></span><br><span class="line">        <span class="attr">path:</span> <span class="string">/run/promtail</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">containers</span></span><br><span class="line">      <span class="attr">hostPath:</span></span><br><span class="line">        <span class="attr">path:</span> <span class="string">/data/docker/containers</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">pods</span></span><br><span class="line">      <span class="attr">hostPath:</span></span><br><span class="line">        <span class="attr">path:</span> <span class="string">/var/log/pods</span></span><br><span class="line">  <span class="attr">defaultVolumeMounts:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">run</span></span><br><span class="line">      <span class="attr">mountPath:</span> <span class="string">/run/promtail</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">containers</span></span><br><span class="line">      <span class="attr">mountPath:</span> <span class="string">/data/docker/containers</span></span><br><span class="line">      <span class="attr">readOnly:</span> <span class="literal">true</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">pods</span></span><br><span class="line">      <span class="attr">mountPath:</span> <span class="string">/var/log/pods</span></span><br><span class="line">      <span class="attr">readOnly:</span> <span class="literal">true</span></span><br><span class="line"></span><br><span class="line"><span class="attr">grafana:</span></span><br><span class="line">  <span class="attr">enabled:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">persistence:</span></span><br><span class="line">    <span class="attr">enabled:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">accessModes:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">ReadWriteOnce</span></span><br><span class="line">    <span class="attr">size:</span> <span class="string">2Gi</span></span><br><span class="line">    <span class="attr">storageClassName:</span> <span class="string">nfs-client</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>修改后更新</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">helm install loki . -n loki -f values-pre.yaml</span><br><span class="line"></span><br><span class="line">[root@master loki-stack]<span class="comment"># </span></span><br><span class="line">helm upgrade loki . -n loki   -f values-pre.yaml \</span><br><span class="line">--dry-run \</span><br><span class="line">--debug &gt; helm-debug.log</span><br><span class="line">kubectl rollout restart daemonset loki-fluent-bit-loki -n loki</span><br><span class="line"></span><br><span class="line">helm upgrade --install fluent-bit fluent/fluent-bit \</span><br><span class="line">  -n loki \</span><br><span class="line">  -f fluent-bit-values.yaml</span><br><span class="line">  </span><br><span class="line">  </span><br><span class="line">  </span><br><span class="line">  </span><br><span class="line"> helm upgrade loki . -n loki   -f values-pre.yaml  --reset-values</span><br><span class="line"> kubectl rollout restart daemonset loki-fluent-bit-loki -n loki</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
 <hr>
 <h3 id="考察重点"><a href="#考察重点" class="headerlink" title="考察重点"></a><strong>考察重点</strong></h3><ul>
 <li><strong>基础扎实</strong>：能清晰解释核心概念（如 Pod 生命周期、Service 负载均衡）。</li>
@@ -8665,5 +8827,1240 @@ The cluster should be running! Launch a test pod.<br>Support Level</li>
       <tags>
         <tag>Kubenetes</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>【自动化测试探索】</title>
+    <url>/2025/07/04/%E3%80%90%20%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95%E6%8E%A2%E7%B4%A2%E3%80%91/</url>
+    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><h2 id="pytest"><a href="#pytest" class="headerlink" title="pytest"></a>pytest</h2><h3 id="快速使用"><a href="#快速使用" class="headerlink" title="快速使用"></a>快速使用</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">add</span>(<span class="params">x, y</span>):</span><br><span class="line">    <span class="keyword">return</span> x + y</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">TestAddFunc</span>(<span class="title class_ inherited__">object</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">setup_method</span>(<span class="params">self, method</span>):</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;设置测试方法: <span class="subst">&#123;method.__name__&#125;</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">teardown_method</span>(<span class="params">self, method</span>):</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;清理测试方法: <span class="subst">&#123;method.__name__&#125;</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">test_01</span>(<span class="params">self</span>):  <span class="comment"># 方法名和函数必须用test_开头</span></span><br><span class="line">        <span class="built_in">print</span>(add(<span class="number">10</span>, <span class="number">20</span>))</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">test_02</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="built_in">print</span>(add(<span class="string">&quot;a&quot;</span>, <span class="string">&quot;B&quot;</span>))</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">test_03</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="built_in">print</span>(add(<span class="string">&quot;ad&quot;</span>, <span class="number">1.1</span>))</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">unit1.py::TestAddFunc::test_01 设置测试方法: test_01</span><br><span class="line">PASSED                                    [ 33%]30</span><br><span class="line">清理测试方法: test_01</span><br><span class="line"></span><br><span class="line">unit1.py::TestAddFunc::test_02 设置测试方法: test_02</span><br><span class="line">PASSED                                    [ 66%]aB</span><br><span class="line">清理测试方法: test_02</span><br><span class="line"></span><br><span class="line">unit1.py::TestAddFunc::test_03 设置测试方法: test_03</span><br><span class="line">FAILED                                    [100%]</span><br></pre></td></tr></table></figure>
+
+<h3 id="结果解析"><a href="#结果解析" class="headerlink" title="结果解析"></a>结果解析</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">✗ pytest -s  study_pyest/test_data.py </span><br><span class="line">=================================================================================================== <span class="built_in">test</span> session starts ====================================================================================================</span><br><span class="line">platform darwin -- Python 3.11.10, pytest-8.4.1, pluggy-1.6.0</span><br><span class="line">rootdir: /Users/medivh/github/box</span><br><span class="line">plugins: anyio-4.9.0</span><br><span class="line">collected 4 items                                                                                                                                                                                                          </span><br><span class="line"></span><br><span class="line">study_pyest/test_data.py FFFF</span><br><span class="line"></span><br><span class="line">========================================================================================================= FAILURES =========================================================================================================</span><br><span class="line">_______________________________________________________________________________________________________ test_number ________________________________________________________________________________________________________</span><br><span class="line"></span><br><span class="line">    def test_number():</span><br><span class="line">&gt;       assert 1 == 2</span><br><span class="line">E       assert 1 == 2</span><br><span class="line"></span><br><span class="line">study_pyest/test_data.py:2: AssertionError</span><br><span class="line">_________________________________________________________________________________________________________ test_str _________________________________________________________________________________________________________</span><br><span class="line"></span><br><span class="line">    def test_str():</span><br><span class="line">        a = <span class="string">&#x27;adada&#x27;</span></span><br><span class="line">        b = <span class="string">&#x27;asdasd&#x27;</span></span><br><span class="line">&gt;       assert a == b</span><br><span class="line">E       AssertionError: assert <span class="string">&#x27;adada&#x27;</span> == <span class="string">&#x27;asdasd&#x27;</span></span><br><span class="line">E         </span><br><span class="line">E         - asdasd</span><br><span class="line">E         + adada</span><br><span class="line"></span><br><span class="line">study_pyest/test_data.py:8: AssertionError</span><br><span class="line">________________________________________________________________________________________________________ test_list _________________________________________________________________________________________________________</span><br><span class="line"></span><br><span class="line">    def test_list():</span><br><span class="line">        a = list(<span class="string">&#x27;aaaaaa&#x27;</span>)</span><br><span class="line">        b = list(<span class="string">&#x27;adasda&#x27;</span>)</span><br><span class="line">&gt;       assert a == b</span><br><span class="line">E       AssertionError: assert [<span class="string">&#x27;a&#x27;</span>, <span class="string">&#x27;a&#x27;</span>, <span class="string">&#x27;a&#x27;</span>, <span class="string">&#x27;a&#x27;</span>, <span class="string">&#x27;a&#x27;</span>, <span class="string">&#x27;a&#x27;</span>] == [<span class="string">&#x27;a&#x27;</span>, <span class="string">&#x27;d&#x27;</span>, <span class="string">&#x27;a&#x27;</span>, <span class="string">&#x27;s&#x27;</span>, <span class="string">&#x27;d&#x27;</span>, <span class="string">&#x27;a&#x27;</span>]</span><br><span class="line">E         </span><br><span class="line">E         At index 1 diff: <span class="string">&#x27;a&#x27;</span> != <span class="string">&#x27;d&#x27;</span></span><br><span class="line">E         Use -v to get more diff</span><br><span class="line"></span><br><span class="line">study_pyest/test_data.py:14: AssertionError</span><br><span class="line">________________________________________________________________________________________________________ test_dict _________________________________________________________________________________________________________</span><br><span class="line"></span><br><span class="line">    def test_dict():</span><br><span class="line">        a = &#123;<span class="string">&#x27;a&#x27;</span>: 1, <span class="string">&#x27;a1&#x27;</span>: 11, <span class="string">&#x27;c&#x27;</span>: <span class="string">&#x27;ada&#x27;</span>&#125;</span><br><span class="line">        b = &#123;<span class="string">&#x27;a&#x27;</span>: 12, <span class="string">&#x27;a1&#x27;</span>: 11, <span class="string">&#x27;c&#x27;</span>: <span class="string">&#x27;asd&#x27;</span>&#125;</span><br><span class="line">&gt;       assert a == b</span><br><span class="line">E       AssertionError: assert &#123;<span class="string">&#x27;a&#x27;</span>: 1, <span class="string">&#x27;a1&#x27;</span>: 11, <span class="string">&#x27;c&#x27;</span>: <span class="string">&#x27;ada&#x27;</span>&#125; == &#123;<span class="string">&#x27;a&#x27;</span>: 12, <span class="string">&#x27;a1...1, &#x27;</span>c<span class="string">&#x27;: &#x27;</span>asd<span class="string">&#x27;&#125;</span></span><br><span class="line"><span class="string">E         </span></span><br><span class="line"><span class="string">E         Omitting 1 identical items, use -vv to show</span></span><br><span class="line"><span class="string">E         Differing items:</span></span><br><span class="line"><span class="string">E         &#123;&#x27;</span>a<span class="string">&#x27;: 1&#125; != &#123;&#x27;</span>a<span class="string">&#x27;: 12&#125;</span></span><br><span class="line"><span class="string">E         &#123;&#x27;</span>c<span class="string">&#x27;: &#x27;</span>ada<span class="string">&#x27;&#125; != &#123;&#x27;</span>c<span class="string">&#x27;: &#x27;</span>asd<span class="string">&#x27;&#125;</span></span><br><span class="line"><span class="string">E         Use -v to get more diff</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">study_pyest/test_data.py:20: AssertionError</span></span><br><span class="line"><span class="string">================================================================================================= short test summary info ==================================================================================================</span></span><br><span class="line"><span class="string">FAILED study_pyest/test_data.py::test_number - assert 1 == 2</span></span><br><span class="line"><span class="string">FAILED study_pyest/test_data.py::test_str - AssertionError: assert &#x27;</span>adada<span class="string">&#x27; == &#x27;</span>asdasd<span class="string">&#x27;</span></span><br><span class="line"><span class="string">FAILED study_pyest/test_data.py::test_list - AssertionError: assert [&#x27;</span>a<span class="string">&#x27;, &#x27;</span>a<span class="string">&#x27;, &#x27;</span>a<span class="string">&#x27;, &#x27;</span>a<span class="string">&#x27;, &#x27;</span>a<span class="string">&#x27;, &#x27;</span>a<span class="string">&#x27;] == [&#x27;</span>a<span class="string">&#x27;, &#x27;</span>d<span class="string">&#x27;, &#x27;</span>a<span class="string">&#x27;, &#x27;</span>s<span class="string">&#x27;, &#x27;</span>d<span class="string">&#x27;, &#x27;</span>a<span class="string">&#x27;]</span></span><br><span class="line"><span class="string">FAILED study_pyest/test_data.py::test_dict - AssertionError: assert &#123;&#x27;</span>a<span class="string">&#x27;: 1, &#x27;</span>a1<span class="string">&#x27;: 11, &#x27;</span>c<span class="string">&#x27;: &#x27;</span>ada<span class="string">&#x27;&#125; == &#123;&#x27;</span>a<span class="string">&#x27;: 12, &#x27;</span>a1...1, <span class="string">&#x27;c&#x27;</span>: <span class="string">&#x27;asd&#x27;</span>&#125;</span><br><span class="line">==================================================================================================== 4 failed <span class="keyword">in</span> 0.03s =====================================================================================================</span><br><span class="line">(.venv-3.11) ➜  box git:(master) ✗ </span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<p>结果解析：</p>
+<ol>
+<li>执行环境：版本、根目录、用例数量</li>
+<li>执行过程：文件名称、用例结构、执行进度</li>
+<li>失败详情：用例内容、断言提示</li>
+<li>整体摘要：结果情况、结果数量、花费时间</li>
+</ol>
+<h3 id="用例规则"><a href="#用例规则" class="headerlink" title="用例规则"></a>用例规则</h3><h4 id="用例发现规则"><a href="#用例发现规则" class="headerlink" title="用例发现规则"></a>用例发现规则</h4><p>测试框架在识别和加载用例的过程。</p>
+<ol>
+<li>遍历所有的目录，例外：<code>venv</code> 和<code>.</code>开头的目录</li>
+<li>打开Python文件，<code>test_</code>开头和 <code>_test</code>结尾的文件</li>
+<li>遍历所有的<code>Test</code>开头类</li>
+<li>收集所有的<code>test_</code>开头的函数或者方法</li>
+</ol>
+<h4 id="用例内容规则"><a href="#用例内容规则" class="headerlink" title="用例内容规则"></a>用例内容规则</h4><p>对用例的要求：</p>
+<ol>
+<li>可调用的（函数、方法、类、对象）</li>
+<li>名字<code>test_</code>开头</li>
+<li>没有参数（参数有另外含义）</li>
+<li>没有返回值（默认为None）</li>
+</ol>
+<h3 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h3><ul>
+<li><p>-s 允许输入和输出</p>
+</li>
+<li><p>-v&#x2F;-vv 详细信息</p>
+</li>
+<li><p>-x 快速退出</p>
+</li>
+<li><p>-m 用例筛选</p>
+</li>
+</ul>
+<h3 id="标记"><a href="#标记" class="headerlink" title="标记"></a>标记</h3><p>让用例与众不同，可以让用例被区别对待。</p>
+<p>步骤：</p>
+<ol>
+<li>先注册</li>
+<li>再标记</li>
+<li>后筛选</li>
+</ol>
+<h4 id="1-用户自定义标记"><a href="#1-用户自定义标记" class="headerlink" title="1. 用户自定义标记"></a>1. 用户自定义标记</h4><p>只能实现用例筛选，使用 <code>-m</code>+名字。</p>
+<p>配置：</p>
+<figure class="highlight ini"><table><tr><td class="code"><pre><span class="line"><span class="section">[pytest]</span></span><br><span class="line"></span><br><span class="line"><span class="attr">markers</span> =</span><br><span class="line">    api: 接口测试</span><br><span class="line">    web: UI测试</span><br><span class="line">    ut: 单元测试</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">TestAdd</span>:</span><br><span class="line"><span class="meta">    @pytest.mark.ut</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">test_add</span>(<span class="params">self</span>):</span><br><span class="line">        res = add_func(<span class="number">1</span>, <span class="number">4</span>)</span><br><span class="line">        <span class="keyword">assert</span> res == <span class="number">5</span></span><br><span class="line"></span><br><span class="line"><span class="meta">    @pytest.mark.api</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">test_str</span>(<span class="params">self</span>):</span><br><span class="line">        res = add_func(<span class="string">&#x27;1&#x27;</span>, <span class="string">&#x27;4&#x27;</span>)</span><br><span class="line">        <span class="keyword">assert</span> res == <span class="string">&#x27;14&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>输出：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">================================================================================================== 7 deselected <span class="keyword">in</span> 0.00s ===================================================================================================</span><br><span class="line">(.venv-3.11) ➜  study_pyest git:(master) ✗ pytest -m api</span><br><span class="line">=================================================================================================== <span class="built_in">test</span> session starts ====================================================================================================</span><br><span class="line">platform darwin -- Python 3.11.10, pytest-8.4.1, pluggy-1.6.0</span><br><span class="line">rootdir: /Users/medivh/github/box/study_pyest</span><br><span class="line">configfile: pytest.ini</span><br><span class="line">plugins: anyio-4.9.0</span><br><span class="line">collected 7 items / 6 deselected / 1 selected                                                                                                                                                                              </span><br><span class="line"></span><br><span class="line">test_data.py .                                                                                                                                                                                                       [100%]</span><br><span class="line"></span><br><span class="line">============================================================================================= 1 passed, 6 deselected <span class="keyword">in</span> 0.00s ==============================================================================================</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h4 id="2-框架内置标记"><a href="#2-框架内置标记" class="headerlink" title="2.框架内置标记"></a>2.框架内置标记</h4><p>可以为用例增加特殊执行效果。</p>
+<p>和用户自定义的区别：</p>
+<ol>
+<li>不需要注册，可以直接使用</li>
+<li>不仅可以筛选，还可以增加特殊效果</li>
+<li>不同的标记，增加不同的特殊效果<ol>
+<li>skip： 无条件跳过</li>
+<li>skipif: 有条件的跳过</li>
+<li>xfail: 预期失败</li>
+<li>parametrize: 参数化</li>
+<li>usefixture: 使用fixture</li>
+</ol>
+</li>
+</ol>
+<p>示例:</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">TestAdd</span>:</span><br><span class="line"><span class="meta">    @pytest.mark.skip</span></span><br><span class="line"><span class="meta">    @pytest.mark.ut</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">test_add</span>(<span class="params">self</span>):</span><br><span class="line">        res = add_func(<span class="number">1</span>, <span class="number">4</span>)</span><br><span class="line">        <span class="keyword">assert</span> res == <span class="number">5</span></span><br><span class="line"></span><br><span class="line"><span class="meta">    @pytest.mark.skipif(<span class="params"><span class="number">1</span> == <span class="number">2</span>, reason=<span class="string">&#x27;不想干了&#x27;</span></span>)</span></span><br><span class="line"><span class="meta">    @pytest.mark.api</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">test_str</span>(<span class="params">self</span>):</span><br><span class="line">        res = add_func(<span class="string">&#x27;1&#x27;</span>, <span class="string">&#x27;4&#x27;</span>)</span><br><span class="line">        <span class="keyword">assert</span> res == <span class="string">&#x27;14&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="meta">    @pytest.mark.xfail</span></span><br><span class="line"><span class="meta">    @pytest.mark.pay</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">test_list</span>(<span class="params">self</span>):</span><br><span class="line">        res = add_func([<span class="number">1</span>], [<span class="number">2</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>])</span><br><span class="line">        <span class="keyword">assert</span> res == [<span class="number">1</span>, <span class="number">2</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>]</span><br></pre></td></tr></table></figure>
+
+<p>输出：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">pytest  -v</span><br><span class="line"></span><br><span class="line">test_data.py::TestAdd::test_add SKIPPED (unconditional skip)                                                                                                                                                         [ 33%]</span><br><span class="line">test_data.py::TestAdd::test_str PASSED                                                                                                                                                                               [ 66%]</span><br><span class="line">test_data.py::TestAdd::test_list XPASS                                                                                                                                                                               [100%]</span><br><span class="line"></span><br><span class="line">========================================================================================= 1 passed, 1 skipped, 1 xpassed <span class="keyword">in</span> 0.00s ==========================================================================================</span><br></pre></td></tr></table></figure>
+
+<h4 id="数据驱动测试"><a href="#数据驱动测试" class="headerlink" title="数据驱动测试"></a>数据驱动测试</h4><p>数据驱动测试 &#x3D; 参数化测试+数据文件</p>
+<p>根据数据文件的内容，动态决定用例的数量、内容。</p>
+<h5 id="parametrize的使用"><a href="#parametrize的使用" class="headerlink" title="parametrize的使用"></a>parametrize的使用</h5><p>配置数据源：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># data.csv</span></span><br><span class="line">a,b,c</span><br><span class="line">1,1,2</span><br><span class="line">2,3,5</span><br><span class="line">3,3,6</span><br><span class="line">4,4,7</span><br></pre></td></tr></table></figure>
+
+<p>读取文件函数：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> csv</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">read_csv</span>(<span class="params">path</span>):</span><br><span class="line">    f = <span class="built_in">open</span>(path)</span><br><span class="line">    reader = csv.reader(f)</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">list</span>(reader)[<span class="number">1</span>:]</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">TestAdd</span>:</span><br><span class="line"><span class="meta">		@pytest.mark.ddt</span></span><br><span class="line"><span class="meta">    @pytest.mark.parametrize(<span class="params"></span></span></span><br><span class="line"><span class="params"><span class="meta">        <span class="string">&quot;a,b,c&quot;</span>, read_csv(<span class="params"><span class="string">&#x27;data.csv&#x27;</span></span>)</span></span></span><br><span class="line"><span class="params"><span class="meta">    </span>)</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">test_ddt</span>(<span class="params">self, a, b, c</span>):</span><br><span class="line">        res = add_func(<span class="built_in">int</span>(a), <span class="built_in">int</span>(b))</span><br><span class="line">        <span class="keyword">assert</span> res == <span class="built_in">int</span>(c)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>输出：</p>
+<p><img data-src="https://img.econow.cn/ranch/nJPC9j.png" alt="nJPC9j"></p>
+<p>执行的时候注意: <code>pytest -m ddt -v</code></p>
+<h4 id="夹具-fixture"><a href="#夹具-fixture" class="headerlink" title="夹具 fixture"></a>夹具 fixture</h4><p>在用例执行之前、之后，自动运行代码。</p>
+<p>场景：</p>
+<ul>
+<li>之前：加密参数&#x2F;之后：解密结果</li>
+<li>之前：启动浏览器&#x2F;之后：关闭浏览器</li>
+<li>之前：注册、登录账号&#x2F;之后：删除账号</li>
+</ul>
+<h5 id="1-创建fixture"><a href="#1-创建fixture" class="headerlink" title="1. 创建fixture"></a>1. 创建fixture</h5><p>步骤：</p>
+<ol>
+<li>创建函数</li>
+<li>添加装饰器</li>
+<li>添加yield关键字</li>
+</ol>
+<h5 id="2-使用fixture"><a href="#2-使用fixture" class="headerlink" title="2. 使用fixture"></a>2. 使用fixture</h5><p>方式：</p>
+<ol>
+<li>在用例的参数列表中，加入fixture名字即可</li>
+<li>给用例加上<code>usefixtures</code>标记</li>
+</ol>
+<h5 id="3-高级用法"><a href="#3-高级用法" class="headerlink" title="3. 高级用法"></a>3. 高级用法</h5><ul>
+<li>自动使用  <code>@pytest.fixture(autouse=True)</code></li>
+<li>依赖使用</li>
+<li>返回内容</li>
+<li>范围共享</li>
+</ul>
+<h3 id="插件管理"><a href="#插件管理" class="headerlink" title="插件管理"></a>插件管理</h3><p>插件分类：</p>
+<ul>
+<li>内置插件</li>
+<li>第三方插件</li>
+</ul>
+<p>启用管理：</p>
+<ul>
+<li>启用  <code>-p</code></li>
+<li>禁用  <code>-p no:html</code></li>
+</ul>
+<p>使用方式：</p>
+<ul>
+<li>参数</li>
+<li>配置文件</li>
+<li>fixture</li>
+<li>mark</li>
+</ul>
+<h4 id="常用插件"><a href="#常用插件" class="headerlink" title="常用插件"></a>常用插件</h4><h5 id="pytest-html"><a href="#pytest-html" class="headerlink" title="pytest-html"></a>pytest-html</h5><p><code>pip install pytest-html  </code></p>
+<p>使用</p>
+<p><code>pytest --html=report.html</code></p>
+<p>或者在配置文件里加上后，直接使用<code>pytest</code>就行。</p>
+<figure class="highlight ini"><table><tr><td class="code"><pre><span class="line"><span class="section">[pytest]</span></span><br><span class="line"><span class="attr">addopts</span> = --html=report.html --self-contained-html</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><img data-src="https://img.econow.cn/ranch/P3GfgS.png" alt="P3GfgS"></p>
+<h5 id="pytest-xdist"><a href="#pytest-xdist" class="headerlink" title="pytest-xdist"></a>pytest-xdist</h5><p>分布式，加<code>-n</code> 执行</p>
+<p><img data-src="https://img.econow.cn/ranch/Lo0cci.png" alt="Lo0cci"></p>
+<blockquote>
+<p>只有任务本身耗时较长，超出调用成本很多的时候，才有意义。</p>
+<p>有并发问题：存在资源竞争、乱序</p>
+</blockquote>
+<h5 id="pytest-rerunfailures"><a href="#pytest-rerunfailures" class="headerlink" title="pytest-rerunfailures"></a>pytest-rerunfailures</h5><p>重试。适用于网络环境不好，需要渲染的情况。</p>
+<p>使用：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">--reruns [重试次数] --reruns-delay [间隔时间]</span><br><span class="line"><span class="comment"># 示例</span></span><br><span class="line">pytest -m mobile  --reruns 5 --reruns-delay 3</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h5 id="pytest-result-log"><a href="#pytest-result-log" class="headerlink" title="pytest-result-log"></a>pytest-result-log</h5><p>将执行结果记录到日志文件中。</p>
+<p>配置项：</p>
+<figure class="highlight ini"><table><tr><td class="code"><pre><span class="line"><span class="attr">log_file</span> = ./logs/pytest.log</span><br><span class="line"><span class="attr">log_file_level</span> = info</span><br><span class="line"><span class="attr">log_file_format</span> = %(levelname)-<span class="number">8</span>s %(asctime)s [%(name)s:%(line<span class="literal">no</span>)s] : %(message)s</span><br><span class="line"><span class="attr">log_file_date_format</span> = %Y-%m-%d %H:%M:%S</span><br><span class="line"><span class="attr">result_log_enable</span> = <span class="number">1</span></span><br><span class="line"><span class="attr">result_log_separator</span> = <span class="number">1</span></span><br><span class="line"><span class="attr">result_log_level_separator</span> = warning</span><br><span class="line"><span class="attr">result_log_level_verbose</span> = info</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="allure"><a href="#allure" class="headerlink" title="allure"></a>allure</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">pip install allure-pytest</span><br><span class="line">allure generate -o report -c temps</span><br></pre></td></tr></table></figure>
+
+<p>支持对用例进行分组和关联</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">@allure.epic  史诗 项目</span><br><span class="line">@allure.feature 主题 模块</span><br><span class="line">@allure.story  故事  功能</span><br><span class="line">@allure.title  标题 用例</span><br></pre></td></tr></table></figure>
+
+<p>使用相同装饰器的用例，自动并入一组。</p>
+<blockquote>
+<p>如果Chrome等浏览器无法加载JSON文件，可以使用如下方式访问 <code>allure serve ./temps</code></p>
+</blockquote>
+<h3 id="web自动化实例"><a href="#web自动化实例" class="headerlink" title="web自动化实例"></a>web自动化实例</h3>]]></content>
+      <categories>
+        <category>Python</category>
+      </categories>
+      <tags>
+        <tag>pytest</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>【kubernetes】Docker和Containerd的关系</title>
+    <url>/2025/05/15/%E3%80%90kubernetes%E3%80%91Docker%E5%92%8CContainerd%E7%9A%84%E5%85%B3%E7%B3%BB/</url>
+    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>2020 年 12 月，Kubernetes 1.20 发布。Kubernetes 社区宣布 dockershim（Docker 的适配层）被标记为“已废弃”（deprecated），鼓励用户迁移到 Containerd 或 CRI-O 等直接支持 CRI 的运行时。这标志着 Containerd 正式成为 Kubernetes 推荐的容器运行时之一。虽然不是 Kubernetes 的内置组件，但它是 Kubernetes 生态中的主流选择。</p>
+<p>自 Kubernetes 1.24 起，Docker 的 dockershim 支持被移除，Kubernetes 不再直接支持 Docker 作为运行时。Kubernetes 完全移除 dockershim，Docker 不再作为默认运行时。Containerd 和 CRI-O 成为 Kubernetes 的主要运行时选择。</p>
+<p>那么Containerd到底是什么？作为一个多年前只属性Docker的运维人来说Containerd这个概念很陌生，接下来就了解一下。</p>
+<h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2><p>首先聊一下什么是容器运行时（Container Runtime）？</p>
+<p>容器运行时（Container Runtime）是负责管理容器生命周期的软件组件，它在容器化技术中扮演核心角色，负责创建、运行、停止和删除容器。以下是对容器运行时的详细解释：</p>
+<h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a><strong>定义</strong></h3><p>容器运行时是一个软件层，负责与操作系统内核交互，管理容器的创建和执行。它通过调用内核的隔离技术（如 Linux 的 namespaces、cgroups 和 seccomp）来实现容器的隔离、资源分配和安全管理。</p>
+<h3 id="主要功能"><a href="#主要功能" class="headerlink" title="主要功能"></a><strong>主要功能</strong></h3><p>容器运行时通常负责以下核心任务：</p>
+<ol>
+<li><strong>镜像管理</strong>：从镜像仓库拉取容器镜像，解压并准备镜像内容。</li>
+<li><strong>容器创建</strong>：根据容器镜像创建容器，包括设置命名空间（network、PID、mount 等）以隔离容器环境。</li>
+<li><strong>资源分配</strong>：通过 cgroups 控制容器的 CPU、内存、磁盘等资源。</li>
+<li><strong>容器生命周期管理</strong>：启动、暂停、停止、删除容器。</li>
+<li><strong>网络和存储配置</strong>：为容器配置网络接口和存储卷。</li>
+<li><strong>安全隔离</strong>：通过内核安全机制（如 seccomp、AppArmor 或 SELinux）确保容器之间的隔离和安全性。</li>
+</ol>
+<h3 id="容器运行时的分类"><a href="#容器运行时的分类" class="headerlink" title="容器运行时的分类"></a><strong>容器运行时的分类</strong></h3><p>根据功能范围，容器运行时可以分为两类：</p>
+<ol>
+<li>低层次运行时（Low-Level Runtime）：<ul>
+<li>专注于底层的容器执行，例如创建 namespaces 和 cgroups。</li>
+<li>示例：<strong>runc</strong>（OCI 标准实现，Containerd 的默认低层次运行时）。</li>
+</ul>
+</li>
+<li>高层次运行时（High-Level Runtime）：<ul>
+<li>提供更高级的功能，如镜像管理、API 接口等，通常调用低层次运行时来执行容器。</li>
+<li>示例：<strong>Containerd</strong>、<strong>CRI-O</strong>。</li>
+</ul>
+</li>
+</ol>
+<h3 id="容器运行时与-Docker-的关系"><a href="#容器运行时与-Docker-的关系" class="headerlink" title="容器运行时与 Docker 的关系"></a><strong>容器运行时与 Docker 的关系</strong></h3><ul>
+<li>Docker 早期使用自己的运行时（libcontainer），后来将其贡献给 OCI（开放容器倡议），成为 runc。</li>
+<li>Docker 内部使用 Containerd 作为高层次运行时，Containerd 再调用 runc 来执行容器。</li>
+<li>其他工具（如 Kubernetes）可以直接使用 Containerd 或 CRI-O，绕过 Docker 的完整堆栈。</li>
+</ul>
+<h3 id="常见容器运行时"><a href="#常见容器运行时" class="headerlink" title="常见容器运行时"></a><strong>常见容器运行时</strong></h3><ol>
+<li>runc：<ul>
+<li>符合 OCI（Open Container Initiative）标准，是最广泛使用的低层次运行时。</li>
+<li>轻量、专注于容器执行，常被高层次运行时调用。</li>
+</ul>
+</li>
+<li>Containerd：<ul>
+<li>高层次运行时，支持镜像管理和 CRI 接口，广泛用于 Kubernetes。</li>
+<li>比 Docker 轻量，专注于运行时核心功能。</li>
+</ul>
+</li>
+<li>CRI-O：<ul>
+<li>专为 Kubernetes 设计的运行时，直接支持 CRI 接口，轻量且模块化。</li>
+</ul>
+</li>
+<li>Docker：<ul>
+<li>虽然 Docker 本身是一个完整的容器平台，但其运行时部分依赖 Containerd 和 runc。</li>
+</ul>
+</li>
+<li>Kata Containers：<ul>
+<li>提供虚拟化容器运行时，通过轻量级虚拟机增强隔离性，适合安全敏感场景。</li>
+</ul>
+</li>
+</ol>
+<h3 id="与-Kubernetes-的关系"><a href="#与-Kubernetes-的关系" class="headerlink" title="与 Kubernetes 的关系"></a><strong>与 Kubernetes 的关系</strong></h3><p>Kubernetes 通过 CRI（Container Runtime Interface）与容器运行时交互。CRI 是一个标准接口，允许 Kubernetes 使用不同的运行时（如 Containerd、CRI-O）。自 Kubernetes 1.20 起，Docker 不再作为默认运行时，Containerd 和 CRI-O 成为主流选择。</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a><strong>总结</strong></h3><p>容器运行时是容器技术的核心，负责管理和执行容器，确保隔离性和资源分配。Containerd 是一个高层次运行时，Docker 则是一个包含 Containerd 的更完整平台。选择运行时取决于场景：开发测试用 Docker，生产集群用 Containerd 或 CRI-O 更高效。</p>
+<h2 id="简单理解"><a href="#简单理解" class="headerlink" title="简单理解"></a>简单理解</h2><h3 id="Containerd-和-Docker-的关系及区别"><a href="#Containerd-和-Docker-的关系及区别" class="headerlink" title="Containerd 和 Docker 的关系及区别"></a>Containerd 和 Docker 的关系及区别</h3><p>可以把 <strong>Docker</strong> 比作一个“全能管家”，而 <strong>Containerd</strong> 就是这个管家里面的“仓库管理员”。</p>
+<h4 id="1-关系"><a href="#1-关系" class="headerlink" title="1. 关系"></a><strong>1. 关系</strong></h4><ul>
+<li><strong>Docker</strong> 是一个完整的容器管理工具，它包含了：<ul>
+<li><strong>Docker CLI（命令行工具）</strong>：你平时用的 <code>docker run</code>、<code>docker ps</code> 等命令。</li>
+<li><strong>Docker Engine（引擎）</strong>：负责管理容器的生命周期（创建、运行、停止等）。</li>
+<li><strong>Containerd</strong>：Docker 引擎底层的一个核心组件，专门负责管理容器的运行时（Runtime），比如启动、停止容器，管理镜像等。</li>
+<li><strong>其他工具</strong>：如 Docker Compose、Docker Swarm 等。</li>
+</ul>
+</li>
+<li><strong>Containerd</strong> 是 Docker 的一个子项目，后来独立发展，成为一个标准的容器运行时（Runtime），可以被 Kubernetes 等工具直接调用。</li>
+</ul>
+<p><strong>简单来说：</strong></p>
+<ul>
+<li><strong>Docker &#x3D; 整个厨房（包含厨师、食材、工具）</strong></li>
+<li><strong>Containerd &#x3D; 厨房里的冰箱（专门管理食材和存储）</strong></li>
+</ul>
+<h4 id="2-使用时的区别"><a href="#2-使用时的区别" class="headerlink" title="2. 使用时的区别"></a><strong>2. 使用时的区别</strong></h4><table>
+<thead>
+<tr>
+<th align="center"><strong>对比项</strong></th>
+<th align="center"><strong>Docker</strong></th>
+<th align="center"><strong>Containerd</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><strong>定位</strong></td>
+<td align="center">完整的容器管理工具（CLI + 引擎 + 运行时）</td>
+<td align="center">专注于容器运行时的底层组件</td>
+</tr>
+<tr>
+<td align="center"><strong>适用场景</strong></td>
+<td align="center">开发、测试、本地运行容器</td>
+<td align="center">生产环境、Kubernetes 等编排系统</td>
+</tr>
+<tr>
+<td align="center"><strong>依赖关系</strong></td>
+<td align="center">包含 Containerd</td>
+<td align="center">可以独立运行，不依赖 Docker</td>
+</tr>
+<tr>
+<td align="center"><strong>命令行</strong></td>
+<td align="center"><code>docker run</code>、<code>docker ps</code></td>
+<td align="center">需要 <code>ctr</code> 或 <code>nerdctl</code>（类似 Docker CLI 的工具）</td>
+</tr>
+<tr>
+<td align="center"><strong>与 Kubernetes 集成</strong></td>
+<td align="center">需要额外配置（如 <code>dockershim</code>，已逐步淘汰）</td>
+<td align="center">直接支持（Kubernetes 原生支持 Containerd）</td>
+</tr>
+<tr>
+<td align="center"><strong>功能</strong></td>
+<td align="center">提供完整的容器生命周期管理（镜像构建、运行、网络等）</td>
+<td align="center">只负责容器的运行时管理（启动、停止、删除容器）</td>
+</tr>
+</tbody></table>
+<h4 id="3-为什么-Kubernetes-更推荐-Containerd？"><a href="#3-为什么-Kubernetes-更推荐-Containerd？" class="headerlink" title="3. 为什么 Kubernetes 更推荐 Containerd？"></a><strong>3. 为什么 Kubernetes 更推荐 Containerd？</strong></h4><ul>
+<li><strong>更轻量</strong>：Containerd 只做容器运行时，不包含 Docker 的额外功能（如镜像构建），启动更快，占用资源更少。</li>
+<li><strong>更稳定</strong>：Kubernetes 直接调用 Containerd，减少中间层（如 <code>dockershim</code>），降低故障风险。</li>
+<li><strong>更标准化</strong>：Containerd 是 CNCF（云原生计算基金会）项目，符合云原生标准，适合大规模生产环境。</li>
+</ul>
+<p><strong>如果你是开发者</strong>，平时用 <code>docker run</code> 测试应用，就用 Docker。<br>​<strong>​如果你是运维&#x2F;集群管理员​</strong>​，在 Kubernetes 上运行容器，直接用 Containerd 更高效。</p>
+<h4 id="总结-1"><a href="#总结-1" class="headerlink" title="总结"></a><strong>总结</strong></h4><ul>
+<li><strong>Docker &#x3D; 全能工具箱</strong>（适合开发、测试）</li>
+<li><strong>Containerd &#x3D; 专业工具</strong>（适合生产、Kubernetes）</li>
+</ul>
+<p>现在很多云服务器和 Kubernetes 集群都直接使用 Containerd，而不再依赖 Docker，因为更轻量、更稳定！ 🚀</p>
+<h3 id="使用的异同？"><a href="#使用的异同？" class="headerlink" title="使用的异同？"></a>使用的异同？</h3><table>
+<thead>
+<tr>
+<th>场景</th>
+<th>Docker</th>
+<th>Containerd</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>快速运行容器</strong></td>
+<td>docker run -d nginx（简单直观）</td>
+<td>ctr run –net-host docker.io&#x2F;library&#x2F;nginx:latest my-nginx（复杂，需手动配置）或用 nerdctl run</td>
+</tr>
+<tr>
+<td><strong>构建镜像</strong></td>
+<td>docker build -t my-image .（内置支持）</td>
+<td>无直接构建功能，需用 BuildKit 或 nerdctl build</td>
+</tr>
+<tr>
+<td><strong>查看容器状态</strong></td>
+<td>docker ps（清晰直观）</td>
+<td>ctr container ls（信息较原始）或 nerdctl ps</td>
+</tr>
+<tr>
+<td><strong>网络管理</strong></td>
+<td>docker network create（内置支持）</td>
+<td>需外部工具（如 CNI 插件）配置网络</td>
+</tr>
+<tr>
+<td><strong>生产环境</strong></td>
+<td>适合小型或单机部署</td>
+<td>适合 Kubernetes 集群，性能优异</td>
+</tr>
+<tr>
+<td><strong>学习曲线</strong></td>
+<td>低，适合初学者</td>
+<td>高，需熟悉底层机制或依赖 Kubernetes</td>
+</tr>
+</tbody></table>
+]]></content>
+      <categories>
+        <category>云原生</category>
+      </categories>
+      <tags>
+        <tag>Kubernetes</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>【Flask 探索之路】</title>
+    <url>/2025/07/03/%E3%80%90Flask%20%E6%8E%A2%E7%B4%A2%E4%B9%8B%E8%B7%AF%E3%80%91/</url>
+    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>Go.</p>
+<h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><h4 id="生命周期"><a href="#生命周期" class="headerlink" title="生命周期"></a>生命周期</h4><ol>
+<li>客户端发送 HTTP 请求到 Flask 应用。</li>
+<li>Flask 通过 <code>url_map</code>（路由映射表）匹配请求 URL 对应的视图函数。</li>
+<li>执行视图函数前，触发 <strong>请求前钩子</strong>（如 <code>@app.before_request</code>）。</li>
+<li>执行视图函数，生成响应。</li>
+<li>响应经过 <strong>请求后钩子</strong>（如 <code>@app.after_request</code>）处理。</li>
+<li>响应返回客户端。</li>
+</ol>
+<h4 id="加载配置项目的多种方式"><a href="#加载配置项目的多种方式" class="headerlink" title="加载配置项目的多种方式"></a>加载配置项目的多种方式</h4><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 加载配置，方式一：</span></span><br><span class="line">app.config[<span class="string">&quot;DEBUG&quot;</span>] = <span class="literal">True</span></span><br><span class="line"><span class="comment"># 加载配置，方式二：</span></span><br><span class="line">config = &#123;</span><br><span class="line">    <span class="string">&quot;DEBUG&quot;</span>: <span class="literal">True</span></span><br><span class="line">&#125;</span><br><span class="line">app.config.update(config)</span><br><span class="line"><span class="comment"># 加载配置，方式三：</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Config</span>(<span class="title class_ inherited__">object</span>):</span><br><span class="line">    DEBUG = <span class="literal">True</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">app.config.from_object(Config)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>通过配置文件加载</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> config</span><br><span class="line">app.config.from_object(config)</span><br><span class="line"></span><br><span class="line"><span class="comment"># config.py</span></span><br><span class="line">DEBUG = <span class="literal">False</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="路由参数传递"><a href="#路由参数传递" class="headerlink" title="路由参数传递"></a>路由参数传递</h3><h4 id="接收默认字符串类型的参数"><a href="#接收默认字符串类型的参数" class="headerlink" title="接收默认字符串类型的参数"></a>接收默认字符串类型的参数</h4><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&quot;/goods/&lt;id&gt;&quot;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">goods</span>(<span class="params"><span class="built_in">id</span></span>):</span><br><span class="line">    <span class="keyword">return</span> <span class="string">f&quot;&lt;h1&gt;hello <span class="subst">&#123;<span class="built_in">id</span>&#125;</span>!&lt;/h1&gt;&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p><img data-src="https://img.econow.cn/ranch/lShUgs.png" alt="lShUgs"></p>
+<p>默认接收参数时，如果没有在设置路由中设置参数的类型，则默认参数类型为字符串类型。</p>
+<h4 id="接收限定类型的参数"><a href="#接收限定类型的参数" class="headerlink" title="接收限定类型的参数"></a>接收限定类型的参数</h4><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&quot;/products/&lt;int:id&gt;/&lt;float:price&gt;&quot;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">products</span>(<span class="params"><span class="built_in">id</span>, price</span>):</span><br><span class="line">    <span class="keyword">return</span> <span class="string">f&quot;&lt;h1&gt;hello <span class="subst">&#123;<span class="built_in">id</span>&#125;</span>,price <span class="subst">&#123;price&#125;</span>!&lt;/h1&gt;&quot;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><img data-src="https://img.econow.cn/ranch/UzcOrV.png" alt="UzcOrV"></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">DEFAULT_CONVERTERS: t.Mapping[<span class="built_in">str</span>, <span class="built_in">type</span>[BaseConverter]] = &#123;</span><br><span class="line">    <span class="string">&quot;default&quot;</span>: UnicodeConverter,</span><br><span class="line">    <span class="string">&quot;string&quot;</span>: UnicodeConverter,</span><br><span class="line">    <span class="string">&quot;any&quot;</span>: AnyConverter,</span><br><span class="line">    <span class="string">&quot;path&quot;</span>: PathConverter,</span><br><span class="line">    <span class="string">&quot;int&quot;</span>: IntegerConverter,</span><br><span class="line">    <span class="string">&quot;float&quot;</span>: FloatConverter,</span><br><span class="line">    <span class="string">&quot;uuid&quot;</span>: UUIDConverter,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> werkzeug.routing.converters <span class="keyword">import</span> BaseConverter</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">MobileConverter</span>(<span class="title class_ inherited__">BaseConverter</span>):</span><br><span class="line">    regex = <span class="string">r&quot;1[3-9]\d&#123;9&#125;&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 将自定义路由转换器类注册到项目中</span></span><br><span class="line">app.url_map.converters[<span class="string">&quot;mob&quot;</span>] = MobileConverter</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&quot;/sms/&lt;mob:mobile&gt;&quot;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">sms</span>(<span class="params">mobile</span>):</span><br><span class="line">    <span class="keyword">return</span> <span class="string">f&quot;发送短信给：<span class="subst">&#123;mobile&#125;</span>的用户&quot;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<p><img data-src="https://img.econow.cn/ranch/TykQLg.png" alt="TykQLg"></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 自定义正则表达式转换器</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">RegexConverter</span>(<span class="title class_ inherited__">BaseConverter</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, <span class="built_in">map</span>, *args</span>):</span><br><span class="line">        <span class="built_in">super</span>().__init__(<span class="built_in">map</span>, *args)</span><br><span class="line">        self.regex = args[<span class="number">0</span>]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 注册转换器</span></span><br><span class="line">app.url_map.converters[<span class="string">&#x27;regex&#x27;</span>] = RegexConverter</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 手机号路由</span></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/sms/&lt;regex(&quot;1[3-9]\d&#123;9&#125;&quot;):mobile&gt;&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">sms</span>(<span class="params">mobile</span>):</span><br><span class="line">    <span class="keyword">return</span> <span class="string">f&quot;发送短信给：<span class="subst">&#123;mobile&#125;</span> 的用户&quot;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 商品ID路由</span></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/goods/&lt;regex(&quot;\d+&quot;):id&gt;/&lt;gid&gt;&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">goods</span>(<span class="params"><span class="built_in">id</span>, gid</span>):</span><br><span class="line">    <span class="keyword">return</span> <span class="string">f&quot;&lt;h1&gt;hello <span class="subst">&#123;<span class="built_in">id</span>&#125;</span>,gid <span class="subst">&#123;gid&#125;</span>!&lt;/h1&gt;&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="request"><a href="#request" class="headerlink" title="request"></a>request</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> urllib.parse <span class="keyword">import</span> parse_qs</span><br><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask,request</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&quot;/qs&quot;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">index</span>():</span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    获取客户端请求的查询字符串参数</span></span><br><span class="line"><span class="string">    :return:</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    <span class="comment"># 获取原始的查询字符串参数，格式：bytes</span></span><br><span class="line">    <span class="built_in">print</span>(request.query_string)</span><br><span class="line">    <span class="comment"># b&#x27;id=10&#x27;</span></span><br><span class="line">    <span class="comment"># 获取查询字符串参数，格式：ImmutableMultiDict</span></span><br><span class="line">    <span class="built_in">print</span>(request.args)</span><br><span class="line">    <span class="comment"># ImmutableMultiDict([(&#x27;id&#x27;, &#x27;10&#x27;)])</span></span><br><span class="line">    query_string = parse_qs(request.query_string.decode())</span><br><span class="line">    <span class="comment"># yu原始字符串参数，转换成字典格式(解码一下bytes)</span></span><br><span class="line">    <span class="built_in">print</span>(query_string)</span><br><span class="line">    <span class="comment"># &#123;b&#x27;id&#x27;: [b&#x27;10&#x27;]&#125;</span></span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;&lt;h1&gt;hello flask!&lt;/h1&gt;&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="session"><a href="#session" class="headerlink" title="session"></a>session</h3><h4 id="Session-的工作流程"><a href="#Session-的工作流程" class="headerlink" title="Session 的工作流程"></a><strong>Session 的工作流程</strong></h4><ol>
+<li><p><strong>创建 Session</strong>：<br>用户首次访问时，服务器生成唯一的<code>Session ID</code>（如 UUID），并创建对应的 Session 对象（存储用户数据）。</p>
+</li>
+<li><p>传递 Session ID：</p>
+<p>服务器通过 Cookie 将Session ID发送到客户端（通常是JSESSIONID或PHPSESSID）。</p>
+<figure class="highlight http"><table><tr><td class="code"><pre><span class="line"><span class="attribute">Set-Cookie</span><span class="punctuation">: </span>JSESSIONID=abc123; Path=/; HttpOnly</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>验证 Session：</p>
+<p>后续请求中，服务器通过Session ID查找对应的 Session 对象，获取用户数据。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Flask示例：通过session_id获取用户数据</span></span><br><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> session</span><br><span class="line">user_id = session.get(<span class="string">&#x27;user_id&#x27;</span>)</span><br></pre></td></tr></table></figure></li>
+</ol>
+<p>如何将 Session 存储到 Redis 而非客户端？</p>
+<p>使用 <code>Flask-Session</code> 扩展：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> flask_session <span class="keyword">import</span> Session</span><br><span class="line"><span class="keyword">import</span> redis</span><br><span class="line"></span><br><span class="line">app.config[<span class="string">&#x27;SESSION_TYPE&#x27;</span>] = <span class="string">&#x27;redis&#x27;</span></span><br><span class="line">app.config[<span class="string">&#x27;SESSION_REDIS&#x27;</span>] = redis.Redis(host=<span class="string">&#x27;localhost&#x27;</span>, port=<span class="number">6379</span>)</span><br><span class="line">Session(app)</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>云原生</category>
+      </categories>
+      <tags>
+        <tag>Kubernetes</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>【Go 探索之路】</title>
+    <url>/2025/06/30/%E3%80%90Go%20%E6%8E%A2%E7%B4%A2%E4%B9%8B%E8%B7%AF%E3%80%91/</url>
+    <content><![CDATA[<h2 id="配置国内镜像"><a href="#配置国内镜像" class="headerlink" title="配置国内镜像"></a>配置国内镜像</h2><h3 id="一、设置-Go-环境变量（国内镜像）"><a href="#一、设置-Go-环境变量（国内镜像）" class="headerlink" title="一、设置 Go 环境变量（国内镜像）"></a><strong>一、设置 Go 环境变量（国内镜像）</strong></h3><p>Go 1.13+ 版本支持通过环境变量直接配置镜像源，推荐使用 <strong><a href="https://goproxy.cn/">Goproxy.cn</a></strong> 或 <strong>阿里云</strong> 镜像：</p>
+<h4 id="1-打开-VSCode-终端"><a href="#1-打开-VSCode-终端" class="headerlink" title="1. 打开 VSCode 终端"></a><strong>1. 打开 VSCode 终端</strong></h4><p>按 <code>Ctrl+</code> （Windows&#x2F;Linux）或 <code>Cmd+</code>（Mac）打开集成终端。</p>
+<h4 id="2-设置镜像环境变量"><a href="#2-设置镜像环境变量" class="headerlink" title="2. 设置镜像环境变量"></a><strong>2. 设置镜像环境变量</strong></h4><p>执行以下命令（选择其中一个镜像即可）：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 使用Goproxy.cn（推荐）</span></span><br><span class="line">go <span class="built_in">env</span> -w GOPROXY=https://goproxy.cn,direct</span><br><span class="line"></span><br><span class="line"><span class="comment"># 或使用阿里云镜像</span></span><br><span class="line">go <span class="built_in">env</span> -w GOPROXY=https://mirrors.aliyun.com/goproxy/,direct</span><br><span class="line"></span><br><span class="line"><span class="comment"># 启用模块模式（Go 1.16+ 默认已启用）</span></span><br><span class="line">go <span class="built_in">env</span> -w GO111MODULE=on</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>direct</code> 表示当镜像源不存在时，直接从原始源拉取。</li>
+</ul>
+<h3 id="二、在-VSCode-中验证配置"><a href="#二、在-VSCode-中验证配置" class="headerlink" title="二、在 VSCode 中验证配置"></a><strong>二、在 VSCode 中验证配置</strong></h3><h4 id="1-查看当前-Go-环境配置"><a href="#1-查看当前-Go-环境配置" class="headerlink" title="1. 查看当前 Go 环境配置"></a><strong>1. 查看当前 Go 环境配置</strong></h4><p>在终端执行：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">go <span class="built_in">env</span></span><br></pre></td></tr></table></figure>
+
+<p>确保输出中包含：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">GOPROXY=&quot;https://goproxy.cn,direct&quot;</span><br><span class="line">GO111MODULE=&quot;on&quot;</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-配置-VSCode-的-Go-插件"><a href="#2-配置-VSCode-的-Go-插件" class="headerlink" title="2. 配置 VSCode 的 Go 插件"></a><strong>2. 配置 VSCode 的 Go 插件</strong></h4><p>若使用 VSCode 的 Go 官方插件（<code>golang.go</code>），建议添加以下设置：</p>
+<ol>
+<li>打开 VSCode 设置（<code>Ctrl+逗号</code> 或 <code>Cmd+逗号</code>）。</li>
+<li>搜索 <code>go.toolsEnvVars</code>，点击 <strong>编辑 in settings.json</strong>。</li>
+<li>添加以下配置：</li>
+</ol>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;go.toolsEnvVars&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;GOPROXY&quot;</span><span class="punctuation">:</span> <span class="string">&quot;https://goproxy.cn,direct&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;GO111MODULE&quot;</span><span class="punctuation">:</span> <span class="string">&quot;on&quot;</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="配置自动代码片段"><a href="#配置自动代码片段" class="headerlink" title="配置自动代码片段"></a>配置自动代码片段</h2><p><code>Ctrl/Command+Shift+P</code>,按下图输入<code>&gt;snippets</code>，选择命令并执行</p>
+<p><img data-src="https://img.econow.cn/ranch/Ie1sIz.png" alt="Ie1sIz"></p>
+<p>然后在弹出的窗口点击选择<code>go</code>选项：</p>
+<p><img data-src="https://img.econow.cn/ranch/01O164.png" alt="01O164"></p>
+<p>其中<code>$0</code>表示最终光标提留的位置。 举个例子，我这里创建了两个快捷方式，一个是输入<code>pln</code>就会在编辑器中插入<code>fmt.Println()</code>代码；输入<code>plf</code>，就会插入<code>fmt.Printf(&quot;&quot;)</code>代码</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">	<span class="attr">&quot;println&quot;</span><span class="punctuation">:</span><span class="punctuation">&#123;</span></span><br><span class="line">		<span class="attr">&quot;prefix&quot;</span><span class="punctuation">:</span> <span class="string">&quot;pln&quot;</span><span class="punctuation">,</span></span><br><span class="line">		<span class="attr">&quot;body&quot;</span><span class="punctuation">:</span><span class="string">&quot;fmt.Println($0)&quot;</span><span class="punctuation">,</span></span><br><span class="line">		<span class="attr">&quot;description&quot;</span><span class="punctuation">:</span> <span class="string">&quot;println&quot;</span></span><br><span class="line">	<span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">	<span class="attr">&quot;printf&quot;</span><span class="punctuation">:</span><span class="punctuation">&#123;</span></span><br><span class="line">		<span class="attr">&quot;prefix&quot;</span><span class="punctuation">:</span> <span class="string">&quot;plf&quot;</span><span class="punctuation">,</span></span><br><span class="line">		<span class="attr">&quot;body&quot;</span><span class="punctuation">:</span> <span class="string">&quot;fmt.Printf(\&quot;$0\&quot;)&quot;</span><span class="punctuation">,</span></span><br><span class="line">		<span class="attr">&quot;description&quot;</span><span class="punctuation">:</span> <span class="string">&quot;printf&quot;</span></span><br><span class="line">	<span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="基础语法"><a href="#基础语法" class="headerlink" title="基础语法"></a>基础语法</h2><figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="comment">// 格式化输出的包</span></span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;fmt&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// main函数是程序的入口点</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	<span class="comment">// 单行注释，打印输出</span></span><br><span class="line">	<span class="comment">/*</span></span><br><span class="line"><span class="comment">	多行注释</span></span><br><span class="line"><span class="comment">	*/</span></span><br><span class="line">	fmt.Println(<span class="string">&quot;hello world!&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="关键字"><a href="#关键字" class="headerlink" title="关键字"></a>关键字</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">break</span>        default      func         interface    <span class="keyword">select</span></span><br><span class="line"><span class="keyword">case</span>         defer        go           map          struct</span><br><span class="line">chan         <span class="keyword">else</span>         goto         package      switch</span><br><span class="line">const        fallthrough  <span class="keyword">if</span>           range        <span class="built_in">type</span></span><br><span class="line"><span class="built_in">continue</span>     <span class="keyword">for</span>          import       <span class="built_in">return</span>       var</span><br></pre></td></tr></table></figure>
+
+<h3 id="保留字"><a href="#保留字" class="headerlink" title="保留字"></a>保留字</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">Constants:    <span class="literal">true</span>  <span class="literal">false</span>  iota  nil</span><br><span class="line"></span><br><span class="line">    Types:    int  int8  int16  int32  int64  </span><br><span class="line">              uint  uint8  uint16  uint32  uint64  uintptr</span><br><span class="line">              float32  float64  complex128  complex64</span><br><span class="line">              bool  byte  rune  string  error</span><br><span class="line"></span><br><span class="line">Functions:   make  len  <span class="built_in">cap</span>  new  append  copy  close  delete</span><br><span class="line">             complex  real  imag</span><br><span class="line">             panic  recover</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h2><p>Go语言中的变量需要声明后才能使用，同一作用域内不支持重复声明。 并且Go语言的变量声明后必须使用。</p>
+<p><img data-src="https://img.econow.cn/ranch/TZFkHq.png" alt="TZFkHq"></p>
+<h3 id="标准声明"><a href="#标准声明" class="headerlink" title="标准声明"></a>标准声明</h3><p>Go语言的变量声明格式为：</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> 变量名 变量类型</span><br></pre></td></tr></table></figure>
+
+<p>变量声明以关键字<code>var</code>开头，变量类型放在变量的后面，行尾无需分号。 举个例子：</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> name <span class="type">string</span></span><br><span class="line"><span class="keyword">var</span> age <span class="type">int</span></span><br><span class="line"><span class="keyword">var</span> isOk <span class="type">bool</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="批量声明"><a href="#批量声明" class="headerlink" title="批量声明"></a>批量声明</h3><p>每声明一个变量就需要写<code>var</code>关键字会比较繁琐，go语言中还支持批量变量声明：</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> (</span><br><span class="line">    a <span class="type">string</span></span><br><span class="line">    b <span class="type">int</span></span><br><span class="line">    c <span class="type">bool</span></span><br><span class="line">    d <span class="type">float32</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<h3 id="变量的初始化"><a href="#变量的初始化" class="headerlink" title="变量的初始化"></a>变量的初始化</h3><p>Go语言在声明变量的时候，会自动对变量对应的内存区域进行初始化操作。每个变量会被初始化成其类型的默认值，例如： 整型和浮点型变量的默认值为<code>0</code>。 字符串变量的默认值为<code>空字符串</code>。 布尔型变量默认为<code>false</code>。 切片、函数、指针变量的默认为<code>nil</code>。</p>
+<p>当然我们也可在声明变量的时候为其指定初始值。变量初始化的标准格式如下：</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> 变量名 类型 = 表达式</span><br></pre></td></tr></table></figure>
+
+<p>举个例子：</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> name <span class="type">string</span> = <span class="string">&quot;Tom&quot;</span></span><br><span class="line"><span class="keyword">var</span> age <span class="type">int</span> = <span class="number">18</span></span><br></pre></td></tr></table></figure>
+
+<p>或者一次初始化多个变量</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> name, age = <span class="string">&quot;Tom&quot;</span>, <span class="number">20</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	<span class="keyword">var</span> name <span class="type">string</span> = <span class="string">&quot;zhangsan&quot;</span></span><br><span class="line">	<span class="keyword">var</span> age <span class="type">int</span> = <span class="number">18</span></span><br><span class="line">	<span class="keyword">var</span> isOk <span class="type">bool</span> = <span class="literal">true</span></span><br><span class="line">	fmt.Println(name, age, isOk)</span><br><span class="line">	fmt.Println(<span class="string">&quot;hello good!&quot;</span>)</span><br><span class="line">	<span class="keyword">var</span> name1, age1, isOk1 = <span class="string">&quot;lisi&quot;</span>, <span class="number">19</span>, <span class="literal">false</span></span><br><span class="line">	fmt.Println(name1, age1, isOk1)</span><br><span class="line">&#125;</span><br><span class="line">zhangsan <span class="number">18</span> <span class="literal">true</span></span><br><span class="line">hello good!</span><br><span class="line">lisi <span class="number">19</span> <span class="literal">false</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="类型推导"><a href="#类型推导" class="headerlink" title="类型推导"></a>类型推导</h4><p>有时候我们会将变量的类型省略，这个时候编译器会根据等号右边的值来推导变量的类型完成初始化。</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> name = <span class="string">&quot;Tom&quot;</span></span><br><span class="line"><span class="keyword">var</span> age = <span class="number">18</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="短变量声明"><a href="#短变量声明" class="headerlink" title="短变量声明"></a>短变量声明</h4><p>在函数内部，可以使用更简略的 <code>:=</code> 方式声明并初始化变量。</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">&quot;fmt&quot;</span></span><br><span class="line">)</span><br><span class="line"><span class="comment">// 全局变量m</span></span><br><span class="line"><span class="keyword">var</span> m = <span class="number">100</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	n := <span class="number">10</span></span><br><span class="line">	m := <span class="number">200</span> <span class="comment">// 此处声明局部变量m，只能使用在函数内部使用</span></span><br><span class="line">	fmt.Println(m, n)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>注意事项：</p>
+<ol>
+<li>函数外的每个语句都必须以关键字开始（var、const、func等）</li>
+<li><code>:=</code>不能使用在函数外。</li>
+<li><code>_</code>多用于占位，表示忽略值。</li>
+</ol>
+<h2 id="常量"><a href="#常量" class="headerlink" title="常量"></a>常量</h2><p>相对于变量，常量是恒定不变的值，多用于定义程序运行期间不会改变的那些值。 常量的声明和变量声明非常类似，只是把<code>var</code>换成了<code>const</code>，常量在定义的时候必须赋值。</p>
+<h2 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h2><p>数组从声明时就确定，使用时可以修改数组成员，但是数组大小不可变化。 基本语法：</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 定义一个长度为3元素类型为int的数组a</span></span><br><span class="line"><span class="keyword">var</span> a [<span class="number">3</span>]<span class="type">int</span></span><br><span class="line"><span class="keyword">var</span> 数组变量名 [元素数量]T</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>云原生</category>
+      </categories>
+      <tags>
+        <tag>Kubernetes</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title></title>
+    <url>/2025/09/04/%E3%80%90%E7%9F%A5%E8%AF%86%E7%82%B9%E6%80%BB%E7%BB%93%E3%80%91%E8%BF%90%E7%BB%B4/</url>
+    <content><![CDATA[<h1 id="【知识点总结】运维"><a href="#【知识点总结】运维" class="headerlink" title="【知识点总结】运维"></a>【知识点总结】运维</h1><ul>
+<li><p>运维管理平台</p>
+<ul>
+<li><p>服务编排，实现一键部署，启动后发送请求给测试的自动化任务，进行投产后的测试</p>
+</li>
+<li><p>资产管理 </p>
+</li>
+<li><p>日报统计 发送给开发前一天的服务接口访问量，失败率，接口请求时间等。发送给作为整个平台的接口情况，还有cdn使用量等等</p>
+</li>
+<li><p>事件管理 把每次告警进行分级和分类，查询当时关联的实例资源情况，pod副本，中间件连接状况，展示在一个大屏。尽可能展示出事件的原因</p>
+</li>
+<li><p>异步任务 重构</p>
+<ul>
+<li><p>反射  getattr 通过使用某个对象的方法或者属性字符串名称来调用该对象的属性和方法</p>
+</li>
+<li><p>使用了celery 来实现异步通知或调用其他功能模块</p>
+</li>
+<li><p>使用APscheduler执行计划任务，代替之前的crontab的方式</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>降本增效</p>
+<ul>
+<li>突发型实例，成本降低50%以上</li>
+<li>节省计划，能达到预付费的价格</li>
+<li>资源混部。大数据离线任务一般在后半夜，而服务的高峰期一般在白天。</li>
+<li>阿里云编排策略，在高峰期实现自动或手动扩容和收缩</li>
+<li>配置pod limits和requests参数，限制服务最大资源要求防止资源使用不均衡；保障最小资源要求，防止资源不足而产生超时或行为优先级低而被删除的情况</li>
+</ul>
+</li>
+<li><p>告警</p>
+<ul>
+<li>日志平台的接口失败率告警，状态码</li>
+<li>微服务的健康检查接口，定时循环遍历</li>
+<li>服务pod副本数量和状态告警</li>
+<li>业务告警，配合开发人员的sql，或者日志关键字</li>
+<li>慢sql趋势告警，同步显示实例信息，负载信息，对比昨日</li>
+</ul>
+</li>
+<li><p>日志机制</p>
+<ul>
+<li>服务日志通过计划任务处理转移到Nas指定位置。</li>
+<li>平台依据服务名和项目组向负责人发送邮件，邮件中包含日志链接和授权码</li>
+<li>最好的方式是存储在elk平台，方便实时查询，也可以通过业务日志关键字来发出一些告警</li>
+</ul>
+</li>
+<li><p>飞书机器人</p>
+<ul>
+<li>建立飞书群，添加机器人，会有一个webhook地址，调用这个地址，就会向对应的飞书群发送消息</li>
+<li>消息类型可以是文本，也可以是卡片。如果是卡片的话还可以执行更多交互，比如点击按钮或者选择菜单会执行一系列操作。</li>
+<li>另外一个很有用的功能是可以和机器人交互，比如发送文字指令，间接进行一系列的指令操作。这个指令需要提前写好功能模块的</li>
+<li>可以实现输入服务名自动发布。输入实例名自动回复当前负载信息，输入k8s自定义指令实现服务的伸缩</li>
+</ul>
+</li>
+<li><p>Prometheus AlterManager 报警抑制</p>
+<ul>
+<li>分组 将类似性质的警报分类为单条通知。比如许多系统宕机会触发成百上千的警报。这时候会合并成一条报警，比如10s内有多条</li>
+<li>抑制 当警报发出后，停止重复发送由此警报引发的其他警报</li>
+<li>静默 特定时间不告警的机制，可以在web控制台操作</li>
+</ul>
+</li>
+</ul>
+<h2 id="管理岗"><a href="#管理岗" class="headerlink" title="管理岗"></a>管理岗</h2><h3 id="运维体系建设"><a href="#运维体系建设" class="headerlink" title="运维体系建设"></a>运维体系建设</h3><h4 id="1-明确运维团队的目标和职责"><a href="#1-明确运维团队的目标和职责" class="headerlink" title="1. 明确运维团队的目标和职责"></a>1. 明确运维团队的目标和职责</h4><p>核心目标：保障业务系统的稳定、高效、安全、低成本的运行，并支撑业务的快速迭代与创新。</p>
+<p>运维团队常见职责包括：</p>
+<table>
+<thead>
+<tr>
+<th align="left">领域</th>
+<th align="left">主要职责</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><strong>基础设施运维</strong></td>
+<td align="left">服务器、网络设备、IDC&#x2F;云资源管理、操作系统维护等</td>
+</tr>
+<tr>
+<td align="left"><strong>应用运维（SRE&#x2F;应用保障）</strong></td>
+<td align="left">应用部署、配置管理、服务治理、发布与回滚、服务稳定性保障</td>
+</tr>
+<tr>
+<td align="left"><strong>监控与告警</strong></td>
+<td align="left">系统&#x2F;应用监控、日志收集、指标分析、异常告警与响应</td>
+</tr>
+<tr>
+<td align="left"><strong>自动化运维</strong></td>
+<td align="left">脚本工具开发、CI&#x2F;CD 流水线、基础设施即代码（IaC）、批量运维</td>
+</tr>
+<tr>
+<td align="left"><strong>安全运维</strong></td>
+<td align="left">主机安全、网络安全、权限管理、漏洞修复、合规审计</td>
+</tr>
+<tr>
+<td align="left"><strong>备份与灾备</strong></td>
+<td align="left">数据备份策略、容灾演练、故障切换、业务连续性保障</td>
+</tr>
+<tr>
+<td align="left"><strong>运维流程与规范</strong></td>
+<td align="left">变更管理、事故管理、问题管理、发布流程、权限控制等 SOP</td>
+</tr>
+<tr>
+<td align="left"><strong>成本管理</strong></td>
+<td align="left">云资源成本优化、容量规划、资源利用率分析</td>
+</tr>
+</tbody></table>
+<h4 id="2-运维体系的组成"><a href="#2-运维体系的组成" class="headerlink" title="2. 运维体系的组成"></a>2. 运维体系的组成</h4><h5 id="2-1-运维流程和规范体系"><a href="#2-1-运维流程和规范体系" class="headerlink" title="2.1. 运维流程和规范体系"></a>2.1. 运维流程和规范体系</h5><p><strong>目的：让运维工作标准化、可重复、可追溯，降低人为风险。</strong></p>
+<table>
+<thead>
+<tr>
+<th align="left">流程</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><strong>变更管理</strong></td>
+<td align="left">所有线上变更（如部署、配置、网络调整）需通过工单&#x2F;流程审批，评估影响与回滚方案。</td>
+</tr>
+<tr>
+<td align="left"><strong>发布管理</strong></td>
+<td align="left">应用发布流程（灰度→全量）、版本控制、回滚机制。</td>
+</tr>
+<tr>
+<td align="left"><strong>事故管理（Incident Management）</strong></td>
+<td align="left">故障响应、定位、恢复、事后复盘（Postmortem）。</td>
+</tr>
+<tr>
+<td align="left"><strong>问题管理（Problem Management）</strong></td>
+<td align="left">针对重复故障，挖掘根因并彻底解决。</td>
+</tr>
+<tr>
+<td align="left"><strong>配置管理</strong></td>
+<td align="left">基础设施与应用的配置项版本控制（如 Ansible、Terraform 管理）。</td>
+</tr>
+<tr>
+<td align="left"><strong>权限与访问控制</strong></td>
+<td align="left">最小权限原则，操作审计，敏感操作二次审批。</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>✅ 推荐引入 ITIL 流程思想（如事件、问题、变更、配置管理），并根据企业实际简化落地。</p>
+</blockquote>
+<h5 id="2-2-监控与可观测性体系（Observability）"><a href="#2-2-监控与可观测性体系（Observability）" class="headerlink" title="2.2. 监控与可观测性体系（Observability）"></a>2.2. <strong>监控与可观测性体系（Observability）</strong></h5><p><strong>目的：让系统“看得见、看得懂”，快速发现与定位问题。</strong></p>
+<p>监控体系通常包括：</p>
+<table>
+<thead>
+<tr>
+<th align="left">监控维度</th>
+<th align="left">工具举例</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><strong>基础设施监控</strong></td>
+<td align="left">Prometheus、Zabbix、Datadog</td>
+<td align="left">CPU、内存、磁盘、网络、节点状态</td>
+</tr>
+<tr>
+<td align="left"><strong>容器 &amp; Kubernetes 监控</strong></td>
+<td align="left">Prometheus + kube-state-metrics + cAdvisor</td>
+<td align="left">Pod、Node、Deployment、Service 状态</td>
+</tr>
+<tr>
+<td align="left"><strong>应用性能监控（APM）</strong></td>
+<td align="left">SkyWalking、Pinpoint、Jaeger、New Relic</td>
+<td align="left">应用性能、链路追踪、慢请求</td>
+</tr>
+<tr>
+<td align="left"><strong>日志监控</strong></td>
+<td align="left">ELK（Elasticsearch+Logstash+Kibana）、Loki、Graylog</td>
+<td align="left">收集、存储、检索、分析日志</td>
+</tr>
+<tr>
+<td align="left"><strong>业务指标监控</strong></td>
+<td align="left">Prometheus、Grafana、自定义 Exporter</td>
+<td align="left">如订单量、支付成功率、用户活跃数</td>
+</tr>
+<tr>
+<td align="left"><strong>告警管理</strong></td>
+<td align="left">Alertmanager、PagerDuty、钉钉&#x2F;企业微信机器人</td>
+<td align="left">告警收敛、分级通知、值班响应</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>🎯 目标：从“监控可用性”走向“可观测性”（Metrics + Logs + Traces）。</p>
+</blockquote>
+<h5 id="2-3-自动化运维体系（DevOps-IaC）"><a href="#2-3-自动化运维体系（DevOps-IaC）" class="headerlink" title="2.3.  自动化运维体系（DevOps &#x2F; IaC）"></a>2.3.  <strong>自动化运维体系（DevOps &#x2F; IaC）</strong></h5><p><strong>目的：减少人工操作，提升效率、一致性与可靠性。</strong></p>
+<p>自动化范围包括：</p>
+<table>
+<thead>
+<tr>
+<th align="left">自动化领域</th>
+<th align="left">工具&#x2F;实践</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><strong>基础设施自动化</strong></td>
+<td align="left">Terraform、Ansible、CloudFormation</td>
+<td align="left">云资源创建、配置管理</td>
+</tr>
+<tr>
+<td align="left"><strong>配置管理</strong></td>
+<td align="left">Ansible、SaltStack、Puppet</td>
+<td align="left">批量配置服务、软件安装</td>
+</tr>
+<tr>
+<td align="left"><strong>部署与发布自动化</strong></td>
+<td align="left">Jenkins、GitLab CI&#x2F;CD、ArgoCD、Spinnaker</td>
+<td align="left">代码构建、测试、发布流水线</td>
+</tr>
+<tr>
+<td align="left"><strong>批量运维与脚本工具</strong></td>
+<td align="left">Shell&#x2F;Python 脚本、Ansible Playbook</td>
+<td align="left">批量执行、日常任务</td>
+</tr>
+<tr>
+<td align="left"><strong>基础设施即代码（IaC）</strong></td>
+<td align="left">Terraform、Crossplane</td>
+<td align="left">通过代码定义云资源，版本控制、可审计</td>
+</tr>
+<tr>
+<td align="left"><strong>自助化平台</strong></td>
+<td align="left">内部 CMDB、运维平台、审批流、资源申请系统</td>
+<td align="left">提升效率，减少重复劳动</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>✅ 建议：推动“一切可脚本化、一切可自动化”，减少人为失误。</p>
+</blockquote>
+<h5 id="2-4-安全运维与合规体系"><a href="#2-4-安全运维与合规体系" class="headerlink" title="2.4. 安全运维与合规体系"></a>2.4. <strong>安全运维与合规体系</strong></h5><p><strong>目的：保障系统的安全性、数据的保密性与完整性，符合行业监管要求。</strong></p>
+<p>常见工作包括：</p>
+<ul>
+<li>∙<strong>主机安全</strong>：漏洞修复、基线检查、防火墙策略。</li>
+<li>∙<strong>网络安全</strong>：VPC、安全组、访问控制、流量加密。</li>
+<li>∙<strong>应用安全</strong>：权限控制、接口鉴权、防止注入&#x2F;越权。</li>
+<li>∙<strong>数据安全</strong>：敏感数据加密、脱敏、备份与访问审计。</li>
+<li>∙<strong>权限与身份管理</strong>：RBAC、最小权限、多因素认证、操作审计。</li>
+<li>∙<strong>合规与审计</strong>：等保 2.0、GDPR、ISO 27001、内部安全巡检。</li>
+</ul>
+<blockquote>
+<p>✅ 建议：安全左移（DevSecOps），将安全融入 CI&#x2F;CD 与运维流程中。</p>
+</blockquote>
+<h5 id="2-5-灾备与高可用体系"><a href="#2-5-灾备与高可用体系" class="headerlink" title="2.5. 灾备与高可用体系"></a>2.5. <strong>灾备与高可用体系</strong></h5><p><strong>目的：保障业务连续性，在故障发生时快速恢复。</strong></p>
+<p>关键措施：</p>
+<ul>
+<li>∙<strong>高可用架构</strong>：多可用区、多集群、服务冗余、负载均衡。</li>
+<li>∙<strong>容灾演练</strong>：定期模拟故障，验证容灾与切换能力。</li>
+<li>∙<strong>数据备份</strong>：定期备份数据库、配置、日志，验证可恢复性。</li>
+<li>∙<strong>故障切换与回滚</strong>：数据库主从切换、服务降级、流量调度。</li>
+<li>∙<strong>容量规划</strong>：预测业务增长，提前扩容，避免资源瓶颈。</li>
+</ul>
+<blockquote>
+<p>✅ 建议：制定并演练 <strong>RTO（恢复时间目标）</strong> 与 <strong>RPO（恢复点目标）</strong>。</p>
+</blockquote>
+<p><strong>一个完善的运维体系 &#x3D; 标准化的流程 + 全面的监控与可观测性 + 高效的自动化工具 + 严格的安全管控 + 健壮的容灾能力 + 专业且协作的团队。</strong></p>
+<h3 id="新上线项目的准备工作"><a href="#新上线项目的准备工作" class="headerlink" title="新上线项目的准备工作"></a>新上线项目的准备工作</h3><table>
+<thead>
+<tr>
+<th align="left">类别</th>
+<th align="left">关键事项</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><strong>需求与规划</strong></td>
+<td align="left">了解业务需求、技术栈、资源预估、上线计划</td>
+</tr>
+<tr>
+<td align="left"><strong>环境准备</strong></td>
+<td align="left">服务器&#x2F;容器&#x2F;K8s、网络&#x2F;VPC、中间件、基础服务</td>
+</tr>
+<tr>
+<td align="left"><strong>部署与发布</strong></td>
+<td align="left">支持自动化部署、CI&#x2F;CD、灰度&#x2F;回滚策略</td>
+</tr>
+<tr>
+<td align="left"><strong>监控与告警</strong></td>
+<td align="left">系统&#x2F;应用&#x2F;日志&#x2F;链路监控，配置合理告警</td>
+</tr>
+<tr>
+<td align="left"><strong>安全与权限</strong></td>
+<td align="left">网络隔离、最小权限、敏感信息保护、HTTPS</td>
+</tr>
+<tr>
+<td align="left"><strong>灾备与应急</strong></td>
+<td align="left">备份策略、故障切换、应急预案、值班机制</td>
+</tr>
+<tr>
+<td align="left"><strong>文档与协作</strong></td>
+<td align="left">运维手册、架构文档、交接与知识沉淀</td>
+</tr>
+</tbody></table>
+<h3 id="监控体系"><a href="#监控体系" class="headerlink" title="监控体系"></a>监控体系</h3><p>监控的定义：通过采集、聚合、分析与展示系统或应用的各项指标、日志、调用链路等数据，实时或接近实时的掌握运行状态，以便于：</p>
+<ul>
+<li>发现潜在异常或危险</li>
+<li>快速定位故障根因</li>
+<li>评估系统性能和资源使用情况</li>
+<li>支撑容量规划与业务决策</li>
+</ul>
+<blockquote>
+<p>简单说：<strong>监控就是让系统“看得见”、让问题“看得清”、让运维“做得准”。</strong></p>
+</blockquote>
+<h4 id="核心目标与价值"><a href="#核心目标与价值" class="headerlink" title="核心目标与价值"></a>核心目标与价值</h4><p><strong>核心目标：</strong></p>
+<ol>
+<li><strong>保障系统稳定性</strong>：及时发现故障，缩短 MTTR（平均修复时间）。</li>
+<li><strong>提升系统可靠性（SLA&#x2F;SLO）</strong>：通过监控关键服务质量指标，确保承诺的服务可用性。</li>
+<li><strong>优化性能与资源使用</strong>：发现性能瓶颈，合理利用 CPU、内存、网络等资源。</li>
+<li><strong>支持容量规划</strong>：基于趋势预测未来资源需求，避免不足或浪费。</li>
+<li><strong>增强安全性与合规性</strong>：通过日志与行为监控，发现异常访问与操作。</li>
+<li><strong>辅助业务运营</strong>：通过业务指标（如订单量、用户活跃度）监控，反映产品健康状态。</li>
+</ol>
+<p> <strong>监控的价值体现：</strong></p>
+<ul>
+<li>对 <strong>运维团队</strong>：减少故障发现与响应时间，提升运维效率与系统可用性。</li>
+<li>对 <strong>开发团队</strong>：帮助快速定位代码或服务问题，提升发布质量与迭代速度。</li>
+<li>对 <strong>SRE&#x2F;平台团队</strong>：通过可观测性数据驱动系统稳定性与效能提升。</li>
+<li>对 <strong>管理层</strong>：通过关键业务指标大盘，辅助决策与风险控制。</li>
+</ul>
+<h4 id="监控系统的分层"><a href="#监控系统的分层" class="headerlink" title="监控系统的分层"></a>监控系统的分层</h4><p>一个完善的监控体系通常是<strong>分层设计</strong>的，覆盖从基础设施到业务应用的全栈：</p>
+<table>
+<thead>
+<tr>
+<th align="left">层级</th>
+<th align="left">监控对象</th>
+<th align="left">监控内容</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><strong>1. 基础设施层</strong></td>
+<td align="left">服务器、网络设备、存储、IDC&#x2F;云资源</td>
+<td align="left">CPU、内存、磁盘、网络、负载、温度等</td>
+<td align="left">保障硬件与底层资源稳定</td>
+</tr>
+<tr>
+<td align="left"><strong>2. 系统软件层</strong></td>
+<td align="left">操作系统、容器、虚拟化平台、中间件</td>
+<td align="left">进程状态、容器资源、服务可用性、网络连接等</td>
+<td align="left">如 Docker、Kubernetes、Nginx、MySQL</td>
+</tr>
+<tr>
+<td align="left"><strong>3. 应用服务层</strong></td>
+<td align="left">后端服务、API、微服务</td>
+<td align="left">接口响应时间、错误率、吞吐量、业务逻辑异常等</td>
+<td align="left">应用自身状态与性能</td>
+</tr>
+<tr>
+<td align="left"><strong>4. 业务层</strong></td>
+<td align="left">业务功能、用户行为、交易数据</td>
+<td align="left">订单量、支付成功率、用户活跃数、转化率等</td>
+<td align="left">反映业务健康度与运营状态</td>
+</tr>
+<tr>
+<td align="left"><strong>5. 安全层</strong></td>
+<td align="left">用户行为、访问控制、异常登录、数据泄露</td>
+<td align="left">登录异常、权限变更、API 调用异常等</td>
+<td align="left">安全监控与风控</td>
+</tr>
+</tbody></table>
+<h4 id="建设原则"><a href="#建设原则" class="headerlink" title="建设原则"></a>建设原则</h4><ol>
+<li><strong>从业务出发，以稳定为核心</strong>：围绕业务关键路径与用户体验构建监控。</li>
+<li><strong>分层监控、逐层深入</strong>：从基础设施 → 系统 → 应用 → 业务，逐层细化。</li>
+<li><strong>指标可量化、可聚合、可告警</strong>：定义清晰的监控指标与健康标准。</li>
+<li><strong>告警有分级、有归属、有响应</strong>：避免告警泛滥，确保“告警必有人跟”。</li>
+<li><strong>可视化直观、大盘清晰</strong>：关键信息一目了然，支持多维度分析。</li>
+<li><strong>自动化与智能化</strong>：减少人工干预，提升效率与准确性。</li>
+<li><strong>持续优化与演进</strong>：随业务发展不断调整监控策略与覆盖范围。</li>
+</ol>
+<blockquote>
+<p><strong>监控体系是 IT 系统的“眼睛”和“神经系统”，它通过 Metrics、Logs、Traces 等数据的采集与分析，实现对系统运行状态的实时感知、异常发现、问题定位与辅助决策。一个完善的监控体系应当是分层设计、全栈覆盖、业务关联、实时可视、智能告警、可扩展演进的，它是保障系统稳定性、提升运维效率、驱动业务健康发展的关键基础。</strong></p>
+</blockquote>
+<p>基础知识准备不足</p>
+<ul>
+<li><p>Header </p>
+</li>
+<li><p>cache</p>
+</li>
+<li><p>cookies</p>
+</li>
+<li><p>Accept 表示浏览器客户端可以接受的媒体类型，比如html&#x2F;json</p>
+</li>
+<li><p>Accept-Encoding  支持压缩</p>
+</li>
+<li><p>Accept-Language 接受的语言</p>
+</li>
+<li><p>User-Agent 浏览器告诉服务器，客户端使用的操作系统、版本、CPU类型、浏览器版本等</p>
+</li>
+<li><p>Connection 保持连接时长</p>
+</li>
+<li><p>Refer 让服务器判断来源页面</p>
+</li>
+<li><p>Host 指定被请求主机和端口号</p>
+</li>
+<li><p>数据库索引</p>
+</li>
+<li><p>用途，避免全表扫描，提高数据库的查询性能，但是会占用额外的磁盘空间，修改数据时也需要进行索引的维护。</p>
+</li>
+<li><p>类型（物理存储角度）</p>
+</li>
+<li><p>聚集索引（主键索引），按照一个特定维度排序存储；</p>
+</li>
+<li><p>非聚集索引，给普通字段加上索引，通过二叉树的数据结构来描述的，随机存储</p>
+</li>
+<li><p>联合索引，多个字段组成的索引</p>
+</li>
+<li><p>TCP&#x2F;IP 模型</p>
+</li>
+<li><p>应用层 提供常见的网络应用服务，包含的协议主要有HTTP、FTP、SSH、SMTP、POP3等</p>
+</li>
+<li><p>传输层 提供应用传输间的通信，包括格式化信息流和提供可靠传输。包含的网络协议TCP、UDP</p>
+</li>
+<li><p>网络层 处理网络上流动的数据包，规定了怎样的路径把数据包传输到目标计算机，并把数据包传给对方。包含IP、ARP、ICMP</p>
+</li>
+<li><p>网络接口 用了处理连接网络的硬件部分，使硬件遵循一个标准，以便相互连接。</p>
+</li>
+<li><p>OSI模型</p>
+</li>
+<li><p>应用层 直接想用户提供服务, APDU</p>
+</li>
+<li><p>表示层 负责数据格式的转换，将应用处理的信息转换为适合网络传输的格式。 SSL、ASCII，PPDU</p>
+</li>
+<li><p>会话层 建立和管理应用程序直接的通信 RPC，SPUD</p>
+</li>
+<li><p>传输层 监控数据传输服务的质量，保证报文的正确传输 TCP、UDP，TPDU</p>
+</li>
+<li><p>网络层 通过路由选择算法，为报文通过通信子网选择最合适的路径。路由器、三层交换机  IP、ICMP，报文</p>
+</li>
+<li><p>数据链路层 建立逻辑连接，进行硬件地址寻址、差错校验等功能。交换机、网卡 PPP，帧</p>
+</li>
+<li><p>物理层 建立和维护物理连接。比如网线，比特</p>
+</li>
+<li><p>time_wait</p>
+</li>
+<li><p>原因</p>
+</li>
+<li><p>服务端大量close_wait的连接没有及时关闭，在高并发短连接的HTTP请求下，客户端不断发出新的连接请求。打开的文件描述符会不断增加。打开达到上限后就无法新建socket来响应新的请求。</p>
+</li>
+<li><p>解决方案</p>
+</li>
+<li><p>修改内核参数，开启syn cookies,出现syn等待队列溢出时，启用cookies处理，减少syn攻击。尽量把syn请求缓存起来，等待有能力处理的时候处理tcp的连接请求</p>
+</li>
+<li><p>开启重用，允许将time_wait 的socket用于新的tcp连接</p>
+</li>
+<li><p>开启快速回收，socket的快速回收</p>
+</li>
+<li><p>修改默认time_out时间</p>
+</li>
+<li><p>客户端，HTTP请求头，设置为keep-alive</p>
+</li>
+<li><p>应用层避免频繁关闭连接，比如使用长连接</p>
+</li>
+<li><p>Pod创建历程</p>
+</li>
+</ul>
+<ol>
+<li><p>用户使用yaml创建pod,请求转发给APIServer，APIServer 将的yaml中的属性信息写入etcd</p>
+</li>
+<li><p>APIServer watch机制准备创建pod,将信息转发给scheduler。scheduler 通过调度算法进行node的预选，过滤掉不符合要求的主机；然后进行调度优选，对上一步筛选出来符合的主机进行打分。最终选择打分最高的主机，并将node信息反馈给APIServer，APIService将绑定的node信息写入etcd</p>
+</li>
+<li><p>APIServer 通过watch机制，调用Kubelet，指定pod信息。触发docker run，创建容器</p>
+</li>
+<li><p>创建完成后将pod信息反馈给kubelet,kubelet将pod信息返回给APIServer，APIServer将pod的状态信息写入etcd</p>
+</li>
+<li><p>Kubelet get pods 调用etcd中的信息，这时候就能展示出来pod的列表</p>
+</li>
+</ol>
+<ul>
+<li><p>组件关系</p>
+</li>
+<li><p>APIServer  提供kubernetes API</p>
+</li>
+<li><p>Etcd 兼具一致性和高可用性的键值数据库，保存集群中所有信息的数据库</p>
+</li>
+<li><p>Kube-scheduler 负责监视新创建的、未指定运行节点的pod,进行pod的调度</p>
+</li>
+<li><p>Kube-controller-manager 是多个控制权的组合。包括节点控制权、任务控制权、断电控制权、服务账号和令牌控制器</p>
+</li>
+<li><p>Node 节点组件在每个节点上运行，提供集群的运行环境</p>
+</li>
+<li><p>Kubelet 在每个节点上运行的代理，误会容器的生命周期</p>
+</li>
+<li><p>Kube-proxy 是每个节点上运行的网络代理，维护接节点的网络规则。这些网络规则允许集群内部或外部的网络会话与pod进行网络通信</p>
+</li>
+<li><p>cache和buffer的区别</p>
+</li>
+<li><p>进程和线程的区别</p>
+</li>
+<li><p>Https 过程，和http的区别</p>
+</li>
+<li><p>TCP和UDP的区别</p>
+</li>
+<li><p>Tcp,面向连接，可靠传输，面向字节流传输，udp是面向报文传输</p>
+</li>
+<li><p>df和du的区别 df 通过文件系统获取到的文件大小，能看到已经删除的文件</p>
+</li>
+<li><p>Mysql 高可用架构</p>
+</li>
+<li><p>MHA manager 定时探测集群中的master节点，出现故障时，自动将最新数据的slave提升为新的master，然后将其他所有的slave指向新的master</p>
+</li>
+<li><p>共享存储 配置VIP，主库宕机，备库挂载相同的文件系统</p>
+</li>
+<li><p>DRBD磁盘复制</p>
+</li>
+<li><p>资源限制原理</p>
+</li>
+<li><p>面向对象和面向过程的区别</p>
+</li>
+<li><p>面向对象，是功能对问题进行分类。把构成问题的事务分解成各个对象，而建立对象的目的也不是为了完成一个个步骤，而是为了描述某个事务在解决整个问题的过程中所发生的行为。</p>
+</li>
+<li><p>面向过程是以事件为中心的编程思想，分析解决问题的步骤，然后用函数把步骤一步一步实现</p>
+</li>
+<li><p>新项目</p>
+</li>
+<li><p>预估访问量，</p>
+</li>
+<li><p>总量除以时间&#x3D;QPS  （时间为4w s）</p>
+</li>
+<li><p>评估高峰期QPS 日平均值*2.5</p>
+</li>
+<li><p>评估单机极限qps</p>
+</li>
+<li><p>冗余</p>
+</li>
+<li><p>亲和性 取代nodeSelector的策略，支持IN，NOTLN，exists,doesNotExit,GT,LT</p>
+</li>
+<li><p>必须满足条件，否则一直重启</p>
+</li>
+<li><p>优先满足规则，并不强求</p>
+</li>
+<li><p>cgropus</p>
+</li>
+<li><p>概念 是Linux内核提供的可以限制单个进程或者多个进程所使用资源的机制，可以对CPU、内存、磁盘和网络带宽等资源实现精细化控制。一个子系统目录加上一组资源限制文件的组合。</p>
+</li>
+<li><p>分类</p>
+</li>
+<li><p>Cpu 子系统，限制CPU使用率</p>
+</li>
+<li><p>Memory 限制进程的memory使用量</p>
+</li>
+<li><p>Blkio 限制进程的块设备IO</p>
+</li>
+<li><p>device 控制进程能访问某些设备</p>
+</li>
+<li><p>Ns 使不通cgroups下的进程使用不同的namespace</p>
+</li>
+<li><p>Redis</p>
+</li>
+<li><p>数据类型：string、hash、list、Set 无序，不能重复、Zset  有序，不能重复</p>
+</li>
+<li><p>Redis 内存不足的淘汰策略  </p>
+</li>
+<li><p>算法</p>
+</li>
+<li><p>LRU 根据数据的历史访问记录来淘汰数据，如果最近被访问过，那么将来被访问的几率也更高</p>
+</li>
+<li><p>LFU 根据最近访问的频率进行排序，频率低的优先被删除，Redis 4.0以后出现的</p>
+</li>
+<li><p>策略</p>
+</li>
+<li><p>Volatile-lru 利用LRU算法溢出设置过过期时间的key </p>
+</li>
+<li><p>Allkeys-lru 利用LRU算法溢出任何key，删除的key 包括设置过期时间和不设置过期时间的  通常采用该方法</p>
+</li>
+<li><p>Volatile-random 移除设置过过期时间的随机key</p>
+</li>
+<li><p>Allkeys-random 无差别的随机移除</p>
+</li>
+<li><p>Volatile-LFU 设置了过期时间的key 使用LFU算法淘汰</p>
+</li>
+<li><p>Allkeys-LFU 如果一个key最近一段时间内使用次数很少，那么将来被使用的可能性就很小</p>
+</li>
+<li><p>Volatile-ttl 移除即将过期的key</p>
+</li>
+<li><p>Noevicition 不移除任何的key，只返回写错误，默认选项</p>
+</li>
+<li><p>MySQL的主从复制原理</p>
+</li>
+<li><p>master节点将数据变化记录写入到二进制日志binlog；</p>
+</li>
+<li><p>slave服务器会在一定时间间隔内对master的binlog探测是否发生改变，如果改变则开始一个I&#x2F;O线程请求master 发送binlog里的更新记录到从库上；</p>
+</li>
+<li><p>主节点生成log dump线程，给从库I&#x2F;O产出传输binlog写入中继日志；</p>
+</li>
+<li><p>从节点开启SQL线程，读取中继日志，并写入到数据库中</p>
+</li>
+<li><p>三次握手</p>
+</li>
+<li><p><img data-src="https://app.yinxiang.com/shard/s20/res/0485c073-1d32-4382-9dc5-c28dc22b7c74.jpg?search=%E5%BE%AA%E7%8E%AF" title="Attachment"></p>
+</li>
+<li><p>1.客户端发送 SYN&#x3D;1，SEQ&#x3D;X到服务器，表示请求建立新连接，客户端进入syn-sent阶段</p>
+</li>
+<li><p>2.服务器收到TCP报文后结束Listen状态，返回一段报文，SEQ&#x3D;y,ACK&#x3D;x+1,SYN&#x3D;1,服务器进入SYN-RCVD阶段</p>
+</li>
+<li><p>3.客户端接收到服务器确认的TCP报文后，明确客户端到服务器数据传输是正常的，结束SYN-SENT阶段，返回最后一段报文。ACK&#x3D;1，SEQ&#x3D;X+1，ACK&#x3D;y+1。客户端进入established阶段。</p>
+</li>
+<li><p>服务器收到客户端确认收到服务器数据的报文后，明确服务器到客户端的数据传输正常，结束SYN-SENT阶段，也进入established接。</p>
+</li>
+<li><p>四次断开</p>
+</li>
+<li><p><img data-src="https://app.yinxiang.com/shard/s20/res/d5865b98-274c-4d63-94a5-e5db79137fbe.jpg?search=%E5%BE%AA%E7%8E%AF" title="Attachment"></p>
+</li>
+<li><p>session和cookie的区别</p>
+</li>
+<li><p>用来跟踪用户的整个会话，常用的技术是cookie和session。cookie通过在客户端记录信息确定用户身份，session通过在服务器端记录信息确定用户身份。</p>
+</li>
+<li><p>session保存在服务器端，比如文件、数据库和内存中，cookie保存在客户端浏览器</p>
+</li>
+<li><p>session运行依赖session id,session id 存在cookie中。</p>
+</li>
+<li><p>输入网址经历了哪些</p>
+</li>
+<li><ol>
+<li>进行DNS解析</li>
+</ol>
+</li>
+<li><p>浏览器搜索自己的DNS缓存，如果没有则搜索操作系统中的DNS缓存，比如&#x2F;etc&#x2F;resolv.conf </p>
+</li>
+<li><p>如果还是没有找到就会像根域名服务器发送请求，如果根域名服务器也不存在该域名，就会向com顶级域名服务器发送请求，依次类推直到最后得到<a href="http://www.baidu.com的ip地址并缓存到本地./">www.baidu.com的ip地址并缓存到本地。</a></p>
+</li>
+<li><p>DNS 有可能会返回不一样的地址，这就是DNS级别的负载均衡，比如依据客户的宽带运营商或者地理位置</p>
+</li>
+<li><p>2.TCP连接</p>
+</li>
+<li><p>获取服务器地址和端口，利用IP地址和服务器建立TCP连接</p>
+</li>
+<li><p>构建请求头信息，发送请求头信息</p>
+</li>
+<li><p>服务器响应后，接收响应报文，包括状态码、响应报头和响应报文</p>
+</li>
+<li><p>3.浏览器解析渲染页面</p>
+</li>
+<li><p>Load 1 5 15 代表什么</p>
+</li>
+<li><p>代表一段时间内CPU正在处理和等待处理的进程综合。首先应该关注5分钟和15分钟的load值。</p>
+</li>
+<li><p>如果CPU是1核，那么如果大于0.7就需要检查一下；如果长期大于等于1，则需要尽快修复</p>
+</li>
+<li><p>Us 用户使用的CPU时间比；sy 系统使用的CPU时间比；ni 用作nice加权的进程分配的用户态cpu时间比；id空闲的CPU时间比；wa CPU等待磁盘写入完成的时间；hi 硬中断消耗的时间；si 软中断消耗时间; st 虚拟机偷取时间</p>
+</li>
+<li><p>Linux 启动流程？</p>
+</li>
+<li><p>加载BIOS设备自检–&gt;读取MBR–&gt;Boot Loader–&gt;加载内核–&gt;用户层init用inittab文件来设定系统运行的等级(一般3或者5，3是多用户命令行，5是界面)–&gt;init进程执行rc.syninit–&gt;启动内核模块–&gt;执行不同级别运行的脚本程序–&gt;执行&#x2F;etc&#x2F;rc.d&#x2F;rc.local(本地运行服务)–&gt;执行&#x2F;bin&#x2F;login,就可以登录了。</p>
+</li>
+<li><p>系统初始化</p>
+</li>
+<li><p>清理系统用户、密码安全改为key认证</p>
+</li>
+<li><p>历史记录设置自动清理</p>
+</li>
+<li><p>LVS 模式原理</p>
+</li>
+<li><p>DR clinet-&gt;lvs 修改Mac地址-&gt;real server -&gt; 返回给client    要求一个VLAN，不可跨VLAN，同一个VIP，不支持端口映射，性能好</p>
+</li>
+<li><p>NAT client-&gt;lvs 修改目标ip-&gt;real server -&gt; 响应后返回给lvs-&gt; lvs 修改源IP-&gt;返回给client  不可跨VLAN，支持端口映射，性能弱</p>
+</li>
+<li><p>IP-TUN 原有的客户端请求包头中再加一层IP Tunnel的包头ip首部信息，不改变原来整个请求包信息，只是新增了一层ip首部信息</p>
+</li>
+<li><p>Iptables 组成</p>
+</li>
+<li><p>抓包工具</p>
+</li>
+<li><p>Mtr 展示</p>
+</li>
+<li><p>traceroute 原理</p>
+</li>
+<li><p>使用ICMP协议定位本机和目标主机之间的所有路由器。IP路由过程中对数据包TTL的处理。</p>
+</li>
+<li><p>当路由器收到一个IP包时，会改动IP包的TTL，没收到一个包，就会检查这个包的TTL是否为1或者0。如果是0则表名没到目的地，并且剩余时间不多了，肯定到不了目的地，因此丢弃这个包，并给源主机发送ICMP通知，表明包已超时。ICMP的通知信息里包含当前路由器发送时所用的IP。</p>
+</li>
+<li><p>P1的TTL设置为1，到达R1时，TTL减1。由于TTL等于0，R1把P1丢弃并向源主机发送一个ICMP超时报文</p>
+</li>
+<li><p>P2的TTL设置为2，到达R1后减1，继续走到R2，R2收到后TTL减1为0。R2丢弃P2，返回给源主机ICMP不可达的报文</p>
+</li>
+<li><p>之后依次</p>
+</li>
+<li><p>TTL 最大值为255UNIX，Windows32&#x2F;128,linux 64</p>
+</li>
+<li><p>k8s service类型？ClusterIP,NodePort,LoadBalancer,ExternalName (使用服务别名访问)<img data-src="https://app.yinxiang.com/shard/s20/res/b1abb5ed-200f-47c0-b610-5ea8e0bf9b54.png?search=%E5%BE%AA%E7%8E%AF" title="Attachment"></p>
+</li>
+<li><p>Pod running状态转变流程？是否代表服务可用</p>
+</li>
+<li><p>docker 容器和镜像的区别，镜像的本质</p>
+</li>
+<li><p>DockerFile add和copy的区别 Add 支持从远程URL获取资源</p>
+</li>
+<li><p>Ansible 核心元素关系</p>
+</li>
+<li><p>playbook 由一个或多个play组成的列表。</p>
+</li>
+<li><p>hosts 指定任务的主机</p>
+</li>
+<li><p>Play的主体是task list。task中各个任务按照次序逐个执行，action就是每条调用的一个ansible模块。</p>
+</li>
+<li><p>Handlers 是在任务中定义了notify后会被调用</p>
+</li>
+<li><p>CDH 搭建流程</p>
+</li>
+<li><p>系统环境初始化（关闭防火墙、selinux、主机名、时间同步、搭建yum源、ssh互信）</p>
+</li>
+<li><p>安装manager ，web界面安装agent</p>
+</li>
+<li><p>选择角色</p>
+</li>
+<li><p>Nginx</p>
+</li>
+<li><p>Websocket?</p>
+</li>
+<li><p>reload过程</p>
+</li>
+<li><p>1 向master进程发送HUP信号（reload）</p>
+</li>
+<li><p>2 master 进程校验配置语法是否正确</p>
+</li>
+<li><p>3 master进程打开新的监听端口</p>
+</li>
+<li><p>4 master进程用新配置启动新的worker进程</p>
+</li>
+<li><p>5 master进程向老worker子进程发送quit信号</p>
+</li>
+<li><p>6 老worker进程关闭监听句柄，处理完当前连接后结束进程</p>
+</li>
+<li><p>location 规则</p>
+</li>
+<li><p>&#x3D; &#x2F;url 精确匹配，优先级最高</p>
+</li>
+<li><p>^~ &#x2F;url 标准匹配，仅前缀</p>
+</li>
+<li><p>~ . 区分大小写</p>
+</li>
+<li><p>~* .(php) 不区分大小写</p>
+</li>
+</ul>
+]]></content>
   </entry>
 </search>
